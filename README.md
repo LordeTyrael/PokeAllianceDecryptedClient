@@ -23,7 +23,7 @@ Every file here is the decrypted original.
 | `.frag` | 107 | 102.9 KB | GLSL fragment-shader sources |
 | `.otfont` | 30 | 4.3 KB | font descriptors (bitmap and TTF) |
 | `.ttf` | 16 | 7.0 MB | TrueType files loaded via .otfont |
-| `.mp4` | 3 | 9.2 MB | login video, gacha opening, profile background |
+| `.mp4` | 3 | 9.2 MB | squirtle video, gacha opening, a 3d ball vid |
 | `.otml` | 2 | 194.8 KB | OTML config trees (cursors, per-thing overrides) |
 | `.rc` | 1 | 47 B | Windows resource script (build leftover) |
 | `.dat` | 1 | 6.4 MB | object definitions - what every item/creature is |
