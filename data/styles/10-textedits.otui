@@ -1,0 +1,40 @@
+TextEdit < UITextEdit
+  font: poppins semibold 12
+  color: white
+  size: 86 22
+  padding: 4
+  image-source: /images/ui/panels/text/textedit
+  image-border: 1
+  selection-color: #434343
+  selection-background-color: #cccccc
+  $disabled:
+    color: #27272788
+    opacity: 0.5
+
+PasswordTextEdit < TextEdit
+  text-hidden: true
+
+MultilineTextEdit < TextEdit
+  multiline: true
+
+EntergameTextEdit < UITextEdit
+  font: poppins semibold 12
+  color: #434343
+  size: 86 22
+  text-offset: 0 0
+  opacity: 1
+  selection-color: #272727
+  selection-background-color: #cccccc
+  $disabled:
+    color: #27272788
+    opacity: 0.5
+
+CreateAccountTextEdit < UITextEdit
+  font: poppins semibold 12
+  size: 86 22
+  text-offset: 25 0
+  opacity: 1
+  padding: 4
+  $disabled:
+    color: #27272788
+    opacity: 0.5

@@ -1,0 +1,283 @@
+TwitchPointsPanel < UIWidget
+  size: 150 50
+
+  UIWidget
+    id: information_icon
+    size: 18 19
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    image-source: images/twitch_icon
+
+  Label
+    id: pointsLabel
+    font: poppins semibold 14
+    !text: tr("Points")
+    text-auto-resize: true
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: information_icon.right
+    margin-left: 8
+
+  Label
+    id: twitchPoints
+    font: poppins semibold 14
+    !text: tr("0")
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    text-auto-resize: true
+    textColor: "#abffbb"
+
+TwitchCategoryPanel < UIWidget
+  size: 200 50
+  image-source: images/empty_category
+  change-cursor-image: true
+  cursor: pointer
+
+  $focus:
+    image-source: images/selected_category
+
+  @onClick: modules.game_twitchshop.renderByCategory(self:getId())
+
+TwitchShopItem < ShopItemCard
+  &priceIcon:
+    size: 20 21
+    image-source: images/twitch_icon
+
+UIWindow
+  id: imageWindow    
+  width: 860
+  height: 580
+  anchors.centerIn: parent
+  draggable: true
+  @onEscape: modules.game_twitchshop.close()
+  margin-bottom: 100
+
+  NewOpaqueWindow
+    id: background
+    anchors.fill: parent
+    phantom: true
+    focusable: false
+
+  UIWidget
+    id: panel_background
+    size: 630 580
+    anchors.right: parent.right
+    anchors.top: parent.top
+    image-source: images/panel_background
+    phantom: true
+
+  UIWidget
+    id: title_background
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: images/title_background
+    phantom: true
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 30 30
+      image-source: images/title_icon
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Twitch Points Shop")
+
+  TwitchPointsPanel
+    id: twitchPanel
+    anchors.left: parent.left
+    margin-left: 10
+    anchors.top: title_background.bottom
+    margin-top: 15
+
+  Label
+    id: categories
+    anchors.left: twitchPanel.left
+    anchors.top: twitchPanel.bottom
+    margin-top: 30
+    !text: tr("Categories")
+    opacity: 0.5
+    text-auto-resize: true
+    font: poppins semibold 20
+
+  UIWidget
+    id: categoriesPanel
+    size: 200 400
+    anchors.left: categories.left
+    anchors.top: categories.bottom
+    margin-top: 10
+
+    TwitchCategoryPanel
+      id: exclusives
+      anchors.left: parent.left
+      anchors.top: parent.top
+
+      UIWidget
+        id: exclusiveIcon
+        size: 29 26
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        margin-left: 10
+        image-source: images/exclusive_icon
+        phantom: true
+
+      Label
+        id: categoryName
+        anchors.verticalCenter: exclusiveIcon.verticalCenter
+        anchors.left: exclusiveIcon.right
+        margin-left: 15
+        !text: tr("Exclusives")
+        phantom: true
+
+    TwitchCategoryPanel
+      id: market
+      anchors.left: parent.left
+      anchors.top: exclusives.bottom
+      margin-top: 10
+
+      UIWidget
+        id: marketIcon
+        size: 29 29
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        margin-left: 10
+        image-source: images/market_icon
+        phantom: true
+
+      Label
+        id: categoryName
+        anchors.verticalCenter: marketIcon.verticalCenter
+        anchors.left: marketIcon.right
+        margin-left: 15
+        !text: tr("Market")
+        phantom: true
+
+    TwitchCategoryPanel
+      id: clothes
+      anchors.left: parent.left
+      anchors.top: market.bottom
+      margin-top: 10
+
+      UIWidget
+        id: clothesIcon
+        size: 33 28
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        margin-left: 10
+        image-source: images/clothes_icon
+        phantom: true
+
+      Label
+        id: categoryName
+        anchors.verticalCenter: clothesIcon.verticalCenter
+        anchors.left: clothesIcon.right
+        margin-left: 15
+        !text: tr("Clothes")
+        phantom: true
+
+    TwitchCategoryPanel
+      id: addons
+      anchors.left: parent.left
+      anchors.top: clothes.bottom
+      margin-top: 10
+
+      UIWidget
+        id: addonsIcon
+        size: 31 36
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        margin-left: 10
+        image-source: images/addons_icon
+        phantom: true
+
+      Label
+        id: categoryName
+        anchors.verticalCenter: addonsIcon.verticalCenter
+        anchors.left: addonsIcon.right
+        margin-left: 15
+        !text: tr("Addons")
+        phantom: true
+
+    TwitchCategoryPanel
+      id: decorations
+      anchors.left: parent.left
+      anchors.top: addons.bottom
+      margin-top: 10
+
+      UIWidget
+        id: decorationsIcon
+        size: 31 36
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        margin-left: 10
+        image-source: images/decorations_icon
+        phantom: true
+
+      Label
+        id: categoryName
+        anchors.verticalCenter: decorationsIcon.verticalCenter
+        anchors.left: decorationsIcon.right
+        margin-left: 15
+        !text: tr("Decorations")
+        phantom: true
+
+  UIWidget
+    id: twitchBanner
+    anchors.horizontalCenter: panel_background.horizontalCenter
+    anchors.top: panel_background.top
+    margin-top: 50
+    size: 600 135
+    image-source: images/twitch_banner
+    phantom: true
+
+    UIWidget
+      anchors.fill: parent
+      image-source: images/banner_background
+      opacity: 0.3
+      phantom: true
+
+  UIScrollArea
+    id: shop_panel
+    size: 625 325
+    anchors.right: parent.right
+    anchors.left: twitchBanner.left
+    anchors.top: twitchBanner.bottom
+    vertical-scrollbar: twitchShopScrollBar
+    margin-top: 50
+
+    layout:
+      type: grid
+      cell-size: 175 160
+      cell-spacing: 3
+      num-columns: 3
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: twitchShopScrollBar
+    anchors.top: shop_panel.top
+    anchors.bottom: shop_panel.bottom
+    anchors.right: shop_panel.right
+    margin-top: 5
+    margin-right: 17
+    margin-bottom: 5
+    step: 30
+    pixels-scroll: true
+    visible: true
+
+  NewButton
+    id: closeButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    image-source: /images/newui/close
+    @onClick: modules.game_twitchshop.close()

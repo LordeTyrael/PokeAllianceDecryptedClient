@@ -1,0 +1,9 @@
+Module
+  name: game_brotherhood
+  description:Brotherhood
+  author: PokeAlliance
+  website: PokeAlliance.com.br
+  sandboxed: true
+  scripts: [ brotherhood ]
+  @onLoad: init()
+  @onUnload: terminate()

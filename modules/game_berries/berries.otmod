@@ -1,0 +1,9 @@
+Module
+  name: game_berries
+  description: PokeAlliance
+  author: Tanjiro
+  website: pokealliance.com
+  sandboxed: true
+  scripts: [ berries ]
+  @onLoad: init()
+  @onUnload: terminate()

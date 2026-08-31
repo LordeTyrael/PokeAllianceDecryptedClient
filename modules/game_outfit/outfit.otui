@@ -1,0 +1,522 @@
+OutfitToList < UICreature
+  id: outfitToList
+  image-source: new_images/outfit_base
+  image-border: 5
+  scale: 0.8
+  old-scaling: true
+  creature-offset: 6 6
+  change-cursor-image: true
+  cursor: pointer
+
+  $focus:    
+    image-source: new_images/outfit_base_selected
+
+LevelUpEffectWidget < UICreature
+  id: levelUpEffect
+  image-source: new_images/outfit_base
+  image-border: 5
+  scale: 0.8
+  old-scaling: true
+  creature-offset: 6 6
+  change-cursor-image: true
+  cursor: pointer
+
+  $focus:    
+    image-source: new_images/outfit_base_selected
+
+  UIWidget
+    id: defaultImage
+    anchors.fill: parent
+    image-source: /images/newui/portrait
+    visible: false
+
+LevelEffect < UIEffect
+  anchors.fill: parent
+  margin-left: 16
+  margin-bottom: 10
+  phantom: true
+  clipping: true
+
+LootEffect < UIEffect
+  anchors.fill: parent
+  effect-centered: true
+  phantom: true
+  clipping: true
+
+LootCategoryLabel < Label
+  font: poppins semibold 11
+  text-wrap: true
+  text-align: center
+  color: #ffe400
+  phantom: true
+
+LootCategoryRow < UIWidget
+  height: 75
+  image-source: new_images/outfit_base
+  image-border: 5
+  change-cursor-image: true
+  cursor: pointer
+
+  LootCategoryLabel
+    id: categoryName
+    height: 30
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 4
+    margin-right: 4
+    margin-top: 4
+
+  UIWidget
+    id: effectPreview
+    size: 48 48
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 2
+    phantom: true
+
+LootPopupOption < UIWidget
+  image-source: new_images/outfit_base
+  image-border: 5
+  change-cursor-image: true
+  cursor: pointer
+
+  $focus:
+    image-source: new_images/outfit_base_selected
+
+LootEffectPopup < UIWindow
+  size: 300 120
+  opacity: 0.95
+  image-source: new_images/outfits_background
+  anchors.centerIn: parent
+  focusable: true
+  phantom: false
+
+  @onEscape: modules.game_outfit.closeLootPopup()
+
+  LootCategoryLabel
+    id: popupTitle
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+
+  ScrollablePanel
+    id: popupGrid
+    anchors.top: popupTitle.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-top: 5
+    margin-left: 10
+    margin-right: 10
+    margin-bottom: 10
+    layout:
+      type: grid
+      cell-size: 65 65
+      num-columns: 4
+      cell-spacing: 5
+      flow: true
+
+OutfitPanel < UIWidget
+  id: outfitPanel
+  size: 304 356
+  anchors.top: parent.top
+  anchors.right: parent.right
+  margin-top: 70
+  margin-right: 20
+  phantom: true
+  focusable: false
+
+  UIWidget
+    id: name
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+    font: poppins regular 15
+    phantom: true
+
+  UICreature
+    id: outfit
+    size: 64 64
+    anchors.top: name.bottom
+    anchors.horizontalCenter: parent.horizontalCenter    
+    margin-top: 10
+    fixed-creature-size: true
+    old-scaling: true
+    phantom: true
+
+  NewButton
+    id: taunt
+    size: 19 18
+    margin-top: 10
+    anchors.top: parent.top
+    anchors.right: outfit.left
+    margin-right: 18
+    !tooltip: tr("Use Outfit Taunt")
+    @onClick: modules.game_outfit.sendTaunt()
+    image-source: new_images/taunt
+
+  NewButton
+    id: rotate
+    size: 17 17
+    anchors.top: prev.bottom
+    margin-top: 10
+    anchors.horizontalCenter: taunt.horizontalCenter
+    !tooltip: tr("Rotate Character")
+    @onClick: modules.game_outfit.sendRotate()
+    image-source: new_images/rotate
+
+  NewButton
+    id: walk
+    size: 20 16
+    anchors.top: prev.bottom
+    margin-top: 10
+    anchors.horizontalCenter: taunt.horizontalCenter
+    !tooltip: tr("Walk")
+    @onClick: modules.game_outfit.sendWalk()
+    image-source: new_images/walk
+
+  NewButton
+    id: randomize
+    size: 16 14
+    anchors.top: prev.bottom
+    margin-top: 10
+    anchors.horizontalCenter: taunt.horizontalCenter
+    !tooltip: tr("Randomize colors")
+    @onClick: modules.game_outfit.randomize()
+    image-source: new_images/randomize
+
+  NewButton
+    id: idle
+    size: 19 18
+    anchors.top: prev.bottom
+    margin-top: 10
+    anchors.horizontalCenter: taunt.horizontalCenter
+    !tooltip: tr("Start Idle Animation")
+    @onClick: modules.game_outfit.sendIdle()
+    icon-source: @fa solid 14 f04b
+    icon-color: #ffffff
+
+  NewButton
+    id: transformation
+    size: 19 18
+    anchors.top: prev.bottom
+    margin-top: 5
+    anchors.horizontalCenter: taunt.horizontalCenter
+    !tooltip: tr("Transformation")
+    @onClick: modules.game_outfit.sendTransform()
+    icon-source: @fa solid 14 f0d0
+    icon-color: #ffffff
+
+  Label
+    id: stylesLabel
+    size: 152 18
+    !text: tr('Styles')
+    font: poppins boldbordered 14
+    textColor: "#ffe400"
+    anchors.top: outfit.top
+    anchors.right: parent.right
+    margin-right: 28
+    text-align: center
+    visible: false
+
+  ScrollablePanel
+    id: stylesPanel
+    size: 152 76
+    anchors.top: stylesLabel.bottom
+    anchors.right: parent.right
+    margin-top: 6
+    margin-right: 28
+    vertical-scrollbar: stylesAllianceScrollBar
+    visible: false
+    layout:
+      type: grid
+      cell-size: 70 70
+      num-columns: 2
+      cell-spacing: 6
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: stylesAllianceScrollBar
+    anchors.top: stylesPanel.top
+    anchors.bottom: stylesPanel.bottom
+    anchors.left: stylesPanel.right
+    margin-left: 4
+    step: 30
+    pixels-scroll: true
+    visible: false
+
+  UIWidget
+    id: template
+    size: 470 22
+    anchors.top: outfit.bottom
+    margin-top: 55
+
+    OutfitBox
+      id: head
+      size: 68 20
+      anchors.top: parent.top
+      anchors.left: parent.left
+      !tooltip: tr('Head')
+      !text: tr('Head')
+      checked: true         
+      image-source: new_images/base_options
+      auto-focus: first
+      image-color: #ff5500
+
+      $checked:
+        color: #c74605
+
+    OutfitBox
+      id: primary
+      size: 68 20
+      anchors.top: parent.top
+      anchors.left: head.right
+      !tooltip: tr('Primary')
+      !text: tr('Primary')
+      image-source: new_images/base_options
+      margin-left: 5
+      image-color: #9fbf5f
+
+      $checked:
+        color: #6d8a32
+
+    OutfitBox
+      id: secondary
+      size: 80 20
+      anchors.top: parent.top
+      anchors.left: primary.right            
+      !tooltip: tr('Secondary')
+      !text: tr('Secondary')
+      image-source: new_images/base_options
+      margin-left: 5
+      image-color: #8fafbf
+      $checked:        
+        color: #078ed4
+
+    OutfitBox
+      id: detail
+      size: 68 20
+      anchors.top: parent.top
+      anchors.left: secondary.right
+      margin-left: 5      
+      !tooltip: tr('Detail')
+      !text: tr('Detail')
+      image-source: new_images/base_options
+      margin-left: 5
+      image-color: #bf5f5f
+      $checked:        
+        color: #9a3c3c
+
+  Panel
+    id: colorBoxPanel
+    size: 304 112
+    anchors.top: template.bottom
+    anchors.left: parent.left
+    margin-top: 10
+    layout:
+      type: grid
+      cell-size: 16 16
+      cell-spacing: 0
+      num-columns: 19
+      num-lines: 7
+
+UIWindow
+  size: 700 460
+  opacity: 0.9
+  @onEnter: modules.game_outfit.accept()
+  @onEscape: modules.game_outfit.destroy()
+  image-source: new_images/background  
+  anchors.centerIn: parent
+
+  UIWidget
+    id: titleBackground
+    size: 400 36
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-source: new_images/title_background
+    phantom: true
+
+    UIWidget
+      id: titleIcon
+      size: 29 31
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 8
+      image-source: new_images/title_icon
+      phantom: true
+
+    Label
+      id: titleName
+      font: poppins semibold 20
+      !text: tr("Character Customization")
+      text-auto-resize: true
+      anchors.left: titleIcon.right
+      margin-left: 10
+      anchors.verticalCenter: titleIcon.verticalCenter
+      text-offset: 0 2
+
+  NewButton
+    id: closeButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 7
+    margin-right: 7
+    image-source: new_images/close
+    @onClick: modules.game_outfit.destroy()
+  
+  Label
+    id: outfits
+    !text: tr("Outfits")
+    font: poppins boldbordered 16
+    textColor: "#ffe400"
+    anchors.left: outfitList.left
+    anchors.bottom: outfitList.top
+    margin-bottom: 5
+    text-auto-resize: true
+
+  UIWidget
+    id: outfitListBackground
+    size: 320 320
+    anchors.left: parent.left
+    anchors.top: titleBackground.bottom
+    margin-left: 20
+    margin-top: 40
+    image-source: new_images/outfits_background
+    opacity: 0.95
+    phantom: true
+
+  ScrollablePanel
+    id: outfitList
+    anchors.fill: outfitListBackground
+    vertical-scrollbar: outfitAllianceScrollBar
+    margin-left: 10
+    margin-top: 10
+    margin-bottom: 10
+    layout:
+      type: grid    
+      cell-size: 65 65
+      num-columns: 4
+      cell-spacing: 5
+      flow: true
+
+  ScrollablePanel
+    id: levelUpList
+    anchors.fill: outfitListBackground
+    vertical-scrollbar: levelUpAllianceScrollBar
+    margin-left: 10
+    margin-top: 10
+    margin-bottom: 10
+    visible: false
+    layout:
+      type: grid    
+      cell-size: 65 65
+      num-columns: 4
+      cell-spacing: 5
+      flow: true
+
+  ScrollablePanel
+    id: lootEffectList
+    anchors.fill: outfitListBackground
+    vertical-scrollbar: outfitAllianceScrollBar
+    margin-left: 10
+    margin-top: 10
+    margin-bottom: 10
+    visible: false
+    layout:
+      type: grid
+      cell-size: 65 75
+      num-columns: 4
+      cell-spacing: 5
+      flow: true
+
+  UIWidget
+    id: optionsButton
+    size: 132 42
+    anchors.horizontalCenter: outfitListBackground.horizontalCenter
+    anchors.top: outfitListBackground.bottom
+    image-source: new_images/options_base
+
+    NewButton
+      id: outfitCircle
+      size: 28 28
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      image-source: new_images/blue_circle
+      !tooltip: tr("Outfit")
+      @onClick: modules.game_outfit.changeOutfitViewer("outfit")
+
+      UIWidget
+        size: 22 22
+        anchors.centerIn: parent
+        image-source: new_images/outfit
+        phantom: true
+
+    NewButton
+      id: levelUpCircle
+      size: 28 28
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      image-source: new_images/circle
+      opacity: 0.5
+      !tooltip: tr("Level Up")
+      @onClick: modules.game_outfit.changeOutfitViewer("levelUp")
+
+      UIWidget
+        size: 22 22
+        anchors.centerIn: parent
+        image-source: new_images/levelup
+        phantom: true
+
+    NewButton
+      id: lootEffectCircle
+      size: 28 28
+      anchors.right: parent.right
+      margin-right: 15
+      anchors.verticalCenter: parent.verticalCenter
+      image-source: new_images/circle
+      opacity: 0.5
+      !tooltip: tr("Loot Effects")
+      @onClick: modules.game_outfit.changeOutfitViewer("lootEffect")
+
+      UIWidget
+        size: 22 22
+        anchors.centerIn: parent
+        image-source: new_images/teleport
+        phantom: true
+
+  AllianceVerticalScrollBar
+    id: outfitAllianceScrollBar
+    anchors.top: outfitList.top
+    anchors.bottom: outfitList.bottom
+    anchors.right: outfitList.right
+    margin-right: 13
+    margin-top: 5
+    margin-bottom: 5
+    step: 30
+    pixels-scroll: true
+
+  AllianceVerticalScrollBar
+    id: levelUpAllianceScrollBar
+    anchors.top: outfitList.top
+    anchors.bottom: outfitList.bottom
+    anchors.right: outfitList.right
+    margin-right: 13
+    margin-top: 5
+    margin-bottom: 5
+    step: 30
+    pixels-scroll: true
+    visible: false
+
+  OutfitPanel
+  NewButton
+    id: confirm
+    size: 156 30
+    anchors.horizontalCenter: outfitPanel.horizontalCenter    
+    anchors.top: outfitList.bottom  
+    margin-top: 15
+    !text: tr('Confirm')
+    @onClick: modules.game_outfit.accept()
+    image-source: new_images/confirm_button

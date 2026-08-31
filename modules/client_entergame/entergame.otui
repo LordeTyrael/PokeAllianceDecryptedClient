@@ -1,0 +1,337 @@
+UIWindow
+  id: enterGame
+  image-auto-resize: true
+  @onEnter: EnterGame.doLogin()
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  anchors.left: parent.left
+  width: 530
+  phantom: true
+
+  ScrollablePanel
+    id: enterGamePanel
+    image-source:
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    width: 530
+
+    UIWidget
+      id: background
+      anchors.fill: parent
+      image-source: new_images/login_flat
+      opacity: 0.7
+
+    UIWidget
+      id: gameLogo
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      size: 330 330
+      margin-top: 30
+      image-source: /images/pka/logo
+
+    Label
+      id: username
+      !text: tr("Login or E-mail")
+      font: poppins semibold 14
+      textColor: "#7f8fa4"
+      anchors.top: gameLogo.bottom
+      anchors.left: gameLogo.left
+      text-auto-resize: true
+      margin-top: 20
+
+    EntergameTextEdit
+      id: accountNameTextEdit
+      !text: tr('Login')
+      font: poppins semibold 14
+      padding-left: 10
+      size: 248 36
+      anchors.top: username.bottom
+      anchors.left: gameLogo.left
+      anchors.right: gameLogo.right
+      margin-top: 5
+      text-offset: 0 10
+      text-hidden: true
+      color: white
+      image-source: new_images/input
+  
+      $focus:
+        image-source: new_images/input_focused
+
+      NewButton
+        id: viewButton
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: 28
+
+        UIWidget
+          size: 23 17
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.horizontalCenter: parent.horizontalCenter
+          image-source: new_images/view
+          phantom: true
+
+    Label
+      id: password
+      !text: tr("Password")
+      font: poppins semibold 14
+      textColor: "#7f8fa4"
+      anchors.top: accountNameTextEdit.bottom
+      anchors.left: username.left
+      text-auto-resize: true
+      margin-top: 10
+  
+    EntergameTextEdit
+      id: accountPasswordTextEdit
+      font: poppins semibold 14
+      padding-left: 10
+      size: 248 36
+      anchors.top: password.bottom
+      anchors.left: gameLogo.left
+      anchors.right: gameLogo.right
+      margin-top: 5
+      text-offset: 0 10
+      text-hidden: true
+      color: white
+      image-source: new_images/input
+  
+      $focus:
+        image-source: new_images/input_focused
+
+      NewButton
+        id: viewButton
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: 28
+
+        UIWidget
+          size: 23 17
+          margin-right: 5
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.horizontalCenter: parent.horizontalCenter
+          image-source: new_images/view
+          phantom: true
+  
+    UIWidget
+      id: socialPanel
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-bottom: 40
+      size: 150 40
+  
+      NewButton
+        id: discord
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-right: 50
+        !tooltip: tr('PokeAlliance Official Discord')
+        @onClick: g_platform.openUrl("https://discord.gg/pokealliance")
+        image-source: new_images/social/discord
+    
+      NewButton
+        id: instagram
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        !tooltip: tr('PokeAlliance Official Instagram')    
+        @onClick: g_platform.openUrl("http://instagram.com/oficial.pokealliance")
+        image-source: new_images/social/instagram
+    
+      NewButton
+        id: site
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-left: 50
+        !tooltip: tr('PokeAlliance Official Website')    
+        @onClick: g_platform.openUrl("https://pokealliance.com/")    
+        image-source: new_images/social/site
+  
+    NewButton
+      id: login
+      size: 150 49
+      !text: tr("Enter Game")
+      text-align: center
+      font: poppins semibold 14
+      anchors.top: rememberPasswordBox.bottom
+      anchors.left: gameLogo.left
+      anchors.right: gameLogo.right
+      margin-top: 30
+      @onClick: EnterGame.doLogin()
+      !tooltip: tr('Connect to the game')
+      image-source: new_images/buttons/enter_game
+
+    UIWidget
+      id: separator
+      size: 403 9
+      image-source: new_images/separator
+      anchors.top: login.bottom
+      anchors.left: gameLogo.left
+      anchors.right: gameLogo.right
+      margin-top: 40
+
+    Panel
+      id: buttonsPanel
+      anchors.top: separator.bottom
+      anchors.left: gameLogo.left
+      anchors.right: gameLogo.right
+      height: 40
+      margin-top: 40
+
+      NewButton
+        id: registerButton
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        image-source: new_images/buttons/bottom_button
+        margin-right: 102
+        width: 194
+        @onClick: EnterGame.onCreateAccount()
+
+        Label
+          id: registerButton
+          !text: tr('Register')
+          anchors.horizontalCenter: parent.horizontalCenter
+          font: poppins semibold 14
+          text-auto-resize: true
+          margin-left: 12
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          text-align: center
+
+        UIWidget
+          id: registerIcon
+          anchors.right: registerButton.left
+          anchors.verticalCenter: registerButton.verticalCenter
+          margin-right: 10
+          image-source: new_images/buttons/register
+          size: 25 25
+
+      NewButton
+        id: recoveryButton
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        image-source: new_images/buttons/bottom_button
+        margin-left: 102
+        width: 194
+        @onClick: EnterGame.onRecovery()
+
+        Label
+          id: recoveryButton
+          !text: tr('Recovery')
+          anchors.horizontalCenter: parent.horizontalCenter
+          font: poppins semibold 14
+          margin-left: 12
+          text-auto-resize: true
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          text-align: center
+
+        UIWidget
+          id: recoveryIcon
+          anchors.right: recoveryButton.left
+          anchors.verticalCenter: recoveryButton.verticalCenter
+          margin-right: 10
+          image-source: new_images/buttons/recovery
+          size: 25 25
+  
+    Panel
+      id: serverSelectorPanel
+      anchors.left: parent.left
+      anchors.top: prev.bottom
+      size: 200 50
+      on: true
+      focusable: false
+      
+      $on:
+        visible: true
+        margin-top: 0
+      
+      $!on:
+        visible: false
+        margin-top: -52
+  
+      MenuLabel
+        id: serverLabel
+        !text: tr('Server')
+        anchors.left: parent.left
+        anchors.top: prev.bottom
+        text-auto-resize: true    
+        margin-top: 5
+  
+      ComboBox
+        id: serverSelector
+        anchors.left: prev.left
+        anchors.right: parent.right
+        anchors.top: serverLabel.bottom
+        margin-top: 2
+        margin-right: 3
+        menu-scroll: true
+        menu-height: 125
+        menu-scroll-step: 25
+        text-offset: 5 2
+        @onOptionChange: EnterGame.onServerChange()
+      
+    Panel
+      id: customServerSelectorPanel
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: prev.bottom
+      height: 52
+      on: true
+      focusable: true
+      
+      $on:
+        visible: true
+        margin-top: 0
+      
+      $!on:
+        visible: false
+        margin-top: -52
+      
+      MenuLabel
+        id: serverLabel
+        !text: tr('IP:PORT or URL')
+        anchors.left: prev.left
+        anchors.top: prev.bottom
+        margin-top: 8
+        text-auto-resize: true
+  
+      TextEdit
+        id: serverHostTextEdit
+        !tooltip: tr('Make sure that your client uses\nthe correct game client version')
+        anchors.left: parent.left
+        anchors.top: serverLabel.bottom
+        margin-top: 2
+        width: 150
+  
+      MenuLabel
+        id: clientLabel
+        !text: tr('Version')
+        anchors.left: serverHostTextEdit.right
+        anchors.top: serverLabel.top
+        text-auto-resize: true
+        margin-left: 10
+  
+      ComboBox
+        id: clientVersionSelector
+        anchors.top: serverHostTextEdit.top
+        anchors.bottom: serverHostTextEdit.bottom
+        anchors.left: prev.left
+        anchors.right: parent.right
+        menu-scroll: true
+        menu-height: 125
+        menu-scroll-step: 25
+        margin-right: 3
+  
+    EnterGameCheckBox
+      id: rememberPasswordBox
+      !text: tr('Remember Password')
+      !tooltip: tr('Remember account and password when starts client')
+      font: poppins semibold 14
+      text-auto-resize: true
+      anchors.left: gameLogo.left
+      anchors.top: accountPasswordTextEdit.bottom
+      margin-top: 15

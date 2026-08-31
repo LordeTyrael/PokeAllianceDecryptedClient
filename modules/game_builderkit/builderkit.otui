@@ -1,0 +1,233 @@
+CategoryWidget < NewButton
+  size: 124 36
+  image-source: images/category
+
+  UIWidget
+    id: category_icon
+    size: 24 24
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 5
+
+  Label
+    id: category_name
+    text-auto-resize: true
+    anchors.left: category_icon.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    font: poppins semibold 14
+
+UIWindow
+  id: imageWindow    
+  size: 630 460
+  @onEnter: modules.game_builderkit.hide()
+  @onEscape: modules.game_builderkit.hide()
+  anchors.centerIn: parent
+  draggable: true
+  focusable: true
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    phantom: true
+    image-source: images/background
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: images/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 27 29
+      image-source: images/base_icon
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Home Customization")
+
+  UIWidget
+    id: categories
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 5
+    margin-bottom: 5
+    image-source: images/side
+
+    Label
+      id: categories_name
+      !text: tr('CATEGORIES')
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 5
+      margin-left: 5
+      text-auto-resize: true
+      font: poppins regular 14
+      textColor: "#7f8fa4"
+
+    ScrollablePanel
+      id: categories_panel
+      anchors.left: parent.left
+      anchors.top: categories_name.bottom
+      anchors.bottom: parent.bottom
+      width: 135
+      margin-left: 10
+      margin-top: 10
+      margin-bottom: 10
+
+      CategoryWidget
+
+  UIWidget
+    id: category_info
+    anchors.top: base_name.bottom
+    anchors.left: categories.right
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    padding: 20
+
+    Label
+      id: current_floor
+      !text: tr('Current Floor')
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-left: 6
+      text-auto-resize: true
+
+    UIWidget
+      id: current_floor_tiles
+      size: 160 128
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-right: 130
+      anchors.top: current_floor.bottom
+      margin-top: 8
+      image-source: images/imput_base
+
+      layout:
+        type: grid
+        cell-size: 32 32
+        num-columns: 5
+        cell-spacing: 0
+
+    UIWidget
+      id: separator
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: current_floor_tiles.verticalCenter
+      size: 40 23
+      image-source: images/speed
+
+    Label
+      id: new_floor
+      !text: tr('New Floor')
+      font: poppins semibold 14
+      anchors.left: new_floor_tiles.left
+      anchors.top: current_floor.top
+      margin-left: 6
+      text-auto-resize: true
+
+    UIWidget
+      id: new_floor_tiles
+      size: 160 128
+      anchors.top: current_floor_tiles.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-left: 130
+      image-source: images/imput_base
+      
+      layout:
+        type: grid
+        cell-size: 32 32
+        num-columns: 5
+        cell-spacing: 0
+
+    NewButton
+      id: previewButton
+      size: 28 28
+      anchors.right: new_floor_tiles.right
+      anchors.top: new_floor_tiles.top
+      margin-right: 2
+      margin-top: 2
+      image-source: images/base
+      !tooltip: tr('Click to Preview on House')
+      @onClick: modules.game_builderkit.sendChangeFloor(true)
+
+      UIWidget
+        size: 22 17
+        margin-top: 1
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        image-source: images/view
+        phantom: true
+
+    Label
+      id: select_newFloor
+      !text: tr('Select New Floor')
+      font: poppins semibold 14
+      anchors.left: current_floor.left
+      anchors.top: current_floor_tiles.bottom
+      margin-top: 15
+      text-auto-resize: true
+
+    UIScrollArea
+      id: availableTiles
+      size: 385 104
+      anchors.top: select_newFloor.bottom
+      margin-top: 5
+      anchors.left: current_floor_tiles.left
+      anchors.right: new_floor_tiles.right
+      horizontal-scrollbar: scrollableBar
+      auto-focus: first
+
+      layout:
+        type: horizontal-grid
+        cell-size: 32 32
+        cell-spacing: 3
+        num-lines: 3
+
+    AllianceHorizontalScrollBar
+      id: scrollableBar
+      anchors.top: availableTiles.bottom
+      anchors.left: availableTiles.left
+      anchors.right: availableTiles.right
+      margin-top: 15
+      step: 250
+
+    UIWidget
+      id: buttonsPanel
+      size: 340 30
+      anchors.horizontalCenter: availableTiles.horizontalCenter
+      anchors.top: scrollableBar.bottom
+      margin-top: 15
+
+      NewButton
+        size: 164 30
+        anchors.left: parent.left
+        anchors.top: parent.top
+        image-source: images/button
+        !text: tr('Confirm')
+        text-align: center
+        text-offset: 0 2
+        font: poppins semibold 12
+        @onClick: modules.game_builderkit.sendChangeFloor()
+
+      NewButton
+        size: 164 30
+        anchors.right: parent.right
+        anchors.top: parent.top
+        image-source: images/normal_button
+        !text: tr('Cancel')
+        text-align: center
+        text-offset: 0 2
+        font: poppins semibold 12
+        @onClick: modules.game_builderkit.hide()

@@ -1,0 +1,127 @@
+OptionCheckBox < Panel
+  height: 25
+  
+  $!first:
+    margin-top: 6
+  
+  @onSetup: |
+    -- Move text from Panel to internal Label
+    local label = self:getChildById('optionLabel')
+    if label and self:getText() and self:getText() ~= '' then
+      label:setText(self:getText())
+      self:setText('') -- Clear text from panel to avoid duplication
+    end
+
+  UILabel
+    id: optionLabel
+    font: poppins semibold 14
+    text-align: left
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    text-auto-resize: true
+    margin-left: 5
+
+  SwitchBox
+    id: switchBox
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    @onCheckChange: |
+      -- Lógica visual do SwitchBox (mover slider)
+      local checked = self:isChecked()
+      local margin = checked and 20 or 2
+      local imageSource = checked and "/images/general_ui/icons/base_slider_selected" or "/images/general_ui/icons/base_slider"
+      local sliderButton = self.sliderButton
+      if sliderButton then
+        sliderButton:setMarginLeft(margin)
+      end
+      self:setImageSource(imageSource)
+      
+      -- Lógica de salvamento das opções
+      modules.client_options.setOption(self:getParent():getId(), self:isChecked())
+
+OptionScrollbar < HorizontalScrollBar
+  step: 1
+  @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+  
+OptionPanel < ScrollablePanel
+  vertical-scrollbar: optionsScrollBar
+  padding-right: 18
+  layout:
+    type: verticalBox
+    
+NewOpaqueWindow
+  id: optionsWindow
+  size: 840 465
+  anchors.centerIn: parent
+  opacity: 0.9
+  $mobile:
+    size: 490 360
+
+  @onEnter: modules.client_options.hide()
+  @onEscape: modules.client_options.hide()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/general_ui/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 32
+      image-source: /images/general_ui/icons/options
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Options")
+
+  UIWidget
+    id: side_background
+    anchors.left: parent.left
+    anchors.top: base_name.bottom
+    anchors.bottom: parent.bottom
+    image-source: images/side_background
+    opacity: 0.7
+    width: 240
+
+  TabBarVertical
+    id: optionsTabBar
+    anchors.fill: side_background
+    padding-top: 10
+
+  Panel
+    id: optionsTabContent
+    anchors.top: optionsTabBar.top
+    anchors.left: optionsTabBar.right
+    anchors.right: parent.right
+    anchors.bottom: optionsTabBar.bottom
+    padding: 10
+    margin-left: 10
+    margin-top: 3
+
+    AllianceVerticalScrollBar
+      id: optionsScrollBar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      step: 14
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: |
+      g_settings.save()
+      modules.client_options.hide()

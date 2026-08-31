@@ -1,0 +1,46 @@
+TextMessageLabel < UILabel
+  font: poppins semibold 12
+  text-align: center
+  text-wrap: true
+  text-auto-resize: true
+  margin-bottom: 2
+  visible: false
+
+Panel
+  anchors.fill: gameMapPanel
+  focusable: false
+
+  Panel
+    id: centerTextMessagePanel
+    layout:
+      type: verticalBox
+      fit-children: true
+    width: 360
+    anchors.centerIn: parent
+
+    TextMessageLabel
+      id: highCenterLabel
+    TextMessageLabel
+      id: middleCenterLabel
+    TextMessageLabel
+      id: lowCenterLabel
+
+  TextMessageLabel
+    id: privateLabel
+    anchors.top: parent.top
+    anchors.bottom: centerTextMessagePanel.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    text-auto-resize: false
+    width: 275
+
+  // bottom-anchored, not hung 150px under the centre block: the margin is recomputed in Lua so it
+  // sits above the action bar while that is on the game screen, and above the map's bottom when not
+  TextMessageLabel
+    id: statusLabel
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    // height follows the wrapped text, like the centre labels: a fixed 100 kept the box padded well
+    // past the last line, so the visible gap never matched the margin
+    text-auto-resize: true
+    width: 400
+    margin-bottom: 8

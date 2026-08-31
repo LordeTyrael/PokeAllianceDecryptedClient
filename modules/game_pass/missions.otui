@@ -1,0 +1,46 @@
+GamePassMissionCategoryTabBar < TabBar
+  size: 151 36
+  padding-left: 4
+
+GamePassMissionCategoryTabBarButton < UIButton
+  anchors.left: parent.left
+  size: 143 36
+  font: poppins semibold 14
+  cursor: pointer
+
+  $first:
+    anchors.top: parent.top
+
+  $!first:
+    anchors.top: prev.bottom
+
+  $!checked:
+    image-source:
+
+  $hover:
+    cursor: pointer
+
+  $checked:
+    image-source: images/selectedcategory
+
+Panel
+  id: missionsPanel
+  padding: 10 10
+
+  Panel
+    id: missionsCategoryPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 151 346
+    image-source: images/categorypanel
+
+  GamePassMissionCategoryTabBar
+    id: categoryTabBar
+    anchors.fill: prev
+
+  Panel
+    id: missionsCategoryContent
+    anchors.top: parent.top
+    anchors.bottom: prev.bottom
+    anchors.left: prev.right
+    anchors.right: parent.right

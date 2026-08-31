@@ -1,0 +1,233 @@
+PokemonWidget < UIWidget
+  size: 301 102
+  image-source: images/pokemon_background
+  image-border: 10
+  focusable: true
+
+  &updateSelected: |
+    function(self)
+      local color = self:isFocused() and "#3af52588" or "#00000000"
+      self:setBorderColor(color)
+    end
+  @onFocusChange: self:updateSelected()
+
+  UIWidget
+    id: portraitClip
+    size: 55 55
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 15
+    image-source: /images/modules/circle_clip
+    image-size: 55 55
+    clip-transparency: true
+    phantom: true
+
+    UIWidget
+      id: pokemonImage
+      anchors.fill: parent
+      phantom: true
+
+  NewButton
+    id: cartButton
+    size: 48 48
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    image-source: images/sell_button
+    image-border: 12
+
+    $hover:
+      opacity: 0.85
+
+    $pressed:
+      opacity: 0.70
+
+    UIWidget
+      id: cartIcon
+      size: 29 26
+      anchors.centerIn: parent
+      image-source: images/sell_icon
+      phantom: true
+
+  UIWidget
+    id: pokemonInformations
+    anchors.left: portraitClip.right
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: cartButton.left
+    margin-left: 12
+    phantom: true
+
+    PoppinsSemibold14
+      id: pokemonName
+      color: white
+      !text: tr("")
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-top: 18
+      phantom: true
+
+    PoppinsSemibold12
+      id: pokemonBoost
+      color: #AAAAAA
+      !text: tr("")
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.top: pokemonName.bottom
+      margin-top: 3
+      phantom: true
+
+    UIWidget
+      id: priceContainer
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: pokemonBoost.bottom
+      margin-top: 8
+      height: 20
+      phantom: true
+
+      UIWidget
+        id: priceIcon
+        size: 11 18
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        icon-source: @fa solid 16 f155
+        icon-color: #4ADE80
+
+      PoppinsSemibold12
+        id: priceLabel
+        color: #4ADE80
+        !text: tr("")
+        text-auto-resize: true
+        anchors.left: priceIcon.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 5
+        phantom: true
+
+    UIWidget
+      id: unsellableContainer
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: pokemonBoost.bottom
+      margin-top: 8
+      height: 20
+      visible: false
+      phantom: true
+
+      UIWidget
+        id: unsellableIcon
+        size: 15 15
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        image-source: images/unsellable_icon
+
+      PoppinsSemibold12
+        id: unsellableLabel
+        color: #FF5555
+        !text: tr("Unsellable")
+        text-auto-resize: true
+        anchors.left: unsellableIcon.right
+        anchors.verticalCenter: unsellableIcon.verticalCenter
+        margin-left: 5
+
+NewOpaqueWindow
+  id: imageWindow
+  size: 674 482
+  @onEnter: modules.game_pokemonshop.hide()
+  @onEscape: modules.game_pokemonshop.hide()
+  anchors.centerIn: parent
+  draggable: true
+  focusable: true
+
+  UIWidget
+    id: titleBanner
+    size: 281 36
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 10
+    image-source: images/title_background
+    phantom: true
+
+    UIWidget
+      id: titleIcon
+      size: 16 27
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 15
+      icon-source: @fa solid 22 f155
+      icon-color: white
+
+    PoppinsSemibold18
+      id: titleLabel
+      color: white
+      !text: tr("Pokémon Seller")
+      anchors.left: titleIcon.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 8
+      text-auto-resize: true
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_pokemonshop.hide()
+
+  UIScrollArea
+    id: pokemons
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: titleBanner.bottom
+    anchors.bottom: bottomBar.top
+    margin-left: 20
+    margin-right: 20
+    margin-top: 15
+    margin-bottom: 10
+    phantom: true
+    layout:
+      type: grid
+      cell-size: 301 102
+      cell-spacing: 10
+      num-columns: 2
+
+  UIWidget
+    id: bottomBar
+    height: 50
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-bottom: 15
+    phantom: true
+
+    UIWidget
+      id: balanceIcon
+      size: 13 22
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 20
+      icon-source: @fa solid 18 f155
+      icon-color: white
+
+    PoppinsSemibold14
+      id: balanceLabel
+      color: white
+      anchors.left: balanceIcon.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 5
+      text-auto-resize: true
+      !text: tr("0")
+
+    NewButton
+      id: quickSell
+      size: 160 36
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 20
+      image-source: images/quick_sell_icon
+      !text: tr("Quick Sell")
+      font: poppins semibold 12
+      color: white
+      @onClick: modules.game_pokemonshop.sellPokemonConfirmation(self:getParent():getParent())

@@ -1,0 +1,30 @@
+UIWindow
+  id: timeWindow
+  size: 243 85
+  image-source: images/timer_background
+  focusable: false
+
+  UIWidget
+    id: timeBackground
+    size: 209 52
+    anchors.centerIn: parent
+    image-source: images/timer_background2
+    phantom: true
+
+    UIWidget
+      id: timerIcon
+      size: 27 26
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 40
+      image-source: images/timer_icon
+      phantom: true
+
+    Label
+      id: dungeonTimer
+      text-auto-resize: true
+      anchors.verticalCenter: timerIcon.verticalCenter
+      anchors.left: timerIcon.right
+      margin-left: 10
+      font: poppins semibold 23
+      phantom: true

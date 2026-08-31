@@ -1,0 +1,432 @@
+DuelIconButton < UIWidget
+  size: 12 12
+  cursor: pointer
+
+DuelRejectButton < DuelIconButton
+  image-source: images/reject_icon
+  size: 12 12
+
+DuelSwitchButton < DuelIconButton
+  image-source: images/switch_icon
+  size: 12 12
+
+InvitedItemWidget < UIWidget
+  size: 130 40
+
+  Label
+    id: playerName
+    size: 100 20
+    font: poppins semibold 12
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 5
+
+  DuelRejectButton
+    id: rejectButton
+    anchors.right: parent.right
+    anchors.verticalCenter: playerName.verticalCenter
+    margin-right: 5
+    !tooltip: tr('Cancel Invite')
+
+PlayerListWidget < UIWidget
+  size: 170 40
+
+  UIWidget
+    id: playerIcon
+    size: 29 29
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 3
+    image-source: images/player_icon
+
+  Label
+    id: playerName
+    size: 100 15
+    font: poppins semibold 12
+    anchors.left: playerIcon.right
+    anchors.top: playerIcon.top
+    margin-left: 5
+
+  Label
+    id: description
+    size: 100 15
+    font: poppins semibold 12
+    anchors.left: playerIcon.right
+    anchors.top: playerName.bottom
+    margin-left: 5
+
+  DuelSwitchButton
+    id: switchButton
+    anchors.left: playerName.right
+    anchors.top: playerIcon.top
+    margin-top: 5
+    !tooltip: tr("Switch Team")
+  
+  DuelRejectButton
+    id: kickButton
+    margin-top: 17
+    anchors.left: playerName.right
+    anchors.top: playerIcon.top
+    !tooltip: tr("Kick Player")
+
+PokeballButton < NewButton
+  size: 16 16
+  image-source: images/pokeballs_icon
+  image-clip: 0 16 16 16
+  $on:
+    image-clip: 0 0 16 16
+
+UIWindow
+  @onEscape: modules.game_duel.hideInvitePanel()
+  id: duelManagementWindow
+  size: 545 390
+  anchors.centerIn: parent
+  draggable: true
+  focusable: true
+
+  NewOpaqueWindow
+    id: background
+    phantom: true
+    anchors.fill: parent
+
+    UIWidget
+      id: titleBackground
+      phantom: true
+      size: 327 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      image-source: images/title_background_large
+
+      UIWidget
+        id: titleIcon
+        phantom: true
+        size: 29 29
+        anchors.verticalCenter: titleName.verticalCenter
+        anchors.right: titleName.left
+        margin-right: 10
+        image-source: images/title_icon
+
+      Label
+        id: titleName
+        phantom: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        text-auto-resize: true
+        margin-left: 5
+        font: poppins semibold 20
+        !text: tr("Duel Management")
+
+  NewSolidWindow
+    id: firstPanel
+    padding: 10
+    size: 180 310
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-top: 20
+    margin-left: 18
+
+    Label
+      !text: tr("First Team")
+      text-wrap: false
+      text-auto-resize: true
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+
+    UIWidget
+      size: 150 2
+      image-source: images/separator
+      margin-top: 5
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+
+    UIScrollArea
+      id: firstTeam
+      size: 150 250
+      margin-top: 10
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      vertical-scrollbar: firstScrollableBar
+
+      layout:
+        type: grid
+        num-columns: 1
+        cell-size: 150 30
+        cell-spacing: 15
+
+    AllianceVerticalScrollBar
+      id: firstScrollableBar
+      anchors.top: firstTeam.top
+      anchors.bottom: firstTeam.bottom
+      anchors.right: firstTeam.right
+      margin-top: 15
+      margin-bottom: 15
+      step: 30
+      pixels-scroll: true
+
+  UIWidget
+    id: centralPanel
+    padding: 10
+    size: 180 325
+    anchors.top: parent.top
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: firstPanel.right
+    anchors.right: secondPanel.left
+    margin-top: 20
+
+    Label
+      text-auto-resize: true
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      font: poppins semibold 20
+      !text: tr("Manage")
+      margin-left: 18
+      margin-right: 18
+
+    Label
+      margin-top: 5
+      margin-left: 18
+      margin-right: 18
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      !text: tr("Number of Pokémon")
+
+    UIWidget
+      id: pokeballs
+      margin-top: 5
+      margin-left: 18
+      margin-right: 18
+      size: 100 16
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      layout:
+        type: grid
+        num-columns: 6
+        cell-size: 16 16
+    
+    NewSolidWindow
+      id: invitedPanel
+      size: 120 100
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 10
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: startButton.top
+      margin-bottom: 10
+
+      Label
+        margin-top: 10
+        !text: tr("Invites")
+        text-wrap: false
+        text-auto-resize: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+
+      UIWidget
+        size: 80 2
+        image-source: images/separator
+        margin-top: 5
+        anchors.top: prev.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+
+      UIScrollArea
+        id: pendingInvites
+        size: 120 100
+        anchors.top: prev.bottom
+        margin-top: 5
+        anchors.horizontalCenter: parent.horizontalCenter
+        vertical-scrollbar: pendingInvitesScrollBar
+
+        layout:
+          type: grid
+          num-columns: 1
+          cell-size: 120 30
+
+      AllianceVerticalScrollBar
+        id: pendingInvitesScrollBar
+        anchors.top: firstTeam.top
+        anchors.bottom: firstTeam.bottom
+        anchors.right: firstTeam.right
+        margin-top: 15
+        margin-bottom: 15
+        step: 30
+        pixels-scroll: true
+
+    NewButton
+      id: startButton
+      size: 108 20
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.bottom: inviteButton.top
+      margin-bottom: 5
+      visible: false
+      image-source: images/start_button
+      !text: tr("Start")
+      @onClick: g_game.duelStart()
+
+    NewButton
+      id: inviteButton
+      size: 108 20
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.bottom: cancelButton.top
+      margin-bottom: 5
+      visible: false
+      image-source: images/invite_button
+      !text: tr("Invite")
+      @onClick: modules.game_duel.showInvitePanel()
+
+    NewButton
+      id: cancelButton
+      size: 108 20
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.bottom: parent.bottom
+      image-source: images/cancel_duel
+      !text: tr("Leave")
+      @onClick: g_game.duelLeave()
+
+  NewSolidWindow
+    id: secondPanel
+    padding: 10
+    size: 180 310
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    margin-top: 20
+    margin-right: 18
+
+    Label
+      !text: tr("Second Team")
+      text-wrap: false
+      text-auto-resize: true
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+
+    UIWidget
+      size: 150 2
+      image-source: images/separator
+      margin-top: 5
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+
+    UIScrollArea
+      id: secondTeam
+      size: 150 250
+      margin-top: 10
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      vertical-scrollbar: secondScrollableBar
+
+      layout:
+        type: grid
+        num-columns: 1
+        cell-size: 150 30
+        cell-spacing: 15
+
+    AllianceVerticalScrollBar
+      id: secondScrollableBar
+      anchors.top: secondTeam.top
+      anchors.bottom: secondTeam.bottom
+      anchors.right: secondTeam.right
+      margin-top: 15
+      margin-bottom: 15
+      step: 30
+      pixels-scroll: true
+
+  NewSolidWindow
+    id: invitePanel
+    anchors.fill: parent
+    visible: false
+
+    UIWidget
+      id: titleBackground
+      phantom: true
+      size: 327 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      image-source: images/title_background_large
+
+      UIWidget
+        id: titleIcon
+        phantom: true
+        size: 29 29
+        anchors.verticalCenter: titleName.verticalCenter
+        anchors.right: titleName.left
+        margin-right: 10
+        image-source: images/title_icon
+
+      Label
+        id: titleName
+        phantom: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        text-auto-resize: true
+        margin-left: 5
+        font: poppins semibold 20
+        !text: tr("Duel Management")
+
+    Label
+      id: inviteLabel
+      anchors.horizontalCenter: parent.horizontalCenter
+      text-auto-resize: true
+      font: poppins semibold 22
+      anchors.top: parent.top
+      margin-top: 100
+      !text: tr("Invite Player")
+
+    Label
+      id: playerName
+      font: poppins semibold 10
+      text-auto-resize: true
+      anchors.left: searchItemEdit.left
+      anchors.bottom: searchItemEdit.top
+      margin-bottom: 3
+      !text: tr("Player Name")
+      textColor: "#7f8fa4"
+
+    UITextEdit
+      id: searchItemEdit
+      font: poppins semibold 14
+      color: white
+      size: 240 26
+      text-offset: 0 2
+      opacity: 1
+      focusable: true
+      padding: 4
+      padding-left: 10
+      selection-color: #272727
+      selection-background-color: #cccccc
+      anchors.top: inviteLabel.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 70
+      image-source: images/search_background
+      $disabled:
+        color: #27272788
+        opacity: 0.5
+
+      UIWidget
+        id: searchItemEditIcon
+        size: 14 14
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        image-source: images/edit_icon
+        margin-right: 4
+
+    NewButton
+      id: confirmButton
+      size: 108 26
+      anchors.left: searchItemEdit.left
+      anchors.top: searchItemEdit.bottom
+      margin-top: 25
+      margin-right: 60
+      image-source: images/start_button
+      !text: tr("Invite")
+      @onClick: modules.game_duel.confirmInvite()
+
+    NewButton
+      id: cancelButton
+      size: 108 26
+      anchors.right: searchItemEdit.right
+      anchors.top: searchItemEdit.bottom
+      margin-top: 25
+      margin-left: 60
+      image-source: images/cancel_duel
+      !text: tr("Cancel")
+      @onClick: modules.game_duel.hideInvitePanel()

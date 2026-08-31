@@ -1,0 +1,87 @@
+GatherPrompt < UIWidget
+  size: 120 30
+  phantom: true
+  focusable: false
+
+  Label
+    id: label
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.top
+    text-align: center
+    text-auto-resize: true
+    padding: 2 6 2 6
+    background-color: #000000bb
+    color: #ffffff
+    text: Press F to Collect
+    phantom: true
+
+  UIWidget
+    id: resbg
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.top
+    margin-bottom: 4
+    width: 40
+    height: 6
+    image-source: /images/modules/progressbar_background
+    image-smooth: true
+    phantom: true
+    visible: false
+
+    UIWidget
+      id: resfill
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.bottom: parent.bottom
+      margin-top: 1
+      margin-bottom: 1
+      margin-left: 1
+      width: 0
+      image-source: /images/modules/progressbar_fill_white
+      image-color: #49acf3
+      image-smooth: true
+      phantom: true
+
+GatherHud < UIWidget
+  size: 172 64
+  anchors.right: parent.right
+  anchors.verticalCenter: parent.verticalCenter
+  margin-right: 14
+  background-color: #000000cc
+  phantom: true
+  visible: false
+
+  Label
+    id: title
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 16
+    margin-top: 6
+    text-align: center
+    text: Mining
+    color: #ffd257
+    phantom: true
+
+  Label
+    id: charges
+    anchors.top: title.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 16
+    margin-top: 5
+    text-align: center
+    text: Charges: -
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: eta
+    anchors.top: charges.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 16
+    margin-top: 3
+    text-align: center
+    text: ETA: -
+    color: #b8b8b8
+    phantom: true

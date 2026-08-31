@@ -1,0 +1,58 @@
+NewPopupWindow
+  id: store
+  size: 300 343
+  anchors.centerIn: parent
+  @onEscape: modules.game_store.closeConfirmPixWindow()
+  visible: false
+
+  Label
+    id: title
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    font: poppins semibold 26
+    textColor: "#FFCA59"
+    text-auto-resize: true
+    margin-top: 20
+    !text: tr("Scan QRCode")
+
+  UIWidget
+    id: qrcode
+    size: 200 200
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 20
+
+  Label
+    id: paymentCompleted
+    size: 240 200
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: title.bottom
+    margin-top: 20
+    font: poppins semibold 22
+    textColor: "#00ff18"
+    text-align: center
+    text-wrap: true
+    text-auto-resize: false
+    !text: tr("Payment Completed!")
+    visible: false
+
+  Label
+    id: copyPaste
+    visible: false
+
+  NewButton
+    id: copy
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: qrcode.bottom
+    margin-top: 13
+    image-source: /images/newui/btngreen_small
+    @onClick: modules.game_store.copyQrCode()
+    !text: tr("Copy")
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_store.closeConfirmPixWindow()

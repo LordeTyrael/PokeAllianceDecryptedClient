@@ -1,0 +1,10 @@
+Module
+  name: game_flycontrols
+  description: Floating up/down buttons rendered above/below the player while flying
+  author: Danvrb
+  sandboxed: true
+  website: none
+  dependencies: [ game_interface, client_hotkeys, game_chat ]
+  @onLoad: init()
+  @onUnload: terminate()
+  scripts: [ flycontrols ]

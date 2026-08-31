@@ -1,0 +1,123 @@
+SpinBox < TextEdit
+  __class: UISpinBox
+  text-align: left
+  size: 86 22
+  padding: 0
+  padding-left: 2
+
+  Button
+    id: up
+    size: 11 11
+    image-source: /images/ui/spinbox_up
+    image-border: 1
+    image-clip: 0 0 10 10
+    anchors.top: parent.top
+    anchors.right: parent.right
+
+    $hover:
+      image-clip: 0 10 10 10
+    $pressed:
+      image-clip: 0 20 10 10
+
+  Button
+    id: down
+    size: 11 11
+    image-source: /images/ui/spinbox_down
+    image-border: 1
+    image-clip: 0 0 10 10
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+
+    $hover:
+      image-clip: 0 10 10 10
+    $pressed:
+      image-clip: 0 20 10 10
+
+AllianceAmountSpinBox < UITextEdit
+  __class: UIAllianceSpinBox
+  height: 32
+  font: poppins semibold 13
+  color: #ffffff
+  text-align: center
+  image-source: /images/general_ui/combobox_background
+  image-border: 6
+  selection-color: #ffffff
+  selection-background-color: #3aa6f6
+  focusable: true
+
+AllianceAmountSpinnerButton < NewButton
+  size: 32 32
+  focusable: false
+  image-source: /images/newui/blueStraight
+  image-border: 4
+  icon-color: #ffffff
+  cursor: pointer
+  opacity: 1.0
+
+  $hover !disabled:
+    opacity: 0.85
+
+  $pressed:
+    opacity: 0.7
+
+  $disabled:
+    opacity: 0.4
+
+AllianceAmountSpinner < UIWidget
+  size: 188 32
+
+  AllianceAmountSpinnerButton
+    id: down
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    icon-source: @fa solid 14 f068
+
+  AllianceAmountSpinnerButton
+    id: up
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    icon-source: @fa solid 14 f067
+
+  AllianceAmountSpinBox
+    id: field
+    anchors.left: down.right
+    anchors.right: up.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    margin-right: 8
+
+AllianceSpinBox < TextEdit
+  __class: UIAllianceSpinBox
+  text-align: left
+  size: 86 22
+  padding: 0
+  padding-left: 2
+
+  Button
+    id: up
+    size: 11 11
+    image-source: /images/ui/spinbox_up
+    image-border: 1
+    image-clip: 0 0 10 10
+    anchors.bottom: parent.verticalCenter
+    anchors.right: parent.right
+
+    $hover:
+      image-clip: 0 10 10 10
+    $pressed:
+      image-clip: 0 20 10 10
+
+  Button
+    id: down
+    size: 11 11
+    image-source: /images/ui/spinbox_down
+    image-border: 1
+    image-clip: 0 0 10 10
+    anchors.top: parent.verticalCenter
+    anchors.right: parent.right
+
+    $hover:
+      image-clip: 0 10 10 10
+    $pressed:
+      image-clip: 0 20 10 10
+

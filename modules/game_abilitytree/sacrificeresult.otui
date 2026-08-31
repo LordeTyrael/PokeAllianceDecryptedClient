@@ -1,0 +1,50 @@
+NewOpaqueWindow
+  id: sacrificeResultWindow
+  size: 200 170
+  anchors.centerIn: parent
+  visible: false
+  focusable: false
+  phantom: true
+
+  Label
+    id: resultTitle
+    text-align: center
+    font: poppins semibold 14
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    text-auto-resize: true
+    color: #ffffff
+
+  UIWidget
+    id: itemContainer
+    size: 64 64
+    anchors.top: resultTitle.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+
+    UIItem
+      id: item
+      size: 48 48
+      anchors.centerIn: parent
+      virtual: true
+      phantom: true
+
+  Label
+    id: talentName
+    text-align: center
+    font: poppins semibold 14
+    anchors.top: itemContainer.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 6
+    text-auto-resize: true
+
+  Label
+    id: countLabel
+    text-align: center
+    font: poppins semibold 12
+    anchors.top: talentName.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 4
+    text-auto-resize: true
+    color: #ff5555

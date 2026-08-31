@@ -1,0 +1,256 @@
+// Tooltip do nome da zona (o card de 160px corta nomes longos). UITooltip estilizado porque
+// setTooltip(string) usa o label global cru, que renderiza quebrado neste fork.
+SpectateZoneTooltip < UITooltip
+  width: 150
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 6
+  phantom: true
+  layout: verticalBox
+    fit-children: true
+
+  Label
+    id: zoneLabel
+    font: poppins semibold 11
+    color: #ffffff
+    text-align: center
+    text-wrap: true
+
+HostPanel < UIWidget
+  size: 160 120
+  focusable: false
+  phantom: false
+
+  UIWidget
+    id: background
+    size: 160 100
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: images/channel_list/background_camera
+  
+    Label
+      id: name
+      anchors.left: parent.left
+      margin-left: 5
+      anchors.top: parent.top
+      margin-top: 5
+      font: poppins semibold 13
+      text-auto-resize: true
+  
+    UIWidget
+      id: guildIcon
+      size: 14 14
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      image-source: /images/guildIcons/0
+  
+    Label
+      id: guildName
+      anchors.top: prev.top
+      anchors.left: prev.right
+      margin-left: 5
+      !text: tr("No Guild")
+      font: poppins semibold 10
+      text-auto-resize: true
+  
+    Label
+      id: playerLevel
+      anchors.top: guildIcon.bottom
+      anchors.left: guildIcon.left
+      !text: tr("Lv. 0")
+      font: poppins semibold 10
+      text-auto-resize: true
+  
+    Panel
+      id: viewer_icon
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 15
+      image-source: images/channel_list/view
+      size: 16 13
+    
+    Label
+      id: viewers
+      anchors.left: prev.right
+      anchors.verticalCenter: prev.verticalCenter
+      margin-left: 5
+      text-align: left
+      color: white
+      text-auto-resize: true
+      shadow: true
+    
+    Label
+      id: desc
+      anchors.top: prev.bottom
+      anchors.left: viewer_icon.left
+      anchors.right: parent.right
+      margin-right: 5
+      margin-top: 5
+      text-align: left
+      shadow: true
+      font: poppins semibold 11
+  
+    UIWidget
+      id: pass
+      anchors.right: parent.right
+      anchors.bottom: desc.bottom
+      margin-right: 5
+      size: 16 18
+      image-source: images/channel_list/lock
+
+    UIWidget
+      id: camerabackGround
+      size: 32 32
+      anchors.top: parent.top
+      anchors.right: parent.right
+      image-source: images/channel_list/camera_background
+
+      UIItem
+        id: cameraIcon
+        size: 22 22
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        margin-right: 3
+        virtual: true
+        item-id: 5080
+
+    // Zona do host (vazio quando a zona não liberou). Último filho e sem usar `prev` de propósito:
+    // inserir no meio do bloco quebraria a cadeia prev dos irmãos.
+    // Ancorado left+right (e SEM text-auto-resize) porque só a âncora direita faz moveRight, não resize:
+    // o label cresceria para a esquerda por cima do playerLevel e vazaria do card de 160px. Nomes longos
+    // são cortados aqui — o nome completo vai no tooltip (setado em show()). phantom:false para o hover
+    // funcionar: UILabel.create liga phantom por padrão.
+    Label
+      id: zoneName
+      anchors.verticalCenter: playerLevel.verticalCenter
+      anchors.left: playerLevel.right
+      anchors.right: parent.right
+      margin-left: 5
+      margin-right: 5
+      height: 14
+      phantom: false
+      text-align: right
+      font: poppins semibold 10
+      color: #9fb0bd
+      shadow: true
+
+  NewButton
+    id: watchButton
+    size: 94 18
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("Watch")
+    font: poppins semibold 12
+    image-source: images/channel_list/watch_button
+    text-align: center
+
+UIWindow
+  id: mainWindow
+  size: 730 460
+  @onEscape: modules.game_spectate.hide()
+  image-source: images/channel_list/background
+  anchors.centerIn: parent
+
+  UIWidget
+    id: titleBackground
+    size: 368 36
+    anchors.top: parent.top
+    anchors.left: parent.left
+    phantom: true
+    focusable: false
+    image-source: images/title_background
+
+    UIWidget
+      id: cameraIcon
+      size: 35 29
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      image-source: images/channel_list/title_icon
+
+    Label
+      !text: tr("Channel List")
+      font: poppins semibold 28
+      text-align: left
+      anchors.left: prev.right
+      margin-left: 15
+      anchors.verticalCenter: prev.verticalCenter
+      text-auto-resize: true
+
+  ScrollablePanel
+    id: hosts
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 700 380
+    margin-top: 40
+    margin-left: 10
+    focusable: false
+    padding: 1
+    vertical-scrollbar: hostsScroll
+    auto-focus: none
+    layout:
+      type: grid
+      num-columns: 4
+      cell-size: 160 120
+      cell-spacing: 10
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: hostsScroll
+    anchors.top: hosts.top
+    anchors.bottom: hosts.bottom
+    anchors.right: hosts.right
+    margin-bottom: 10
+    step: 100
+    pixels-scroll: true
+
+  HorizontalSeparator
+    id: separator
+    anchors.top: hosts.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 5
+  
+  NewButton
+    size: 20 20
+    anchors.bottom: hostsScroll.top
+    anchors.horizontalCenter: hostsScroll.horizontalCenter
+    margin-bottom: 10
+    image-source: images/close
+    @onClick: modules.game_spectate.hide()
+
+  SwitchBox
+    id: hideCheck
+    anchors.verticalCenter: searchCameraName.verticalCenter
+    anchors.left: hosts.left
+    checked: true
+    @onClick: modules.game_spectate.hideProtected(self)
+
+  Label
+    id: hideText
+    !text: tr("Hide password protected")
+    text-auto-resize: true
+    font: poppins semibold 12
+    anchors.left: hideCheck.right
+    margin-left: 5
+    anchors.verticalCenter: hideCheck.verticalCenter
+
+  UITextEdit
+    id: searchCameraName
+    anchors.right: hosts.right
+    anchors.top: separator.bottom
+    margin-top: 4
+    padding: 6
+    padding-right: 14
+    size: 177 26
+    image-source: images/channel_list/search_background
+    font: poppins semibold 12
+    @onTextChange: modules.game_spectate.onSearchCameraNames(self:getText())
+
+  UIWidget
+    size: 11 12
+    anchors.verticalCenter: searchCameraName.verticalCenter
+    anchors.right: searchCameraName.right
+    margin-right: 6
+    phantom: true
+    image-source: images/channel_list/search_icon

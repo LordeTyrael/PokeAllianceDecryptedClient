@@ -1,0 +1,418 @@
+MedalTooltip < NewOpaqueWindow
+  size: 150 150
+
+  Label
+    id: pokemonName
+    font: poppins semibold 13
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 5
+    text-align: center
+
+  Label
+    id: level
+    font: poppins semibold 12
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    text-auto-resize: true
+
+  Label
+    id: experience
+    font: poppins semibold 12
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    text-auto-resize: true
+
+  Label
+    id: buff
+    font: poppins semibold 12
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    text-auto-resize: true
+
+  Label
+    id: debuff
+    font: poppins semibold 12
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    text-auto-resize: true
+
+  Label
+    id: itemCount
+    font: poppins semibold 12
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    text-auto-resize: true
+    color: #35e6f1
+
+AttributeLabel < UIWidget
+  size: 190 15
+
+  Label
+    id: attributeName
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    font: poppins semibold 11
+    text-align: left
+    text-auto-resize: true
+    textColor: "#35e6f1"
+
+  Label
+    id: attributeValue
+    anchors.left: prev.right
+    margin-left: 6
+    anchors.verticalCenter: parent.verticalCenter
+    font: poppins semibold 11
+    text-align: left
+
+EquippedMedalWidget < NewButton
+  size: 50 50
+  image-source: images/equipped_medal
+  @onClick: modules.game_medals.deequipMedal(self)
+
+  UIWidget
+    size: 18 18
+    anchors.centerIn: parent
+    image-source: images/add_icon
+    phantom: true
+
+  UIItem
+    id: pokemonItem
+    size: 40 40
+    anchors.centerIn: parent
+    phantom: true
+
+MedalWidget < NewButton
+  size: 32 32
+
+  UIItem
+    id: pokemonItem
+    size: 32 32
+    anchors.fill: parent
+    phantom: true
+
+MedalsScrollBar < AllianceVerticalScrollBar
+  anchors.top: medalsPanel.top
+  anchors.bottom: medalsPanel.bottom
+  anchors.right: medalsPanel.right
+  margin-right: 10
+  margin-top: 15
+  margin-bottom: 15
+  step: 30
+  pixels-scroll: true
+
+UIWindow
+  id: medalWindow    
+  size: 771 385
+  anchors.centerIn: parent
+  draggable: true
+  @onEscape: modules.game_medals.hideMedalWindow()
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    phantom: true
+    image-source: images/background
+
+    UIWidget
+      id: titleBackground
+      size: 368 36
+      anchors.left: parent.left
+      anchors.top: parent.top
+      image-source: images/title_background
+
+      UIWidget
+        id: titleIcon
+        size: 29 29
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        margin-left: 10
+        image-source: images/title_icon
+
+      Label
+        id: titleName
+        anchors.verticalCenter: titleIcon.verticalCenter
+        text-auto-resize: true
+        anchors.left: prev.right
+        margin-left: 5
+        font: poppins semibold 20
+        phantom: true
+        !text: tr("Pokémon Emblem")
+
+  UIWidget
+    id: leftPanel
+    size: 345 239
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 205
+    image-source: images/left_panel
+
+  Label
+    id: emblemsStats
+    anchors.horizontalCenter: leftPanel.horizontalCenter
+    anchors.top: leftPanel.top
+    margin-top: 10
+    margin-right: 35
+    font: poppins semibold 22
+    !text: tr("Emblems Stats")
+    text-auto-resize: true
+
+  UIScrollArea
+    id: attributeArea
+    anchors.left: leftPanel.left
+    anchors.right: leftPanel.right
+    anchors.bottom: leftPanel.bottom
+    anchors.top: emblemsStats.bottom
+    vertical-scrollbar: attributeAreaScrollableBar
+    padding: 20
+    padding-top: 10
+    padding-left: 30
+
+    layout:
+      type: grid
+      cell-size: 190 15
+      num-columns: 1
+      cell-spacing: 4
+
+  AllianceVerticalScrollBar
+    id: attributeAreaScrollableBar
+    anchors.top: attributeArea.top
+    anchors.bottom: attributeArea.bottom
+    anchors.left: attributeArea.left
+    margin-top: 10
+    margin-bottom: 20
+    margin-left: 10
+    step: 30
+    pixels-scroll: true
+    visible: false
+
+  UIWidget
+    id: rightPanel
+    size: 335 239
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 205
+    image-source: images/right_panel
+
+  UIWidget
+    id: presetPanel
+    size: 150 30
+    anchors.right: rightPanel.right
+    anchors.top: rightPanel.bottom
+    margin-top: 20
+    margin-right: 10
+
+    UIWidget
+      id: presetButtons
+      anchors.top: currentPresetLabel.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      size: 150 30
+
+      layout:
+        type: horizontalBox
+        spacing: 0
+        fit-children: true
+
+      NewButton
+        id: preset1
+        !text: tr("1")
+        size: 30 30
+        font: poppins semibold 18
+        @onClick: modules.game_medals.changePreset(1)
+
+      NewButton
+        id: preset2
+        !text: tr("2")
+        size: 30 30
+        font: poppins semibold 18
+        @onClick: modules.game_medals.changePreset(2)
+
+      NewButton
+        id: preset3
+        !text: tr("3")
+        size: 30 30
+        font: poppins semibold 18
+        @onClick: modules.game_medals.changePreset(3)
+
+      NewButton
+        id: preset4
+        !text: tr("4")
+        size: 30 30
+        font: poppins semibold 18
+        @onClick: modules.game_medals.changePreset(4)
+
+      NewButton
+        id: preset5
+        !text: tr("5")
+        size: 30 30
+        font: poppins semibold 18
+        @onClick: modules.game_medals.changePreset(5)
+
+  UIWidget
+    id: hideLockedPanel
+    height: 20
+    anchors.left: leftPanel.left
+    anchors.right: presetPanel.left
+    anchors.verticalCenter: presetPanel.verticalCenter
+    margin-left: 10
+    margin-right: 15
+
+    SwitchBox
+      id: hideLocked
+      focusable: false
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      @onCheckChange: |
+        local checked = self:isChecked()
+        if self.sliderButton then
+          self.sliderButton:setMarginLeft(checked and 20 or 2)
+        end
+        self:setImageSource(checked and "/images/general_ui/icons/base_slider_selected" or "/images/general_ui/icons/base_slider")
+        modules.game_medals.onHideLockedChange(checked)
+
+    Label
+      id: hideLockedLabel
+      !text: tr('Hide locked')
+      font: poppins semibold 12
+      color: #dfdfdf
+      text-auto-resize: true
+      anchors.left: hideLocked.right
+      anchors.verticalCenter: parent.verticalCenter
+      phantom: true
+
+  UIWidget
+    id: lupa
+    anchors.verticalCenter: searchPokemon.verticalCenter
+    size: 32 32
+    anchors.right: searchPokemon.left
+    margin-right: 5
+    image-source: images/lupa
+
+  PkaInput
+    id: searchPokemon
+    width: 175
+    height: 32
+    text-offset: 13 6
+    placeholder-offset: 13 6
+    anchors.bottom: rightPanel.top
+    margin-bottom: 5
+    anchors.right: rightPanel.right
+    !placeholder: tr('Search')
+    @onTextChange: modules.game_medals.onSearchTextChange(self:getText())
+
+  UIWidget
+    id: emblems_background
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.horizontalCenter: parent.horizontalCenter
+    size: 284 284
+    image-source: images/emblems_background
+
+  UIScrollArea
+    id: medalsPanel
+    size: 210 230
+    padding: 10
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: rightPanel.right
+    margin-right: 15
+    vertical-scrollbar: scrollableBar
+    visible: false
+  
+    layout:
+      type: grid
+      cell-size: 32 32
+      num-columns: 5
+      cell-spacing: 4
+
+  EquippedMedalWidget
+    id: medal1
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-bottom: 97
+    margin-right: 30
+
+  EquippedMedalWidget
+    id: medal2
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-bottom: 60
+    margin-right: 82
+
+  EquippedMedalWidget
+    id: medal3
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-right: 102
+
+  EquippedMedalWidget
+    id: medal4
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-top: 60
+    margin-right: 82
+
+  EquippedMedalWidget
+    id: medal5
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-top: 95
+    margin-right: 30
+
+  EquippedMedalWidget
+    id: medal6
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-top: 95
+    margin-left: 30
+
+  EquippedMedalWidget
+    id: medal7
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-top: 60
+    margin-left: 82
+
+  EquippedMedalWidget
+    id: medal8
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-left: 102
+
+  EquippedMedalWidget
+    id: medal9
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-bottom: 60
+    margin-left: 82
+
+  EquippedMedalWidget
+    id: medal10
+    anchors.horizontalCenter: emblems_background.horizontalCenter
+    anchors.verticalCenter: emblems_background.verticalCenter
+    margin-bottom: 97
+    margin-left: 30
+  
+  AllianceVerticalScrollBar
+    id: scrollableBar
+    anchors.top: medalsPanel.top
+    anchors.bottom: medalsPanel.bottom
+    anchors.right: medalsPanel.right
+    margin-top: 15
+    margin-bottom: 15
+    step: 30
+    pixels-scroll: true
+    visible: false
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    margin-top: 10
+    anchors.right: parent.right
+    margin-right: 10
+    @onClick: modules.game_medals.hideMedalWindow()

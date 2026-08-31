@@ -1,0 +1,60 @@
+UIWindow
+  id: guildmotd
+  size: 392 332
+  visible: false
+  image-source: images/guild_wall
+  opacity: 0.95
+
+  UIWidget
+    id: close
+    size: 28 29
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 3
+    margin-right: 6
+    image-source: images/close
+    @onClick: motdClose()
+
+  UIWidget
+    margin-top: 55
+    margin-right: 20
+    margin-left: 20
+    margin-bottom: 5
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+
+    Label
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      !text: tr("Edit Guild Wall")
+      font: poppins regular 15
+      text-offset: 0 -5
+      text-auto-resize: true
+
+    TextEdit
+      id: name
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: prev.bottom
+      anchors.bottom: next.top
+      text-wrap: true      
+      margin: 8 0
+      max-length: 400
+      margin-bottom: 5
+      --layout:
+      --  type: verticalBox
+      margin-top: 15
+      margin-bottom: 10
+
+    Button
+      id: button
+      !text: tr('Change')
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right      
+      margin-left: 100
+      margin-right: 100
+      margin-bottom: 10
+      @onClick: motdSubmit()

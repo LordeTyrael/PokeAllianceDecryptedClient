@@ -1,0 +1,337 @@
+AnalyzerControlButton < UIWidget
+  size: 52 26
+  image-border: 4
+  image-source: /images/newui/grayStraight
+  icon-color: #ffffff
+  opacity: 1.0
+  cursor: pointer
+
+  $hover:
+    opacity: 0.75
+
+  $pressed:
+    opacity: 0.5
+
+UIMiniWindow
+  id: analyzerWindow
+  height: 206
+  @onClose: modules.game_analyzer.onAnalyzerClose()
+  &save: true
+  &autoOpen: false
+  image-source: /images/general_ui/bordered_background
+  focusable: false
+  &minimizedHeight: 26
+  image-border: 12
+
+  ContainerMiniWindowTopbar
+    id: miniwindowTopBar
+    padding: 3
+
+  Label
+    id: miniwindowName
+    text-auto-resize: true
+    anchors.left: miniwindowTopBar.left
+    margin-left: 8
+    anchors.verticalCenter: miniwindowTopBar.verticalCenter
+    anchors.right: optionsButton.left
+    margin-right: 2
+    font: poppins semibold 14
+    !text: tr('Hunt Analyzer')
+    text-offset: 0 4
+
+    UIItem
+      id: icon
+      anchors.right: parent.left
+      margin-right: 2
+      anchors.verticalCenter: parent.verticalCenter
+      size: 21 17
+      phantom: true
+      image-source: images/icon
+
+  NewButton
+    id: closeButton
+    anchors.top: miniwindowTopBar.top
+    anchors.right: miniwindowTopBar.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    image-source: /images/newui/miniwindow/close
+    @onClick: modules.game_analyzer.onAnalyzerClose()
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.verticalCenter: closeButton.verticalCenter
+    anchors.right: closeButton.left
+    margin-right: 7
+
+  UIWidget
+    id: session
+    size: 165 19
+    margin-top: 5
+    margin-left: 15
+    margin-right: 15
+    anchors.top: miniwindowTopBar.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    UIWidget
+      anchors.top: parent.top
+      anchors.left: parent.left
+      size: 11 15
+      image-source: images/session_icon
+      anchors.verticalCenter: parent.verticalCenter
+
+    Label
+      anchors.left: prev.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-left: 14
+      font: poppins semibold 13
+      !text: tr("Session: ")
+      textColor: "#7f8fa4"
+      width: 66
+      text-align: left
+
+    Label
+      id: value
+      anchors.top: parent.top
+      phantom: false
+      anchors.bottom: parent.bottom
+      anchors.left: prev.right
+      anchors.right: parent.right
+      margin-left: 6
+      text: 00:00:00
+      font: poppins semibold 13
+      text-align: right
+
+  UIWidget
+    id: totalExperience
+    size: 165 19
+    margin-top: 5
+    margin-left: 15
+    margin-right: 15
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    UIWidget
+      anchors.top: parent.top
+      anchors.left: parent.left
+      size: 15 15
+      image-source: images/total_exp_icon
+      anchors.verticalCenter: parent.verticalCenter
+
+    Label
+      anchors.left: prev.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-left: 10
+      font: poppins semibold 13
+      !text: tr("Total XP: ")
+      textColor: "#7f8fa4"
+      width: 66
+      text-align: left
+
+    Label
+      id: value
+      anchors.top: parent.top
+      phantom: false
+      anchors.bottom: parent.bottom
+      anchors.left: prev.right
+      anchors.right: parent.right
+      margin-left: 6
+      text: 0
+      font: poppins semibold 13
+      text-align: right
+  
+  UIWidget
+    id: loot
+    size: 165 19
+    margin-top: 5
+    margin-left: 15
+    margin-right: 15
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    UIWidget
+      anchors.top: parent.top
+      anchors.left: parent.left
+      size: 15 15
+      image-source: images/loot_icon
+      anchors.verticalCenter: parent.verticalCenter
+
+    Label
+      anchors.left: prev.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-left: 10
+      font: poppins semibold 13
+      !text: tr("Loot: ")
+      textColor: "#7f8fa4"
+      width: 66
+      text-align: left
+
+    Label
+      id: value
+      anchors.top: parent.top
+      phantom: false
+      anchors.bottom: parent.bottom
+      anchors.left: prev.right
+      anchors.right: parent.right
+      margin-left: 6
+      text: $0
+      textColor: "#3fcc59"
+      font: poppins semibold 13
+      text-align: right
+      
+  UIWidget
+    id: spent
+    size: 165 19
+    margin-top: 5
+    margin-left: 15
+    margin-right: 15
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    UIWidget
+      anchors.top: parent.top
+      anchors.left: parent.left
+      size: 15 7
+      image-source: images/spent_icon
+      anchors.verticalCenter: parent.verticalCenter
+
+    Label
+      anchors.left: prev.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-left: 10
+      font: poppins semibold 13
+      !text: tr("Spent: ")
+      textColor: "#7f8fa4"
+      width: 66
+      text-align: left
+
+    Label
+      id: value
+      anchors.top: parent.top
+      phantom: false
+      anchors.bottom: parent.bottom
+      anchors.left: prev.right
+      anchors.right: parent.right
+      margin-left: 6
+      text: $0
+      textColor: "#c92626"
+      font: poppins semibold 13
+      text-align: right
+
+  UIWidget
+    id: balance
+    size: 165 19
+    margin-top: 5
+    margin-left: 15
+    margin-right: 15
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    UIWidget
+      anchors.top: parent.top
+      anchors.left: parent.left
+      size: 15 14
+      image-source: images/balance_icon
+      anchors.verticalCenter: parent.verticalCenter
+
+    Label
+      anchors.left: prev.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-left: 10
+      font: poppins semibold 13
+      !text: tr("Balance: ")
+      textColor: "#7f8fa4"
+      width: 66
+      text-align: left
+
+    Label
+      id: value
+      anchors.top: parent.top
+      phantom: false
+      anchors.bottom: parent.bottom
+      anchors.left: prev.right
+      anchors.right: parent.right
+      margin-left: 6
+      text: $0
+      font: poppins semibold 13
+      text-align: right
+      
+  UIWidget
+    id: totalDamage
+    size: 165 19
+    margin-top: 5
+    margin-left: 15
+    margin-right: 15
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+    UIWidget
+      anchors.top: parent.top
+      anchors.left: parent.left
+      size: 11 15
+      image-source: images/total_damage_icon
+      anchors.verticalCenter: parent.verticalCenter
+
+    Label
+      anchors.left: prev.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-left: 14
+      font: poppins semibold 13
+      !text: tr("Damage: ")
+      textColor: "#7f8fa4"
+      width: 66
+      text-align: left
+
+    Label
+      id: value
+      anchors.top: parent.top
+      phantom: false
+      anchors.bottom: parent.bottom
+      anchors.left: prev.right
+      anchors.right: parent.right
+      margin-left: 6
+      text: 0
+      font: poppins semibold 13
+      text-align: right
+
+  UIWidget
+    id: controls
+    size: 166 26
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    layout:
+      type: horizontalBox
+      spacing: 5
+
+    AnalyzerControlButton
+      id: pauseInfo
+      icon-source: @fa solid 14 f04c
+      icon-color: #f5c542
+      @onClick: modules.game_analyzer.toggleAnalyzerPause()
+
+    AnalyzerControlButton
+      id: resetInfo
+      icon-source: @fa solid 14 f0e2
+      icon-color: #c92626
+      !tooltip: tr('Reset Analyzer')
+      @onClick: modules.game_analyzer.confirmResetAnalyzerInfo()
+
+    AnalyzerControlButton
+      id: moreInfos
+      icon-source: @fa solid 14 f05a
+      icon-color: #269bf3
+      !tooltip: tr('More Infos')
+      @onClick: modules.game_analyzer.showDetails()

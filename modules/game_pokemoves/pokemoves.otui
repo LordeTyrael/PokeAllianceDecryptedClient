@@ -1,0 +1,75 @@
+LockButton < NewButton
+  id: lockButton
+  size: 32 32
+  @onClick: modules.game_pokemoves.lockMovebar()
+
+PokemovesWindow < NewOpaqueWindow
+  id: mainWindow
+  focusable: false
+  draggable: true
+  border-top: 35
+  &save: true
+
+  UIWidget
+    id: spellWindow
+    anchors.fill: parent
+    focusable: false
+    draggable: true
+    phantom: true
+    padding: 5
+    layout:
+      type: grid
+      cell-size: 32 32
+      cell-spacing: 3
+      flow: true
+
+PokemonConditionBar < Panel
+  id: pokemonConditionBar
+  size: 32 32
+  phantom: true
+  background-color: alpha
+  layout:
+    type: horizontalBox
+    spacing: 2
+
+PokemoveItem < UIWidget
+  focusable: false
+  width: 32
+  height: 32
+
+  UIWidget
+    id: circleClip
+    anchors.fill: parent
+    clip-transparency: true
+    image-source: /images/modules/circle_clip
+    phantom: true
+
+    PokemoveIcon
+      id: icon
+      focusable: false
+      anchors.fill: parent
+  
+      UIProgressRect
+        id: progress
+        phantom: true
+        font: verdana-11px-rounded
+        text-offset: 0 -8
+        background: #585858AA
+        percent: 100
+        focusable: false
+        anchors.fill: parent
+
+  Label
+    id: moveNumber
+    anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    font: poppins boldbordered 13
+    text-auto-resize: true
+    text-offset: 4 0
+    text-align: center
+    margin-bottom: -2
+
+PokemoveIcon < UIItem
+  virtual: true
+  focusable: false

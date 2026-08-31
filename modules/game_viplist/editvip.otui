@@ -1,0 +1,186 @@
+IconButton < CheckBox
+  size: 20 20
+  image-source: /images/game/viplist/vipcheckbox
+  image-size: 20 20
+  image-border: 3
+  margin: 2
+  icon-source: /images/game/viplist/icons
+  icon-size: 12 12
+  icon-rect: 0 0 12 12
+  icon-clip: 0 0 12 12
+  icon-offset: 4 6
+
+  $first:
+    margin-left: 0
+
+  $!checked:
+    image-clip: 26 0 26 26
+
+  $hover !checked:
+    image-clip: 78 0 26 26
+
+  $checked:
+    image-clip: 0 0 26 26
+
+  $hover checked:
+    image-clip: 52 0 26 26
+
+NewOpaqueWindow
+  id: editWindow
+  size: 380 285
+  anchors.centerIn: parent
+  opacity: 0.9
+  focusable: true
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 240 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr('Edit Friend List entry')
+
+  NewRedCloseButton
+    id: buttonCancel
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+
+  Label
+    id: nameTitle
+    !text: tr('Name') .. ':'
+    font: poppins semibold 12
+    color: #a0b0c0
+    text-auto-resize: true
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 22
+    margin-left: 15
+
+  Label
+    id: nameLabel
+    font: poppins semibold 12
+    color: green
+    text-auto-resize: true
+    anchors.verticalCenter: nameTitle.verticalCenter
+    anchors.left: parent.left
+    margin-left: 110
+
+  Label
+    id: descTitle
+    !text: tr('Description') .. ':'
+    font: poppins semibold 12
+    color: #a0b0c0
+    text-auto-resize: true
+    anchors.top: nameTitle.bottom
+    anchors.left: parent.left
+    margin-top: 18
+    margin-left: 15
+
+  EntergameTextEdit
+    id: descriptionText
+    height: 25
+    font: poppins semibold 12
+    text-offset: 10 2
+    color: white
+    focusable: true
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    anchors.verticalCenter: descTitle.verticalCenter
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 110
+    margin-right: 15
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  Label
+    id: notifyTitle
+    !text: tr('Notify-Login') .. ':'
+    font: poppins semibold 12
+    color: #a0b0c0
+    text-auto-resize: true
+    anchors.top: descTitle.bottom
+    anchors.left: parent.left
+    margin-top: 20
+    margin-left: 15
+
+  CheckBox
+    id: checkBoxNotify
+    size: 16 16
+    anchors.verticalCenter: notifyTitle.verticalCenter
+    anchors.left: parent.left
+    margin-left: 110
+
+  UIWidget
+    id: iconRow
+    layout: horizontalBox
+    anchors.top: notifyTitle.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 18
+    margin-left: 15
+    margin-right: 15
+    height: 24
+
+    IconButton
+      id: icon0
+
+    IconButton
+      id: icon1
+      icon-clip: 12 0 12 12
+
+    IconButton
+      id: icon2
+      icon-clip: 24 0 12 12
+
+    IconButton
+      id: icon3
+      icon-clip: 36 0 12 12
+
+    IconButton
+      id: icon4
+      icon-clip: 48 0 12 12
+
+    IconButton
+      id: icon5
+      icon-clip: 60 0 12 12
+
+    IconButton
+      id: icon6
+      icon-clip: 72 0 12 12
+
+    IconButton
+      id: icon7
+      icon-clip: 84 0 12 12
+
+    IconButton
+      id: icon8
+      icon-clip: 96 0 12 12
+
+    IconButton
+      id: icon9
+      icon-clip: 108 0 12 12
+
+    IconButton
+      id: icon10
+      icon-clip: 120 0 12 12
+
+  AllianceStraightBlueButton
+    id: buttonOK
+    size: 120 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr('Ok')

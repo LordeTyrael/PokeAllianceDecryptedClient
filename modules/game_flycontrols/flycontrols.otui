@@ -1,0 +1,14 @@
+FlyControlButton < NewOpaqueWindow
+  size: 48 48
+  focusable: false
+  draggable: false
+  cursor: pointer
+  phantom: false
+
+  UIEffect
+    id: effect
+    anchors.centerIn: parent
+    size: 32 32
+    effect-centered: true
+    effect-scale: 1.0
+    phantom: true

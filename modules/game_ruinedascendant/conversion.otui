@@ -1,0 +1,149 @@
+ConversionItemSlot < UIItem
+  size: 32 32
+  virtual: true
+  image-source: /images/newui/item
+  change-cursor-image: true
+  cursor: pointer
+
+NewOpaqueWindow
+  @onEscape: modules.game_ruinedascendant.hideConversionWindow()
+  id: ruinedConversionWindow
+  anchors.centerIn: parent
+  size: 520 400
+  focusable: true
+
+  UIWidget
+    id: header
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 348 37
+    image-offset: 1 0
+    image-source: images/header
+    font: poppins bold 18
+    text-align: left
+    text-offset: 10 0
+    !text: tr("Convert Mega Stones")
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin: 10 10 0 0
+    @onClick: modules.game_ruinedascendant.hideConversionWindow()
+
+  NewOpaqueWindow
+    id: sourcePanel
+    anchors.top: header.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 25
+    size: 220 250
+    phantom: true
+    focusable: true
+
+    Label
+      id: sourceTitle
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 8
+      font: poppins bold 13
+      !text: tr("Your Stone")
+
+    ScrollablePanel
+      id: sourceGrid
+      anchors.top: sourceTitle.bottom
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 8
+      margin-bottom: 8
+      padding: 8
+      size: 195 200
+      vertical-scrollbar: sourceScrollBar
+      layout:
+        type: grid
+        cell-size: 32 32
+        num-columns: 5
+        cell-spacing: 3
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: sourceScrollBar
+      anchors.top: prev.top
+      anchors.bottom: prev.bottom
+      anchors.left: prev.right
+      margin-bottom: 5
+      margin-left: 2
+      pixels-scroll: true
+      step: 40
+
+  NewOpaqueWindow
+    id: targetPanel
+    anchors.top: sourcePanel.top
+    anchors.right: parent.right
+    margin-right: 25
+    size: 220 250
+    phantom: true
+    focusable: true
+
+    Label
+      id: targetTitle
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 8
+      font: poppins bold 13
+      !text: tr("Convert To")
+
+    ScrollablePanel
+      id: targetGrid
+      anchors.top: targetTitle.bottom
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 8
+      margin-bottom: 8
+      padding: 8
+      size: 195 200
+      vertical-scrollbar: targetScrollBar
+      layout:
+        type: grid
+        cell-size: 32 32
+        num-columns: 5
+        cell-spacing: 3
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: targetScrollBar
+      anchors.top: prev.top
+      anchors.bottom: prev.bottom
+      anchors.left: prev.right
+      margin-bottom: 5
+      margin-left: 2
+      pixels-scroll: true
+      step: 40
+
+  PoppinsSemibold13
+    id: costLabel
+    anchors.top: sourcePanel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    font: poppins semibold 13
+    text-align: center
+    !text: tr("Cost: $0")
+
+  NewStraightBlueButton
+    id: confirmButton
+    size: 180 36
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin-left: 65
+    margin-bottom: 18
+    !text: tr("Convert")
+
+  NewStraightBlueButton
+    id: cancelButton
+    size: 180 36
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-right: 65
+    margin-bottom: 18
+    !text: tr("Cancel")
+    @onClick: modules.game_ruinedascendant.hideConversionWindow()

@@ -1,0 +1,219 @@
+CompletedBrotherhoodItem < UIWidget
+  size: 305 98
+  image-source: images/empty_background
+
+  UIWidget
+    phantom: true
+    image-source: images/success_icon
+    size: 25 25
+    margin-top: 15
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+
+  UIWidget
+    phantom: true
+    margin-top: 10
+    anchors.top: prev.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    font: poppins semibold 16
+    text-auto-resize: true
+    !text: tr("You have already defeated this contract!")
+
+EmptyBrotherhoodItem < UIWidget
+  size: 305 98
+  image-source: images/empty_background
+  @onClick: modules.game_brotherhood:collectNpcContract()
+  cursor: pointer
+
+  UIWidget
+    phantom: true
+    image-source: images/new_icon
+    size: 25 25
+    margin-top: 15
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+
+  UIWidget
+    phantom: true
+    margin-top: 10
+    anchors.top: prev.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    font: poppins semibold 16
+    text-auto-resize: true
+    !text: tr("Sign New Contract")
+
+PendingBrotherhoodItem < UIWidget
+  size: 305 98
+  image-source: images/item_background
+
+  UICreature
+    id: creature
+    size: 48 48
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 11
+    fixed-creature-size: true
+    old-scaling: true
+
+  UIWidget
+    id: title
+    margin-left: 20
+    margin-top: 10
+    anchors.left: prev.right
+    anchors.top: parent.top
+    font: poppins semibold 18
+    text-auto-resize: true
+
+  UIWidget
+    id: description
+    size: 215 55
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    font: poppins semibold 12
+    text-align: topleft
+    text-wrap: true
+
+NewOpaqueWindow
+  id: brotherhoodPanel    
+  size: 670 478
+  anchors.centerIn: parent
+  draggable: true
+  visible: false
+  @onEscape: modules.game_brotherhood:close()
+
+  UIWidget
+    id: background
+    phantom: true
+    anchors.fill: parent
+    image-source: images/background
+
+    UIWidget
+      id: titleBackground
+      phantom: true
+      size: 281 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      image-source: images/title_background
+
+      Label
+        id: titleName
+        phantom: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        text-auto-resize: true
+        margin-left: 5
+        font: poppins semibold 20
+        !text: tr("Brotherhood")
+
+  UIScrollArea
+    id: contractsList
+    size: 670 370
+    margin-top: 60
+    margin-left: 15
+    margin-right: 15
+    anchors.top: prev.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    vertical-scrollbar: contractsScroll
+
+    layout: 
+      type: grid
+      num-columns: 2
+      cell-size: 305 98
+      cell-spacing: 25
+
+  AllianceVerticalScrollBar
+    id: contractsScroll
+    anchors.top: prev.top
+    anchors.bottom: prev.bottom
+    anchors.right: prev.right
+    margin-right: 10
+    margin-top: 15
+    margin-bottom: 15
+    step: 30
+    pixels-scroll: true
+
+  UIWidget
+    id: bottomPanel
+    size: 668 34
+    image-source: images/bottom_background
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: background.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    padding-left: 10
+    padding-right: 10
+
+    UIWidget
+      id: dailyCompleted
+      size: 335 34
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+
+      UIWidget
+        size: 23 25
+        image-source: images/today_finished_icon
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.verticalCenter: parent.verticalCenter
+
+      UIWidget
+        !text: tr("Contracts completed this week:")
+        anchors.left: prev.right
+        anchors.top: parent.top
+        margin-left: 5
+        anchors.verticalCenter: parent.verticalCenter
+        font: poppins semibold 14
+        text-auto-resize: true
+
+      UIWidget
+        id: value
+        text: "0"
+        anchors.left: prev.right
+        anchors.top: parent.top
+        margin-left: 5
+        anchors.verticalCenter: parent.verticalCenter
+        font: poppins semibold 14
+        text-auto-resize: true
+
+    UIWidget
+      id: totalCompleted
+      size: 335 34
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+
+      UIWidget
+        size: 23 25
+        image-source: images/today_finished_icon
+        margin-right: 5
+        anchors.right: next.left
+        anchors.top: parent.top
+        anchors.verticalCenter: parent.verticalCenter
+
+      UIWidget
+        !text: tr("Total contracts completed:")
+        anchors.right: next.left
+        anchors.top: parent.top
+        margin-right: 5
+        anchors.verticalCenter: parent.verticalCenter
+        font: poppins semibold 14
+        text-auto-resize: true
+
+      UIWidget
+        id: value
+        text: "0"
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.verticalCenter: parent.verticalCenter
+        font: poppins semibold 14
+        text-auto-resize: true
+
+
+  NewRedCloseButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_brotherhood.close()

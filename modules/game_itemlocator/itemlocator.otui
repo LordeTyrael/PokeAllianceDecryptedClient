@@ -1,0 +1,133 @@
+ItemLocatorPointer < UIWidget
+  size: 24 24
+  icon-source: @fa solid 22 f063
+  icon-color: #ffd700
+  phantom: true
+
+ItemLocatorRow < UIWidget
+  height: 34
+  focusable: true
+  background-color: alpha
+  cursor: pointer
+
+  $hover:
+    background-color: #ffffff11
+
+  $!hover:
+    background-color: alpha
+
+  UIItem
+    id: icon
+    size: 32 32
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 2
+    phantom: true
+    virtual: true
+
+  Label
+    id: name
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: count.left
+    margin-left: 8
+    margin-right: 8
+    text-auto-resize: false
+    color: #ffffff
+    font: poppins semibold 12
+
+  Label
+    id: count
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    text-auto-resize: true
+    color: #c0c0c0
+    font: poppins semibold 12
+
+NewOpaqueWindow
+  id: itemLocatorWindow
+  size: 420 460
+  anchors.centerIn: parent
+  focusable: true
+  visible: false
+  @onEscape: modules.game_itemlocator.hide()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 260 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 12
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 4
+      font: poppins semibold 20
+      !text: tr("Item Locator")
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+    @onClick: modules.game_itemlocator.hide()
+
+  EntergameTextEdit
+    id: searchEdit
+    height: 28
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 15
+    margin-right: 15
+    text-offset: 20 5
+    placeholder-offset: 20 5
+    placeholder: Buscar item...
+    placeholder-color: #aaaaaa
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  ScrollablePanel
+    id: itemList
+    anchors.top: searchEdit.bottom
+    anchors.left: parent.left
+    anchors.right: itemListScrollBar.left
+    anchors.bottom: parent.bottom
+    margin-top: 10
+    margin-bottom: 10
+    margin-left: 15
+    margin-right: 4
+    vertical-scrollbar: itemListScrollBar
+    layout:
+      type: verticalBox
+      spacing: 2
+
+  AllianceVerticalScrollBar
+    id: itemListScrollBar
+    anchors.top: searchEdit.bottom
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-top: 10
+    margin-bottom: 10
+    margin-right: 3
+    step: 34
+    pixels-scroll: true
+
+  UIWidget
+    id: loadingIcon
+    size: 44 44
+    anchors.centerIn: itemList
+    icon-source: @fa solid 40 f1ce
+    icon-color: #cfcfcf
+    phantom: true
+    visible: false

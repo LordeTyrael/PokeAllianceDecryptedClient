@@ -1,0 +1,87 @@
+DailyShopItem < ShopItemCard
+  &priceIcon:
+    image-source: images/daily_coin
+
+NewOpaqueWindow
+  id: mainWindow
+  size: 780 629
+  focusable: true
+  anchors.centerIn: parent
+  @onEscape: modules.game_dailies.closeDailyShopWindow()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 282 36
+    image-source: images/daily_shop/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 39 30
+      image-source: images/daily_shop/base_icon
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Daily Shop")
+
+  ScrollablePanel
+    id: shopPanel
+    size: 734 508
+    anchors.left: parent.left
+    anchors.top: base_name.bottom
+    margin-left: 15
+    margin-top: 20
+    vertical-scrollbar: shopPanelScrollBar
+    image-border: 15
+    image-source: /images/newui/background_3
+    auto-focus: none
+    padding: 8
+    layout:
+      type: grid
+      num-columns: 4
+      cell-size: 175 160
+      cell-spacing: 6
+      auto-spacing: true
+
+  AllianceVerticalScrollBar
+    id: shopPanelScrollBar
+    anchors.top: shopPanel.top
+    anchors.bottom: shopPanel.bottom
+    anchors.left: shopPanel.right
+    margin-left: 4
+    step: 30
+    pixels-scroll: true
+
+  UIWidget
+    id: coinItem
+    size: 32 32
+    anchors.verticalCenter: coinCount.verticalCenter
+    anchors.right: coinCount.left
+    margin-right: 7
+    image-source: images/daily_coin
+
+  Label
+    id: coinCount
+    text-auto-resize: true
+    font: poppins semibold 14
+    anchors.top: shopPanel.bottom
+    anchors.right: parent.right
+    margin-top: 18
+    margin-right: 15
+
+  NewRedCloseButton
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_dailies.closeDailyShopWindow()

@@ -1,0 +1,162 @@
+QuickSellItem < UIItem
+  size: 40 40
+  virtual: true
+  cursor: pointer
+  font: poppins semibold 10
+  border-width: 1
+  border-color: #ffffff88
+
+  $hover:
+    border-color: #ffffffff
+
+QuickSellPinIcon < UIWidget
+  size: 14 14
+  anchors.top: parent.top
+  anchors.right: parent.right
+  margin-top: 1
+  margin-right: 1
+  icon-source: @fa solid 12 f08d
+  icon-color: #e23c3c
+  phantom: true
+
+NewOpaqueWindow
+  id: quickSellWindow
+  size: 430 508
+  anchors.centerIn: parent
+  focusable: true
+  @onEscape: modules.game_npctrade.closeQuickSell()
+
+  UIWidget
+    id: titleBar
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 240 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 15
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr('Quick Sell')
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    @onClick: modules.game_npctrade.closeQuickSell()
+
+  Label
+    id: confirmLabel
+    anchors.top: titleBar.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 12
+    margin-left: 16
+    margin-right: 16
+    text-align: center
+    text-wrap: true
+    text-auto-resize: true
+    font: poppins semibold 12
+    color: #dfe6f0
+
+  ScrollablePanel
+    id: sellPanel
+    anchors.top: confirmLabel.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 12
+    margin-left: 16
+    margin-right: 22
+    height: 224
+    vertical-scrollbar: sellScroll
+    image-source: /images/newui/background_2
+    image-border: 10
+    padding: 4
+    layout:
+      type: grid
+      cell-size: 40 40
+      cell-spacing: 4
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: sellScroll
+    anchors.top: sellPanel.top
+    anchors.bottom: sellPanel.bottom
+    anchors.right: sellPanel.right
+    margin-right: 2
+    step: 20
+    pixels-scroll: true
+
+  Label
+    id: pinnedLabel
+    anchors.top: sellPanel.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 16
+    margin-right: 16
+    text-align: center
+    text-auto-resize: true
+    font: poppins semibold 11
+    color: #a0b2d2
+    !text: tr('The following items will NOT be sold:')
+
+  UIWidget
+    id: pinnedPanel
+    anchors.top: pinnedLabel.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 16
+    margin-right: 16
+    height: 48
+    clipping: true
+    layout:
+      type: grid
+      cell-size: 40 40
+      cell-spacing: 4
+      flow: true
+
+  Label
+    id: hintLabel
+    anchors.top: pinnedPanel.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 8
+    margin-left: 16
+    margin-right: 16
+    text-align: center
+    text-wrap: true
+    text-auto-resize: true
+    font: poppins semibold 9
+    color: #7f8ca3
+    !text: tr('Right-click any item to pin it to your block list.')
+
+  AllianceStraightBlueButton
+    id: sellButton
+    size: 130 34
+    font: poppins semibold 13
+    text-align: center
+    anchors.right: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-right: 8
+    margin-bottom: 16
+    !text: tr('Sell')
+    @onClick: modules.game_npctrade.quickSellConfirm()
+
+  NewRedButton
+    id: cancelButton
+    size: 130 34
+    font: poppins semibold 13
+    text-align: center
+    anchors.left: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-left: 8
+    margin-bottom: 16
+    !text: tr('Cancel')
+    @onClick: modules.game_npctrade.closeQuickSell()

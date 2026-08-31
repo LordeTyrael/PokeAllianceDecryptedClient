@@ -1,0 +1,39 @@
+NewOpaqueWindow
+  @onEscape: modules.game_minimap.destroyWaypointWindow()
+  size: 320 180
+  anchors.centerIn: parent
+
+  Label
+    id: title
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 6
+    font: poppins semibold 22
+    text-auto-resize: true
+
+  Label
+    id: description
+    size: 300 80
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: title.bottom
+    margin-top: 10
+    font: poppins semibold 15
+    text-wrap: true
+    text-align: center
+
+  NewStraightBlueButton
+    id: confirmButton
+    font: poppins semibold 14
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: description.bottom
+    margin-top: 6
+    !text: tr("Confirm")
+    @onClick: modules.game_minimap.confirmWaypointWindow()
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 10
+    margin-top: 10
+    @onClick: modules.game_minimap.destroyWaypointWindow()

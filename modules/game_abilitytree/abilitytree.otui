@@ -1,0 +1,399 @@
+AbilityItem < UIItem
+  size: 32 32
+  image-source: /images/newui/containers/item
+  virtual: true
+  searchable: true
+  focusable: false
+
+// 612x81 rows: 16 + icon 48 + 16 + desc 328 + 16 + recipe 172 + 16.
+AbilityItemWidget < UIWidget
+  height: 81
+  anchors.top: parent.top
+  anchors.left: parent.left
+  anchors.right: parent.right
+  margin-top: 0
+  margin-right: 18
+  image-source: /images/modules/talents_ui/item_background
+  focusable: false
+
+  $!first:
+    anchors.top: prev.bottom
+    margin-top: 6
+
+  UIWidget
+    id: mainImage
+    size: 48 48
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 16
+    phantom: true
+
+  UIWidget
+    id: desc
+    width: 328
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: mainImage.right
+    margin-top: 8
+    margin-bottom: 8
+    margin-left: 17
+    text-align: topLeft
+    text-wrap: true
+    font: poppins semibold 12
+    color: #dfe7ef
+    phantom: true
+
+  // width/height come from the recipe size in applyFilters (5 columns max).
+  UIWidget
+    id: recipe
+    size: 172 67
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    margin-right: 16
+    layout:
+      type: grid
+      cell-size: 32 32
+      num-columns: 5
+      cell-spacing: 3
+
+TalentFilterButton < UIButton
+  size: 180 40
+  font: poppins semibold 14
+  text-align: left
+  text-offset: 48 1
+  color: #8ea3b8
+  opacity: 0.62
+  icon-source: @fa solid 12 f0da
+  icon-color: #ffffff00
+  icon-align: right
+  icon-offset: -8 0
+  anchors.left: parent.left
+  anchors.top: prev.bottom
+  margin-top: 4
+  change-cursor-image: true
+  cursor: pointer
+
+  UIWidget
+    id: icon
+    size: 40 40
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 5
+    phantom: true
+
+  $hover:
+    color: #cfdae8
+    opacity: 0.88
+
+  $checked:
+    color: #ffffff
+    opacity: 1.0
+    icon-color: #35c1ee
+
+FilterPanel < ScrollablePanel
+  id: filterPanel
+  width: 180
+  focusable: false
+  anchors.left: parent.left
+  anchors.top: base_name.bottom
+  anchors.bottom: parent.bottom
+  margin-left: 12
+  margin-top: 12
+  margin-bottom: 12
+  vertical-scrollbar: filterPanelScrollBar
+
+  TalentFilterButton
+    id: character
+    !text: tr("Character")
+    image-source: images/labels/character
+    anchors.top: parent.top
+    margin-top: 0
+    @onClick: applyFilters("character")
+    &icon:
+      image-source: images/mainimages/character
+
+  TalentFilterButton
+    id: pokemon
+    !text: tr("Pokémon")
+    image-source: images/labels/character
+    @onClick: applyFilters("pokemon")
+    &icon:
+      image-source: images/mainimages/pokemon
+
+  TalentFilterButton
+    id: bug
+    !text: tr("Bug")
+    image-source: images/labels/bug
+    @onClick: applyFilters("bug")
+    &icon:
+      image-source: images/mainimages/bug
+
+  TalentFilterButton
+    id: dark
+    !text: tr("Dark")
+    image-source: images/labels/dark
+    @onClick: applyFilters("dark")
+    &icon:
+      image-source: images/mainimages/dark
+
+  TalentFilterButton
+    id: dragon
+    !text: tr("Dragon")
+    image-source: images/labels/dragon
+    @onClick: applyFilters("dragon")
+    &icon:
+      image-source: images/mainimages/dragon
+
+  TalentFilterButton
+    id: electric
+    !text: tr("Electric")
+    image-source: images/labels/electric
+    @onClick: applyFilters("electric")
+    &icon:
+      image-source: images/mainimages/electric
+
+  TalentFilterButton
+    id: fairy
+    !text: tr("Fairy")
+    image-source: images/labels/fairy
+    @onClick: applyFilters("fairy")
+    &icon:
+      image-source: images/mainimages/fairy
+
+  TalentFilterButton
+    id: fighting
+    !text: tr("Fighting")
+    image-source: images/labels/fighting
+    @onClick: applyFilters("fighting")
+    &icon:
+      image-source: images/mainimages/fighting
+
+  TalentFilterButton
+    id: fire
+    !text: tr("Fire")
+    image-source: images/labels/fire
+    @onClick: applyFilters("fire")
+    &icon:
+      image-source: images/mainimages/fire
+
+  TalentFilterButton
+    id: flying
+    !text: tr("Flying")
+    image-source: images/labels/flying
+    @onClick: applyFilters("flying")
+    &icon:
+      image-source: images/mainimages/flying
+
+  TalentFilterButton
+    id: ghost
+    !text: tr("Ghost")
+    image-source: images/labels/ghost
+    @onClick: applyFilters("ghost")
+    &icon:
+      image-source: images/mainimages/ghost
+
+  TalentFilterButton
+    id: grass
+    !text: tr("Grass")
+    image-source: images/labels/grass
+    @onClick: applyFilters("grass")
+    &icon:
+      image-source: images/mainimages/grass
+
+  TalentFilterButton
+    id: ground
+    !text: tr("Ground")
+    image-source: images/labels/ground
+    @onClick: applyFilters("ground")
+    &icon:
+      image-source: images/mainimages/ground
+
+  TalentFilterButton
+    id: ice
+    !text: tr("Ice")
+    image-source: images/labels/ice
+    @onClick: applyFilters("ice")
+    &icon:
+      image-source: images/mainimages/ice
+
+  TalentFilterButton
+    id: normal
+    !text: tr("Normal")
+    image-source: images/labels/normal
+    @onClick: applyFilters("normal")
+    &icon:
+      image-source: images/mainimages/normal
+
+  TalentFilterButton
+    id: poison
+    !text: tr("Poison")
+    image-source: images/labels/poison
+    @onClick: applyFilters("poison")
+    &icon:
+      image-source: images/mainimages/poison
+
+  TalentFilterButton
+    id: psychic
+    !text: tr("Psychic")
+    image-source: images/labels/psychic
+    @onClick: applyFilters("psychic")
+    &icon:
+      image-source: images/mainimages/psychic
+
+  TalentFilterButton
+    id: rock
+    !text: tr("Rock")
+    image-source: images/labels/rock
+    @onClick: applyFilters("rock")
+    &icon:
+      image-source: images/mainimages/rock
+
+  TalentFilterButton
+    id: steel
+    !text: tr("Steel")
+    image-source: images/labels/steel
+    @onClick: applyFilters("steel")
+    &icon:
+      image-source: images/mainimages/steel
+
+  TalentFilterButton
+    id: water
+    !text: tr("Water")
+    image-source: images/labels/water
+    @onClick: applyFilters("water")
+    &icon:
+      image-source: images/mainimages/water
+
+FilterPanelScrollBar < AllianceVerticalScrollBar
+  id: filterPanelScrollBar
+  width: 12
+  anchors.top: filterPanel.top
+  anchors.bottom: filterPanel.bottom
+  anchors.left: filterPanel.right
+  margin-left: 4
+  step: 44
+  pixels-scroll: true
+
+TalentCategoryHeader < UIWidget
+  id: header
+  height: 40
+  anchors.top: base_name.bottom
+  anchors.left: filterPanelScrollBar.right
+  anchors.right: parent.right
+  margin-top: 12
+  margin-left: 12
+  margin-right: 30
+  background-color: #101d2baa
+  focusable: false
+  phantom: true
+
+  UIWidget
+    id: headerIcon
+    size: 28 28
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 12
+
+  Label
+    id: headerTitle
+    text-auto-resize: true
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: headerIcon.right
+    margin-left: 10
+    margin-top: 2
+    font: poppins semibold 15
+    color: #ffffff
+
+  // fixed width: a right-anchored text-auto-resize label grows past its anchor
+  Label
+    id: headerCount
+    size: 170 20
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    margin-right: 12
+    text-align: right
+    font: poppins semibold 12
+    color: #8fb7d6
+
+  AllianceProgressBar
+    id: headerProgress
+    size: 140 10
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: headerCount.left
+    margin-right: 10
+
+AbilityPanel < UIScrollArea
+  id: abilityPanel
+  focusable: false
+  anchors.top: header.bottom
+  anchors.bottom: parent.bottom
+  anchors.left: filterPanelScrollBar.right
+  anchors.right: parent.right
+  margin-top: 11
+  margin-bottom: 12
+  margin-left: 12
+  margin-right: 12
+  vertical-scrollbar: abilityPanelScrollBar
+
+AbilityPanelScrollBar < AllianceVerticalScrollBar
+  id: abilityPanelScrollBar
+  width: 12
+  anchors.top: abilityPanel.top
+  anchors.bottom: abilityPanel.bottom
+  anchors.right: abilityPanel.right
+  step: 87
+  pixels-scroll: true
+
+// 860 = 12 + 180 (filters) + 4 + 12 (scrollbar) + 12 + 610 (rows) + 6 + 12 (scrollbar) + 12
+// 540 = 36 (title) + 12 + 40 (header) + 11 + 429 (5 rows of 81 + 4 gaps of 6) + 12
+NewOpaqueWindow
+  id: abilitytree
+  size: 860 540
+  anchors.centerIn: parent
+  @onEscape: modules.game_abilitytree.close()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 330 36
+    image-source: /images/general_ui/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 32
+      image-source: /images/game/icons/poketalent
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 10
+      margin-top: 4
+      font: poppins semibold 20
+      !text: tr("Player Talents")
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+    @onClick: modules.game_abilitytree.close()
+
+  SearchableHint
+    id: searchHint
+    anchors.verticalCenter: closeButton.verticalCenter
+    anchors.right: closeButton.left
+    margin-right: 8
+    !tooltip: tr("Hold Shift over an item to see which Pokemon drop it")
+
+  FilterPanel
+  FilterPanelScrollBar
+  TalentCategoryHeader
+  AbilityPanel
+  AbilityPanelScrollBar

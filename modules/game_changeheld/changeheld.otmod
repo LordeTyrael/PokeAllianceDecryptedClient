@@ -1,0 +1,9 @@
+Module
+  name: game_changeheld
+  description: Painel para troca de Helds
+  author: PokeAlliance
+  website: PokeAlliance.com.br
+  sandboxed: true
+  scripts: [ changeheld ]
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,9 @@
+Module
+  name: game_prey
+  description: Prey
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ prey ]
+  @onLoad: init()
+  @onUnload: terminate()

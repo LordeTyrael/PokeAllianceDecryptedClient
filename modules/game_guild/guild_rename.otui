@@ -1,0 +1,77 @@
+RenameGuildWindow < NewOpaqueWindow
+  id: renameGuildWindow
+  size: 350 180
+  opacity: 0.9
+  focusable: true
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 200 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr("Rename Guild")
+
+  NewRedCloseButton
+    id: cancelButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    @onClick: modules.game_guild.renameGuildClose()
+
+  Label
+    id: nameLabel
+    font: poppins semibold 12
+    color: #a0b0c0
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 20
+    margin-left: 15
+    !text: tr("New Name:")
+
+  EntergameTextEdit
+    id: nameEdit
+    size: 230 25
+    font: poppins semibold 12
+    text-offset: 10 2
+    max-length: 20
+    color: white
+    focusable: true
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    anchors.verticalCenter: nameLabel.verticalCenter
+    anchors.left: nameLabel.right
+    margin-left: 10
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  Label
+    id: costLabel
+    font: poppins semibold 12
+    color: #e0c050
+    anchors.top: nameLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 15
+    !text: tr("This will cost 50 Diamonds.")
+
+  AllianceStraightBlueButton
+    id: confirmButton
+    size: 120 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr("Confirm")
+    @onClick: modules.game_guild.renameGuildSubmit()

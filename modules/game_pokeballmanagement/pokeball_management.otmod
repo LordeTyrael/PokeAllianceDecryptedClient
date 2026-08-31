@@ -1,0 +1,9 @@
+Module
+  name: game_pokeballmanagement
+  description: PokeballManagement
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ pokeball_management ]
+  @onLoad: init()
+  @onUnload: terminate()

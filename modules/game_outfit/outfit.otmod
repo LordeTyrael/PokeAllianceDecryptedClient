@@ -1,0 +1,10 @@
+Module
+  name: game_outfit
+  description: Change local player outfit
+  author: Eternal
+  website: https://discord.gg/pokealliance
+  sandboxed: true
+  dependencies: [ client_hotkeys ]
+  scripts: [ outfit ]
+  @onLoad: init()
+  @onUnload: terminate()

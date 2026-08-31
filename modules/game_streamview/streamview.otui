@@ -1,0 +1,180 @@
+StreamResizeGrip < UIWidget
+  background-color: #ffffff00
+  focusable: false
+
+  $hover:
+    background-color: #ffffff33
+
+  $pressed:
+    background-color: #ffffff59
+
+StreamTopBarButton < NewButton
+  opacity: 1.0
+
+  $hover:
+    opacity: 0.5
+
+  $pressed:
+    opacity: 0.75
+
+UIWindow
+  id: streamViewWindow
+  size: 330 216
+  anchors.centerIn: parent
+  focusable: false
+  image-source: /images/general_ui/bordered_background
+  image-border: 12
+
+  UIWidget
+    id: topBar
+    anchors.left: resizeLeft.right
+    anchors.right: resizeRight.left
+    anchors.top: resizeTop.bottom
+    margin-left: 1
+    margin-right: 1
+    margin-top: 1
+    height: 26
+    focusable: false
+    phantom: true
+
+  UIWidget
+    id: titleIcon
+    size: 16 16
+    anchors.left: topBar.left
+    anchors.verticalCenter: topBar.verticalCenter
+    margin-left: 8
+    icon-source: @fa solid 12 f03d
+    icon-color: #b6bcc4
+    phantom: true
+
+  StreamTopBarButton
+    id: closeButton
+    size: 11 11
+    anchors.right: topBar.right
+    anchors.verticalCenter: topBar.verticalCenter
+    margin-right: 8
+    image-source: /images/newui/miniwindow/close
+    !tooltip: tr('Close')
+
+  StreamTopBarButton
+    id: minimizeButton
+    size: 11 7
+    anchors.right: closeButton.left
+    anchors.verticalCenter: topBar.verticalCenter
+    margin-right: 7
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    !tooltip: tr('Minimize')
+
+    $on:
+      image-clip: 0 7 11 7
+
+  StreamTopBarButton
+    id: browserButton
+    size: 14 14
+    anchors.right: minimizeButton.left
+    anchors.verticalCenter: topBar.verticalCenter
+    margin-right: 7
+    icon-source: @fa solid 12 f35d
+    icon-color: #b6bcc4
+    !tooltip: tr('Open in browser')
+
+  Label
+    id: titleLabel
+    anchors.left: titleIcon.right
+    anchors.right: browserButton.left
+    anchors.verticalCenter: topBar.verticalCenter
+    margin-left: 6
+    margin-right: 8
+    height: 16
+    font: poppins semibold 12
+    color: #e8eaed
+    text-align: left
+    focusable: false
+
+  UIWidget
+    id: panelArea
+    anchors.left: resizeLeft.right
+    anchors.right: resizeRight.left
+    anchors.top: topBar.bottom
+    anchors.bottom: resizeBottom.top
+    margin-left: 1
+    margin-right: 1
+    margin-top: 1
+    margin-bottom: 1
+    background-color: #0e1116
+    focusable: false
+    phantom: true
+
+    Label
+      id: loadingLabel
+      anchors.centerIn: parent
+      text-auto-resize: true
+      font: poppins semibold 12
+      color: #6b7280
+      phantom: true
+      !text: tr('Loading...')
+
+  StreamResizeGrip
+    id: resizeLeft
+    anchors.left: parent.left
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    width: 5
+    cursor: horizontal
+
+  StreamResizeGrip
+    id: resizeRight
+    anchors.right: parent.right
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    width: 5
+    cursor: horizontal
+
+  StreamResizeGrip
+    id: resizeTop
+    anchors.left: resizeLeft.right
+    anchors.right: resizeRight.left
+    anchors.top: parent.top
+    margin-left: 1
+    margin-right: 1
+    height: 5
+    cursor: vertical
+
+  StreamResizeGrip
+    id: resizeBottom
+    anchors.left: resizeLeft.right
+    anchors.right: resizeRight.left
+    anchors.bottom: parent.bottom
+    margin-left: 1
+    margin-right: 1
+    height: 5
+    cursor: vertical
+
+  StreamResizeGrip
+    id: resizeTopLeft
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 10 10
+    cursor: diagonal-nwse
+
+  StreamResizeGrip
+    id: resizeTopRight
+    anchors.right: parent.right
+    anchors.top: parent.top
+    size: 10 10
+    cursor: diagonal-nesw
+
+  StreamResizeGrip
+    id: resizeBottomLeft
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    size: 10 10
+    cursor: diagonal-nesw
+
+  StreamResizeGrip
+    id: resizeBottomRight
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    size: 10 10
+    cursor: diagonal-nwse

@@ -1,0 +1,9 @@
+Module
+  name: game_album
+  description: PKA sticker album
+  author: PokeAlliance
+  sandboxed: true
+  dependencies: [ game_interface, client_hotkeys ]
+  scripts: [ cards, protocol, album, ranking ]
+  @onLoad: init()
+  @onUnload: terminate()

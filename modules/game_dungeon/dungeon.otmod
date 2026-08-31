@@ -1,0 +1,9 @@
+Module
+  name: game_dungeon
+  description: tanjiro
+  author: otclient.ovh
+  website: http://otclient.ovh
+  sandboxed: true
+  scripts: [ dungeon ]
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,10 @@
+Module
+  name: game_walking
+  description: Control walking and turns
+  author: otclient.ovh
+  website: http://otclient.ovh
+  scripts: [ walking ]
+  sandboxed: true
+  dependencies: [ game_interface, client_hotkeys, game_chat ]
+  @onLoad: init()
+  @onUnload: terminate()

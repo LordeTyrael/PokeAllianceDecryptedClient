@@ -1,0 +1,454 @@
+AnalyzerCategoryButton < UIWidget
+  size: 140 30
+  image-border: 4
+  image-source: /images/newui/grayStraight
+  font: poppins semibold 13
+  textColor: #ffffff
+  cursor: pointer
+
+  $on:
+    image-source: /images/newui/blueStraight
+
+AnalyzerLootItemWidget < UIWidget
+  size: 40 40
+  cursor: pointer
+
+  UIItem
+    id: itemIcon
+    anchors.fill: parent
+    size: 40 40
+    virtual: true
+    phantom: true
+
+  Label
+    id: itemCount
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 1
+    margin-right: 2
+    font: poppins semibold 12
+    text-auto-resize: true
+    textColor: #ffffff
+    phantom: true
+
+AnalyzerLootDetailRow < UIWidget
+  height: 22
+  margin-top: 1
+
+  Label
+    id: dropTime
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    font: poppins semibold 12
+    text-auto-resize: true
+    textColor: #7f8fa4
+
+AnalyzerDamageRow < UIWidget
+  height: 70
+  margin-top: 2
+
+  UICreature
+    id: creatureOutfit
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    size: 64 64
+    fixed-creature-size: true
+    new-scaling: true
+    max-scale: 1.5
+    min-scale: 1.5
+
+  Label
+    id: creatureCount
+    anchors.bottom: creatureOutfit.bottom
+    anchors.right: creatureOutfit.right
+    margin-bottom: 2
+    margin-right: 2
+    font: poppins semibold 12
+    text-auto-resize: true
+
+  Label
+    id: creatureName
+    anchors.left: creatureOutfit.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 80
+    font: poppins semibold 13
+    text-auto-resize: true
+    textColor: #ffffff
+
+  Label
+    id: damageValue
+    phantom: false
+    anchors.left: creatureName.right
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 6
+    font: poppins semibold 13
+    text-align: right
+    textColor: #c92626
+
+NewOpaqueWindow
+  id: analyzerDetailsWindow
+  size: 600 400
+  draggable: true
+  visible: false
+  anchors.centerIn: parent
+  @onEscape: modules.game_analyzer.closeDetails()
+
+  UIWidget
+    id: titleBackground
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/modules/store_ui/name_base
+    phantom: true
+
+    UIWidget
+      id: iconWidget
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 21 17
+      phantom: true
+      image-source: images/icon
+
+    Label
+      id: title
+      anchors.left: iconWidget.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Hunt Analyzer")
+      margin-top: 2
+      font: poppins semibold 20
+      text-auto-resize: true
+
+  NewButton
+    id: closeIcon
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    image-source: /images/newui/close
+    @onClick: modules.game_analyzer.closeDetails()
+
+  UIWidget
+    id: sidebar
+    anchors.left: parent.left
+    anchors.top: titleBackground.bottom
+    anchors.bottom: bottomBar.top
+    width: 155
+    margin-top: 8
+    margin-left: 8
+    margin-bottom: 8
+
+    AnalyzerCategoryButton
+      id: tabLoot
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: prev.bottom
+      margin-top: 5
+      !text: tr("Loot")
+      @onClick: modules.game_analyzer.switchTab('loot')
+
+    AnalyzerCategoryButton
+      id: tabDamage
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: prev.bottom
+      margin-top: 3
+      !text: tr("Damage")
+      @onClick: modules.game_analyzer.switchTab('damage')
+
+  UIWidget
+    id: contentArea
+    anchors.left: sidebar.right
+    anchors.right: parent.right
+    anchors.top: titleBackground.bottom
+    anchors.bottom: bottomBar.top
+    margin-top: 8
+    margin-left: 10
+    margin-right: 10
+    margin-bottom: 8
+
+    ScrollablePanel
+      id: lootGrid
+      anchors.left: parent.left
+      anchors.right: lootGridScrollBar.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-right: 4
+      vertical-scrollbar: lootGridScrollBar
+      padding: 4
+      layout:
+        type: grid
+        cell-size: 40 40
+        cell-spacing: 4
+        num-columns: 10
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: lootGridScrollBar
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-right: 9
+      anchors.bottom: parent.bottom
+      step: 44
+      pixels-scroll: true
+
+    NewOpaqueWindow
+      id: lootDetailPanel
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      visible: false
+      image-border: 4
+      draggable: false
+
+      UIWidget
+        id: detailHeader
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        height: 30
+
+        UIItem
+          id: detailIcon
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          margin-left: 8
+          size: 24 24
+          virtual: true
+          phantom: true
+
+        Label
+          id: detailName
+          anchors.left: prev.right
+          anchors.verticalCenter: parent.verticalCenter
+          margin-left: 8
+          font: poppins semibold 13
+          text-auto-resize: true
+          textColor: #ffffff
+
+        NewRedCloseButton
+          id: detailClose
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.right: parent.right
+          margin-right: 6
+          @onClick: modules.game_analyzer.closeLootDetail()
+
+      UIScrollArea
+        id: detailList
+        anchors.left: parent.left
+        anchors.right: detailListScrollBar.left
+        anchors.top: detailHeader.bottom
+        anchors.bottom: detailPagination.top
+        margin-left: 4
+        margin-right: 4
+        margin-bottom: 2
+        layout:
+          type: verticalBox
+        vertical-scrollbar: detailListScrollBar
+
+      AllianceVerticalScrollBar
+        id: detailListScrollBar
+        anchors.top: detailHeader.bottom
+        anchors.right: parent.right
+        anchors.bottom: detailPagination.top
+        margin-right: 9
+        margin-bottom: 2
+        step: 22
+        pixels-scroll: true
+
+      UIWidget
+        id: detailPagination
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        height: 22
+
+        UIWidget
+          id: detailPrevPage
+          size: 8 14
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          margin-left: 8
+          cursor: pointer
+          image-source: /images/modules/arrow_left
+          @onClick: modules.game_analyzer.detailGoToPage('prev')
+
+        Label
+          id: detailPageLabel
+          anchors.centerIn: parent
+          text-align: center
+          font: poppins semibold 12
+          text-auto-resize: true
+
+        UIWidget
+          id: detailNextPage
+          size: 8 14
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          margin-right: 8
+          cursor: pointer
+          image-source: /images/modules/arrow_right
+          @onClick: modules.game_analyzer.detailGoToPage('next')
+
+    UIWidget
+      id: damageHeaderRow
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+      height: 22
+      visible: false
+
+      UIWidget
+        id: col1
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        font: poppins semibold 13
+        textColor: #3fbbdb
+        text-auto-resize: true
+        cursor: pointer
+        @onClick: modules.game_analyzer.toggleDamageSort('count')
+
+      Label
+        id: col1Icon
+        anchors.left: col1.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 4
+        size: 12 12
+        visible: false
+
+      UIWidget
+        id: col2
+        anchors.left: parent.left
+        margin-left: 150
+        anchors.verticalCenter: parent.verticalCenter
+        font: poppins semibold 13
+        textColor: #3fbbdb
+        text-auto-resize: true
+        cursor: pointer
+        @onClick: modules.game_analyzer.toggleDamageSort('name')
+
+      Label
+        id: col2Icon
+        anchors.left: col2.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 4
+        size: 12 12
+        visible: false
+
+      UIWidget
+        id: col3
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        font: poppins semibold 13
+        textColor: #3fbbdb
+        text-auto-resize: true
+        cursor: pointer
+        @onClick: modules.game_analyzer.toggleDamageSort('damage')
+
+      Label
+        id: col3Icon
+        anchors.right: col3.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-right: 4
+        size: 12 12
+        visible: false
+
+    UIScrollArea
+      id: entryList
+      anchors.left: parent.left
+      anchors.right: entriesScrollBar.left
+      anchors.top: damageHeaderRow.bottom
+      anchors.bottom: parent.bottom
+      margin-top: 5
+      margin-right: 4
+      visible: false
+      layout:
+        type: verticalBox
+      vertical-scrollbar: entriesScrollBar
+
+    AllianceVerticalScrollBar
+      id: entriesScrollBar
+      anchors.top: damageHeaderRow.bottom
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-top: 5
+      margin-right: 9
+      step: 36
+      pixels-scroll: true
+      visible: false
+
+  UIWidget
+    id: bottomBar
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    height: 36
+    margin-left: 10
+    margin-right: 10
+    margin-bottom: 5
+
+    UIWidget
+      id: pagination
+      anchors.centerIn: parent
+      size: 260 26
+
+      UIWidget
+        id: firstPage
+        size: 14 14
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        cursor: pointer
+        image-source: /images/modules/doublearrow_left
+        @onClick: modules.game_analyzer.goToPage('first')
+
+      UIWidget
+        id: prevPage
+        size: 8 14
+        anchors.left: prev.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 12
+        cursor: pointer
+        image-source: /images/modules/arrow_left
+        @onClick: modules.game_analyzer.goToPage('prev')
+
+      Label
+        id: pageLabel
+        anchors.centerIn: parent
+        text-align: center
+        !text: tr("Page: %d/%d", 1, 1)
+        font: poppins semibold 13
+        textColor: #ffffff
+        text-auto-resize: true
+
+      UIWidget
+        id: nextPage
+        size: 8 14
+        anchors.right: lastPage.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-right: 12
+        cursor: pointer
+        image-source: /images/modules/arrow_right
+        @onClick: modules.game_analyzer.goToPage('next')
+
+      UIWidget
+        id: lastPage
+        size: 14 14
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        cursor: pointer
+        image-source: /images/modules/doublearrow_right
+        @onClick: modules.game_analyzer.goToPage('last')
+
+    NewStraightBlueButton
+      id: resetBtn
+      size: 100 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Reset")
+      font: poppins semibold 13
+      textColor: #ffffff
+      @onClick: modules.game_analyzer.confirmResetAnalyzerInfo()

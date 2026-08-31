@@ -1,0 +1,234 @@
+ActionLabel < UILabel
+  font: inter-regular-12px-rounded_cp1252
+  color: white
+
+ActionItem < UIItem
+  size: 32 32
+  font: cipsoftFont
+  image-source: /images/general_ui/item_slot
+  border: 0 alpha
+  virtual: true
+  &selectable: true
+  &editable: false
+
+  $hover:
+    border: 1 lightGray
+
+  UIWidget
+    size: 22 22
+    anchors.centerIn: parent
+    phantom: true
+    image-source: /images/newui/miniwindow/pokeball_slot
+
+ActionButton < UIButton
+  size: 34 34
+  margin: 1
+
+  ActionItem
+    id: item
+    anchors.centerIn: parent
+
+  UIProgressRect
+    id: progress
+    phantom: true
+    font: poppins semibold 15
+    background: #585858AA
+    percent: 100
+    focusable: false
+    anchors.fill: item
+    textColor: #0398e2
+
+  ActionLabel
+    id: hotkeyLabel
+    font: verdana-11px-rounded
+    anchors.top: parent.top
+    anchors.horizontalCenter: prev.horizontalCenter
+    text-auto-resize: true
+    phantom: true
+    margin-top: 1
+
+  ActionLabel
+    id: text
+    anchors.centerIn: parent
+    text-auto-resize: true
+    text-wrap: true
+    phantom: true
+
+FixedActionButton < UIButton
+  width: 34
+
+  UIWidget
+    id: background
+    size: 20 20
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 12
+    phantom: true
+
+  ActionLabel
+    id: hotkeyLabel
+    font: verdana-11px-rounded
+    anchors.top: parent.top
+    anchors.horizontalCenter: prev.horizontalCenter
+    text-auto-resize: true
+    phantom: true
+    margin-top: 2
+
+UIMiniWindow
+  id: playerActionBar
+  focusable: false
+  anchors.bottom: parent.bottom
+  anchors.horizontalCenter: parent.horizontalCenter
+  phantom: false
+  image-border: 10
+  image-source: /images/general_ui/background
+  draggable: false
+
+  Panel
+    id: panel
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+
+  Panel
+    id: statsRow
+    height: 16
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 3
+    margin-left: 5
+    // clears the collapse button parked in the window's top-right corner
+    margin-right: 24
+
+    // grows leftwards off the bar's edge, so a changing HP value never shifts the bar itself
+    // UILabel.create() turns phantom on: clear it or the value can't carry the bar's tooltip
+    Label
+      id: playerHealthValue
+      phantom: false
+      anchors.right: playerHealth.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 6
+      text-auto-resize: true
+      font: poppins semibold 11
+      color: #8ef06a
+
+    UIWidget
+      id: playerHealth
+      size: 200 13
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 52
+      image-source: images/progress_background
+      // 2px outline around a flat interior: 9-slice it so the outline stays crisp as the bar widens
+      image-border: 2
+      // per-channel multiplier, not a display colour: the source is teal (45,69,69), so green and
+      // blue are pulled down harder than red to land on the action bar's neutral dark
+      image-color: #88606b
+
+      UIWidget
+        id: healthProgress
+        size: 196 9
+        anchors.centerIn: parent
+        image-source: images/lifebar
+        // the art is a 1px outline around a flat interior: 9-slicing keeps that outline crisp
+        // instead of squashing it as the fill shrinks
+        image-border: 1
+        phantom: true
+
+    Label
+      id: playerLevel
+      anchors.left: playerHealth.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 20
+      text-auto-resize: true
+      font: poppins semibold 11
+      color: #ffe27a
+      phantom: true
+
+    UIWidget
+      id: playerExperience
+      size: 350 13
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: playerLevel.right
+      margin-left: 6
+      image-source: images/progress_background
+      // 2px outline around a flat interior: 9-slice it so the outline stays crisp as the bar widens
+      image-border: 2
+      // per-channel multiplier, not a display colour: the source is teal (45,69,69), so green and
+      // blue are pulled down harder than red to land on the action bar's neutral dark
+      image-color: #88606b
+
+      UIWidget
+        id: experienceProgress
+        anchors.fill: parent
+        margin-top: 2
+        margin-left: 2
+        margin-bottom: 2
+        margin-right: 2
+        image-source: images/xpbar
+        // the art is a 1px outline around a flat interior: 9-slicing keeps that outline crisp
+        // instead of squashing it as the fill shrinks
+        image-border: 1
+        phantom: true
+
+  FixedActionButton
+    id: ACTION_BAR_DEX
+    anchors.top: statsRow.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin-left: 5
+    !tooltip: tr("Use PokéDex")
+
+  FixedActionButton
+    id: ACTION_BAR_ORDER
+    anchors.top: statsRow.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: prev.right
+    margin-left: 5
+    !tooltip: tr("Order your Pokémon")
+
+  FixedActionButton
+    id: ACTION_BAR_AUTOCOMBO
+    anchors.top: statsRow.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: prev.right
+    margin-left: 5
+    !tooltip: tr("Send AutoCombo")
+
+  UIWidget
+    id: slotsSeparator
+    image-source: images/separator
+    anchors.top: statsRow.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: prev.right
+    margin-left: 2
+
+  Panel
+    id: slotsPanel
+    height: 40
+    anchors.bottom: parent.bottom
+    anchors.left: prev.right
+    anchors.right: panel.right
+    layout: horizontalBox
+    margin-left: 2
+
+  NewButton
+    id: hideButtonBackground
+    size: 16 16
+    focusable: false
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 2
+    image-border: 10
+    image-source: /images/general_ui/close_base
+    @onClick: modules.game_playeractionbar.slideActionBar()
+  
+    UIWidget
+      id: hideButton
+      phantom: true
+      size: 10 10
+      anchors.centerIn: parent
+      image-source: /images/newui/containers/up_button

@@ -1,0 +1,65 @@
+OptionPanel
+  Label
+    !text: tr('Client user features profile')
+    visible: false
+
+  ComboBox  
+    id: profile
+    visible: false
+    margin-top: 3
+    @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+    @onSetup: |
+      self:addOption("1")
+
+  Label
+    !text: tr('Show Left Action Bars:')
+    visible: false
+
+  Panel
+    margin-top: 2
+    height: 16    
+    visible: false
+
+    layout:
+      type: horizontalBox
+
+    OptionCheckBox
+      id: actionbarLeft1
+      !text: tr('Bar 1')
+      width: 60
+
+    OptionCheckBox
+      id: actionbarLeft2
+      !text: tr('Bar 2')
+      width: 60
+
+    OptionCheckBox
+      id: actionbarLeft3
+      !text: tr('Bar 3')
+      width: 60
+
+  Label
+    !text: tr('Show Right Action Bars:')
+    visible: false
+
+  Panel
+    margin-top: 2
+    height: 16
+    layout:
+      type: horizontalBox    
+    visible: false
+
+    OptionCheckBox
+      id: actionbarRight1
+      !text: tr('Bar 1')
+      width: 60
+
+    OptionCheckBox
+      id: actionbarRight2
+      !text: tr('Bar 2')
+      width: 60
+
+    OptionCheckBox
+      id: actionbarRight3
+      !text: tr('Bar 3')
+      width: 60

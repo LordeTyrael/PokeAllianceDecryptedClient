@@ -1,0 +1,192 @@
+ConfirmationWidget < UIWidget
+  id: confirmationWidget
+  size: 300 170
+  anchors.centerIn: parent
+  image-source: /images/newui/background_popup
+  padding-left: 20
+  padding-right: 20
+
+  UIWidget
+    id: diamondIconbackground
+    size: 32 32
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 10
+    image-source: /images/newui/baseItem
+
+  UIItem
+    id: diamondIcon
+    item-id: 3028
+    anchors.fill: diamondIconbackground
+
+  Label
+    id: textMessage
+    font: poppins semibold 14
+    anchors.top: diamondIconbackground.bottom
+    margin-top: 5
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 60
+    !text: tr('Do you really want to unlock a Memory Slot on your Ditto for 30 Diamonds?')
+    text-wrap: true
+    text-align: center
+
+  NewButton
+    id: confirmationButton
+    size: 100 30
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 10
+    margin-bottom: 20
+    !text: tr('Confirm')
+    font: poppins semibold 16
+    image-source: /images/newui/confirmButton
+    @onClick: modules.game_memory.sendUnlockMemorySlot(true)
+
+  NewButton
+    id: cancelButton
+    size: 100 30
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-bottom: 20
+    margin-right: 10
+    !text: tr('Cancel')
+    font: poppins semibold 16
+    image-source: /images/newui/cancelButton
+    @onClick: modules.game_memory.hideConfirmationWindow()
+
+
+ExcludeMemoryWidget < UIWidget
+  id: excludeMemoryWidget
+  size: 260 130
+  anchors.centerIn: parent
+  image-source: /images/newui/background_popup
+  padding-left: 20
+  padding-right: 20
+
+  Label
+    id: textMessage
+    font: poppins semibold 14
+    anchors.top: parent.top
+    margin-top: 10
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 60
+    !text: tr('Do you really want to unlock a Memory Slot on your Ditto for 30 Diamonds?')
+    text-wrap: true
+    text-align: center
+
+  NewButton
+    id: confirmationButton
+    size: 100 30
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-bottom: 20
+    !text: tr('Confirm')
+    font: poppins semibold 16
+    image-source: /images/newui/confirmButton
+    @onClick: modules.game_memory.confirmExcludeMemory()
+
+  NewButton
+    id: cancelButton
+    size: 100 30
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-bottom: 20
+    !text: tr('Cancel')
+    font: poppins semibold 16
+    image-source: /images/newui/cancelButton
+    @onClick: modules.game_memory.hideExcludeMemoryWidget()
+
+PokemonSlot < NewButton
+  id: slotButton
+  size: 64 64
+  image-source: /images/newui/background_2
+  image-border: 7
+
+  UICreature
+    id: pokemon
+    image-source: /images/newui/default
+    phantom: true
+
+  NewButton
+    id: closeButton
+    size: 10 10
+    image-source: /images/newui/close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 2
+    margin-right: 2
+    @onClick: modules.game_memory.excludeMemory(self)
+
+  NewButton
+    id: fundoPago
+    anchors.fill: parent
+    image-source: /images/newui/background
+    @onClick: modules.game_memory.sendUnlockMemorySlot()
+
+    UIWidget
+      id: lockWidget
+      size: 18 22
+      anchors.centerIn: parent
+      phantom: true
+      image-source: /images/newui/lock
+
+UIWindow
+  id: memory
+  size: 270 250
+  image-source: /images/newui/background_popup
+  anchors.centerIn: parent
+
+  AllianceMiniwindowTopbar
+    id: topBar
+    size: 270 26
+
+    UICreature
+      id: dittoOutfit
+      size: 64 64
+      outfit-id: 635
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 3
+      margin-left: -12
+      anchors.left: parent.left
+
+    Label
+      id: miniwindowName
+      text-auto-resize: true
+      anchors.left: dittoOutfit.right
+      anchors.verticalCenter: parent.verticalCenter
+      font: poppins semibold 14
+      !text: tr('Ditto Memory')
+      text-offset: -12 4
+
+    NewButton
+      id: closeButton
+      size: 20 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      margin-right: 5
+      image-source: /images/newui/close
+      @onClick: modules.game_memory.memoryHide()
+
+  UICreature
+    id: dittoCopy
+    size: 64 64
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: topBar.bottom
+    margin-top: 5
+    image-source: /images/newui/portrait
+  
+  UIWidget
+    id: creaturePanel
+    size: 210 140
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: dittoCopy.bottom
+    margin-top: 10
+
+    layout:
+      type: grid
+      num-columns: 3
+      cell-size: 64 64
+      cell-spacing: 8
+      flow: true

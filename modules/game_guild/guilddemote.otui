@@ -1,0 +1,27 @@
+MainWindow
+  id: demoteGuildWindow
+  !text: tr('Demote Player')
+  height: 130
+  width: 260
+  visible: false
+  CheckBox
+    id: text
+    anchors.top: parent.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    @onCheckChange: self:getParent():getChildById('buttonOk'):setEnabled(self:isChecked())
+  Button
+    id: buttonCancel
+    !text: tr('Cancel')
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: modules.game_guild.closeGuildPanels()
+  Button
+    id: buttonOk
+    enabled: false
+    !text: tr('Ok')
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: modules.game_guild.demoteMember()

@@ -1,0 +1,18 @@
+ClockTimeWindow < HeadlessWindow
+  id: window
+  size: 70 50
+  image-source: images/background
+  opacity: 0.90
+  focusable: false
+  draggable: true
+  &save: true
+
+  UIWidget
+    id: time
+    font: poppins regular 15
+    size: 50 35
+    text: #
+    phantom: true
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 3

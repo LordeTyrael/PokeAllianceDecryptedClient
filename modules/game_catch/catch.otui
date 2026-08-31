@@ -1,0 +1,40 @@
+UIWindow
+  id: catchWindow    
+  width: 200
+  height: 197
+  @onEnter: modules.game_catch.hide()
+  @onEscape: modules.game_catch.hide()
+  image-source: images/catch
+  anchors.top: parent.top
+  anchors.right: parent.right
+  margin-top: 50
+  margin-right: 200
+  visible: false
+  phantom: true
+
+  UICreature
+    id: looktype
+    size: 64 64
+    image-color: alpha    
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 39    
+    virtual: true
+
+  Label
+    id: text
+    text-align: center
+    text-wrap: true
+    size: 165 30
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter    
+    text-auto-resize: true
+    margin-top: 5
+
+  Button
+    id: closeButtom
+    !text: tr('Ok')
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter        
+    @onClick: modules.game_catch.hide()
+    margin-top: 10

@@ -1,0 +1,67 @@
+OptionPanel
+  OptionCheckBox
+    id: pokemonInUseAlwaysOnTop
+    !text: tr('Pokemon in Use Always on Top')
+    !tooltip: tr('When enabled, the pokeball in use will always appear at the top of the pokebar')
+
+  Panel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Pokebar Scale")
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+
+    OptionsComboBox
+      id: pokebarScaleMode
+      width: 200
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+      @onSetup: |
+        self:addOption(tr("Expansion to Right"))
+        self:addOption(tr("Expansion to Left"))
+        self:addOption(tr("Disabled"))
+
+  Panel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Pokebar Size")
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+
+    OptionsComboBox
+      id: pokebarSizeMode
+      width: 200
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+      @onSetup: |
+        self:addOption(tr("Compact"))
+        self:addOption(tr("Normal"))
+        self:addOption(tr("Large"))
+
+  OptionCheckBox
+    id: pokebarShowPortrait
+    !text: tr('Show Pokebar Portrait')
+
+  OptionCheckBox
+    id: pokebarShowHpPercent
+    !text: tr('Show Pokebar HP Percent')
+
+  OptionCheckBox
+    id: pokebarShowCooldownText
+    !text: tr('Show Pokebar Cooldown Text')
+
+  OptionCheckBox
+    id: showPokebarHotkeys
+    !text: tr('Show Pokebar Hotkeys')

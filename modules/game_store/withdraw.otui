@@ -1,0 +1,126 @@
+NewPopupWindow
+  id: store
+  size: 400 460
+  anchors.centerIn: parent
+  opacity: 1.0
+  @onEscape: modules.game_store.hidePixWindow()
+
+  Label
+    id: title
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 20
+    font: poppins semibold 32
+    !text: tr("Donate Pix")
+    text-auto-resize: true
+
+  Label
+    id: bonusInfo
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: title.bottom
+    margin-top: 10
+    text-auto-resize: true
+    font: poppins boldbordered 16
+    textColor: #4a99e3
+    !text: tr("+100 Diamonds - 10%% Bonus\n+150 Diamonds - 15%% Bonus\n+200 Diamonds - 20%% Bonus\n+400 Diamonds - 30%% Bonus\nStreamer Code +10%% Bonus")
+
+  Label
+    id: email
+    !text: tr("Email")
+    anchors.top: bonusInfo.bottom
+    anchors.left: parent.left
+    margin-left: 30
+    text-auto-resize: true
+    margin-top: 20
+
+  TextEdit
+    id: emailEdit
+    size: 200 20
+    margin-top: 3
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    anchors.right: parent.right
+    margin-right: 30
+    image-source: newimages/label_search
+    color: white
+
+  Label
+    id: cpf
+    !text: tr("CPF")
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    text-auto-resize: true
+    margin-bottom: 2
+    margin-top: 8
+
+  TextEdit
+    id: cpfEdit
+    size: 200 20
+    margin-top: 3
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    anchors.right: parent.right
+    margin-right: 30
+    image-source: newimages/label_search
+    color: white
+
+  Label
+    id: quantidade
+    !text: tr("Quantidade")
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    text-auto-resize: true
+    margin-bottom: 2
+    margin-top: 8
+
+  TextEdit
+    id: quantidadeEdit
+    size: 200 20
+    margin-top: 3
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    anchors.right: parent.right
+    margin-right: 30
+    image-source: newimages/label_search
+    color: white
+
+  Label
+    id: cupom
+    !text: tr("Cupom")
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    text-auto-resize: true
+    margin-bottom: 2
+    margin-top: 8
+
+  TextEdit
+    id: cupomEdit
+    size: 200 20
+    margin-top: 3
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    anchors.right: parent.right
+    margin-right: 30
+    image-source: newimages/label_search
+    color: white
+
+  NewButton
+    id: confirmButton
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-right: 50
+    margin-top: 20
+    size: 80 40
+    anchors.top: prev.bottom
+    image-source: /images/newui/btngreen_small
+    !text: tr("Confirm")
+    @onClick: modules.game_store.sendDonateHttp()
+
+  NewButton
+    id: cancelButton
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-left: 50
+    size: 80 40
+    anchors.top: confirmButton.top
+    image-source: /images/newui/btnred_small
+    !text: tr("Cancel")
+    @onClick: modules.game_store.hidePixWindow()

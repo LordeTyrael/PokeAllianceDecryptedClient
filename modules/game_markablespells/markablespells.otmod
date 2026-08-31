@@ -1,0 +1,9 @@
+Module
+  name: game_markablespells
+  description: Markable Spells
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ markablespells ]
+  @onLoad: init()
+  @onUnload: terminate()

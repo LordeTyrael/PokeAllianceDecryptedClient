@@ -1,0 +1,70 @@
+// 400x366 (6 juncoes ancoradas comem 1px cada): 20 + title 34 + 10 + bonus 110 + 20 + 2 fields (14+3+32, 8 apart) + 20 + button 32 + 20
+NewPopupWindow
+  id: store
+  size: 400 366
+  anchors.centerIn: parent
+  opacity: 1.0
+  @onEscape: modules.game_store.hideCreditCardWindow()
+
+  PoppinsSemibold22
+    id: title
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 20
+    !text: tr("Donate Credit Card")
+
+  Label
+    id: bonusInfo
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: title.bottom
+    margin-top: 10
+    text-auto-resize: true
+    text-align: center
+    font: poppins boldbordered 14
+    textColor: #4a99e3
+    !text: tr("+100 Diamonds - 10%% Bonus\n+150 Diamonds - 15%% Bonus\n+200 Diamonds - 20%% Bonus\n+400 Diamonds - 30%% Bonus\nStreamer Code +10%% Bonus")
+
+  DonateFieldLabel
+    id: quantidade
+    anchors.top: bonusInfo.bottom
+    margin-top: 20
+    !text: tr("Quantity")
+
+  DonateField
+    id: quantidadeEdit
+    anchors.top: quantidade.bottom
+
+  DonateFieldLabel
+    id: cupom
+    anchors.top: quantidadeEdit.bottom
+    margin-top: 8
+    !text: tr("Coupon")
+
+  DonateField
+    id: cupomEdit
+    anchors.top: cupom.bottom
+
+  NewGreenButton
+    id: confirmButton
+    anchors.top: cupomEdit.bottom
+    anchors.right: parent.horizontalCenter
+    margin-top: 20
+    margin-right: 6
+    !text: tr("Confirm")
+    @onClick: modules.game_store.sendDonateCreditCardHttp()
+
+  NewRedButton
+    id: cancelButton
+    anchors.top: confirmButton.top
+    anchors.left: parent.horizontalCenter
+    margin-left: 6
+    !text: tr("Cancel")
+    @onClick: modules.game_store.hideCreditCardWindow()
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_store.hideCreditCardWindow()

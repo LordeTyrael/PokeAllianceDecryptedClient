@@ -1,0 +1,41 @@
+PlayerBuff < UIWidget
+  draggable: true
+  focusable: false
+  width: 40
+  height: 36
+  anchors.top: parent.top
+  anchors.left: parent.left
+  anchors.right: parent.right
+  margin-top: 4
+  margin-left: 4
+  margin-right: 4
+
+  $!first:
+    anchors.top: prev.bottom
+    margin-top: 10
+
+  UIWidget
+    id: icon
+    size: 32 32
+    focusable: false
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    draggable: true
+
+  UIWidget
+    id: duration
+    font: verdana-11px-rounded
+    focusable: false
+    anchors.top: icon.bottom
+    anchors.left: icon.left
+    anchors.right: icon.right
+    draggable: true
+
+PlayerBuffsWindow < UIWindow
+  id: playerBuffsWindow
+  size: 40 36
+  focusable: false
+  image-source: /images/ui/background/default_full
+  draggable: true
+  &save: true

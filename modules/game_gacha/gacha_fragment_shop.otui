@@ -1,0 +1,64 @@
+NewSolidWindow
+  id: fragmentShopWindow
+  anchors.centerIn: parent
+  size: 475 420
+  draggable: false
+  @onEscape: modules.game_gacha.closeFragmentSelection()
+
+  PoppinsSemibold18
+    id: shopTitle
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    !text: tr('Fragment Shop')
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_gacha.closeFragmentSelection()
+
+  UIWidget
+    id: shopSeparator
+    anchors.top: shopTitle.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 6
+    size: 150 2
+    image-source: /images/modules/separator
+
+  UIScrollArea
+    id: shopItemsPanel
+    anchors.top: shopSeparator.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: shardsLabel.top
+    margin-top: 10
+    margin-left: 16
+    margin-right: 28
+    margin-bottom: 8
+    vertical-scrollbar: shopScrollBar
+    layout:
+      type: grid
+      cell-size: 140 100
+      num-columns: 3
+      cell-spacing: 6
+
+  AllianceVerticalScrollBar
+    id: shopScrollBar
+    anchors.top: shopItemsPanel.top
+    anchors.right: parent.right
+    anchors.bottom: shopItemsPanel.bottom
+    margin-right: 10
+    step: 100
+    pixels-scroll: true
+
+  PoppinsSemibold14
+    id: shardsLabel
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 12
+    margin-right: 16
+    color: #ffcc00
+    text: Shards: 0

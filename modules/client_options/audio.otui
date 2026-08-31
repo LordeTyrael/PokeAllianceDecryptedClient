@@ -1,0 +1,104 @@
+OptionPanel
+  OptionCheckBox
+    id: enableAudio
+    !text: tr('Enable audio')
+
+  OptionCheckBox
+    id: enableMusicSound
+    !text: tr('Enable startup music')
+
+  OptionCheckBox
+    id: enableAmbientSound
+    !text: tr('Enable ambient music')
+
+  Panel
+    id: audioDevicePanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: audioDeviceLabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr('Audio device')
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+      phantom: false
+
+    OptionsComboBox
+      id: audioDevice
+      width: 200
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.onAudioDeviceChange(self)
+
+  Panel
+    id: musicSoundPanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: musicSoundVolumeLabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr('Startup volume: %d', 100)
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+      phantom: false
+      @onSetup: |
+        local value = modules.client_options.getOption('musicSoundVolume')
+        self:setText(tr('Music volume: %d', value))
+  
+    AllianceHorizontalScrollBar
+      id: musicSoundVolume
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 0
+      maximum: 100
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: ambientSoundPanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: ambientSoundVolumeLabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr('Ambient music volume: %d', 100)
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+      phantom: false
+      @onSetup: |
+        local value = modules.client_options.getOption('ambientSoundVolume')
+        self:setText(tr('Ambient volume: %d', value))
+  
+    AllianceHorizontalScrollBar
+      id: ambientSoundVolume
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 0
+      maximum: 100
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Label
+    id: botSoundVolumeLabel
+    visible: false
+    !text: tr('Bot sound volume: %d', 100)
+    margin-top: 6
+    @onSetup: |
+      local value = modules.client_options.getOption('botSoundVolume')
+      self:setText(tr('Bot sound volume: %d', value))
+
+  OptionScrollbar
+    id: botSoundVolume
+    visible: false
+    margin-top: 3
+    minimum: 0
+    maximum: 100

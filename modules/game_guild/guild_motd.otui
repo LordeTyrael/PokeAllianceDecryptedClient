@@ -1,0 +1,77 @@
+NewOpaqueWindow
+  id: guildmotd
+  size: 420 300
+  visible: false
+  // a UITextEdit only takes the keyboard when the surrounding window is focusable too
+  focusable: true
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 240 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      text-auto-resize: true
+      !text: tr("Edit Guild Wall")
+
+  NewRedCloseButton
+    id: closeBtn
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    @onClick: motdClose()
+
+  PoppinsSemibold12
+    id: nameLabel
+    color: #a0b0c0
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 18
+    margin-left: 15
+    !text: tr("Message:")
+
+  TextEdit
+    id: name
+    focusable: true
+    font: poppins semibold 12
+    color: white
+    text-wrap: true
+    text-offset: 8 6
+    max-length: 400
+    // Same art the guild window uses behind the wall text (motdPanel), so editing looks like the
+    // panel it edits. It is built for a tall panel, unlike the single-line labelbox that seamed.
+    image-source: /images/modules/guild/motd_background
+    image-border: 8
+    anchors.top: nameLabel.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: button.top
+    margin-top: 8
+    margin-left: 15
+    margin-right: 15
+    margin-bottom: 15
+
+    $focus:
+      border: 1 #468cebbf
+
+  AllianceStraightBlueButton
+    id: button
+    size: 120 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr("Change")
+    @onClick: motdSubmit()

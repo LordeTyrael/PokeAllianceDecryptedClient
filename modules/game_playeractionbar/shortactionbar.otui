@@ -1,0 +1,26 @@
+UIWidget
+  size: 750 14
+  anchors.bottom: parent.bottom
+  anchors.horizontalCenter: parent.horizontalCenter
+  phantom: true
+  opacity: 0.8
+
+  UIWidget
+    focusable: false
+    phantom: true
+    size: 750 12
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    image-border-left: 10
+    image-border-right: 10
+    image-source: images/background
+
+  NewButton
+    size: 10 10
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 5
+    margin-top: 2
+    image-source: /images/newui/containers/up_button
+    @onClick: modules.game_playeractionbar.slideActionBar()

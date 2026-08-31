@@ -1,0 +1,8 @@
+Module
+  name: game_craft
+  description: Shows available items to craft by profession.
+  sandboxed: true
+  autoload: true
+  scripts: [ craft ]
+  @onLoad: init()
+  @onUnload: terminate()

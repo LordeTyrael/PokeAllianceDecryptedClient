@@ -1,0 +1,9 @@
+Module
+  name: game_twitch
+  description: Game Twitch Mode
+  author: Danvrb
+  website: http://pokealliance.com
+  scripts: [ twitch ]
+  autoload-priority: 500
+  @onLoad: init()
+  @onUnload: terminate()

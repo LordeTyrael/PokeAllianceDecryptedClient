@@ -1,0 +1,10 @@
+Module
+  name: game_minimap
+  description: Manage minimap
+  author: edubart, BeniS
+  website: https://github.com/edubart/otclient
+  sandboxed: true
+  scripts: [ minimap ]
+  dependencies: [ client_hotkeys, game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

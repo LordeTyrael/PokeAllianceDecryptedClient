@@ -1,0 +1,13 @@
+UIWidget
+  size: 14 14
+  focusable: false
+  phantom: true
+  image-border-left: 10
+  image-border-right: 10
+  image-source: /images/newui/close_base    
+
+  NewButton
+    size: 10 10
+    anchors.centerIn: parent
+    image-source: /images/newui/containers/up_button
+    @onClick: modules.game_playeractionbar.slideActionBar()

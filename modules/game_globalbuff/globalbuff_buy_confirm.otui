@@ -1,0 +1,70 @@
+NewOpaqueWindow
+  id: globalBuffBuyConfirmWindow
+  size: 280 180
+  anchors.centerIn: parent
+  visible: false
+  focusable: true
+  @onEscape: modules.game_globalbuff.closeBuyConfirm()
+
+  PoppinsSemibold14
+    id: confirmTitle
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    color: #ffffff
+    !text: tr('Confirm Purchase')
+
+  UIItem
+    id: confirmItem
+    size: 48 48
+    anchors.top: confirmTitle.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    phantom: true
+    virtual: true
+
+  AllianceHorizontalScrollBar
+    id: confirmScrollBar
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: confirmItem.bottom
+    margin-left: 20
+    margin-right: 20
+    margin-top: 10
+    focusable: false
+
+  PoppinsSemibold12
+    id: confirmValueLabel
+    anchors.top: confirmScrollBar.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 4
+    color: #ffcc00
+    text: 1
+
+  NewStraightBlueButton
+    id: confirmBuyButton
+    size: 90 30
+    anchors.right: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-right: 6
+    margin-bottom: 14
+    !text: tr("Buy")
+    @onClick: modules.game_globalbuff.confirmBuyItem()
+
+  NewRedButton
+    id: cancelButton
+    size: 90 30
+    anchors.left: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-left: 6
+    margin-bottom: 14
+    !text: tr("Cancel")
+    @onClick: modules.game_globalbuff.closeBuyConfirm()
+
+  NewRedCloseButton
+    id: closeConfirmBtn
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+    @onClick: modules.game_globalbuff.closeBuyConfirm()

@@ -1,0 +1,99 @@
+MinimapWindow
+  id: minimapWindow
+  !text: tr('Minimap')
+  icon: /images/ui/topbuttons/icons/minimap_window
+  @onClose: modules.game_minimap.onMiniWindowClose()
+  &save: true
+  &autoOpen: 1
+
+CreatureParty < UICreature
+  size: 20 20
+  scale: 1
+  old-scaling: true
+
+  UIWidget
+    id: floorIcon
+    size: 12 12
+    phantom: true
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+
+CityName < Label
+  font: poppins semibold 14
+  size: 120 40
+  text-wrap: true
+  text-align: center
+
+WaypointCreature < UIWidget
+  size: 28 28
+  image-source: images/waypoints
+
+  UIWidget
+    id: background
+    image-source: images/waypoints
+    clip-transparency: true
+    anchors.fill: parent
+
+    UICreature
+      id: creature
+      size: 48 48
+      phantom: true
+      anchors.centerIn: parent
+      margin-left: 2
+      margin-top: 2
+      new-scaling: true
+
+PortalBossEntry < UIWidget
+  size: 86 112
+  phantom: true
+
+  UICreature
+    id: creature
+    size: 64 64
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    fixed-creature-size: true
+    new-scaling: true
+    max-scale: 1.5
+    min-scale: 1.5
+    phantom: true
+
+  Label
+    id: bossName
+    height: 44
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 3
+    text-align: center
+    text-wrap: true
+    font: poppins semibold 13
+    phantom: true
+
+PortalBossTooltip < UITooltip
+  width: 306
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 8
+  phantom: true
+  layout:
+    type: verticalBox
+    fit-children: true
+
+  Label
+    id: title
+    height: 26
+    font: poppins bold 15
+    text-align: center
+    text-auto-resize: true
+    phantom: true
+
+  Panel
+    id: bossList
+    phantom: true
+    layout:
+      type: grid
+      cell-size: 86 112
+      cell-spacing: 4
+      num-columns: 3
+      flow: true

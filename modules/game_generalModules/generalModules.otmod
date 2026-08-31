@@ -1,0 +1,11 @@
+Module
+  name: game_generalModules
+  description: General Modules
+  author: PokeAlliance
+  autoload: true
+  autoload-priority: 1000
+  website: www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ generalModules ]
+  @onLoad: init()
+  @onUnload: terminate()

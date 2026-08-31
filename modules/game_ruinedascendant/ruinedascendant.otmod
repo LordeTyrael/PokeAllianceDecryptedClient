@@ -1,0 +1,7 @@
+Module
+  name: game_ruinedascendant
+  description: Ruined Ascendant
+  sandboxed: true
+  scripts: [ ruinedascendant, conversion, merit ]
+  @onLoad: init()
+  @onUnload: terminate()

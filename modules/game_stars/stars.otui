@@ -1,0 +1,347 @@
+StarPokeballWidget < UIWidget
+  size: 54 51
+  image-source: images/background_pokeball
+  @onMouseRelease: modules.game_stars.dropPokeball()
+
+  UIWidget
+    id: basePokeball
+    anchors.centerIn: parent
+    size: 32 32
+    image-source: images/base_pokeball
+    phantom: true
+
+    UIWidget
+      id: basePokeballIcon
+      size: 21 21
+      image-source: images/pokeball_icon
+      anchors.centerIn: parent
+      phantom: true
+
+    UIItem
+      id: pokeball
+      size: 32 32
+      virtual: true
+      forceMove: true
+      change-cursor-image: true
+      cursor: pointer
+      @onClick: modules.game_stars.removePokemonFromSlot(self)
+
+StarIcon < UIWidget
+  size: 13 12
+  image-source: images/star
+
+StarPanel < UIWidget
+  size: 80 12
+  
+  StarIcon
+    id: star1
+    anchors.top: parent.top
+    anchors.left: parent.left
+
+  StarIcon
+    id: star2
+    anchors.top: parent.top
+    anchors.left: prev.right
+    margin-left: 3
+
+  StarIcon
+    id: star3
+    anchors.top: parent.top
+    anchors.left: prev.right
+    margin-left: 3
+
+  StarIcon
+    id: star4
+    anchors.top: parent.top
+    anchors.left: prev.right
+    margin-left: 3
+
+  StarIcon
+    id: star5
+    anchors.top: parent.top
+    anchors.left: prev.right
+    margin-left: 3
+
+StarsPokemonWidget < UIWidget
+
+  StarPanel
+    id: starPanel
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 8
+
+  UICreature
+    id: pokemonOutfit
+    size: 64 64
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 10
+
+UIWindow
+  id: mainStarWindow
+  size: 670 374
+  draggable: true
+  anchors.centerIn: parent
+  image-source: images/background
+  opacity: 0.95
+  @onEscape: modules.game_stars.hide()
+  focusable: true
+
+  UIWidget
+    id: topBackground
+    size: 281 36
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    font: poppins semibold 20
+    !text: tr('Star Ascension')
+    image-source: /images/general_ui/top_background
+    phantom: true
+
+  NewRedCloseButton
+    id: closeBtn
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_stars.hide()
+
+  UIWidget
+    id: pokemonBackground
+    size: 635 169
+    padding: 5
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 60
+    phantom: true
+    image-source: images/pokemon_background
+
+    StarsPokemonWidget
+      id: pokemonInfo
+      anchors.left: parent.left
+      anchors.top: parent.top
+      size: 135 99
+      image-source: images/left_panel
+
+    StarPokeballWidget
+      id: leftPokeballPoke
+      anchors.left: pokemonInfo.left
+      anchors.top: pokemonInfo.bottom
+
+    UIWidget
+      id: rightArrows
+      size: 50 28
+      anchors.verticalCenter: pokemonInfo.verticalCenter
+      anchors.left: pokemonInfo.right
+      margin-left: 33
+      image-source: images/right_arrows
+
+
+    StarsPokemonWidget
+      id: newPokemonInfo
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      size: 135 99
+      image-source: images/middle_panel
+
+    UIWidget
+      id: bluePanel1
+      size: 4 35
+      anchors.top: newPokemonInfo.bottom
+      anchors.left: newPokemonInfo.left
+      margin-left: 15
+      margin-top: 1
+      image-source: images/blue_image
+
+    UIWidget
+      id: bluePanel2
+      size: 206 4
+      anchors.right: prev.left
+      anchors.bottom: prev.bottom
+      image-source: images/blue_image2
+
+    UIWidget
+      id: orangePanel1
+      size: 4 35
+      anchors.top: newPokemonInfo.bottom
+      anchors.right: newPokemonInfo.right
+      margin-right: 15
+      margin-top: 1
+      image-source: images/orange_image
+
+    UIWidget
+      id: orangePanel2
+      size: 206 4
+      anchors.left: prev.right
+      anchors.bottom: prev.bottom
+      image-source: images/orange_image2
+
+    UIWidget
+      id: leftArrows
+      size: 50 28
+      anchors.verticalCenter: pokemonInfo.verticalCenter
+      anchors.right: foodPokemonInfo.left
+      margin-right: 33
+      image-source: images/left_arrows
+
+    StarsPokemonWidget
+      id: foodPokemonInfo
+      anchors.right: parent.right
+      anchors.top: parent.top
+      size: 135 99
+      image-source: images/right_panel
+
+    StarPokeballWidget
+      id: rightPokeballPoke
+      anchors.right: foodPokemonInfo.right
+      anchors.top: foodPokemonInfo.bottom
+
+  UIWidget
+    id: priceBackground
+    size: 180 120
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-right: 27
+    anchors.top: pokemonBackground.bottom
+    margin-top: 10
+    image-source: images/price_background
+    image-border: 12
+
+    UIWidget
+      id: taxDiamondIconBackground
+      size: 22 22
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-right: 58
+      margin-top: 35
+      image-source: images/tax_icon_background
+  
+      UIWidget
+        size: 16 16
+        anchors.centerIn: parent
+        image-source: images/diamond_icon
+
+    Label
+      text-auto-resize: true
+      anchors.horizontalCenter: taxDiamondBackground.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 7
+      margin-right: 10
+      font: poppins semibold 16
+      !text: tr("Ascension Cost")
+
+    UIWidget
+      id: taxDiamondBackground
+      size: 116 22
+      anchors.left: taxDiamondIconBackground.right
+      anchors.top: taxDiamondIconBackground.top
+      image-source: images/tax_price_background
+
+      Label
+        id: diamondCost
+        text-auto-resize: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        margin-left: 4
+        font: poppins semibold 15
+        !text: 0
+
+    UIWidget
+      id: taxMoneyIconBackground
+      size: 22 22
+      image-source: images/tax_icon_background
+      anchors.left: taxDiamondIconBackground.left
+      anchors.top: taxDiamondIconBackground.bottom
+      margin-top: 5
+  
+      UIWidget
+        size: 16 16
+        anchors.centerIn: parent
+        image-source: images/money_icon
+
+    UIWidget
+      id: taxMoneyBackground
+      size: 116 22
+      anchors.left: taxMoneyIconBackground.right
+      anchors.top: taxMoneyIconBackground.top
+      image-source: images/tax_price_background
+
+      Label
+        id: moneyCost
+        text-auto-resize: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        margin-left: 4
+        font: poppins semibold 15
+        !text: tr("$0")
+
+    UIWidget
+      id: taxOptionsPanel
+      size: 135 20
+      anchors.right: taxMoneyBackground.right
+      anchors.top: taxMoneyBackground.bottom
+      margin-top: 8
+      image-source: images/taxoptions_background
+
+      NewButton
+        id: diamondOption
+        size: 45 20
+        anchors.left: parent.left
+        anchors.top: parent.top
+        image-source: images/selected_option
+        @onClick: modules.game_stars.selectCashOption(self)
+
+        UIWidget
+          size: 16 16
+          anchors.centerIn: parent
+          image-source: images/diamond_icon
+          phantom: true
+
+      NewButton
+        id: cashOption
+        size: 45 20
+        anchors.left: prev.right
+        anchors.top: parent.top
+        @onClick: modules.game_stars.selectCashOption(self)
+
+        UIWidget
+          size: 16 16
+          anchors.centerIn: parent
+          image-source: images/money_icon
+          phantom: true
+
+      NewButton
+        id: bothOption
+        size: 45 20
+        anchors.left: prev.right
+        anchors.top: parent.top
+        @onClick: modules.game_stars.selectCashOption(self)
+
+        UIWidget
+          size: 16 16
+          anchors.centerIn: parent
+          margin-right: 10
+          image-source: images/diamond_icon
+          phantom: true
+
+        UIWidget
+          size: 16 16
+          anchors.centerIn: parent
+          margin-left: 10
+          image-source: images/money_icon
+          phantom: true
+
+
+  NewButton
+    id: confirmButton
+    size: 54 120
+    anchors.left: priceBackground.right
+    anchors.top: priceBackground.top
+    image-source: images/confirm_button
+    @onClick: modules.game_stars.sendConfirmUpgradeStar()
+
+    UIWidget
+      id: confirmIcon
+      size: 39 29
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      image-source: images/confirm_icon
+      phantom: true

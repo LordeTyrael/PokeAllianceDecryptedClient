@@ -1,0 +1,205 @@
+GuildShopItem < UIWidget
+  size: 190 95
+  image-source: images/guild_shop/item_background
+
+  $focus:
+    image-source: images/guild_shop/selected_item_background
+
+  UIWidget
+    id: item_icon
+    size: 33 33
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 8
+    image-source: images/guild_shop/item_icon_background
+    phantom: true
+
+  UIItem
+    id: item
+    size: 32 32
+    anchors.centerIn: item_icon
+    phantom: true
+
+  Label
+    id: itemName
+    text-auto-resize: true
+    font: poppins semibold 12
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: item_icon.bottom
+    margin-top: 5
+    phantom: true
+
+  UIWidget
+    id: priceInfo
+    size: 35 24
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: itemName.bottom
+    margin-top: 3
+    phantom: true
+
+    UIItem
+      size: 24 24
+      item-id: 39993
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      phantom: true
+
+    Label
+      id: itemPrice
+      text-auto-resize: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      phantom: true
+
+UIWindow
+  id: mainWindow
+  size: 650 500
+  focusable: false
+
+  NewOpaqueWindow
+    id: background
+    anchors.fill: parent
+    phantom: true
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 282 36
+    image-source: images/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 39 30
+      image-source: new_images/base_icon
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Guild Shop")
+
+  ScrollablePanel
+    id: shopPanel
+    size: 605 320
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: base_name.bottom
+    margin-top: 20
+    vertical-scrollbar: shopPanelScrollBar
+    image-border: 15
+    image-source: /images/newui/background_3
+    auto-focus: none
+    padding: 10
+    layout:
+      type: grid
+      num-columns: 3
+      cell-size: 190 95
+      cell-spacing: 7
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: shopPanelScrollBar
+    anchors.top: shopPanel.top
+    anchors.bottom: shopPanel.bottom
+    anchors.left: shopPanel.right
+    margin-left: 7
+    step: 30
+    pixels-scroll: true
+
+  NewBlueButton
+    id: confirmButton
+    anchors.right: shopPanel.right
+    anchors.bottom: parent.bottom
+    margin-bottom: 30
+    !text: tr("Buy")
+    @onClick: modules.game_guild.buyGuildItemShop()
+
+  UIItem
+    id: coinItem
+    size: 32 32
+    anchors.verticalCenter: coinCount.verticalCenter
+    anchors.right: coinCount.left
+    margin-right: 7
+
+  Label
+    id: coinCount
+    text-auto-resize: true
+    font: poppins semibold 12
+    anchors.bottom: confirmButton.top
+    anchors.right: shopPanel.right
+    margin-bottom: 20
+
+  UIWidget
+    id: buyPanel
+    size: 220 90
+    anchors.left: shopPanel.left
+    anchors.top: shopPanel.bottom
+    margin-top: 10
+
+    NewOpaqueWindow
+      anchors.fill: parent
+
+    UIWidget
+      id: item_icon
+      size: 33 33
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-top: 8
+      margin-left: 10
+      image-source: images/guild_shop/item_icon_background
+
+    UIItem
+      id: item
+      size: 32 32
+      anchors.centerIn: item_icon
+
+    Label
+      id: itemName
+      anchors.verticalCenter: item_icon.verticalCenter
+      anchors.left: item_icon.right
+      margin-left: 5
+      font: poppins semibold 12
+      text-auto-resize: true
+
+    UIItem
+      id: itemCost
+      size: 24 24
+      anchors.top: item_icon.bottom
+      margin-top: 5
+      anchors.left: parent.left
+      margin-left: 10
+
+    Label
+      id: costDescription
+      text-auto-resize: true
+      font: poppins semibold 12
+      anchors.verticalCenter: itemCost.verticalCenter
+      anchors.left: itemCost.right
+      margin-left: 5
+
+    AllianceHorizontalScrollBar
+      id: quantityScroll
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: itemCost.bottom
+      margin-top: 5
+      margin-left: 10
+      margin-right: 10
+      minimum: 1
+      maximum: 100
+      step: 1
+      @onValueChange: modules.game_guild.onQuantityShopValueChange(self:getValue())
+
+  NewRedCloseButton
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_guild.closeShopWindow()

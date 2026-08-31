@@ -1,0 +1,9 @@
+Module
+  name: game_task
+  description: tasks
+  author: Tanjiro Mamada
+  website: Tanjiro Mamada
+  sandboxed: true
+  scripts: [ tasks ]
+  @onLoad: init()
+  @onUnload: terminate()

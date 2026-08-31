@@ -1,0 +1,9 @@
+Module
+  name: game_onlineshop
+  description: Venda de itens por onlinePoints
+  author: Tanjiro Mamada
+  website:
+  sandboxed: true
+  scripts: [ onlineshop ]
+  @onLoad: init()
+  @onUnload: terminate()

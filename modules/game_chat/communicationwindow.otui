@@ -1,0 +1,132 @@
+// Still a Label so the module keeps using setText/getText on the row itself; the remove button is
+// a child that only shows on the selected row.
+IgnoreListLabel < Label
+  font: poppins semibold 12
+  color: #e9eefb
+  background-color: alpha
+  text-offset: 6 0
+  height: 22
+  focusable: true
+  phantom: false
+
+  $focus:
+    background-color: #3aa6f633
+    color: #ffffff
+
+  NewRedCloseButton
+    id: removeButton
+    size: 14 14
+    visible: false
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 6
+
+NewOpaqueWindow
+  id: communicationWindow
+  size: 380 420
+  anchors.centerIn: parent
+  focusable: true
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 220 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr("Ignore List")
+
+  NewRedCloseButton
+    id: buttonCancel
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+
+  PoppinsSemibold12
+    id: listLabel
+    color: #a0b0c0
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 18
+    margin-left: 15
+    !text: tr("Ignored Players:")
+
+  // Buttons first: everything above anchors upward from them, so no pair ever points at each other.
+  // A cycle here does not warn, it takes the client down (see the anchors note in ui-conventions).
+  AllianceStraightBlueButton
+    id: buttonSave
+    size: 120 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr("Save")
+
+  AllianceStraightBlueButton
+    id: buttonIgnoreAdd
+    size: 90 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.right: parent.right
+    anchors.bottom: buttonSave.top
+    margin-right: 15
+    margin-bottom: 10
+    !text: tr("Add")
+
+  TextEdit
+    id: ignoreNameEdit
+    height: 30
+    font: poppins semibold 12
+    color: white
+    text-offset: 8 0
+    max-length: 32
+    image-source: ""
+    background-color: #0d1220
+    border: 1 #7896dc29
+    anchors.left: parent.left
+    anchors.right: buttonIgnoreAdd.left
+    anchors.verticalCenter: buttonIgnoreAdd.verticalCenter
+    margin-left: 15
+    margin-right: 8
+
+    $focus:
+      border: 1 #468cebbf
+
+  // Scrollbar anchored to the WINDOW, not to the list it serves: the list already points at it
+  // through vertical-scrollbar, and anchoring back would close the loop.
+  AllianceVerticalScrollBar
+    id: ignoreListScrollBar
+    anchors.top: listLabel.bottom
+    anchors.bottom: buttonIgnoreAdd.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 15
+    margin-bottom: 10
+    step: 14
+    pixels-scroll: true
+
+  TextList
+    id: ignoreList
+    anchors.top: listLabel.bottom
+    anchors.left: parent.left
+    anchors.right: ignoreListScrollBar.left
+    anchors.bottom: buttonIgnoreAdd.top
+    margin-top: 8
+    margin-left: 15
+    margin-bottom: 10
+    vertical-scrollbar: ignoreListScrollBar
+    padding: 2
+    background-color: #0d1220
+    border: 1 #7896dc29
+    focusable: false

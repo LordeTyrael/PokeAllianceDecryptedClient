@@ -1,0 +1,85 @@
+NewOpaqueWindow
+  id: bagTitleWindow
+  size: 380 175
+  anchors.centerIn: parent
+  opacity: 0.9
+  focusable: true
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 240 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr('Set bag title')
+
+  NewRedCloseButton
+    id: buttonCancel
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+
+  Label
+    id: titleTitle
+    !text: tr('Title') .. ':'
+    font: poppins semibold 12
+    color: #a0b0c0
+    text-auto-resize: true
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 22
+    margin-left: 15
+
+  EntergameTextEdit
+    id: titleText
+    height: 25
+    font: poppins semibold 12
+    text-offset: 10 2
+    color: white
+    focusable: true
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    anchors.verticalCenter: titleTitle.verticalCenter
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 110
+    margin-right: 15
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  Label
+    id: showRealTitle
+    !text: tr('Show real bag name') .. ':'
+    font: poppins semibold 12
+    color: #a0b0c0
+    text-auto-resize: true
+    anchors.top: titleTitle.bottom
+    anchors.left: parent.left
+    margin-top: 22
+    margin-left: 15
+
+  CheckBox
+    id: checkBoxShowReal
+    size: 16 16
+    anchors.verticalCenter: showRealTitle.verticalCenter
+    anchors.left: showRealTitle.right
+    margin-left: 12
+
+  AllianceStraightBlueButton
+    id: buttonOK
+    size: 120 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr('Ok')

@@ -1,0 +1,113 @@
+ShopItemWidget < ShopItemCard
+  &priceIcon:
+    icon-source: @fa solid 16 f005
+    icon-color: #ffcc00
+
+NewOpaqueWindow
+  id: globalBuffShopWindow
+  anchors.centerIn: parent
+  size: 780 602
+  draggable: false
+  @onEscape: modules.game_globalbuff.hideShop()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/modules/store_ui/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 28
+      image-source: /images/modules/store_ui/base_icon
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr('Community Shop')
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_globalbuff.hideShop()
+
+  UIScrollArea
+    id: shopItemsPanel
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    anchors.right: shopScrollBar.left
+    anchors.bottom: shopSearchField.top
+    margin-top: 10
+    margin-left: 15
+    margin-right: 4
+    margin-bottom: 8
+    vertical-scrollbar: shopScrollBar
+    image-border: 15
+    image-source: /images/newui/background_3
+    auto-focus: none
+    padding: 8
+    layout:
+      type: grid
+      cell-size: 175 160
+      num-columns: 4
+      cell-spacing: 6
+      auto-spacing: true
+
+  AllianceVerticalScrollBar
+    id: shopScrollBar
+    anchors.top: base_name.bottom
+    anchors.right: parent.right
+    anchors.bottom: shopSearchField.top
+    margin-top: 10
+    margin-right: 15
+    margin-bottom: 8
+    step: 100
+    pixels-scroll: true
+
+  EntergameTextEdit
+    id: shopSearchField
+    text-offset: 35 2
+    placeholder-offset: 35 -2
+    size: 175 28
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin-bottom: 12
+    margin-left: 15
+    text-align: left
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    placeholder: Search Item
+    placeholder-color: #aaaaaa
+    @onTextChange: modules.game_globalbuff.onShopSearchChange()
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+    UIWidget
+      id: lupa
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 24 24
+      image-source: /images/game/icons/lupa
+
+  PoppinsSemibold14
+    id: shopPointsLabel
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 14
+    margin-right: 15
+    color: #ffcc00
+    !text: tr('Community Points: 0')

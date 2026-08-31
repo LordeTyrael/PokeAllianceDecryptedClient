@@ -1,0 +1,24 @@
+Font
+  type: ttf
+  family: poppins
+  default: true
+  styles:
+    regular:
+      file: poppins-regular
+    italic:
+      file: poppins-italic
+    light:
+      file: poppins-light
+    bold:
+      file: poppins-bold
+      outline-width: 1
+    rounded:
+      file: poppins-regular
+      outline-width: 1
+    semibold:
+      file: poppins-semibold
+      outline-width: 1.4
+      spacing: 4 -5
+    boldbordered:
+      file: poppins-bold
+      outline-width: 2

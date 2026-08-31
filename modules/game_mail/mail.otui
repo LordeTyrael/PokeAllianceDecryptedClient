@@ -1,0 +1,259 @@
+MailButton < UIButton
+  size: 122 22
+  font: poppins semibold 14
+  text-align: center
+
+  $hover !on:
+    cursor: pointer
+    opacity: 1.0
+
+  $!hover:
+    cursor: none
+    opacity: 0.85
+
+  $on !hover:
+    opacity: 0.5
+
+  $!on:
+    opacity: 1.0
+
+MailReward < UIWidget
+  size: 32 32
+  image-source: images/itemholder
+
+  UIItem
+    id: item
+    anchors.fill: parent
+    font: poppins rounded 13
+    virtual: true
+
+    $checked:
+      opacity: 0.5
+
+    $!checked:
+      opacity: 1.0
+
+  UIWidget
+    id: check
+    anchors.fill: parent
+    icon-source: @fa solid 16 f00c
+    icon-color: #56ff47ff
+    visible: false
+
+Mail < UIWidget
+  height: 72
+
+  $checked:
+    image-source: images/mailpanelhover
+
+  $hover:
+    cursor: pointer
+
+  $!hover !checked:
+    cursor: none
+    image-source: images/mailpanel
+
+  UIWidget
+    id: read
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 10
+    size: 36 36
+    phantom: true
+
+    $checked:
+      icon-source: @fa solid 36 f2b6
+      opacity: 0.5
+      icon-offset: 0 -5
+
+    $!checked:
+      icon-source: @fa solid 36 f0e0
+      opacity: 1.0
+      icon-offset: 0 -2
+
+  Label
+    id: title
+    anchors.verticalCenter: read.verticalCenter
+    anchors.left: read.right
+    anchors.right: parent.right
+    margin-left: 5
+    text-wrap: true
+    text-vertical-auto-resize: true
+    text-align: left
+    font: poppins bold 13
+
+  Label
+    id: date
+    anchors.top: read.bottom
+    anchors.left: read.left
+    anchors.right: read.right
+    margin-top: -3
+    font: poppins semibold 12
+    color: #7f7f7f
+    text-align: center
+    text-vertical-auto-resize: true
+
+  Label
+    id: endDate
+    anchors.top: date.top
+    anchors.right: parent.right
+    margin-right: 10
+    font: poppins semibold 12
+    color: #7f7f7f
+    text-auto-resize: true
+
+UIWindow
+  focusable: true
+  @onEscape: modules.game_mail.hide()
+  anchors.centerIn: parent
+  size: 816 547
+  image-source: images/background
+
+  UIWidget
+    id: topBar
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 1
+    size: 368 37
+    image-source: images/topbar
+    font: poppins bold 22
+    icon-source: images/icon
+    icon-align: left
+    icon-offset: 8 -2
+    text-align: left
+    text-offset: 50 3
+    !text: tr('Mailbox')
+
+  Panel
+    id: mailsPanel
+    anchors.left: parent.left
+    anchors.top: prev.bottom
+    size: 273 488
+    image-source: images/panel
+    margin: 10 0 0 10
+    padding: 4
+
+    ScrollablePanel
+      id: mails
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: next.left
+      vertical-scrollbar: mailScrollBar
+      padding: 5
+      layout:
+        type: verticalBox
+        spacing: 8
+
+    VerticalScrollBar
+      id: mailScrollBar
+      anchors.top: parent.top
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      step: 14
+      pixels-scroll: true
+
+  Panel
+    id: mailsContainer
+    anchors.top: prev.top
+    anchors.left: prev.right
+    anchors.right: parent.right
+    anchors.bottom: rewardsContainer.top
+
+    Panel
+      id: banner
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-left: 12
+      size: 507 100
+      image-source: images/banner
+      visible: false
+
+    Panel
+      id: header
+      anchors.top: banner.bottom
+      anchors.left: banner.left
+      anchors.right: banner.right
+      margin-top: 10
+      height: 42
+      visible: false
+
+      Label
+        id: title
+        anchors.top: parent.top
+        anchors.left: parent.left
+        font: poppins bold 20
+        text-align: left
+        text-auto-resize: true
+
+      Label
+        id: team
+        anchors.top: title.bottom
+        anchors.left: parent.left
+        color: #698fd4
+        !text: tr("PokeAlliance Team")
+
+      Label
+        id: date
+        anchors.top: team.top
+        anchors.right: parent.right
+        text-align: right
+        text-auto-resize: true
+
+    Label
+      id: description
+      anchors.top: header.bottom
+      anchors.left: header.left
+      anchors.right: header.right
+      margin-top: 10
+      font: poppins semibold 12
+      text-wrap: true
+      text-vertical-auto-resize: true
+      text-align: left
+
+  Panel
+    id: rewardsContainer
+    anchors.bottom: mailsPanel.bottom
+    anchors.left: mailsPanel.right
+    margin-left: 12
+    size: 507 40
+    image-source: images/rewardspanel
+    visible: false
+
+    Panel
+      id: rewards
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 3
+      height: 32
+      layout:
+        type: horizontalBox
+        fit-children: true
+        spacing: 2
+
+    MailButton
+      id: claim
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      margin-right: 10
+      image-source: images/greenbtn
+      !text: tr("Claim")
+
+      @onClick: modules.game_mail.claimReward()
+
+  UIButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    size: 20 20
+    image-source: images/close
+    margin: 5 5 0 0
+    !tooltip: tr("Close")
+
+    $hover:
+      cursor: pointer
+
+    $!hover:
+      cursor: none
+
+    @onClick: modules.game_mail.hide()

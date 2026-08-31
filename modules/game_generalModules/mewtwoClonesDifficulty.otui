@@ -1,0 +1,55 @@
+MewtwoDifficultyRow < UIWidget
+  size: 320 42
+
+  NewStraightBlueButton
+    id: select
+    size: 320 42
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    !text: tr("Easy — 30 min | Lv 150")
+
+  UIWidget
+    id: lockIcon
+    size: 18 18
+    anchors.right: select.right
+    anchors.verticalCenter: select.verticalCenter
+    margin-right: 8
+    image-source: mewtwoClones/lock_icon
+    visible: false
+
+NewPopupWindow
+  @onEscape: self:destroy()
+  id: mewtwoDifficultyWindow
+  size: 360 200
+  anchors.centerIn: parent
+  draggable: true
+
+  Label
+    id: title
+    font: poppins bold 16
+    !text: tr("Select Difficulty")
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 10
+    text-auto-resize: true
+
+  ScrollablePanel
+    id: diffArea
+    size: 330 170
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: title.bottom
+    margin-top: 8
+    layout:
+      type: grid
+      cell-spacing: 6
+      cell-size: 320 42
+      fit-children: true
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 6
+    margin-right: 6
+    @onClick: self:getParent():destroy()

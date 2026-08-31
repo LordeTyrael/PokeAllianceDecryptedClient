@@ -1,0 +1,104 @@
+UIWindow
+  size: 350 200
+  @onEnter: modules.game_spectate.confirmHost()
+  @onEscape: self:hide()
+  image-source: images/channel_open/background
+  anchors.centerIn: parent
+
+  UIWidget
+    id: titleBackground
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: parent.top
+    height: 26
+    image-source: images/channel_open/title_background
+    font: poppins semibold 14
+    !text: tr("TV Channel")
+    phantom: true
+    text-offset: 0 4
+
+  UIWidget
+    id: descriptionBackground
+    size: 36 36
+    anchors.left: parent.left
+    margin-left: 20
+    anchors.top: prev.bottom
+    margin-top: 15
+    image-source: images/channel_open/icon_background
+
+    UIWidget
+      id: descriptionIcon
+      size: 22 22
+      anchors.centerIn: parent
+      image-source: images/channel_open/edit
+
+  UITextEdit
+    id: description
+    anchors.left: prev.right
+    anchors.top: prev.top
+    size: 270 36
+    padding: 10
+    image-source: images/channel_open/text_base
+    font: poppins semibold 12
+    placeholder: Channel Name
+
+  UIWidget
+    id: passwordBackground
+    size: 36 36
+    anchors.left: descriptionBackground.left
+    anchors.top: descriptionBackground.bottom
+    margin-top: 10
+    image-source: images/channel_open/icon_background
+
+    UIWidget
+      id: lockIcon
+      size: 18 22
+      anchors.centerIn: parent
+      image-source: images/lock
+
+  UITextEdit
+    id: password
+    anchors.left: prev.right
+    anchors.top: prev.top
+    size: 270 36
+    padding: 10
+    image-source: images/channel_open/text_base
+    font: poppins semibold 12
+    placeholder: Empty for no Password
+    text-hidden: true
+
+    NewButton
+      id: viewButton
+      anchors.right: parent.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 28
+
+      UIWidget
+        size: 23 18
+        margin-right: 5
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        image-source: images/view
+        phantom: true
+
+  NewButton
+    anchors.top: prev.bottom
+    margin-top: 20
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-right: 80
+    size: 132 36
+    font: poppins semibold 12
+    !text: tr("Start Host")
+    @onClick: modules.game_spectate.confirmHost()
+    image-source: images/channel_open/base_blue
+
+  NewButton
+    anchors.top: prev.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    size: 132 36
+    margin-left: 80
+    !text: tr('Cancel')
+    @onClick: modules.game_spectate.cancelHost()
+    image-source: images/channel_open/base_red
+    font: poppins semibold 12

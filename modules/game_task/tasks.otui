@@ -1,0 +1,111 @@
+NpcPanel < NewSolidWindow
+  id: npcPanel
+  visible: true
+  size: 700 100
+
+  UICreature
+    id: outfit
+    size: 48 48
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 18
+    margin-left: 18
+    phantom: true
+    visible: true
+    scale: 1
+    old-scaling: true
+
+  NewButton
+    id: targetIcon
+    size: 16 16
+    anchors.right: outfit.right
+    anchors.top: outfit.top
+    image-source: images/target_icon
+    !tooltip: tr("Click to see where this NPC alives")
+
+  Label
+    id: npcName
+    font: poppins semibold 15
+    anchors.top: outfit.bottom
+    anchors.horizontalCenter: outfit.horizontalCenter
+    margin-top: 5
+    margin-left: 5
+    text-auto-resize: true
+
+CreaturePanel < UIWidget
+  id: creaturePanel
+  visible: true
+  anchors.top: outfit.top
+  margin-left: 20
+  size: 48 48
+
+  UICreature
+    id: creatureOutfit
+    size: 32 32
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 12
+    margin-right: 2
+    phantom: true
+    visible: true
+    old-scaling: true
+
+  Label
+    id: creatureCount
+    font: poppins semibold 15
+    anchors.top: creatureOutfit.bottom
+    anchors.right: creatureOutfit.right
+    margin.top: 2
+    text-auto-resize: true
+
+NewOpaqueWindow
+  id: mainTaskWindow
+  size: 801 405
+  draggable: true
+  anchors.centerIn: parent
+  @onEscape: modules.game_task.close()
+
+  Label
+    id: title
+    font: poppins semibold 22
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 10
+    !text: tr("Task Panel")
+    text-auto-resize: true
+
+  UIScrollArea
+    id: panelTasks
+    visible: true
+    size: 700 330
+    anchors.top: title.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    vertical-scrollbar: tasksBar
+    margin-top: 10
+    padding-top: 10
+    padding-bottom: 10
+
+    layout:
+      type: grid
+      cell-size: 700 100
+      num-columns: 1
+      cell-spacing: 5
+
+  AllianceVerticalScrollBar
+    id: tasksBar
+    anchors.top: panelTasks.top
+    anchors.bottom: panelTasks.bottom
+    anchors.left: panelTasks.right
+    margin-left: 15
+    margin-top: 15
+    margin-bottom: 15
+    step: 30
+    pixels-scroll: true
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_task.close()

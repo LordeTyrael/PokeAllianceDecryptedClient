@@ -1,0 +1,36 @@
+ConditionSquare < UICondition
+  size: 25 32
+  phantom: false
+
+  UIWidget
+    id: iconImage
+    size: 18 18
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 2
+    phantom: true
+
+  UIProgressRect
+    id: progressRect
+    anchors.fill: iconImage
+    background-color: #000000A0
+    percent: 100
+    phantom: true
+
+  Label
+    id: timeLabel
+    anchors.bottom: parent.bottom
+    width: 32
+    anchors.horizontalCenter: iconImage.horizontalCenter
+    text-align: center
+    font: poppins semibold 9
+    color: white
+    phantom: true
+    margin-bottom: -2
+    text-auto-resize: false
+
+ConditionBarPanel < Panel
+  layout:
+    type: horizontalBox
+    spacing: 2
+  height: 32

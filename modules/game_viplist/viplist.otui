@@ -1,0 +1,211 @@
+VipSectionLabel < UIWidget
+  height: 25
+  margin-top: 10
+  margin-bottom: 5
+  focusable: true
+  cursor: pointer
+  change-cursor-image: true
+
+  PoppinsSemibold12
+    id: sectionText
+    color: #AAAAAA
+    text-auto-resize: true
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    phantom: true
+
+  HorizontalSeparator
+    anchors.left: sectionText.right
+    anchors.right: sectionArrow.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    margin-right: 6
+    phantom: true
+
+  UIWidget
+    id: sectionArrow
+    size: 8 8
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    icon-source: @fa solid 8 f0d7
+    icon-color: #AAAAAA
+    phantom: true
+
+  $first:
+    margin-top: 5
+
+VipListItem < UIWidget
+  height: 38
+  phantom: false
+  focusable: true
+
+  UIWidget
+    id: playerIconClip
+    size: 32 32
+    phantom: true
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 10
+    image-source: /images/modules/circle_clip
+    image-size: 32 32
+    clip-transparency: true
+
+    UIWidget
+      id: playerIcon
+      anchors.fill: parent
+      phantom: true
+
+  GameLabel
+    id: playerName
+    height: 16
+    phantom: true
+    anchors.left: playerIconClip.right
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 5
+    text-auto-resize: true
+
+  UIWidget
+    id: starIcon
+    size: 12 12
+    anchors.left: playerName.right
+    anchors.verticalCenter: playerName.verticalCenter
+    margin-left: 4
+    image-source: /images/game/viplist/icons
+    image-rect: 0 0 12 12
+    image-clip: 12 0 12 12
+    visible: false
+
+  GameLabel
+    id: playerDescription
+    height: 14
+    font: poppins semibold 10
+    color: #888888
+    phantom: true
+    anchors.left: playerIconClip.right
+    anchors.top: playerName.bottom
+    anchors.right: parent.right
+    margin-left: 10
+    margin-top: 2
+    margin-right: 10
+
+  $first:
+    margin-top: 5
+
+UIMiniWindow
+  id: vipWindow
+  height: 282
+  @onClose: modules.game_viplist.onMiniWindowClose()
+  &save: true
+  &autoOpen: false
+  image-source: /images/general_ui/bordered_background
+  focusable: false
+  &minimizedHeight: 26
+  image-border: 12
+
+  ContainerMiniWindowTopbar
+    id: miniwindowTopBar
+    padding: 3
+
+  UIWidget
+    id: miniwindowIcon
+    icon-source: @fa solid 14 f500
+    icon-color: #269bf3
+    size: 14 14
+    anchors.left: miniwindowTopBar.left
+    margin-left: 6
+    anchors.verticalCenter: miniwindowTopBar.verticalCenter
+
+  Label
+    id: miniwindowName
+    text-auto-resize: true
+    anchors.left: miniwindowIcon.right
+    margin-left: 4
+    anchors.verticalCenter: miniwindowIcon.verticalCenter
+    anchors.right: optionsButton.left
+    margin-right: 2
+    font: poppins semibold 14
+    !text: tr('Friends')
+    text-offset: 0 4
+
+  NewButton
+    id: closeButton
+    anchors.top: miniwindowTopBar.top
+    anchors.right: miniwindowTopBar.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    image-source: /images/newui/miniwindow/close
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $pressed:
+      opacity: 0.75
+
+  NewButton
+    id: minimizeButton
+    anchors.right: closeButton.left
+    margin-right: 5
+    anchors.verticalCenter: closeButton.verticalCenter
+    size: 11 7
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 7 11 7
+
+  NewButton
+    id: lockButton
+    anchors.right: minimizeButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+    size: 13 15
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 0 13 15
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.right: lockButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 7
+
+  ResizeBorder
+    id: bottomResizeBorder
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 3
+    minimum: 48
+    margin-left: 3
+    margin-right: 3
+    background: #ffffff88
+
+  AllianceVerticalScrollBar
+    id: miniwindowScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 14
+    margin-top: 28
+    margin-bottom: 5
+    margin-right: 4
+    pixels-scroll: true
+
+  MiniWindowContents
+    layout: verticalBox
+    padding-left: 5
+    padding-right: 5
+    &onMousePress: modules.game_viplist.onVipListMousePress

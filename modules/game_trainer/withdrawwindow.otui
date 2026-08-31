@@ -1,0 +1,39 @@
+UIWindow
+  @onEscape: self:hide()
+  id: withdrawWindow
+  size: 267 143
+  anchors.centerIn: parent
+  visible: false
+  image-source: images/bg_withdraw
+  UIWidget
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: images/close
+    @onClick: self:getParent():hide()
+  UIWidget
+    id: label
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 40
+    !text: tr("Create a prepaid card.")
+  UIWidget
+    id: label_value
+    anchors.top: label.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("Value")
+    margin-top: 10
+  TextEdit
+    id: edit_value
+    size: 180 20
+    anchors.top: label_value.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+  UIWidget
+    id: confirm
+    anchors.top: edit_value.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    image-source: images/confirm_pix
+    !text: tr("Confirm")
+    @onClick: modules.game_trainer.doWithdraw()

@@ -1,0 +1,151 @@
+LanguageWidget < UIWidget
+  anchors.top: prev.bottom
+  anchors.left: prev.left
+  size: 282 36
+  padding: 8
+  image-source:
+
+  $focus:
+    image-source: /modules/client_entergame/new_images/language/active
+
+  &updateOnStates: |
+    function(self)
+      local children = self:getChildren()
+      for i=1,#children do
+        children[i]:setOn(self:isFocused())
+      end
+      if not self:isFocused() then
+        if self.selectConfirm then
+          self.selectConfirm:hide()
+          self.countryName:setColoredText({self.countryName:getText(), "white"})
+        end
+      end
+    end
+  @onFocusChange: self:updateOnStates()
+
+  UIWidget
+    id: countryIcon
+    size: 27 27
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+
+  Label
+    id: countryName
+    text-align: left
+    font: poppins semibold 14
+    anchors.left: countryIcon.right
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    margin-left: 10
+    text-auto-resize: true
+
+  UIWidget
+    id: selectConfirm
+    size: 12 9
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    visible: false
+    image-source: /modules/client_entergame/new_images/language/check
+
+UIWidget
+  id: background
+  anchors.fill: parent
+  focusable: false
+  image-source: /images/background
+  image-smooth: true
+  image-fixed-ratio: true
+  margin-top: 1
+
+  UIWidget
+    id: backgroundDegrade
+    width: 950
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    image-source: /modules/client_entergame/new_images/degrade
+    phantom: true
+
+  UILabel
+    id: clientVersionLabel
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    text-align: left
+    text-auto-resize: true
+    margin-left: 540
+    margin-bottom: 5
+    height: 30
+    padding: 2
+    textColor: "#7f8fa4"
+    font: poppins semibold 12
+
+  NewButton
+    id: configurationButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 5
+    margin-right: 5
+    size: 42 42
+    image-source: /modules/client_entergame/new_images/buttons/button
+    !tooltip: tr('Options')
+    @onClick: modules.client_options.toggle()
+
+    UIWidget
+      id: aditionalIcon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      phantom: true
+      size: 21 22
+      image-source: /modules/client_entergame/new_images/buttons/settings
+
+  NewButton
+    id: exitButton
+    anchors.top: prev.bottom
+    anchors.right: prev.right
+    margin-top: 8
+    size: 42 42
+    image-source: /modules/client_entergame/new_images/buttons/button
+    !tooltip: tr('Exit')
+    @onClick: g_app.exit()
+
+    UIWidget
+      id: aditionalIcon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      phantom: true
+      size: 22 19
+      image-source: /modules/client_entergame/new_images/buttons/logout
+
+  UIWidget
+    id: language
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 10
+    margin-right: 10
+    padding: 38
+    size: 357 254
+    image-source: /modules/client_entergame/new_images/language/base
+
+    LanguageWidget
+      id: en
+      anchors.top: parent.top
+      @onClick: modules.client_background.setLocale("en")
+
+    LanguageWidget
+      id: pt
+      anchors.top: prev.bottom
+      @onClick: modules.client_background.setLocale("pt")
+
+    LanguageWidget
+      id: es
+      anchors.top: prev.bottom
+      @onClick: modules.client_background.setLocale("es")
+
+    LanguageWidget
+      id: de
+      anchors.top: prev.bottom
+      @onClick: modules.client_background.setLocale("de")
+
+    LanguageWidget
+      id: pl
+      anchors.top: prev.bottom
+      @onClick: modules.client_background.setLocale("pl")

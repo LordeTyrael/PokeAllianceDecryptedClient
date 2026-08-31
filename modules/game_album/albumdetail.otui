@@ -1,0 +1,67 @@
+NewOpaqueWindow
+  id: albumDetailWindow
+  size: 340 470
+  anchors.centerIn: parent
+  focusable: true
+  visible: false
+  @onEscape: modules.game_album.closeDetail()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 260 36
+    image-source: /images/general_ui/name_base
+
+  Label
+    id: detailName
+    anchors.left: base_name.left
+    anchors.verticalCenter: base_name.verticalCenter
+    margin-left: 15
+    margin-top: 2
+    font: poppins semibold 16
+    color: #ffffff
+    text-auto-resize: true
+
+  NewRedCloseButton
+    id: detailClose
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_album.closeDetail()
+
+  UIWidget
+    id: detailSlot
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: base_name.bottom
+    margin-top: 22
+    size: 250 345
+    image-source: images/card_slot
+
+  UIWidget
+    id: detailImage
+    anchors.top: detailSlot.top
+    anchors.left: detailSlot.left
+    anchors.right: detailSlot.right
+    anchors.bottom: detailSlot.bottom
+    margin: 6
+    phantom: true
+
+  UIWidget
+    id: detailLock
+    size: 64 64
+    anchors.horizontalCenter: detailSlot.horizontalCenter
+    anchors.verticalCenter: detailSlot.verticalCenter
+    icon-source: @fa solid 60 f023
+    icon-color: #6b7b8d
+    icon-size: 60 60
+    phantom: true
+
+  Label
+    id: detailStatus
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 22
+    font: poppins bold 14
+    text-auto-resize: true

@@ -1,0 +1,7 @@
+Module
+  name: game_conditionicons
+  description: Condition icons (status effects) for player and active summon
+  sandboxed: true
+  scripts: [ uicondition, conditioninfo, conditionicons ]
+  @onLoad: init()
+  @onUnload: terminate()

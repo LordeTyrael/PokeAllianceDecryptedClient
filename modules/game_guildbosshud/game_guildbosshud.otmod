@@ -1,0 +1,9 @@
+Module
+  name: game_guildbosshud
+  description: Floating notification (top-left of the map) when the guild boss is open
+  author: Danvrb
+  sandboxed: true
+  dependencies: [ game_interface, game_guild ]
+  @onLoad: init()
+  @onUnload: terminate()
+  scripts: [ guildbosshud ]

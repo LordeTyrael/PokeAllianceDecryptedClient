@@ -1,0 +1,176 @@
+UIWidget
+  id: createCharacterWindow
+  size: 668 420
+  focusable: true
+  anchors.centerIn: parent
+  image-source: images/redesign/card-frame
+  image-border: 18
+
+  UIWidget
+    id: artPanel
+    width: 266
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    phantom: true
+    clip-transparency: true
+    image-source: images/redesign/card-art-mask
+    image-border: 18
+
+    UIWidget
+      anchors.fill: parent
+      phantom: true
+      image-source: images/redesign/card-art
+      image-clip: 0 52 266 420
+
+  UIWidget
+    id: logo
+    size: 76 76
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 30
+    margin-left: 26
+    image-source: /images/pka/logo
+    image-smooth: true
+    phantom: true
+
+  PkaArtSubtitle
+    id: artSubtitle
+    width: 214
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 26
+    margin-bottom: 30
+    !text: tr('Pick a name, choose your side and step into the world.')
+
+  PkaArtTitle
+    id: artTitle
+    width: 214
+    anchors.left: parent.left
+    anchors.bottom: artSubtitle.top
+    margin-left: 26
+    margin-bottom: 8
+    !text: tr('Create your character')
+
+  PkaCardTitle
+    id: title
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 24
+    margin-left: 296
+    !text: tr('Create Character')
+
+  PkaCardSubtitle
+    id: subtitle
+    anchors.top: title.bottom
+    anchors.left: title.left
+    margin-top: 2
+    !text: tr('Choose how the world will know you.')
+
+  PkaFieldLabel
+    id: characterNameLabel
+    anchors.top: subtitle.bottom
+    anchors.left: parent.left
+    margin-top: 16
+    margin-left: 296
+    !text: tr('CHARACTER NAME')
+
+  PkaInput
+    id: characterNameTextEdit
+    height: 44
+    text-offset: 13 13
+    placeholder-offset: 13 13
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+
+  PkaFieldLabel
+    id: genderLabel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 296
+    !text: tr('CHARACTER GENDER')
+
+  PkaGenderSegment
+    id: maleSegment
+    width: 166
+    on: true
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 6
+    margin-left: 296
+    !text: tr('Male')
+    @onClick: CreateCharacter.selectGender('Male')
+
+    UIWidget
+      id: icon
+      size: 16 16
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: -40
+      icon-source: @fa solid 15 f222
+      icon-color: #6fb6fb
+      phantom: true
+
+  PkaGenderSegment
+    id: femaleSegment
+    anchors.top: genderLabel.bottom
+    anchors.left: maleSegment.right
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 9
+    margin-right: 30
+    !text: tr('Female')
+    @onClick: CreateCharacter.selectGender('Female')
+
+    UIWidget
+      id: icon
+      size: 16 16
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: -46
+      icon-source: @fa solid 15 f221
+      icon-color: #d78fc0
+      phantom: true
+
+  PkaFieldLabel
+    id: worldLabel
+    anchors.top: maleSegment.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 296
+    !text: tr('WORLD')
+
+  PkaWorldCombo
+    id: worlds
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+
+  PkaGhostButton
+    id: backButton
+    size: 84 46
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin-bottom: 28
+    margin-left: 296
+    !text: tr('Back')
+    @onClick: CreateCharacter.doOpenCharacterList()
+
+  PkaPrimaryButton
+    id: confirmButton
+    anchors.bottom: parent.bottom
+    anchors.left: backButton.right
+    anchors.right: parent.right
+    margin-bottom: 28
+    margin-left: 9
+    margin-right: 30
+    !text: tr('Create Character')
+    @onClick: CreateCharacter.doCreateCharacter()

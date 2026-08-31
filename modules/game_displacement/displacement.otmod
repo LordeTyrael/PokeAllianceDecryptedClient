@@ -1,0 +1,9 @@
+Module
+  name: game_displacement
+  description: Ditto Memory
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ displacement ]
+  @onLoad: init()
+  @onUnload: terminate()

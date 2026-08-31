@@ -1,0 +1,9 @@
+Module
+  name: game_depotstash
+  description: DepotStash
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ depotstash ]
+  @onLoad: init()
+  @onUnload: terminate()

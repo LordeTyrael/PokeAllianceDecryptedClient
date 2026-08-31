@@ -1,0 +1,42 @@
+UIWindow
+  id: store
+  size: 300 150
+  anchors.centerIn: parent
+  image-source: /images/ui/newpanel2
+  opacity: 0.9
+  @onEscape: modules.game_store.hideChangeNameOption()
+
+  Label
+    id: username
+    !text: tr("New Name")
+    font: sans-bold-16px
+    text-align: center
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 15
+    text-auto-resize: true
+    margin-bottom: 2
+
+  EntergameTextEdit
+    id: changeNameTextEdit
+    text-align: center
+    text-offset: 0 15
+    size: 248 36
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 15
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  NewButton
+    id: confirmChangeName
+    size: 150 32
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 15
+    image-source: /images/newui/btnblue_small
+    !text: tr("Confirm")
+    @onClick: modules.game_store.confirmChangeName()

@@ -1,0 +1,31 @@
+MainWindow
+  id: nickGuildWindow
+  !text: tr('Insert Nick')
+  height: 175
+  width: 260
+  visible: false
+  Label
+    id: nickGuildLabel
+    !text: tr('Enter your new nick')
+    anchors.top: parent.top
+    anchors.left: parent.left
+  TextEdit
+    id: nickGuildText
+    anchors.top: nickGuildLabel1.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Button
+    id: buttonCancel
+    !text: tr('Cancel')
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: modules.game_guild.closeGuildPanels()
+  Button
+    id: buttonOk
+    !text: tr('Ok')
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: modules.game_guild.changeNick()

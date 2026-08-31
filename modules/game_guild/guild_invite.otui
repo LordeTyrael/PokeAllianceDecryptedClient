@@ -1,0 +1,56 @@
+NewOpaqueWindow
+  id: guild_invite
+  size: 252 130
+  visible: false
+  focusable: true
+
+  UIWidget
+    id: window
+    margin-right: 20
+    margin-left: 20
+    margin-bottom: 20
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left  
+
+    Label
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalcenter
+      !text: tr("Invite Player")      
+      text-align: horizontal
+      text-auto-resize: true
+      font: poppins semibold 18
+      margin-top: 10
+
+    EntergameTextEdit
+      id: name
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: prev.bottom
+      margin-top: 20
+      font: poppins semibold 12
+      text-offset: 14 2
+      focusable: true
+      color: white
+      image-source: /modules/client_entergame/images/labelbox_noselect
+
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    AllianceStraightBlueButton
+      id: button
+      !text: tr('Invite')
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 15
+      size: 100 20
+      @onClick: inviteSubmit()
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: inviteClose()

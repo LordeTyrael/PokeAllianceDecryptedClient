@@ -1,0 +1,27 @@
+CountLabel < UILabel
+  font: verdana-11px-antialised
+  color: #ffffff
+  size: 28 28
+  text-auto-resize: true
+  phantom: true
+  focusable: false
+
+LootItem < Item
+  size: 32 32
+  virtual: true
+  margin: 1 0 0 1
+  phantom: true
+  focusable: false
+  image-source: ~
+
+HeadlessWindow
+  id: lootList
+  phantom: true
+  focusable: false
+  draggable: false
+  image-color: #ffffffee
+  size: 64 64
+  margin-top: 42
+  anchors.horizontalCenter: gameMapPanel.horizontalCenter
+  anchors.top: gameMapPanel.top
+  image-source: ~

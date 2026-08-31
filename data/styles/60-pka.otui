@@ -1,0 +1,132 @@
+NewRedButton < UIWidget
+  image-border: 15
+  image-border-left: 40
+  image-border-right: 40
+  image-source: /images/newui/btnred_small
+  size: 100 32
+  textColor: #ffffff
+  cursor: pointer
+
+NewGreenButton < UIWidget
+  image-border: 15
+  image-border-left: 40
+  image-border-right: 40
+  image-source: /images/newui/btngreen_small
+  size: 100 32
+  textColor: #ffffff
+  cursor: pointer
+
+NewBlueButton < UIWidget
+  image-border: 15
+  image-border-left: 40
+  image-border-right: 40
+  image-source: /images/newui/btnblue_small
+  size: 100 32
+  textColor: #ffffff
+  cursor: pointer
+
+NewStraightBlueButton < UIWidget
+  image-border: 4
+  image-source: /images/newui/blueStraight
+  size: 100 32
+  textColor: #ffffff
+  cursor: pointer
+
+NewStraightGrayButton < UIWidget
+  image-border: 4
+  image-source: /images/newui/grayStraight
+  size: 100 32
+  textColor: #ffffff
+  cursor: pointer
+
+NewStraightGreenButton < UIWidget
+  image-border: 4
+  image-source: /images/newui/greenStraight
+  size: 100 32
+  textColor: #ffffff
+  cursor: pointer
+
+NewSolidWindow < UIWindow
+  image-border: 32
+  image-source: /images/newui/background
+
+NewOpaqueWindow < UIWindow
+  image-border: 15
+  image-source: /images/newui/background_3
+  focusable: true
+
+NewPopupWindow < UIWindow
+  image-border: 15
+  image-source: /images/newui/background_popup
+  
+NewCloseButton < UIWidget
+  size: 11 11
+  image-source: /images/newui/miniwindow/close
+  cursor: pointer
+
+NewRedCloseButton < UIWidget
+  size: 20 20
+  image-source: /images/newui/close
+  cursor: pointer
+
+SearchableHint < UIWidget
+  size: 20 20
+  icon-source: @fa solid 14 f002
+  icon-color: #8fb7d6
+
+AllianceMessageBoxWindow < NewOpaqueWindow
+  size: 400 200
+  anchors.centerIn: parent
+  focusable: true
+  
+AllianceTitle < Label
+  id: title
+  anchors.horizontalCenter: parent.horizontalCenter
+  anchors.top: parent.top
+  margin-top: 5
+  font: poppins bold 30
+  text-align: center
+  text-auto-resize: true
+  textColor: #269bf3
+
+AllianceLabel < Label
+  id: messageBoxLabel
+  anchors.horizontalCenter: parent.horizontalCenter
+  anchors.top: title.bottom
+  margin-top: 15
+  text-wrap: true
+  text-align: center
+  text-auto-resize: true
+  font: poppins semibold 14
+
+AllianceStraightBlueButton < UIWidget
+  image-border: 4
+  image-source: /images/newui/blueStraight
+  size: 100 32
+  textColor: #ffffff
+  cursor: pointer
+
+AllianceSoftBlueButton < UIWidget
+  size: 100 32
+  text-align: center
+  textColor: #ffffff
+  cursor: pointer
+  image-source: /images/newui/blueSoft
+  image-border: 4
+
+AllianceBoxButtonHolder < UIWidget
+  id: buttonHolder
+  margin-bottom: 10
+  anchors.bottom: parent.bottom
+
+AllianceSeparator < UIWidget
+  size: 150 2
+  image-source: /images/modules/separator
+  margin-top: 5
+
+AllianceSoftBlackButton < UIWidget
+  size: 100 32
+  image-border: 15
+  image-source: /images/newui/background_3
+  focusable: false
+  cursor: pointer

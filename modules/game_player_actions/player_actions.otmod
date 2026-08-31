@@ -1,0 +1,9 @@
+Module
+  name: game_player_actions
+  description: Player action hotkeys (e.g. Fishing Rod) — bindable via Hotkey Manager.
+  author: PokeAlliance team
+  website: none
+  scripts: [ player_actions ]
+  sandboxed: true
+  @onLoad: init()
+  @onUnload: terminate()

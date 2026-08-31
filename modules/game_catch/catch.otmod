@@ -1,0 +1,9 @@
+Module
+  name: game_catch
+  description: First time the player captured a pokemon
+  author: PokeAlliance
+  website: http://pokealliance.com.br
+  sandboxed: true
+  scripts: [ catch ]
+  @onLoad: init()
+  @onUnload: terminate()

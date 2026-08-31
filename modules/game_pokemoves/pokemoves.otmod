@@ -1,0 +1,10 @@
+Module
+  name: game_pokemoves
+  description: pokemon movebar
+  author: Danvrb
+  sandboxed: true
+  website: none
+  dependencies: [ client_hotkeys, game_chat, game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()
+  scripts: [ pokemoves ]

@@ -1,0 +1,598 @@
+// ===== Sub-estilos de linha =====
+HuntPortrait < UIWidget
+  size: 44 44
+
+  UIWidget
+    id: circle
+    size: 40 40
+    anchors.centerIn: parent
+    image-source: /images/modules/circle_clip
+    image-size: 40 40
+    clip-transparency: true
+    phantom: true
+
+    UIWidget
+      id: sprite
+      anchors.fill: parent
+      phantom: true
+
+    UICreature
+      id: creature
+      anchors.fill: parent
+      fixed-creature-size: true
+      old-scaling: true
+      phantom: true
+
+ElementDot < UIWidget
+  size: 8 8
+  phantom: true
+
+HuntFilterButton < NewStraightGrayButton
+  height: 30
+  font: poppins semibold 11
+  color: #c8d2da
+  text-align: center
+
+// tooltip estilizado padrão da casa (mesmo visual do pokedex/poketask/minimap) — o setTooltip(string)
+// cru usa um label global que renderiza quebrado neste fork
+PokeNameTooltip < UITooltip
+  width: 120
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 6
+  phantom: true
+  layout: verticalBox
+    fit-children: true
+
+  Label
+    id: nameLabel
+    font: poppins semibold 11
+    color: #ffffff
+    text-align: center
+    height: 16
+
+HuntRow < UIWidget
+  size: 660 80
+  // card da Pokédex (36x36, 9-slice de centro chapado): estica uniforme em qualquer tamanho —
+  // o bordered_background (194x238, arte no centro) distorcia esticado pra 660x80
+  image-source: /modules/game_pokedex/images/ui/card
+  image-border: 12
+  focusable: true
+
+  &updateSelected: |
+    function(self)
+      local focused = self:isFocused()
+      self:setImageColor(focused and '#a8c8f0' or '#ffffff')
+      local name = self:recursiveGetChildById('huntName')
+      if name then name:setColor(focused and '#4aa3ff' or '#ffffff') end
+    end
+  @onFocusChange: self:updateSelected()
+
+  UIWidget
+    id: star
+    size: 16 16
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 10
+    icon-source: @fa solid 15 f005
+    icon-color: #55606b
+
+  UIWidget
+    id: portraits
+    anchors.left: star.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    height: 44
+    width: 150
+    layout:
+      type: horizontalBox
+      spacing: 4
+
+  UIWidget
+    id: info
+    anchors.left: portraits.right
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: rightCol.left
+    margin-left: 14
+    margin-right: 10
+    phantom: true
+
+    Label
+      id: huntName
+      font: poppins semibold 14
+      color: #ffffff
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 18
+      text-auto-resize: true
+      phantom: true
+
+    UIWidget
+      id: wildBadge
+      size: 84 16
+      anchors.left: huntName.right
+      anchors.verticalCenter: huntName.verticalCenter
+      margin-left: 8
+      image-source: /images/general_ui/bordered_background
+      image-border: 5
+      image-color: #2f6b34
+      visible: false
+      phantom: true
+
+      Label
+        anchors.centerIn: parent
+        font: poppins semibold 10
+        color: #6be07a
+        text: WILDSCAPE
+        text-auto-resize: true
+        phantom: true
+
+    Label
+      id: continent
+      font: poppins semibold 11
+      color: #9fb0bd
+      anchors.top: huntName.bottom
+      anchors.left: parent.left
+      margin-top: 6
+      text-auto-resize: true
+      phantom: true
+
+    UIWidget
+      id: dots
+      height: 8
+      anchors.left: continent.right
+      anchors.verticalCenter: continent.verticalCenter
+      margin-left: 10
+      width: 120
+      phantom: true
+      layout:
+        type: horizontalBox
+        spacing: 4
+
+  UIWidget
+    id: rightCol
+    width: 90
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-right: 14
+    phantom: true
+
+    Label
+      id: level
+      font: poppins semibold 13
+      color: #ffffff
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 18
+      text-align: right
+      text-auto-resize: true
+      phantom: true
+
+    UIWidget
+      id: tierBadge
+      size: 64 18
+      anchors.top: level.bottom
+      anchors.right: parent.right
+      margin-top: 8
+      image-source: /images/general_ui/bordered_background
+      image-border: 5
+      phantom: true
+
+      Label
+        id: tierLabel
+        anchors.centerIn: parent
+        margin-left: 8
+        margin-right: 8
+        font: poppins semibold 12
+        color: #c8d2da
+        text-auto-resize: true
+        phantom: true
+
+// ===== Janela =====
+NewOpaqueWindow
+  id: huntFinderWindow
+  size: 940 640
+  // background_3 tem alpha 230 (~90%) por design — cor sólida por baixo torna a janela realmente opaca
+  background-color: #1c262f
+  @onEscape: modules.game_huntfinder.hide()
+  anchors.centerIn: parent
+  draggable: true
+  focusable: true
+
+  // ---- header ----
+  UIWidget
+    id: headerIcon
+    size: 34 34
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 14
+    margin-top: 12
+    image-source: /images/general_ui/bordered_background
+    image-border: 8
+    image-color: #3b82c4
+    phantom: true
+
+    UIWidget
+      size: 20 20
+      anchors.centerIn: parent
+      icon-source: @fa solid 16 f05a
+      icon-color: #ffffff
+      phantom: true
+
+  PoppinsSemibold18
+    id: titleLabel
+    color: white
+    !text: tr("Hunt Finder")
+    anchors.left: headerIcon.right
+    anchors.top: parent.top
+    margin-left: 12
+    margin-top: 12
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: subtitleLabel
+    font: poppins semibold 10
+    color: #8391a0
+    !text: tr("Find the best hunting grounds for your level and element")
+    anchors.left: titleLabel.left
+    anchors.top: titleLabel.bottom
+    margin-top: 2
+    text-auto-resize: true
+    phantom: true
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 14
+    margin-right: 14
+    @onClick: modules.game_huntfinder.hide()
+
+  // ---- sidebar (filtros) ----
+  Panel
+    id: sidebar
+    width: 214
+    anchors.left: parent.left
+    anchors.top: headerIcon.bottom
+    anchors.bottom: parent.bottom
+    margin-left: 14
+    margin-top: 16
+    margin-bottom: 14
+
+    Label
+      id: lblSearch
+      font: poppins semibold 12
+      color: #6b7a87
+      text: SEARCH
+      anchors.top: parent.top
+      anchors.left: parent.left
+      text-auto-resize: true
+
+    EntergameTextEdit
+      id: searchEdit
+      height: 30
+      anchors.top: lblSearch.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 6
+      text-offset: 10 8
+      color: white
+      focusable: true
+      image-source: /modules/client_entergame/images/labelbox_noselect
+      placeholder: Hunt name...
+      placeholder-color: #6b7a87
+      placeholder-offset: 10 8
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    Label
+      id: lblLevel
+      font: poppins semibold 12
+      color: #6b7a87
+      text: LEVEL RANGE
+      anchors.top: searchEdit.bottom
+      anchors.left: parent.left
+      margin-top: 10
+      text-auto-resize: true
+
+    EntergameTextEdit
+      id: minEdit
+      height: 30
+      width: 99
+      anchors.top: lblLevel.bottom
+      anchors.left: parent.left
+      margin-top: 6
+      text-offset: 10 8
+      color: white
+      focusable: true
+      image-source: /modules/client_entergame/images/labelbox_noselect
+      placeholder: Min
+      placeholder-color: #6b7a87
+      placeholder-offset: 10 8
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    EntergameTextEdit
+      id: maxEdit
+      height: 30
+      width: 99
+      anchors.top: lblLevel.bottom
+      anchors.right: parent.right
+      margin-top: 6
+      text-offset: 10 8
+      color: white
+      focusable: true
+      image-source: /modules/client_entergame/images/labelbox_noselect
+      placeholder: Max
+      placeholder-color: #6b7a87
+      placeholder-offset: 10 8
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    Label
+      id: lblUsed
+      font: poppins semibold 12
+      color: #6b7a87
+      text: POKÉMON USED
+      anchors.top: minEdit.bottom
+      anchors.left: parent.left
+      margin-top: 10
+      text-auto-resize: true
+
+    EntergameTextEdit
+      id: usedEdit
+      height: 30
+      anchors.top: lblUsed.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 6
+      text-offset: 10 8
+      color: white
+      focusable: true
+      image-source: /modules/client_entergame/images/labelbox_noselect
+      placeholder: e.g. Magmar
+      placeholder-color: #6b7a87
+      placeholder-offset: 10 8
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    Label
+      id: usedHelp
+      font: poppins semibold 10
+      color: #5c6773
+      height: 28
+      !text: tr("Shows hunts your Pokémon is strong against")
+      anchors.top: usedEdit.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 4
+      text-wrap: true
+
+    Label
+      id: lblTarget
+      font: poppins semibold 12
+      color: #6b7a87
+      text: TARGET POKÉMON
+      anchors.top: usedHelp.bottom
+      anchors.left: parent.left
+      margin-top: 12
+      text-auto-resize: true
+
+    EntergameTextEdit
+      id: targetEdit
+      height: 30
+      anchors.top: lblTarget.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 6
+      text-offset: 10 8
+      color: white
+      focusable: true
+      image-source: /modules/client_entergame/images/labelbox_noselect
+      placeholder: e.g. Dratini
+      placeholder-color: #6b7a87
+      placeholder-offset: 10 8
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    Label
+      id: lblElement
+      font: poppins semibold 12
+      color: #6b7a87
+      text: TARGET ELEMENT
+      anchors.top: targetEdit.bottom
+      anchors.left: parent.left
+      margin-top: 10
+      text-auto-resize: true
+
+    OptionsComboBox
+      id: elementCombo
+      height: 30
+      anchors.top: lblElement.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 6
+
+    Label
+      id: lblTier
+      font: poppins semibold 12
+      color: #6b7a87
+      text: SHINY TIER
+      anchors.top: elementCombo.bottom
+      anchors.left: parent.left
+      margin-top: 10
+      text-auto-resize: true
+
+    OptionsComboBox
+      id: tierCombo
+      height: 30
+      anchors.top: lblTier.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 6
+
+    Label
+      id: lblWild
+      font: poppins semibold 12
+      color: #6b7a87
+      text: WILDSCAPE
+      anchors.top: tierCombo.bottom
+      anchors.left: parent.left
+      margin-top: 10
+      text-auto-resize: true
+
+    UIWidget
+      id: wildToggle
+      height: 30
+      anchors.top: lblWild.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 6
+      layout:
+        type: horizontalBox
+        spacing: 6
+
+      HuntFilterButton
+        id: wildAll
+        !text: tr("All")
+        width: 66
+      HuntFilterButton
+        id: wildYes
+        !text: tr("Yes")
+        width: 66
+      HuntFilterButton
+        id: wildNo
+        !text: tr("No")
+        width: 66
+
+    Label
+      id: lblContinent
+      font: poppins semibold 12
+      color: #6b7a87
+      text: CONTINENT
+      anchors.top: wildToggle.bottom
+      anchors.left: parent.left
+      margin-top: 10
+      text-auto-resize: true
+
+    OptionsComboBox
+      id: continentCombo
+      height: 30
+      anchors.top: lblContinent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 6
+
+    HuntFilterButton
+      id: resetButton
+      !text: tr("Reset filters")
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+
+  // ---- área principal ----
+  Label
+    id: sortLabel
+    font: poppins semibold 11
+    color: #9fb0bd
+    !text: tr("Sort by")
+    anchors.left: sidebar.right
+    anchors.top: headerIcon.bottom
+    margin-left: 16
+    margin-top: 22
+    text-auto-resize: true
+    phantom: true
+
+  OptionsComboBox
+    id: sortCombo
+    width: 130
+    height: 28
+    anchors.left: sortLabel.right
+    anchors.top: headerIcon.bottom
+    margin-left: 10
+    margin-top: 16
+
+  UIScrollArea
+    id: huntList
+    anchors.left: sidebar.right
+    anchors.top: sortCombo.bottom
+    anchors.right: parent.right
+    anchors.bottom: footerBar.top
+    margin-left: 16
+    margin-top: 12
+    margin-right: 28
+    margin-bottom: 10
+    vertical-scrollbar: huntScroll
+    layout:
+      type: grid
+      cell-size: 660 80
+      cell-spacing: 8
+      num-columns: 1
+
+  AllianceVerticalScrollBar
+    id: huntScroll
+    anchors.top: sortCombo.bottom
+    anchors.bottom: footerBar.top
+    anchors.right: parent.right
+    margin-top: 12
+    margin-bottom: 10
+    margin-right: 12
+    step: 20
+    pixels-scroll: true
+
+  // ---- rodapé ----
+  UIWidget
+    id: footerBar
+    height: 54
+    anchors.left: sidebar.right
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-left: 16
+    margin-right: 14
+    margin-bottom: 12
+    phantom: true
+
+    Label
+      id: selectedTitle
+      font: poppins semibold 10
+      color: #6b7a87
+      text: SELECTED HUNT
+      anchors.left: parent.left
+      anchors.top: parent.top
+      text-auto-resize: true
+      phantom: true
+
+    Label
+      id: selectedName
+      font: poppins semibold 12
+      color: #c8d2da
+      !text: tr("None - click a hunt to select it")
+      anchors.left: parent.left
+      anchors.top: selectedTitle.bottom
+      margin-top: 3
+      text-auto-resize: true
+      phantom: true
+
+    NewStraightBlueButton
+      id: trackButton
+      size: 150 32
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Track Enter Place")
+      font: poppins semibold 11
+      text-align: center
+      enabled: false
+
+    NewStraightBlueButton
+      id: showButton
+      size: 150 32
+      anchors.right: trackButton.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 10
+      !text: tr("Show Enter Place")
+      font: poppins semibold 11
+      text-align: center
+      enabled: false

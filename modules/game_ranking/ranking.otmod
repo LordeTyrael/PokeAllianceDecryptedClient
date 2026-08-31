@@ -1,0 +1,9 @@
+Module
+  name: game_ranking
+  description: game player ranking
+  author: pokealliance
+  website: https://github.com/pokealliance
+  sandboxed: true
+  scripts: [ ranking ]
+  @onLoad: init()
+  @onUnload: terminate()

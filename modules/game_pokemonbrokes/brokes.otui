@@ -1,0 +1,423 @@
+BlackButton < UIWidget
+  size: 139 32
+  image-source: /modules/game_guild/images/black_button
+  color: #ffffff
+
+TopBlackButton < UIWidget
+  size: 139 32
+  phantom: false
+  focusable: false
+  cursor: pointer
+
+PokeballBrokesWidget < UIWidget
+  size: 70 20
+  
+  UIWidget
+    id: icon
+    size: 16 16
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+
+  PoppinsSemibold12
+    id: count
+    anchors.left: prev.right
+    anchors.verticalCenter: prev.verticalCenter
+    margin-left: 2
+    size: 50 16
+    !text: tr("0")
+
+PokemonBrokeWidget < UIWidget
+  size: 800 70
+  anchors.top: parent.top
+  anchors.horizontalCenter: parent.horizontalCenter
+  image-source: /images/modules/pokemon_background
+
+  $!first:
+    anchors.top: prev.bottom
+    margin-top: 5
+
+  UIWidget
+    id: pokemonsInfo
+    size: 210 70
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    padding: 5
+
+    PoppinsSemibold12
+      id: pokemonName
+      anchors.left: parent.left
+      anchors.top: parent.top
+
+    PoppinsSemibold12
+      id: pokemonId
+      anchors.left: parent.left
+      anchors.top: prev.bottom
+  
+    NewButton
+      id: favoriteButton
+      size: 15 15
+      anchors.left: parent.left
+      anchors.top: prev.bottom
+      image-source: /images/modules/empty_star
+
+    UIWidget
+      id: trackerButton
+      size: 15 15
+      anchors.left: favoriteButton.right
+      anchors.verticalCenter: favoriteButton.verticalCenter
+      margin-left: 3
+      icon-source: @fa solid 12 f05b
+      icon-color: #666666
+      phantom: false
+      focusable: false
+      cursor: pointer
+
+    UIWidget
+      id: copyButton
+      size: 15 15
+      anchors.left: trackerButton.right
+      anchors.verticalCenter: trackerButton.verticalCenter
+      margin-left: 3
+      icon-source: @fa solid 12 f0c5
+      icon-color: #666666
+      phantom: false
+      focusable: false
+      cursor: pointer
+      !tooltip: tr('Copy brokes')
+
+      $hover:
+        icon-color: #55bbff
+
+    UIWidget
+      id: dexButton
+      size: 15 15
+      anchors.left: copyButton.right
+      anchors.verticalCenter: copyButton.verticalCenter
+      margin-left: 3
+      icon-source: @fa solid 12 f02d
+      icon-color: #666666
+      phantom: false
+      focusable: false
+      cursor: pointer
+      !tooltip: tr('Open in PokeDex')
+
+      $hover:
+        icon-color: #55bbff
+
+    UIWidget
+      id: pokemonBackground
+      size: 51 51
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      image-source: /images/modules/pokeball_background
+
+    UIWidget
+      id: pokemon
+      size: 50 50
+      anchors.centerIn: pokemonBackground
+
+  Panel
+    id: pokeballPanel
+    size: 490 50
+    anchors.left: pokemonsInfo.right
+    margin-left: 20
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    margin-top: 10
+
+    layout:
+      type: grid
+      cell-size: 70 20
+      num-columns: 7
+
+    PokeballBrokesWidget
+      id: pokeballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/pokeball
+
+    PokeballBrokesWidget
+      id: greatballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/greatball
+
+    PokeballBrokesWidget
+      id: superballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/superball
+
+    PokeballBrokesWidget
+      id: ultraballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/ultraball
+
+    PokeballBrokesWidget
+      id: safariballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/safariball
+
+    PokeballBrokesWidget
+      id: moonballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/moonball
+
+    PokeballBrokesWidget
+      id: tinkerballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/tinkerball
+
+    PokeballBrokesWidget
+      id: yumeballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/yumeball
+
+    PokeballBrokesWidget
+      id: duskballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/duskball
+
+    PokeballBrokesWidget
+      id: heavyballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/heavyball
+
+    PokeballBrokesWidget
+      id: janguruballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/janguruball
+
+    PokeballBrokesWidget
+      id: maguballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/maguball
+
+    PokeballBrokesWidget
+      id: netballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/netball
+
+    PokeballBrokesWidget
+      id: soraballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/soraball
+
+    PokeballBrokesWidget
+      id: taleballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/taleball
+
+    PokeballBrokesWidget
+      id: fastballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/fastball
+
+    PokeballBrokesWidget
+      id: premierballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/premierball
+
+    PokeballBrokesWidget
+      id: allianceballCount
+      &icon:
+        image-source: /modules/game_pokemonbrokes/images/allianceball
+
+  PoppinsSemibold12
+    id: totalPokeballs
+    size: 50 50
+    anchors.left: pokeballPanel.right
+    margin-left: 10
+    anchors.verticalCenter: pokeballPanel.verticalCenter
+    text-auto-resize: false
+    !text: tr("0")
+    text-align: center
+
+NewOpaqueWindow
+  width: 830
+  height: 530
+  anchors.centerIn: parent
+  phantom: false
+  focusable: true
+  @onEscape: modules.game_pokemonbrokes.toggle()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 260 36
+    image-source: /images/general_ui/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 32
+      image-source: /images/game/icons/brokes
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 4
+      font: poppins semibold 20
+      !text: tr("Pokéball Brokes")
+
+  UIWidget
+    id: header
+    size: 800 35
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: base_name.bottom
+    margin-top: 5
+    image-source: /images/modules/header_blue
+
+    UIWidget
+      id: topPokemonInfo
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.right: parent.right
+      height: 40
+  
+      TopBlackButton
+        id: pokemonId
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        margin-left: 10
+        size: 100 40
+        !text: tr("Pokémon")
+        font: poppins semibold 16
+  
+      TopBlackButton
+        id: pokemonName
+        anchors.verticalCenter: prev.verticalCenter
+        anchors.left: prev.right
+        margin-left: 250
+        size: 190 40
+        !text: tr("Pokéballs")
+        font: poppins semibold 16
+    
+      TopBlackButton
+        id: total
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        margin-right: 20
+        size: 60 40
+        !text: tr("Total")
+        text-align: center
+        font: poppins semibold 16
+
+  ScrollablePanel
+    id: pokemonBrokesPanel
+    size: 800 400
+    anchors.top: header.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    vertical-scrollbar: brokesPanelScrollBar
+
+  AllianceVerticalScrollBar
+    id: brokesPanelScrollBar
+    anchors.top: pokemonBrokesPanel.top
+    anchors.bottom: pokemonBrokesPanel.bottom
+    anchors.right: pokemonBrokesPanel.right
+    margin-top: 5
+    margin-right: 5
+    margin-bottom: 5
+    visible: true
+    step: 48
+    pixels-scroll: true
+
+  NewButton
+    id: prev
+    anchors.verticalCenter: pageIndex.verticalCenter
+    anchors.right: pageIndex.left
+    margin-right: 10
+    size: 16 26
+    @onClick: prevPage()
+    image-source: /images/modules/arrow_left
+
+  UIWidget
+    id: pageIndex
+    anchors.verticalCenter: searchPokemon.verticalCenter
+    anchors.horizontalCenter: parent.horizontalCenter
+    height: 32
+    text-auto-resize: true
+    font: poppins semibold 16
+    text-align: center
+    !text: tr("Page: 1/1")
+
+  NewButton
+    id: next
+    anchors.verticalCenter: pageIndex.verticalCenter
+    anchors.left: pageIndex.right
+    margin-left: 10
+    size: 16 26
+    @onClick: nextPage()
+    image-source: /images/modules/arrow_right
+
+  UIWidget
+    id: lupa
+    anchors.bottom: parent.bottom
+    margin-bottom: 10
+    size: 32 32
+    anchors.left: pokemonBrokesPanel.left
+    image-source: /images/game/icons/lupa
+
+  EntergameTextEdit
+    id: searchPokemon
+    text-offset: 0 0
+    size: 175 32
+    anchors.bottom: parent.bottom
+    margin-bottom: 10
+    text-align: center
+    anchors.left: lupa.right
+    margin-left: 5
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  UICheckBox
+    id: showAllPokeballs
+    anchors.right: showAllPokeballsText.left
+    margin-right: 5
+    anchors.verticalCenter: searchPokemon.verticalCenter
+    size: 38 20
+    image-source: /images/general_ui/icons/base_slider
+    cursor: pointer
+    checked: false
+
+    UIWidget
+      id: sliderButton
+      size: 16 16
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 2
+      image-source: /images/general_ui/icons/slider
+      phantom: true
+
+  PoppinsSemibold12
+    id: showAllPokeballsText
+    anchors.right: pokemonBrokesPanel.right
+    anchors.verticalCenter: lupa.verticalCenter
+    !text: tr("Show all Pokéball")
+
+  NewRedCloseButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_pokemonbrokes.hideBrokesWindow()
+
+  NewButton
+    id: openTrackerButton
+    anchors.bottom: parent.bottom
+    anchors.right: showAllPokeballs.left
+    anchors.verticalCenter: searchPokemon.verticalCenter
+    margin-right: 15
+    font: poppins semibold 12
+    !text: tr("Open Tracker")
+    opacity: 0.7
+    @onClick: modules.game_pokemonbrokes.openBrokesTracker()
+
+    $hover:
+      opacity: 1.0

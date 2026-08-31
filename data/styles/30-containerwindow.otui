@@ -1,0 +1,133 @@
+ContainerMiniWindow < UIMiniWindow
+  icon-rect: 6 7 16 16  
+  size: 194 146
+  text-align: topLeft
+  image-source: /images/general_ui/background
+  image-border-bottom: 50
+  focusable: false
+  &minimizedHeight: 26
+  draggable: true
+
+  $on:
+    image-border-bottom: 2
+
+  UIWidget
+    id: miniwindowBackground
+    anchors.fill: parent
+    image-source: /images/general_ui/background
+    opacity: 0.9
+    phantom: true
+
+  ContainerMiniWindowTopbar
+
+  UIItem
+    id: miniwindowIcon
+    size: 16 16
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 8
+    margin-top: 5
+    virtual: true
+
+  Label
+    id: miniwindowName
+    text-auto-resize: true
+    anchors.left: miniwindowIcon.right
+    margin-left: 4
+    anchors.verticalCenter: miniwindowIcon.verticalCenter
+    anchors.right: upButton.left
+    margin-right: 2
+    font: poppins semibold 14
+    !text: tr('Pokémon')
+    text-offset: 0 4
+
+  NewButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    image-source: /images/newui/miniwindow/close
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $pressed:
+      opacity: 0.75
+
+  NewButton
+    id: minimizeButton
+    anchors.right: closeButton.left
+    margin-right: 5
+    anchors.verticalCenter: closeButton.verticalCenter
+    size: 11 7
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 7 11 7
+
+  NewButton
+    id: lockButton
+    anchors.right: minimizeButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+    size: 13 15
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 0 13 15
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.right: lockButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+
+  ResizeBorder
+    id: bottomResizeBorder
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 3
+    minimum: 48
+    margin-left: 3
+    margin-right: 3
+    background: #ffffff88
+
+  AllianceVerticalScrollBar
+    id: miniwindowScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 14
+    margin-top: 28
+    margin-bottom: 5
+    margin-right: 4
+    pixels-scroll: true
+
+ContainerMiniWindowContents < ScrollablePanel
+  id: contentsPanel
+  anchors.fill: parent
+  margin-left: 5
+  margin-bottom: 3
+  margin-top: 27
+
+ContainerMiniWindowTopbar < UIWidget
+  id: miniwindowTopBar
+  anchors.top: parent.top
+  anchors.right: parent.right
+  anchors.left: parent.left
+  size: 258 26
+  phantom: true

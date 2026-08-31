@@ -1,0 +1,9 @@
+Module
+  name: game_incense
+  description: Painel para dar Claim em trocas falhadas
+  author: PokeAlliance
+  website: PokeAlliance.com.br
+  sandboxed: true
+  scripts: [ incense ]
+  @onLoad: init()
+  @onUnload: terminate()

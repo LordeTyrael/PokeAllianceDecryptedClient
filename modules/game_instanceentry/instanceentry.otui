@@ -1,0 +1,320 @@
+// Par noselect/select do entergame, o mesmo que o game_huntfinder usa: preenchimento chapado
+// (45/45/45 a153) na largura toda e uma listra de 8px na esquerda que muda de cor com a selecao.
+// image-border: 8 preserva a listra e estica so o preenchimento. Nao usar store_ui/category:
+// aquela arte tem o alpha caindo de 252 a 0 da esquerda para a direita, e o 9-slice estica essa
+// queda pela row inteira -- era o rastro lavado.
+InstanceRow < UIWidget
+  height: 42
+  image-source: /modules/client_entergame/images/labelbox_noselect
+  image-border: 8
+  opacity: 0.9
+  cursor: pointer
+  // focusable: false de proposito. Focar a row faz o recursiveFocus borbulhar ate o instanceContent
+  // virar o filho focado da ScrollablePanel, e o onChildFocusChange chama ensureChildVisible nele --
+  // como ele tem a altura de todas as rows, a lista pula pro fim no meio do clique e o release cai
+  // noutra row, matando o onClick. A selecao e' setChecked, nao depende de foco.
+  focusable: false
+
+  $hover:
+    opacity: 1.0
+
+  $checked:
+    image-source: /modules/client_entergame/images/labelbox_select
+    opacity: 1.0
+
+  Label
+    id: instanceName
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 13
+    font: poppins bold 13
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: playerCount
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 11
+    font: poppins semibold 13
+    text-auto-resize: true
+    phantom: true
+
+  UIWidget
+    id: playerIcon
+    size: 16 16
+    anchors.right: playerCount.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 9
+    image-source: /modules/game_dungeon/images/player
+    phantom: true
+
+// Marcador de porta no minimapa. A caveira e' o PADRAO e identifica area wildscape; area
+// iniciante troca o icone em runtime no instanceentry.lua (BEGINNER_ICON), a partir do tipo que o
+// servidor manda no catalogo de portas.
+// blackrounded = fa-sharp-solid-900 com contorno preto (data/fonts/fa.otfont): e' o estilo que o
+// mapflags.lua ja usa para os icones do minimapa, porque so ele fica legivel sobre o mapa.
+InstanceDoorMarker < UICreature
+  size: 48 48
+  phantom: true
+  focusable: false
+
+  UIWidget
+    id: skull
+    size: 16 16
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    icon-source: @fa blackrounded 14 f54c
+    icon-color: #f14c4c
+    phantom: true
+    focusable: false
+
+NewOpaqueWindow
+  id: instanceEntryWindow
+  size: 640 400
+  anchors.centerIn: parent
+  focusable: true
+  @onEscape: modules.game_instanceentry.hide()
+
+  UIWidget
+    id: titleBase
+    size: 368 36
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: /images/modules/store_ui/name_base
+
+    UIWidget
+      id: titleIcon
+      size: 32 28
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 12
+      image-source: /images/modules/store_ui/base_icon
+      phantom: true
+
+    Label
+      id: titleText
+      anchors.left: titleIcon.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 10
+      font: poppins semibold 20
+      text-auto-resize: true
+      !text: tr("Instance Entry")
+      phantom: true
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_instanceentry.hide()
+
+  UIWidget
+    id: creaturePanel
+    width: 204
+    anchors.left: parent.left
+    anchors.top: titleBase.bottom
+    anchors.bottom: parent.bottom
+    margin-left: 15
+    margin-top: 15
+    margin-bottom: 15
+    image-source: /images/modules/store_ui/background_category
+    image-border: 15
+
+    Label
+      id: sectionLabel
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 12
+      font: poppins semibold 11
+      textColor: #ffd672
+      text-auto-resize: true
+      !text: tr("CREATURE IN THIS AREA")
+      phantom: true
+
+    UIWidget
+      id: separator
+      size: 149 2
+      anchors.top: sectionLabel.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 7
+      image-source: /images/modules/separator
+      phantom: true
+
+    UIWidget
+      id: creatureFrame
+      size: 132 132
+      anchors.top: separator.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 7
+      image-source: /images/modules/store_ui/item_background
+      image-border: 14
+
+      UIWidget
+        id: pokeImage
+        size: 122 122
+        anchors.centerIn: parent
+        image-smooth: true
+        phantom: true
+
+    Label
+      id: creatureName
+      anchors.top: creatureFrame.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 7
+      margin-left: 8
+      margin-right: 8
+      font: poppins bold 17
+      text-align: center
+      text-wrap: true
+      text-auto-resize: true
+      phantom: true
+
+    Label
+      id: levelLabel
+      anchors.top: creatureName.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 6
+      font: poppins regular 11
+      textColor: #a9bad2
+      text-auto-resize: true
+      !text: tr("Recommended level")
+      phantom: true
+
+    Label
+      id: levelValue
+      anchors.left: levelLabel.right
+      anchors.verticalCenter: levelLabel.verticalCenter
+      margin-left: 6
+      font: poppins bold 14
+      textColor: #ffd672
+      text-auto-resize: true
+      phantom: true
+
+    UIWidget
+      id: areaTotal
+      height: 26
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-left: 11
+      margin-right: 11
+      margin-bottom: 11
+      image-source: /images/modules/store_ui/withdraw_background
+      image-border: 8
+
+      UIWidget
+        id: totalIcon
+        size: 16 16
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: totalText.left
+        margin-right: 6
+        image-source: /modules/game_dungeon/images/player
+        phantom: true
+
+      Label
+        id: totalText
+        anchors.centerIn: parent
+        margin-left: 11
+        font: poppins semibold 11
+        text-auto-resize: true
+        phantom: true
+
+  UIWidget
+    id: instancePanel
+    anchors.left: creaturePanel.right
+    anchors.right: parent.right
+    anchors.top: creaturePanel.top
+    anchors.bottom: creaturePanel.bottom
+    margin-left: 10
+    margin-right: 15
+    image-source: /images/modules/store_ui/background_items
+    image-border: 15
+
+    Label
+      id: listTitle
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 11
+      margin-left: 13
+      font: poppins semibold 15
+      text-auto-resize: true
+      !text: tr("Available Instances")
+      phantom: true
+
+    Label
+      id: listCount
+      anchors.verticalCenter: listTitle.verticalCenter
+      anchors.right: parent.right
+      margin-right: 13
+      font: poppins semibold 11
+      textColor: #ffd672
+      text-auto-resize: true
+      phantom: true
+
+    NewBlueButton
+      id: enterButton
+      size: 146 34
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-right: 13
+      margin-bottom: 12
+      font: poppins bold 14
+      text-align: center
+      !text: tr("Enter")
+      !tooltip: tr("Enter selected instance")
+      @onClick: modules.game_instanceentry.enterSelected()
+
+    Label
+      id: hintLabel
+      anchors.left: parent.left
+      anchors.right: enterButton.left
+      anchors.verticalCenter: enterButton.verticalCenter
+      margin-left: 13
+      margin-right: 10
+      font: poppins regular 11
+      textColor: #a9bad2
+      text-wrap: true
+      !text: tr("Select an instance and confirm to enter.")
+      phantom: true
+
+    ScrollablePanel
+      id: instanceList
+      anchors.top: listTitle.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: enterButton.top
+      margin-top: 8
+      margin-left: 13
+      margin-right: 25
+      margin-bottom: 9
+      vertical-scrollbar: instanceScroll
+      auto-focus: none
+
+      Panel
+        id: instanceContent
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        // Panel NAO herda focusable: false, e UIWidget nasce focavel. Como o recursiveFocus sobe a
+        // cadeia mesmo quando o filho nao e' focavel, era ESTE painel que virava o filho focado da
+        // ScrollablePanel e disparava o ensureChildVisible -- e como ele tem a altura de todas as
+        // rows, a lista pulava pro fim no meio do clique.
+        focusable: false
+        layout:
+          type: verticalBox
+          spacing: 4
+          fit-children: true
+
+    AllianceVerticalScrollBar
+      id: instanceScroll
+      anchors.top: listTitle.bottom
+      anchors.bottom: enterButton.top
+      anchors.right: parent.right
+      margin-top: 8
+      margin-bottom: 9
+      margin-right: 6
+      step: 46
+      pixels-scroll: true

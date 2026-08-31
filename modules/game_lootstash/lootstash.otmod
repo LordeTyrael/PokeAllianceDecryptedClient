@@ -1,0 +1,10 @@
+Module
+  name: game_lootstash
+  description: LootStash
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ lootstash ]
+  dependencies: [ game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,9 @@
+Module
+  name: game_eventdungeon
+  description: Danvrb
+  author: PokeAlliance
+  website: http://pokealliance.com
+  sandboxed: true
+  scripts: [ eventdungeon ]
+  @onLoad: init()
+  @onUnload: terminate()

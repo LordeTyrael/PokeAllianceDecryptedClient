@@ -1,0 +1,11 @@
+Module
+  name: game_pokedex
+  description: Pokedex modified for PokeAlliance
+  author: PokeAlliance
+  website: www.pokealliance.com.br
+  autoload: true
+  sandboxed: true
+  scripts: [ pokedex ]
+  dependencies: [ client_hotkeys, game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

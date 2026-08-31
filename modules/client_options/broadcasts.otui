@@ -1,0 +1,85 @@
+OptionPanel
+  OptionCheckBox
+    id: hideTipsMessages
+    !text: tr('Hide server tip messages')
+    $mobile:
+      visible: false
+
+  OptionCheckBox
+    id: ignorePaymentsAlerts
+    !text: tr('Ignore Payments Alerts')
+
+  Label
+    text-auto-resize: true
+    margin-top: 12
+    !text: tr('Chat History')
+    font: poppins semibold 14
+    color: #aaffaa
+
+  OptionCheckBox
+    id: chatHistoryEnabled
+    !text: tr('Enable chat history')
+    !tooltip: tr('Save your private messages locally so they reappear after relog')
+
+  Label
+    margin-top: 2
+    margin-left: 4
+    text-wrap: true
+    text-auto-resize: true
+    font: poppins semibold 11
+    color: #ffff00
+    !text: tr('Only private messages are saved, and history is kept for 2 days. It is stored locally - you lose it if you reinstall, format, or sign in from another PC.')
+
+  Label
+    text-auto-resize: true
+    margin-top: 12
+    !text: tr('Notifications')
+    font: poppins semibold 14
+    color: #aaffaa
+
+  Panel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Notifications Position")
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+
+    OptionsComboBox
+      id: notificationPosition
+      width: 200
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+      @onSetup: |
+        self:addOption(tr("Top Left"))
+        self:addOption(tr("Top Right"))
+        self:addOption(tr("Bottom Left"))
+        self:addOption(tr("Bottom Right"))
+
+  Panel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: notificationDurationLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+      @onSetup: |
+        self:setText(tr('Notification duration: %ss', modules.client_options.getOption('notificationDuration')))
+
+    AllianceHorizontalScrollBar
+      id: notificationDuration
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 3
+      maximum: 20
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())

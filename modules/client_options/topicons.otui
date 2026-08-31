@@ -1,0 +1,166 @@
+TopIconItem < Label
+  font: poppins semibold 12
+  height: 22
+  text-offset: 8 0
+  text-align: left
+  focusable: true
+  background: #00000000
+  $focus:
+    background: #ffffff22
+  $!first:
+    margin-top: 1
+
+TopIconFixedItem < Label
+  font: poppins semibold 12
+  height: 22
+  text-offset: 8 0
+  text-align: left
+  focusable: false
+  color: #888888
+  background: #00000000
+  $!first:
+    margin-top: 1
+
+Panel
+  layout: verticalBox
+
+  Label
+    id: displayedLabel
+    font: poppins semibold 14
+    !text: tr('Displayed Shortcuts')
+    height: 20
+    text-offset: 5 0
+
+  Panel
+    id: displayedArea
+    height: 200
+
+    TextList
+      id: displayedList
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: displayedScrollBar.left
+      anchors.bottom: parent.bottom
+      vertical-scrollbar: displayedScrollBar
+      margin-right: 2
+      padding: 2
+      background-color: #00000000
+      image-source: /images/newui/background_3
+      image-border: 15
+
+    AllianceVerticalScrollBar
+      id: displayedScrollBar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: displayedButtons.left
+      margin-right: 6
+      step: 14
+      pixels-scroll: true
+
+    Panel
+      id: displayedButtons
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 12
+      height: 34
+      layout:
+        type: verticalBox
+        spacing: 2
+
+      UIButton
+        id: moveUpBtn
+        size: 12 10
+        image-source: /images/ui/alliance_arrow_vertical
+        image-clip: 0 0 10 7
+        cursor: pointer
+        @onClick: modules.client_options.topIconMoveUp()
+        $hover:
+          image-clip: 10 0 10 7
+        $pressed:
+          image-clip: 20 0 10 7
+
+      UIButton
+        id: moveDownBtn
+        size: 12 10
+        image-source: /images/ui/alliance_arrow_vertical
+        image-clip: 0 7 10 7
+        cursor: pointer
+        @onClick: modules.client_options.topIconMoveDown()
+        $hover:
+          image-clip: 10 7 10 7
+        $pressed:
+          image-clip: 20 7 10 7
+
+      UIButton
+        id: removeBtn
+        size: 12 12
+        image-source: /images/newui/close
+        cursor: pointer
+        @onClick: modules.client_options.topIconRemove()
+
+  Panel
+    height: 8
+
+  Label
+    id: availableLabel
+    font: poppins semibold 14
+    !text: tr('Available Shortcuts')
+    height: 20
+    text-offset: 5 0
+
+  Panel
+    id: availableArea
+    height: 120
+
+    TextList
+      id: availableList
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: availableScrollBar.left
+      anchors.bottom: parent.bottom
+      vertical-scrollbar: availableScrollBar
+      margin-right: 2
+      padding: 2
+      background-color: #00000000
+      image-source: /images/newui/background_3
+      image-border: 15
+
+    AllianceVerticalScrollBar
+      id: availableScrollBar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: availableButtons.left
+      margin-right: 6
+      step: 14
+      pixels-scroll: true
+
+    Panel
+      id: availableButtons
+      anchors.top: parent.top
+      anchors.right: parent.right
+      width: 12
+      height: 12
+      layout:
+        type: verticalBox
+
+      UIButton
+        id: addBtn
+        size: 12 12
+        image-source: /images/ui/icon_add
+        cursor: pointer
+        @onClick: modules.client_options.topIconAdd()
+
+  Panel
+    height: 40
+    layout: anchor
+
+    AllianceStraightBlueButton
+      id: resetTopIcons
+      size: 240 30
+      font: poppins semibold 12
+      text-align: center
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Reset to Default")
+      cursor: pointer
+      @onClick: modules.client_options.topIconReset()

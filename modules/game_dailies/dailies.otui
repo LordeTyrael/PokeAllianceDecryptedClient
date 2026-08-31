@@ -1,0 +1,202 @@
+MissionWidget < UIWidget
+  size: 196 220
+  image-source: /images/newui/background_3
+  image-border: 15
+  focusable: false
+
+  PoppinsSemibold13
+    id: taskTitle
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 12
+    height: 20
+    text-auto-resize: false
+    text-align: center
+    color: #ffffff
+
+  UICreature
+    id: outfit
+    size: 48 48
+    anchors.top: taskTitle.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    scale: 1
+    old-scaling: true
+    focusable: false
+    phantom: true
+
+  PoppinsSemibold11
+    id: description
+    size: 168 42
+    anchors.top: outfit.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+    text-auto-resize: false
+    text-wrap: true
+    text-align: center
+    color: #a0b0c0
+
+  UIItem
+    id: refreshDiamond
+    size: 30 30
+    item-id: 3028
+    item-count: 1
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 14
+    margin-bottom: 12
+    visible: false
+    focusable: false
+    forceShowCount: true
+    change-cursor-image: true
+    cursor: pointer
+    !tooltip: tr("Refresh this daily for 1 Diamond")
+    @onClick: modules.game_dailies.confirmChangeDaily(self, 1)
+
+    $disabled:
+      image-color: #dfdfdf66
+      icon-color: #dfdfdf
+      change-cursor-image: false
+
+  UIItem
+    id: refreshOnlinePoints
+    size: 30 30
+    item-id: 42301
+    item-count: 50
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 12
+    visible: false
+    focusable: false
+    forceShowCount: true
+    change-cursor-image: true
+    cursor: pointer
+    !tooltip: tr("Refresh this daily for 50 Online Points")
+    @onClick: modules.game_dailies.confirmChangeDaily(self, 2)
+
+    $disabled:
+      image-color: #dfdfdf66
+      icon-color: #dfdfdf
+      change-cursor-image: false
+
+  UIItem
+    id: refreshCash
+    size: 30 30
+    item-id: 42302
+    item-count: 200000
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-right: 14
+    margin-bottom: 12
+    visible: false
+    focusable: false
+    forceShowCount: true
+    change-cursor-image: true
+    cursor: pointer
+    !tooltip: tr("Refresh this daily for 200k")
+    @onClick: modules.game_dailies.confirmChangeDaily(self, 3)
+
+    $disabled:
+      image-color: #dfdfdf66
+      icon-color: #dfdfdf
+      change-cursor-image: false
+
+  AllianceStraightBlueButton
+    id: button
+    size: 150 30
+    font: poppins semibold 12
+    anchors.bottom: refreshOnlinePoints.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 10
+    focusable: false
+    !text: tr('Select Daily')
+    @onClick: modules.game_dailies.openDailySelect(self)
+
+  NewStraightGreenButton
+    id: completeDaily
+    size: 150 30
+    font: poppins semibold 12
+    anchors.bottom: refreshOnlinePoints.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 10
+    visible: false
+    focusable: false
+    !text: tr('Collect')
+    @onClick: modules.game_dailies.collectDailyReward(self)
+
+NewOpaqueWindow
+  id: mainDailyTaskWindow
+  size: 440 330
+  anchors.centerIn: parent
+  draggable: true
+  @onEscape: modules.game_dailies.close()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 200 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 15
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr("Daily Tasks")
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    !tooltip: tr("Close")
+    @onClick: modules.game_dailies.close()
+
+  UIWidget
+    id: tasksPanel
+    size: 404 220
+    anchors.top: base_name.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    focusable: false
+
+    layout:
+      type: grid
+      cell-size: 196 220
+      num-columns: 2
+      cell-spacing: 12
+
+  AllianceStraightBlueButton
+    id: shopButton
+    size: 150 32
+    font: poppins semibold 12
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 18
+    margin-bottom: 15
+    !text: tr("Daily Shop")
+    @onClick: modules.game_dailies.openDailyShopWindow()
+
+  UIWidget
+    id: pointsIcon
+    size: 26 26
+    anchors.right: parent.right
+    anchors.verticalCenter: shopButton.verticalCenter
+    margin-right: 18
+    image-source: images/daily_coin
+    !tooltip: tr("Daily Points")
+
+  PoppinsSemibold14
+    id: playerPoints
+    text-auto-resize: true
+    anchors.right: pointsIcon.left
+    anchors.verticalCenter: pointsIcon.verticalCenter
+    margin-right: 8
+    color: #ffcc00
+    text: 0

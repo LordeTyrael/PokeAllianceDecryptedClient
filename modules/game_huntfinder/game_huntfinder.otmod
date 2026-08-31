@@ -1,0 +1,9 @@
+Module
+  name: game_huntfinder
+  description: Hunt Finder - busca de hunts (lista, filtros, recomendados, show/track do local de entrada)
+  author: Danvrb
+  sandboxed: true
+  dependencies: [ game_interface ]
+  scripts: [ huntfinder ]
+  @onLoad: init()
+  @onUnload: terminate()

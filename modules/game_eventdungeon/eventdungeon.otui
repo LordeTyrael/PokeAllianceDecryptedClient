@@ -1,0 +1,312 @@
+CompletedWeeklyWidget < UIWidget
+  size: 34 34
+  image-source: images/complete_base
+
+  UIWidget
+    id: completedOption
+    size: 20 20
+    anchors.centerIn: parent
+
+InfoCompleteBase < UIWidget
+  size: 34 34
+
+  UIItem
+    id: completedOption
+    size: 32 32
+    anchors.centerIn: parent
+    virtual: true
+    phantom: true
+
+UIWindow
+  size: 740 430
+  anchors.centerIn: parent
+  @onEscape: modules.game_eventdungeon.hideDungeonWindow()
+  image-source: images/background
+  padding-top: 5
+  padding-left: 40
+  draggable: true
+
+  Label
+    id: dungeonName
+    font: poppins semibold 23
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-top: 15
+    text-auto-resize: true
+
+  UIWidget
+    id: dungeonDescription
+    size: 270 140
+    anchors.left: parent.left
+    anchors.top: dungeonName.bottom
+    margin-top: 15
+    image-source: /images/newui/background_popup
+    padding: 5
+    padding-left: 10
+
+    Label
+      id: dungeonDescriptionText
+      font: poppins semibold 16
+      anchors.fill: parent
+      textColor: "#7f8fa4"
+      text-wrap: true 
+
+  UIWidget
+    id: separator
+    size: 184 3
+    anchors.left: parent.left
+    anchors.top: dungeonDescription.bottom
+    margin-top: 10
+    image-source: images/separator
+
+  Label
+    id: selectDifficulty
+    font: poppins semibold 20
+    anchors.left: parent.left
+    anchors.top: separator.bottom
+    margin-top: 10
+    text-auto-resize: true
+    !text: tr("Select difficulty:")
+
+  UIWidget
+    id: difficultyPanel
+    size: 209 112
+    anchors.left: parent.left
+    anchors.top: selectDifficulty.bottom
+    margin-top: 5
+
+    NewButton
+      id: easy
+      size: 209 34
+      image-source: images/difficulty_on
+      font: poppins semibold 18
+      anchors.top: parent.top
+      @onClick: modules.game_eventdungeon.selectDifficulty(self)
+      !text: tr("Easy")
+
+    NewButton
+      id: medium
+      size: 209 34
+      image-source: images/difficulty_off
+      font: poppins semibold 18
+      anchors.top: prev.bottom
+      margin-top: 5
+      @onClick: modules.game_eventdungeon.selectDifficulty(self)
+      !text: tr("Medium")
+
+    NewButton
+      id: hard
+      size: 209 34
+      image-source: images/difficulty_off
+      font: poppins semibold 18
+      anchors.top: prev.bottom
+      margin-top: 5
+      @onClick: modules.game_eventdungeon.selectDifficulty(self)
+      !text: tr("Hard")
+
+  UIWidget
+    id: weeklyCompletedPanel
+    size: 209 34
+    anchors.left: parent.left
+    anchors.top: difficultyPanel.bottom
+    margin-top: 8
+
+    Label
+      id: text
+      size: 90 34
+      font: poppins semibold 12
+      anchors.left: parent.left
+      anchors.top: parent.top
+      !text: tr("Conclusions of the week")
+      text-wrap: true
+
+    UIWidget
+      id: weeklyCompleted
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: prev.right
+      margin-left: 5
+      anchors.right: parent.right
+
+      layout:
+        type: grid
+        cell-size: 34 34
+        cell-spacing: 3
+        num-columns: 3
+        flow: true
+
+  UIWidget
+    id: dungeonInfo
+    size: 368 400
+    anchors.left: dungeonDescription.right
+    margin-left: 20
+    anchors.bottom: parent.bottom
+    image-source: images/dungeoninfo_background
+
+    UIWidget
+      id: image
+      size: 336 125
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 15
+
+    UIWidget
+      id: rewardIcon
+      size: 16 14
+      anchors.left: image.left
+      anchors.top: image.bottom
+      margin-top: 10
+      image-source: images/chest
+
+    Label
+      id: rewardText
+      text-auto-resize: true
+      font: poppins semibold 12
+      anchors.left: rewardIcon.right
+      margin-left: 6
+      text-offset: 0 3
+      anchors.verticalCenter: rewardIcon.verticalCenter
+      !text: tr("Available Rewards")
+      textColor: "#7f8fa4"
+
+    UIWidget
+      id: rewardPanel
+      size: 293 72
+      anchors.top: rewardIcon.bottom
+      anchors.left: image.left
+      margin-top: 10
+
+      layout:
+        type: grid
+        cell-size: 34 34
+        cell-spacing: 3
+        num-columns: 8
+        flow: true
+
+    UIWidget
+      id: requirementIcon
+      size: 16 16
+      anchors.left: image.left
+      anchors.top: rewardPanel.bottom
+      margin-top: 10
+      image-source: images/requirement
+
+    Label
+      id: requirementLevelText
+      text-auto-resize: true
+      font: poppins semibold 15
+      anchors.left: requirementIcon.right
+      margin-left: 6
+      text-offset: 0 3
+      anchors.verticalCenter: requirementIcon.verticalCenter
+      !text: tr("Requirements")
+      textColor: "#7f8fa4"
+
+    Label
+      id: requiredLevel
+      textColor: "#7f8fa4"
+      text-auto-resize: true
+      font: poppins semibold 14
+      anchors.left: requirementIcon.left
+      anchors.top: requirementIcon.bottom
+      margin-top: 6
+      !text: tr("Required Level: ")
+
+    Label
+      id: requiredLevelValue
+      textColor: "#61738b"
+      text-offset: 0 1
+      text-auto-resize: true
+      font: poppins semibold 13
+      anchors.left: requiredLevel.right
+      margin-left: 3
+      anchors.verticalCenter: requiredLevel.verticalCenter
+      !text: tr("0")
+
+    Label
+      id: playerNumber
+      textColor: "#7f8fa4"
+      text-auto-resize: true
+      font: poppins semibold 14
+      anchors.left: requiredLevel.left
+      anchors.top: requiredLevel.bottom
+      margin-top: 2
+      !text: tr("Players: ")
+
+    Label
+      id: playerNumberValue
+      textColor: "#61738b"
+      text-offset: 0 1
+      text-auto-resize: true
+      font: poppins semibold 13
+      anchors.left: playerNumber.right
+      margin-left: 3
+      anchors.verticalCenter: playerNumber.verticalCenter
+      !text: tr("1")
+
+    Label
+      id: requirementItems
+      textColor: "#7f8fa4"
+      text-auto-resize: true
+      font: poppins semibold 14
+      anchors.left: requiredLevel.left
+      anchors.top: playerNumberValue.bottom
+      margin-top: 2
+      !text: tr("Required items:")
+
+    UIWidget
+      id: requirementPanel
+      size: 182 34
+      anchors.verticalCenter: requirementItems.verticalCenter
+      anchors.left: requirementItems.right
+      margin-left: 10
+
+      layout:
+        type: grid
+        cell-size: 34 34
+        cell-spacing: 3
+        num-columns: 5
+        flow: true
+
+    NewButton
+      id: startButton
+      size: 209 34
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: requirementPanel.bottom
+      margin-top: 8
+      image-source: images/start_background
+      @onClick: modules.game_eventdungeon.sendStartDungeon()
+
+      UIWidget
+        id: startIcon
+        size: 18 18
+        anchors.verticalCenter: startText.verticalCenter
+        anchors.right: startText.left
+        margin-right: 10
+        image-source: images/start_icon
+        phantom: true
+
+      Label
+        id: startText
+        text-auto-resize: true
+        font: poppins semibold 18
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-left: 9
+        anchors.verticalCenter: parent.verticalCenter
+        phantom: true
+        !text: tr("Start")
+
+  UIWidget
+    id: buttonBackground
+    size: 34 34
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 3
+    image-source: /images/newui/close_base
+
+    NewButton
+      id: closeButton
+      size: 20 20
+      anchors.centerIn: parent
+      image-source: /images/newui/close
+      @onClick: modules.game_eventdungeon.hideDungeonWindow()

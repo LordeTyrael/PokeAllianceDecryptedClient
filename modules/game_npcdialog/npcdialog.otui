@@ -1,0 +1,137 @@
+OptionWidget < UIWidget
+  size: 422 22
+  padding: 20
+  
+  NewButton
+    id: optionButton
+    anchors.centerIn: optionText
+    image-source: images/option
+    anchors.centerIn: optionText
+    anchors.left: parent.left
+    image-border: 10
+    anchors.right: parent.right
+    height: 22
+    @onClick: modules.game_npcdialog.sendTalkWithNPC(self:getParent())
+    $hover:
+      image-source: images/selected_option
+
+  Label
+    id: optionText
+    size: 380 22
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    anchors.right: parent.right
+    text-offset: 20 0
+    phantom: true
+    text-vertical-auto-resize: true
+    text-wrap: true
+
+DialogCreature < UIWidget
+  size: 64 64
+  $first:
+    margin-left: 8
+
+  UICreature
+    id: creature
+    size: 64 64
+    phantom: true
+
+  Label
+    id: count
+    text-auto-resize: true
+    anchors.right: creature.right
+    anchors.bottom: creature.bottom
+    margin-right: 5
+    margin-bottom: 5
+    font: poppins semibold 12
+    phantom: true
+
+UIWindow
+  size: 422 305
+  anchors.centerIn: parent
+  focusable: true
+  phantom: true
+  @onEscape: modules.game_npcdialog.hideMainWindow()
+
+  UIWidget
+    id: messageBackground
+    width: 422
+    image-source: images/background
+    anchors.left: parent.left
+    anchors.top: titleBackground.bottom
+    margin-top: 3
+    padding: 20
+
+    Label
+      id: npcMessage
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+      width: 422
+      text-auto-resize: false
+      text-vertical-auto-resize: true
+      text-wrap: true
+      text-align: left
+      font: poppins semibold 18
+
+    UIWidget
+      id: tasksPanel
+      width: 422
+      focusable: false
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: npcMessage.bottom
+      margin-top: 10
+      layout:
+        type: grid
+        num-columns: 8
+        cell-size: 64 64
+        cell-spacing: 10
+        flow: true
+  
+    UIWidget
+      id: optionsPanel
+      width: 422
+      focusable: false
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: tasksPanel.bottom
+      margin-top: 5
+      layout:
+        type: grid
+        num-columns: 1
+        cell-size: 422 22
+        cell-spacing: 10
+        flow: true
+
+  UIWidget
+    id: titleBackground
+    size: 422 55
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-source: images/title_background
+
+    UICreature
+      id: npcOutfit
+      size: 64 64
+      anchors.verticalCenter: titleBackground.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      phantom: true
+
+    Label
+      id: npcName
+      text-auto-resize: true
+      anchors.verticalCenter: npcOutfit.verticalCenter
+      anchors.left: npcOutfit.right
+      margin-left: 5
+      font: poppins semibold 17
+      phantom: true
+      text-offset: 0 -4
+
+    NewButton
+      id: close
+      size: 20 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      margin-right: 15
+      image-source: /images/newui/close
+      @onClick: modules.game_npcdialog.hideMainWindow()

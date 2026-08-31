@@ -1,0 +1,141 @@
+IncenseItem < UIWidget
+  id: incenseItem
+  size: 170 170
+
+  UIWidget
+    anchors.fill: parent
+    image-border: 15
+    image-source: /images/newui/background_3
+    phantom: true
+
+    PoppinsSemibold14
+      id: itemName
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 10
+      color: #ffffff
+
+    UIItem
+      id: item
+      size: 48 48
+      anchors.top: itemName.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 8
+      phantom: true
+      virtual: true
+
+    PoppinsSemibold12
+      id: progressLabel
+      anchors.top: item.bottom
+      anchors.left: parent.left
+      margin-top: 8
+      margin-left: 15
+      color: #aaaaaa
+      !text: tr("Fragments:")
+
+    PoppinsSemibold12
+      id: progress
+      anchors.top: item.bottom
+      anchors.right: parent.right
+      margin-top: 8
+      margin-right: 15
+      color: #aaaaaa
+
+    UIWidget
+      id: progressBarBackground
+      anchors.top: progressLabel.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 4
+      margin-left: 15
+      margin-right: 15
+      height: 6
+      image-source: /images/modules/progressbar_background
+      image-smooth: true
+      phantom: true
+
+      UIWidget
+        id: progressBarFill
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        width: 0
+        image-source: /images/modules/progressbar_fill
+        image-smooth: true
+        phantom: true
+
+    NewStraightBlueButton
+      id: selectButton
+      size: 100 28
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-bottom: 12
+      !text: tr("Claim")
+
+NewOpaqueWindow
+  id: incenseWindow
+  size: 560 400
+  anchors.centerIn: parent
+  visible: false
+  @onEscape: modules.game_incense.close()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 260 36
+    image-source: /images/general_ui/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 32
+      image-source: /images/game/icons/brokes
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 4
+      font: poppins semibold 20
+      !text: tr("Held Fragments")
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+    @onClick: modules.game_incense.close()
+
+  ScrollablePanel
+    id: incensePanel
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 10
+    margin-left: 20
+    margin-right: 20
+    vertical-scrollbar: incenseScrollBar
+    layout:
+      type: grid
+      num-columns: 3
+      cell-size: 170 170
+      cell-spacing: 5
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: incenseScrollBar
+    anchors.top: base_name.bottom
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-top: 10
+    margin-bottom: 10
+    margin-right: 5
+    step: 48
+    pixels-scroll: true

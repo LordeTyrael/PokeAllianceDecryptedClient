@@ -1,0 +1,198 @@
+MewtwoRewardBase < UIWidget
+  size: 34 34
+  image-source: mewtwoClones/item_background
+  phantom: true
+
+  UIItem
+    id: completedOption
+    size: 32 32
+    anchors.centerIn: parent
+    virtual: true
+    phantom: true
+
+NewOpaqueWindow
+  @onEscape: modules.game_generalModules.hideMewtwoPanel()
+  size: 560 591
+  anchors.centerIn: parent
+
+  Label
+    id: titleName
+    font: poppins bold 21
+    !text: tr("Mewtwo Clones Dungeon")
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 25
+    text-auto-resize: true
+
+  NewPopupWindow
+    id: dungeon_image
+    size: 477 185
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: titleName.bottom
+    margin-top: 25
+    draggable: false
+    phantom: true
+
+    NewStraightBlueButton
+      id: time_info
+      size: 158 25
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 18
+      margin-right: 18
+      !text: tr("Minutes")
+
+    NewStraightBlueButton
+      id: players_info
+      size: 158 25
+      anchors.top: prev.bottom
+      anchors.right: parent.right
+      margin-top: 5
+      margin-right: 18
+      !text: tr("Players")
+
+    NewStraightBlueButton
+      id: level_info
+      size: 158 25
+      anchors.top: prev.bottom
+      anchors.right: parent.right
+      margin-top: 5
+      margin-right: 18
+      !text: tr("Level")
+
+  Label
+    id: dungeon_description
+    anchors.left: dungeon_image.left
+    anchors.right: dungeon_image.right
+    anchors.top: dungeon_image.bottom
+    margin-top: 20
+    height: 60
+    font: poppins semibold 12
+    !text: tr("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem psum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type.")
+    text-wrap: true
+
+  NewPopupWindow
+    id: reward_panel
+    anchors.left: dungeon_image.left
+    anchors.right: dungeon_image.right
+    height: 102
+    anchors.top: dungeon_description.bottom
+    margin-top: 20
+    opacity: 0.75
+    draggable: false
+    phantom: true
+
+    UIWidget
+      size: 104 102
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-top: 2
+      margin-bottom: 2
+      margin-right: 2
+      anchors.right: parent.right
+      image-source: mewtwoClones/pokeball_image
+      opacity: 0.3
+
+    UIWidget
+      id: reward_icon
+      size: 25 25
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      image-source: mewtwoClones/reward_icon
+
+    Label
+      id: reward_text
+      anchors.left: reward_icon.right
+      margin-left: 8
+      anchors.top: reward_icon.top
+      size: 80 25
+      text-offset: 0 -4
+      !text: tr("Available Rewards")
+      text-wrap: true
+      font: poppins semibold 10
+
+    UIWidget
+      id: rewards
+      size: 256 71
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: reward_text.right
+      margin-left: 15
+
+      layout:
+        type: grid
+        cell-size: 34 34
+        cell-spacing: 3
+        num-columns: 7
+        flow: true
+
+  Label
+    anchors.horizontalCenter: difficultyLabel.horizontalCenter
+    anchors.bottom: difficultyLabel.top
+    margin-bottom: 5
+    text-auto-resize: true
+    !text: tr("Select Difficulty")
+    font: poppins semibold 12
+
+  NewStraightBlueButton
+    id: difficultyLabel
+    size: 210 34
+    !text: tr("Easy")
+    anchors.left: dungeon_image.left
+    anchors.top: reward_panel.bottom
+    margin-top: 30
+    font: poppins semibold 14
+
+  NewStraightGrayButton
+    id: shopButton
+    size: 210 34
+    anchors.left: dungeon_image.left
+    anchors.top: difficultyLabel.bottom
+    margin-top: 5
+
+    UIWidget
+      size: 19 17
+      anchors.verticalCenter: shopText.verticalCenter
+      anchors.right: shopText.left
+      margin-right: 8
+      image-source: mewtwoClones/shop_icon
+  
+    Label
+      id: shopText
+      !text: tr("Buy Buffs")
+      font: poppins semibold 14
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 14
+      text-auto-resize: true
+
+  NewStraightGreenButton
+    id: startButton
+    size: 210 34
+    anchors.right: dungeon_image.right
+    anchors.bottom: shopButton.bottom
+    @onClick: modules.game_generalModules.sendMewtwoConfirm()
+
+    UIWidget
+      size: 18 18
+      anchors.verticalCenter: startText.verticalCenter
+      anchors.right: startText.left
+      margin-right: 8
+      image-source: mewtwoClones/start_icon
+  
+    Label
+      id: startText
+      !text: tr("Start")
+      font: poppins semibold 14
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 12
+      text-auto-resize: true
+
+  NewRedCloseButton
+    id: close
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 10
+    margin-top: 10
+    @onClick: modules.game_generalModules.hideMewtwoPanel()

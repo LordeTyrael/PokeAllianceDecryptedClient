@@ -1,0 +1,9 @@
+Module
+  name: game_instanceentry
+  description: Instance entry window
+  author: PokeAlliance
+  sandboxed: true
+  dependencies: [ game_interface ]
+  scripts: [ instanceentry ]
+  @onLoad: init()
+  @onUnload: terminate()

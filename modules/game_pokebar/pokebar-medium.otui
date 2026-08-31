@@ -1,0 +1,89 @@
+UIPokeBarItem < UIWidget
+  size: 170 50
+  draggable: true
+  focusable: false
+
+  UIWidget
+    id: bar
+    draggable: true
+    size: 170 50
+    image-source: images/bar_default
+    opacity: 0.8
+    anchors.top: parent.top
+    anchors.right: pokeBar.right
+
+  UIProgressBar
+    id: life
+    draggable: true
+    background-color: #08b365
+    size: 113 16
+    anchors.top: pokeName.bottom
+    anchors.left: bar.left
+    image-source: images/green_bar
+    margin-top: 5
+    margin-left: 46
+
+  UIWidget
+    id: portrait
+    draggable: true
+    size: 41 40
+    anchors.top: bar.top
+    anchors.left: bar.left
+    margin-top: 6
+    margin-left: 4
+
+  Label
+    id: pokeName
+    draggable: true
+    color: #e8c05e
+    anchors.left: portrait.right
+    anchors.right: parent.right
+    anchors.top: bar.top
+    margin-top: 7
+    font: poppins semibold 11
+    text-align: center
+
+  Label
+    id: percent
+    draggable: true
+    text-auto-resize: true
+    color: #c5e4f9
+    anchors.centerIn: life
+
+UIWidget
+  id: pokeBar
+  size: 170 300
+  draggable: true
+  focusable: false
+  y: 35
+  x: 200
+
+  UIPokeBarItem
+    id: poke1
+    draggable: true
+    anchors.top: parent.top
+
+  UIPokeBarItem
+    id: poke2
+    draggable: true
+    anchors.top: poke1.bottom
+
+  UIPokeBarItem
+    id: poke3
+    draggable: true
+    anchors.top: poke2.bottom
+
+  UIPokeBarItem
+    id: poke4
+    draggable: true
+    anchors.top: poke3.bottom
+
+  UIPokeBarItem
+    id: poke5
+    draggable: true
+    anchors.top: poke4.bottom
+
+  UIPokeBarItem
+    id: poke6
+    draggable: true
+    anchors.top: poke5.bottom

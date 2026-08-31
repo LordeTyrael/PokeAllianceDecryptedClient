@@ -1,0 +1,10 @@
+Module
+  name: game_abilitytree
+  description: 
+  author: Tanjiro mamada
+  website: 
+  dependencies: [ client_hotkeys ]
+  sandboxed: true
+  scripts: [ abilitytree ]
+  @onLoad: init()
+  @onUnload: terminate()

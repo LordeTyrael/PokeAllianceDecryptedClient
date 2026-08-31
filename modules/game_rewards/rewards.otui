@@ -1,0 +1,88 @@
+InfoCompleteBase < UIWidget
+  size: 34 34
+  image-source: images/item_background
+
+  UIItem
+    id: completedOption
+    size: 32 32
+    anchors.centerIn: parent
+    virtual: true
+    phantom: true
+
+  Label
+    id: experienceCount
+    visible: false
+    text-auto-resize: true
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    font: verdana-11px-rounded
+
+UIWindow
+  size: 347 317
+  anchors.centerIn: parent
+  @onEscape: modules.game_rewards.hideMainWindow()
+  image-source: images/background
+  draggable: true
+  focusable: true
+
+  UIWidget
+    id: background
+    image-source: images/border
+    size: 316 285
+    anchors.centerIn: parent
+    phantom: true
+
+    Label
+      id: rewardTitle
+      anchors.horizontalCenter: parent.horizontalCenter
+      text-auto-resize: true
+      anchors.top: parent.top
+      margin-top: 15
+      font: poppins semibold 23
+      !text: tr('Title Name')
+      phantom: true
+
+    UIWidget
+      id: rewardImage
+      size: 284 94
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: prev.bottom
+      margin-top: 15
+      phantom: true
+      image-source: images/reward_image
+
+    UIWidget
+      id: rewardIcon
+      size: 16 14
+      anchors.left: rewardImage.left
+      anchors.top: rewardImage.bottom
+      margin-top: 10
+
+      Label
+        text-auto-resize: true
+        !text: tr('Rewards:')
+        font: poppins semibold 16
+
+    UIWidget
+      id: rewardPanel
+      size: 293 34
+      anchors.top: rewardIcon.bottom
+      anchors.left: rewardImage.left
+      margin-top: 10
+
+      layout:
+        type: grid
+        cell-size: 34 34
+        cell-spacing: 3
+        num-columns: 8
+        flow: true
+
+    NewButton
+      id: closeButton
+      size: 284 34
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: rewardPanel.bottom
+      margin-top: 20
+      image-source: images/close_background
+      !text: tr('Close')
+      @onClick: modules.game_rewards.hideMainWindow()

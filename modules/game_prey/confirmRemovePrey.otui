@@ -1,0 +1,79 @@
+ChoiceCreature < NewButton
+  size: 50 50
+
+UIWindow
+  id: medalWindow    
+  size: 300 370
+  anchors.centerIn: parent
+  draggable: true
+  focusable: true
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    phantom: true
+    image-source: images/background
+
+    UIWidget
+      id: titleBackground
+      size: 200 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      image-source: images/top_background
+      phantom: true
+
+      Label
+        id: titleName
+        anchors.verticalCenter: titleIcon.verticalCenter
+        text-auto-resize: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        font: poppins semibold 22
+        phantom: true
+        !text: tr("Remove Prey")
+
+  UIWidget
+    id: pokemonImage
+    size: 140 140
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 50
+    phantom: true
+
+  Label
+    id: confirmDescription
+    size: 250 60
+    font: poppins semibold 14
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: pokemonImage.bottom
+    margin-top: 10
+    text-wrap: true
+    text-align: center
+    phantom: true
+
+  NewButton
+    id: closeButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    image-source: /images/newui/close
+    @onClick: modules.game_prey.closeConfirmWindow()
+
+  UIWidget
+    id: buffWidget
+    size: 30 30
+    image-source: images/prey_damage
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: confirmDescription.bottom
+    margin-top: 10
+
+  NewButton
+    id: confirmButton
+    size: 100 36
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 20
+    image-source: images/collect
+    !text: tr("Confirm")
+    @onClick: modules.game_prey.confirmRemovePrey()

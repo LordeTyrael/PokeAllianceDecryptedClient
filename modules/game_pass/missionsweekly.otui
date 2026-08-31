@@ -1,0 +1,120 @@
+WeeklyMissionPanel < UIWidget
+  height: 46
+
+  @onHoverChange: |
+    function(self, hover)
+      self:getChildById('panel'):setChecked(hover)
+    end
+
+  UIWidget
+    id: iconBg
+    size: 46 46
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: images/weeklymissionbase
+    phantom: true
+
+  UIWidget
+    id: icon
+    size: 34 34
+    anchors.centerIn: prev
+    image-source: images/scroll
+    phantom: true
+
+  Panel
+    id: panel
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: iconBg.right
+    anchors.right: next.left
+    padding-left: 8
+    image-offset-x: 4
+
+    $checked:
+      image-source: images/missionpanelbg
+    $!checked:
+      image-source:
+
+    layout:
+      type: verticalBox
+      fit-children: true
+
+    Label
+      id: description
+      text-align: left
+      text-auto-resize: true
+      text-wrap: true
+      font: poppins semibold 12
+      color: #cacaca
+
+    GamePassExpLabel
+      id: exp
+      font: poppins semibold 12
+      text-auto-resize: true
+      color: #ffffff
+
+  UIWidget
+    id: progress
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    size: 100 16
+    text-align: center
+
+  UIWidget
+    id: accumulate
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    size: 23 23
+    font: poppins bold 12
+    icon-source: @fa solid 23 f1ce
+    icon-color: #616b77
+    text-align: center
+    text-offset: 2 3
+    text: 1
+    visible: false
+
+Panel
+  id: weekly
+
+  GamePassInfoLabel
+    id: info
+    anchors.centerIn: parent
+
+  UIWidget
+    id: loading
+    anchors.centerIn: parent
+    size: 120 120
+    image-source: images/loading
+    visible: false
+
+  GamePassAccumulateCheckBox
+    id: accumulate
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 8
+
+    @onCheckChange: |
+      function(self)
+        modules.game_pass.toggleWeeklyAccumulate()
+      end
+
+  ScrollablePanel
+    id: missions
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    anchors.right: next.left
+    vertical-scrollbar: scrollBar
+    padding: 8
+
+    layout:
+      type: verticalBox
+      spacing: 8
+
+  AllianceVerticalScrollBar
+    id: scrollBar
+    anchors.top: accumulate.bottom
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    width: 10
+    step: 25
+    pixels-scroll: true

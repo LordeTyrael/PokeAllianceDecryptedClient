@@ -1,0 +1,202 @@
+ItemSlot < UIItem
+  size: 32 32
+  virtual: true
+  phantom: true
+  image-source: images/itemslot
+
+RewardsTooltip < UITooltip
+  width: 160
+  follow-mouse-offset: -180 -40
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 4
+  padding-left: 9
+  padding-right: 9
+
+  layout: verticalBox
+    fit-children: true
+
+  Label
+    height: 25
+    font: poppins bold 15
+    text-align: center
+    !text: tr("Possible Rewards")
+    phantom: true
+
+  Panel
+    id: rewards
+    height: 34
+    phantom: true
+    layout:
+      type: grid
+      cell-size: 34 34
+      cell-spacing: 2
+      num-columns: 4
+      flow: true
+
+PokeTask < Panel
+  height: 100
+  image-source: images/missionbg
+  focusable: false
+
+  UIWidget
+    id: banner
+    anchors.fill: parent
+
+    $on:
+      opacity: 0.75
+
+    $!on:
+      opacity: 1.0
+
+  NewButton
+    id: start
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    size: 103 36
+    image-source: images/missionheader
+    font: poppins bold 16
+    text-offset: 0 -6
+    !text: tr("START")
+    visible: false
+
+  UIWidget
+    id: chest
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin: 5 5 0 0
+    image-source: images/chest
+    visible: false
+
+    $hover:
+      opacity: 1.0
+
+    $!hover:
+      opacity: 0.75
+
+  UIWidget
+    id: rightInstructionLabel
+    size: 130 50
+    anchors.verticalCenter: shard.verticalCenter
+    anchors.right: shard.left
+    margin-right: 5
+    phantom: true
+
+    Label
+      font: poppins semibold 14
+      size: 100 50
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: awesomeIcon.left
+      !text: tr('Put your Shard here')
+      text-wrap: true
+      text-align: center
+  
+    Label
+      id: awesomeIcon
+      size: 30 30
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      icon-source: @fa solid 16 f061
+
+  ItemSlot
+    id: shard
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    margin-right: 20
+
+  UIWidget
+    id: leftInstructionLabel
+    size: 145 50
+    anchors.verticalCenter: shard.verticalCenter
+    anchors.left: pokeball.right
+    margin-left: 5
+    phantom: true
+    visible: false
+
+    Label
+      font: poppins semibold 14
+      size: 110 50
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: awesomeIcon.right
+      !text: tr('Put your Pokémon here')
+      margin-left: 5
+      text-wrap: true
+      text-align: center
+  
+    Label
+      id: awesomeIcon
+      size: 30 30
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      icon-source: @fa solid 16 f060
+
+  ItemSlot
+    id: pokeball
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 20
+    visible: false
+
+  Label
+    id: timer
+    anchors.bottom: parent.bottom
+    anchors.right: shard.right
+    margin-bottom: 8
+    margin-right: 4
+    icon-source: @fa solid 16 f017
+    icon-align: right
+    font: poppins semibold 14
+    text-auto-resize: true
+    text-align: right
+    icon-offset: 18 0
+    text-offset: 0 3
+    visible: false
+
+NewOpaqueWindow
+  @onEscape: modules.game_poketask.hide()
+  anchors.centerIn: parent
+  size: 672 469
+  focusable: true
+
+  UIWidget
+    id: header
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 368 37
+    image-offset: 1 0
+    image-source: images/header
+    font: poppins bold 20
+    text-align: left
+    text-offset: 10 0
+    !text: tr("Poké Expeditions")
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin: 10 10 0 0
+    size: 20 20
+    !tooltip: tr("Close")
+    @onClick: modules.game_poketask.hide()
+
+  ScrollablePanel
+    id: tasks
+    anchors.top: header.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 15
+    padding: 8
+    size: 630 405
+    vertical-scrollbar: scrollBar
+    layout: verticalBox
+      spacing: 5
+
+  AllianceVerticalScrollBar
+    id: scrollBar
+    anchors.top: prev.top
+    anchors.bottom: prev.bottom
+    anchors.left: prev.right
+    margin-left: 3
+    pixels-scroll: true
+    step: 40

@@ -1,0 +1,139 @@
+PokemonInfoWidget < UIWidget
+  size: 80 90
+  image-source: /images/general_ui/bordered_background
+  image-border: 6
+
+  UIWidget
+    id: pokemonImage
+    size: 50 50
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 6
+    phantom: true
+
+  PoppinsSemibold12
+    id: pokemonCount
+    height: 20
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-bottom: 4
+    text-align: center
+    color: white
+    phantom: true
+
+NewOpaqueWindow
+  id: imageWindow
+  size: 777 585
+  @onEnter: modules.game_pokemons.hide()
+  @onEscape: modules.game_pokemons.hide()
+  anchors.centerIn: parent
+  draggable: true
+  focusable: true
+
+  UIWidget
+    id: titleBanner
+    size: 281 36
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 10
+    image-source: /modules/game_pokemonshop/images/title_background
+    phantom: true
+
+    UIWidget
+      id: titleIcon
+      size: 22 22
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 12
+      image-source: /images/ui/topbuttons/icons/pokemon
+      image-size: 22 22
+      phantom: true
+
+    PoppinsSemibold18
+      id: titleLabel
+      color: white
+      !text: tr("Pokémon Captured")
+      anchors.left: titleIcon.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 8
+      text-auto-resize: true
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_pokemons.hide()
+
+  UIScrollArea
+    id: pokemons
+    width: 696
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: titleBanner.bottom
+    anchors.bottom: bottomBar.top
+    margin-top: 8
+    margin-bottom: 8
+    vertical-scrollbar: newVerticalScrollbar
+    layout:
+      type: grid
+      cell-size: 80 90
+      cell-spacing: 8
+      num-columns: 8
+
+  AllianceVerticalScrollBar
+    id: newVerticalScrollbar
+    anchors.top: titleBanner.bottom
+    anchors.bottom: bottomBar.top
+    anchors.right: parent.right
+    margin-top: 15
+    margin-bottom: 10
+    margin-right: 12
+    step: 14
+    pixels-scroll: true
+
+  UIWidget
+    id: bottomBar
+    height: 45
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-bottom: 12
+
+    CheckBox
+      id: shinyFilter
+      width: 280
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 22
+      !text: tr("Show only Shiny Pokémon")
+      font: poppins semibold 12
+      color: white
+
+    UIWidget
+      id: lupa
+      size: 24 24
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      margin-right: 22
+      image-source: images/lupa
+      phantom: true
+
+    EntergameTextEdit
+      id: searchPokemon
+      size: 180 30
+      anchors.right: lupa.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 6
+      text-offset: 10 5
+      color: white
+      focusable: true
+      image-source: /modules/client_entergame/images/labelbox_noselect
+      placeholder: Search
+      placeholder-color: #888888
+      placeholder-offset: 10 5
+
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select

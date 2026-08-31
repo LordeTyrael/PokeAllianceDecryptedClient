@@ -1,0 +1,243 @@
+BattleIcon < UICheckBox
+  change-cursor-image: true
+  cursor: pointer
+
+  $hover !disabled:
+    opacity: 0.8
+
+  $!checked:
+    opacity: 1.0
+
+  $hover !checked:
+    opacity: 0.8
+
+  $checked:
+    opacity: 0.5
+
+  $hover checked:
+    opacity: 0.8
+
+  $disabled:
+    opacity: 0.5
+
+BattlePlayers < BattleIcon
+  size: 24 20
+  image-source: /images/game/battle/players
+
+BattleNPCs < BattleIcon
+  size: 20 18
+  image-source: /images/game/battle/npcs
+
+BattleMonsters < BattleIcon
+  size: 16 20
+  image-source: /images/game/battle/monsters
+
+BattleParty < BattleIcon
+  size: 15 15
+  image-source: /images/game/battle/party
+
+UIMiniWindow
+  id: battleWindow
+  height: 166
+  @onClose: modules.game_battle.onMiniWindowClose()
+  &save: true
+  &autoOpen: false
+  image-source: /images/general_ui/bordered_background
+  focusable: false
+  &minimizedHeight: 26
+  image-border: 12
+
+  ContainerMiniWindowTopbar
+    id: miniwindowTopBar
+    padding: 3
+
+  UIWidget
+    id: miniwindowIcon
+    icon: /images/ui/topbuttons/icons/battle_window
+    size: 20 25
+    anchors.left: miniwindowTopBar.left
+    margin-left: 5
+    anchors.verticalCenter: miniwindowTopBar.verticalCenter
+
+  Label
+    id: miniwindowName
+    text-auto-resize: true
+    anchors.left: miniwindowIcon.right
+    margin-left: 4
+    anchors.verticalCenter: miniwindowIcon.verticalCenter
+    anchors.right: upButton.left
+    margin-right: 2
+    font: poppins semibold 14
+    !text: tr('Battle')
+    text-offset: 0 4
+
+  NewButton
+    id: closeButton
+    anchors.top: miniwindowTopBar.top
+    anchors.right: miniwindowTopBar.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    image-source: /images/newui/miniwindow/close
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $pressed:
+      opacity: 0.75
+  
+  NewButton
+    id: minimizeButton
+    anchors.right: closeButton.left
+    margin-right: 5
+    anchors.verticalCenter: closeButton.verticalCenter
+    size: 11 7
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 7 11 7
+  
+  NewButton
+    id: lockButton
+    anchors.right: minimizeButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+    size: 13 15
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 0 13 15
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.right: lockButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+
+  NewButton
+    id: toggleFilterButton
+    anchors.right: optionsButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    size: 14 12
+    margin-right: 7
+    image-source: /images/newui/miniwindow/traces
+    @onClick: modules.game_battle.toggleFilterPanel()
+    phantom: false
+  
+  ResizeBorder
+    id: bottomResizeBorder
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 3
+    minimum: 48
+    margin-left: 3
+    margin-right: 3
+    background: #ffffff88
+  
+  AllianceVerticalScrollBar
+    id: miniwindowScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 14
+    margin-top: 28
+    margin-bottom: 5
+    margin-right: 4
+    pixels-scroll: true
+
+  Panel
+    id: filterPanel
+    margin-top: 30
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: miniwindowScrollBar.left
+    height: 30
+
+    Panel
+      id: buttons
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      height: 20
+      width: 120
+      margin-top: 7
+
+      BattlePlayers
+        id: hidePlayers
+        !tooltip: tr('Hide players')
+        @onSetup: if g_app.isMobile() then self:setChecked(true) end
+        @onCheckChange: modules.game_battle.onFilterChanged(self)
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+          
+      BattleNPCs
+        id: hideNPCs
+        !tooltip: tr('Hide Npcs')
+        @onSetup: if g_app.isMobile() then self:setChecked(true) end
+        @onCheckChange: modules.game_battle.onFilterChanged(self)
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: prev.right
+        margin-left: 8
+
+      BattleMonsters
+        id: hideMonsters
+        !tooltip: tr('Hide monsters')
+        @onCheckChange: modules.game_battle.onFilterChanged(self)
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: prev.right
+        margin-left: 8
+
+      BattleParty
+        id: hideParty
+        !tooltip: tr('Hide party members')
+        @onSetup: if g_app.isMobile() then self:setChecked(true) end
+        @onCheckChange: modules.game_battle.onFilterChanged(self)
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: prev.right
+        margin-left: 8
+
+      NewButton
+        id: showOptions
+        size: 14 18
+        anchors.left: prev.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 8
+        !tooltip: tr('Options')
+        image-source: /images/game/battle/options
+        @onClick: modules.game_battle.createSortOptions()
+
+  HorizontalSeparator
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: miniwindowScrollBar.left
+    margin-right: 5
+    margin-left: 5
+    margin-top: 5
+    height: 2
+    image-source: /images/newui/horizontal_separator
+
+  MiniWindowContents
+    anchors.top: prev.bottom
+    margin-top: 6
+
+    Panel
+      id: battlePanel
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+      margin-top: 5
+      padding-right: 5
+      layout:
+        type: verticalBox
+        fit-children: true

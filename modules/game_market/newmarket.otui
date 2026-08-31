@@ -1,0 +1,1672 @@
+HistoricLabel < Label
+  font: poppins semibold 12
+  text-align: left
+  text-offset: 5 0
+  height: 25
+  margin-left: 10
+
+RequestItemWidget < UIWidget
+  size: 250 35
+  focusable: true
+  background-color: #00000000
+  border-width: 0
+  cursor: pointer
+  
+  UIItem
+    id: itemIcon
+    virtual: true
+    size: 32 32
+    anchors.centerIn: parent
+    phantom: true
+
+  $hover:
+    background-color: #333333
+    border-width: 1
+    border-color: #1b8bed
+
+  $focus:
+    border-width: 1
+    border-color: #01a30c
+
+SellItemsPanel < UIWidget
+  id: sellItemsBackground
+  size: 980 200
+  anchors.left: parent.left
+  margin-left: 20
+  anchors.top: geralLabel.bottom
+  margin-top: 10
+  opacity: 0.75
+  image-border: 15
+  image-source: /images/newui/background_3
+
+  MyItemsPanel
+    id: sellTitlePanelBackground
+    size: 960 50
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 10
+    margin-top: 10
+    image-source: new_images/title_panel_background
+    focusable: false
+    phantom: true
+
+  ScrollablePanel
+    id: sellItemArea
+    size: 960 130
+    anchors.left: parent.left
+    anchors.top: sellTitlePanelBackground.bottom
+    margin-left: 10
+    vertical-scrollbar: sellMarketScroll
+    auto-focus: first
+    margin-top: 5
+    image-border: 15
+
+    layout:
+      type: grid
+      cell-size: 960 50
+      cell-spacing: 2
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: sellMarketScroll
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: sellItemArea.right
+    margin-top: 10
+    margin-bottom: 10
+    margin-right: 2
+    step: 30
+    pixels-scroll: true
+
+BuyRequestsPanel < UIWidget
+  id: buyRequestsBackground
+  size: 980 200
+  anchors.left: parent.left
+  margin-left: 20
+  anchors.top: requestsLabel.bottom
+  margin-top: 10
+  opacity: 0.75
+  image-border: 15
+  image-source: /images/newui/background_3
+
+  MyItemsPanel
+    id: requestsTitlePanelBackground
+    size: 960 50
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 10
+    margin-top: 10
+    image-source: new_images/title_panel_background
+    focusable: false
+    phantom: true
+
+  ScrollablePanel
+    id: buyRequestsArea
+    size: 960 130
+    anchors.left: parent.left
+    anchors.top: requestsTitlePanelBackground.bottom
+    margin-left: 10
+    vertical-scrollbar: requestsMarketScroll
+    auto-focus: first
+    margin-top: 5
+    image-border: 15
+
+    layout:
+      type: grid
+      cell-size: 960 50
+      cell-spacing: 2
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: requestsMarketScroll
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: buyRequestsArea.right
+    margin-right: 6
+    step: 30
+    pixels-scroll: true
+
+MarketItemPanel < UIWidget
+  size: 750 50
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    image-border: 30
+
+  PoppinsSemibold14
+    id: itemNumber
+    size: 50 50
+    anchors.left: parent.left
+    anchors.top: parent.top
+    !text: tr("#")
+    text-align: center
+    text-auto-resize: false
+
+  PoppinsSemibold14
+    id: item_image
+    size: 70 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Item")
+    text-align: center
+    text-auto-resize: false
+
+    UIItem
+      id: item
+      virtual: true
+      size: 38 38
+      anchors.centerIn: parent
+
+  PoppinsSemibold14
+    id: item_name
+    size: 200 50
+    anchors.left: prev.right
+    margin-left: 10
+    anchors.top: parent.top
+    !text: tr("Name")
+    text-align: center
+    text-auto-resize: false
+    text-wrap: true
+
+  PoppinsSemibold14
+    id: seller_name
+    size: 110 50
+    anchors.left: prev.right
+    margin-left: 10
+    anchors.top: parent.top
+    !text: tr("Seller")
+    text-align: center
+    text-auto-resize: false
+
+  PoppinsSemibold14
+    id: count
+    size: 100 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Count")
+    text-align: center
+    text-auto-resize: false
+
+  PoppinsSemibold14
+    id: price
+    size: 115 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Price")
+    text-align: center
+    text-auto-resize: false
+
+  PoppinsSemibold14
+    id: time
+    size: 80 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Time")
+    text-align: center
+    text-auto-resize: false
+
+  UIWidget
+    id: actions
+    size: 85 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+
+    UIWidget
+      id: cancelButton
+      size: 24 24
+      anchors.centerIn: parent
+      image-source: /images/newui/close
+      focusable: true
+      cursor: pointer
+      visible: false
+
+      $hover:
+        opacity: 0.7
+
+      $pressed:
+        opacity: 0.5
+
+MyItemsPanel < UIWidget
+  size: 960 50
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    image-border: 30
+
+  PoppinsSemibold14
+    id: itemNumber
+    size: 70 50
+    anchors.left: parent.left
+    anchors.top: parent.top
+    !text: tr("#")
+    text-align: center
+    text-auto-resize: false
+
+  PoppinsSemibold14
+    id: item_image
+    size: 80 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Item")
+    text-align: center
+    text-auto-resize: false
+
+    UIItem
+      id: item
+      virtual: true
+      size: 38 38
+      anchors.centerIn: parent
+
+  PoppinsSemibold14
+    id: item_name
+    size: 300 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Name")
+    text-align: center
+    text-auto-resize: false
+
+  PoppinsSemibold14
+    id: count
+    size: 120 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Count")
+    text-align: center
+    text-auto-resize: false
+
+  PoppinsSemibold14
+    id: price
+    size: 195 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Price")
+    text-align: center
+    text-auto-resize: false
+
+  PoppinsSemibold14
+    id: time
+    size: 100 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+    !text: tr("Time")
+    text-align: center
+    text-auto-resize: false
+
+  UIWidget
+    id: actions
+    size: 100 50
+    anchors.left: prev.right
+    anchors.top: parent.top
+
+    PoppinsSemibold14
+      id: actionsLabel
+      anchors.centerIn: parent
+      !text: tr("Actions")
+      phantom: true
+      visible: false
+
+    UIWidget
+      id: cancelButton
+      size: 24 24
+      anchors.centerIn: parent
+      image-source: /images/newui/close
+      focusable: true
+      cursor: pointer
+      opacity: 1.0
+      @onClick: modules.game_market.cancelSellItem(self:getParent():getParent())
+
+      $hover:
+        opacity: 0.7
+
+      $pressed:
+        opacity: 0.5
+
+MarketCategoryButton < NewButton
+  size: 160 26
+  image-source: new_images/base_category
+  margin-left: 8
+  focusable: true
+  $first:
+    margin-top: 5
+
+  $focus:
+    image-source: new_images/selected_category
+
+  @onClick: modules.game_market.requestMarketCategory(0, self)
+
+  UIWidget
+    id: icon
+    size: 16 16
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 5
+    phantom: true
+
+  PoppinsSemibold14
+    id: name
+    anchors.left: icon.right
+    margin-left: 8
+    anchors.verticalCenter: parent.verticalCenter
+    phantom: true
+
+  UIWidget
+    size: 7 10
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    margin-right: 8
+    image-source: new_images/arrow_icon
+
+MarketCategoryLabel < PoppinsSemibold18
+  textColor: #ffe400
+
+NewOpaqueWindow
+  id: market
+  size: 1020 600
+  anchors.centerIn: parent
+  padding: 2
+  focusable: true
+  @onEscape: modules.game_market.hideGameMarket()
+  @onDrop: function(self, draggedWidget, mousePos) return modules.game_market.onMarketWindowDrop(self, draggedWidget, mousePos) end
+
+  UIWidget
+    id: options_background
+    size: 730 36
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: new_images/title_options_background
+    border-right: 40
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 206 36
+    image-source: new_images/title_background
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 34 31
+      image-source: new_images/base_icon
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Market")
+
+  NewButton
+    id: buy_button
+    size: 100 36
+    anchors.left: base_name.right
+    anchors.top: parent.top
+    margin-left: 10
+
+    UIWidget
+      id: icon
+      size: 22 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 5
+      image-source: new_images/buy_icon
+      phantom: true
+
+    PoppinsSemibold14
+      anchors.verticalCenter: icon.verticalCenter
+      anchors.left: icon.right
+      margin-left: 5
+      !text: tr("Buy")
+
+  NewButton
+    id: sell_button
+    size: 100 36
+    anchors.left: buy_button.right
+    anchors.top: parent.top
+
+    UIWidget
+      id: icon
+      size: 22 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 5
+      image-source: new_images/sell_icon
+      phantom: true
+
+    PoppinsSemibold14
+      anchors.verticalCenter: icon.verticalCenter
+      anchors.left: icon.right
+      margin-left: 5
+      !text: tr("Sell")
+
+  NewButton
+    id: items_button
+    size: 180 36
+    anchors.left: sell_button.right
+    anchors.top: parent.top
+    @onClick: modules.game_market.getMyRequests()
+
+    UIWidget
+      id: icon
+      size: 22 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 5
+      image-source: new_images/sell_icon
+      phantom: true
+
+    PoppinsSemibold14
+      anchors.verticalCenter: icon.verticalCenter
+      anchors.left: icon.right
+      margin-left: 5
+      !text: tr("My Transactions")
+      phantom: true
+
+  NewButton
+    id: historic_button
+    size: 120 36
+    anchors.left: items_button.right
+    anchors.top: parent.top
+    @onClick: g_game.sendMarketViewHistoric()
+
+    UIWidget
+      id: icon
+      size: 22 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      image-source: new_images/sell_icon
+      phantom: true
+
+    PoppinsSemibold14
+      anchors.verticalCenter: icon.verticalCenter
+      anchors.left: icon.right
+      margin-left: 5
+      !text: tr("Historic")
+      phantom: true
+
+  MarketCategoryLabel
+    id: categoryLabel
+    anchors.left: parent.left
+    margin-left: 15
+    anchors.top: base_name.bottom
+    margin-top: 30
+    !text: tr("Categories")
+    visible: false
+
+  UIWidget
+    id: categoryArea
+    size: 181 389
+    anchors.left: parent.left
+    margin-left: 20
+    margin-top: 15
+    anchors.top: categoryLabel.bottom
+    auto-focus: first
+    opacity: 0.75
+    image-border: 15
+    image-source: /images/newui/background_3
+    visible: false
+
+    layout:
+      type: grid
+      cell-size: 172 26
+      cell-spacing: 3
+      flow: true
+
+  MarketCategoryLabel
+    id: geralLabel
+    anchors.left: parent.left
+    margin-left: 15
+    anchors.top: base_name.bottom
+    margin-top: 30
+    !text: tr("My Sell Items")
+
+  UIWidget
+    id: searchPanel
+    size: 300 30
+    anchors.right: parent.right
+    anchors.top: base_name.bottom
+    margin-right: 20
+    margin-top: 20
+    image-border: 3
+    visible: false
+
+    EntergameTextEdit
+      id: searchEdit
+      anchors.fill: parent
+      font: poppins semibold 14
+      placeholder: "Search items..."
+      placeholder-offset: 15 5
+      image-source: /modules/client_entergame/images/labelbox_noselect
+      @onTextChange: modules.game_market.onSearchTextChanged(self:getText())
+      @onEnter: modules.game_market.performSearch()
+      color: white
+      text-offset: 15 5
+
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+  UIWidget
+    id: priceAlertPanel
+    size: 280 30
+    anchors.right: searchPanel.left
+    anchors.top: searchPanel.top
+    margin-right: 20
+    visible: false
+    !tooltip: tr('Prices more than this percentage above the 30-day trade average are highlighted in red.')
+
+    Label
+      id: priceAlertTitle
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      font: poppins semibold 12
+      color: #ffffff
+      !text: tr('Price alert:')
+
+    Label
+      id: priceAlertValue
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      width: 55
+      font: poppins semibold 12
+      color: #ff5555
+      text-align: right
+      text: +100%
+
+    AllianceHorizontalScrollBar
+      id: priceAlertSlider
+      anchors.left: priceAlertTitle.right
+      anchors.right: priceAlertValue.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 10
+      margin-right: 10
+      focusable: false
+
+  UIWidget
+    id: categoryBackground
+    size: 790 400
+    anchors.left: categoryArea.right
+    anchors.top: base_name.bottom
+    margin-left: 20
+    margin-top: 60
+    opacity: 0.75
+    image-border: 15
+    image-source: /images/newui/background_3
+
+    MarketItemPanel
+      id: titlePanelBackground
+      size: 750 50
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-left: 10
+      margin-top: 10
+      image-source: new_images/title_panel_background
+      focusable: false
+      phantom: true
+
+    ScrollablePanel
+      id: itemArea
+      size: 770 325
+      anchors.left: parent.left
+      anchors.top: titlePanelBackground.bottom
+      margin-left: 10
+      margin-bottom: 80
+      vertical-scrollbar: marketScroll
+      auto-focus: first
+      margin-top: 5
+      image-border: 15
+
+      layout:
+        type: grid
+        cell-size: 750 50
+        cell-spacing: 2
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: marketScroll
+      anchors.top: parent.top
+      anchors.right: itemArea.right
+      margin-top: 10
+      margin-right: 1
+      step: 30
+      pixels-scroll: true
+
+  AlliancePagination
+    id: buyPaginationPanel
+    width: 180
+    anchors.right: buyButton.left
+    anchors.bottom: parent.bottom
+    margin-right: 30
+    margin-bottom: 35
+
+  AlliancePagination
+    id: sellPaginationPanel
+    width: 180
+    anchors.right: createRequestButton.left
+    anchors.bottom: parent.bottom
+    margin-right: 30
+    margin-bottom: 35
+
+  NewBlueButton
+    id: createRequestButton
+    size: 150 50
+    anchors.bottom: parent.bottom
+    anchors.right: sellNowButton.left
+    margin-bottom: 20
+    margin-right: 20
+    font: poppins semibold 14
+    !text: tr("Create Request")
+    visible: false
+    @onClick: modules.game_market.onCreateRequestButtonClick()
+
+  NewBlueButton
+    id: buyButton
+    size: 150 50
+    anchors.bottom: parent.bottom
+    anchors.right: selectItemButton.left
+    margin-bottom: 20
+    margin-right: 20
+    font: poppins semibold 14
+    !text: tr("Buy Now")
+    @onClick: modules.game_market.onBuyNowButtonClick()
+
+  NewGreenButton
+    id: sellNowButton
+    size: 150 50
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 20
+    margin-right: 20
+    font: poppins semibold 14
+    !text: tr("Sell Now")
+    visible: false
+    @onClick: modules.game_market.onSellNowButtonClick()
+
+  NewBlueButton
+    id: selectItemButton
+    size: 190 50
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 20
+    margin-right: 20
+    font: poppins semibold 14
+    !text: tr("Create Announcement")
+    @onClick: modules.game_market.onSelectItemButtonClick()
+
+  UIWidget
+    id: sellDropWindow
+    size: 350 150
+    anchors.centerIn: parent
+    visible: false
+    image-source: /images/newui/background_3
+    image-border: 15
+    
+    Label
+      id: sellDropTitle
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 15
+    
+    UIWidget
+      id: sellDropArea
+      size: 350 150
+      anchors.centerIn: parent
+      image-source: /images/newui/background_2
+      image-border: 15
+      @onDrop: function(self, draggedWidget, mousePos) return modules.game_market.onReceiveItemToSell(self, draggedWidget, mousePos) end
+      
+      Label
+        id: dropLabel
+        anchors.centerIn: parent
+        text-align: center
+        font: poppins semibold 16
+        !text: tr("Drop an item here to sell")
+        color: #ffffff
+
+    NewRedCloseButton
+      id: closeSellDropButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_market.closeSellDrop()
+
+  UIWidget
+    id: sellConfigPanel
+    size: 500 350
+    anchors.centerIn: parent
+    visible: false
+    image-source: /images/newui/background_3
+    image-border: 15
+    
+    NewRedCloseButton
+      id: closeSellConfigButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_market.closeSellConfig()
+    
+    UIWidget
+      id: sellConfigTitleBar
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 12
+      margin-left: 14
+      size: 220 36
+      image-source: /images/general_ui/name_base
+      phantom: true
+
+      Label
+        id: sellConfigTitle
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 15
+        margin-top: 2
+        font: poppins semibold 16
+        text-auto-resize: true
+        color: #ffffff
+        !text: tr("Sell Item")
+
+    UIItem
+      id: configSelectedItem
+      virtual: true
+      size: 48 48
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: sellConfigTitleBar.bottom
+      margin-top: 14
+    
+    PoppinsSemibold14
+      id: configItemName
+      anchors.top: configSelectedItem.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      color: #ffffff
+      text-align: center
+      !text: tr("Item Name")
+    
+    PoppinsSemibold14
+      id: quantityLabel
+      anchors.top: configItemName.bottom
+      anchors.left: parent.left
+      margin-top: 20
+      margin-left: 30
+      color: #ffffff
+      !text: tr("Quantity:")
+    
+    AllianceSpinBox
+      id: quantityEdit
+      size: 100 32
+      anchors.top: quantityLabel.top
+      anchors.right: parent.right
+      margin-right: 30
+      focusable: true
+      font: poppins semibold 12
+      text-align: center
+      padding-left: 12
+      padding-right: 18
+      color: #ffffff
+      image-source: /images/general_ui/combobox_background
+      image-border: 6
+
+    AllianceStraightBlueButton
+      id: maxQuantityButton
+      size: 50 28
+      anchors.verticalCenter: quantityEdit.verticalCenter
+      anchors.right: quantityEdit.left
+      margin-right: 8
+      font: poppins semibold 12
+      text-align: center
+      !text: tr("Max")
+      @onClick: modules.game_market.onSellMaxClicked()
+
+    AllianceHorizontalScrollBar
+      id: quantityScrollBar
+      anchors.left: quantityLabel.right
+      anchors.right: maxQuantityButton.left
+      anchors.verticalCenter: quantityEdit.verticalCenter
+      margin-left: 15
+      margin-right: 10
+      focusable: false
+
+    Label
+      id: maxQuantityLabel
+      anchors.top: quantityEdit.bottom
+      anchors.right: parent.right
+      margin-top: 2
+      margin-right: 30
+      font: poppins semibold 12
+      text-auto-resize: true
+      color: #cccccc
+      cursor: pointer
+      !text: tr("Max: 0")
+      @onClick: modules.game_market.onSellMaxClicked()
+    
+    PoppinsSemibold14
+      id: priceLabel
+      anchors.top: quantityEdit.bottom
+      anchors.left: parent.left
+      margin-top: 20
+      margin-left: 30
+      color: #ffffff
+      !text: tr("Price per unit:")
+    
+    EntergameTextEdit
+      id: priceEdit
+      size: 120 32
+      anchors.top: priceLabel.top
+      anchors.right: parent.right
+      margin-right: 30
+      font: poppins semibold 12
+      text-offset: 0 0
+      padding-left: 15
+      text-align: center
+      color: #ffffff
+      image-source: /images/general_ui/combobox_background
+      image-border: 6
+      text: 0
+
+    UIWidget
+      id: priceCurrencyIcon
+      size: 16 16
+      anchors.verticalCenter: priceEdit.verticalCenter
+      anchors.right: priceEdit.left
+      margin-right: 8
+      icon-source: @fa solid 16 f155
+      icon-color: #4ADE80
+      phantom: true
+
+    Label
+      id: totalPriceLabel
+      anchors.top: priceEdit.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 20
+      font: poppins semibold 16
+      text-auto-resize: true
+      color: #00ff00
+      text-align: center
+      !text: tr("Total: $0")
+
+    Label
+      id: anonymousLabel
+      anchors.verticalCenter: anonymousCheckBox.verticalCenter
+      anchors.right: anonymousCheckBox.left
+      margin-right: 5
+      font: poppins semibold 12
+      text-auto-resize: true
+      !text: tr("Sell as anonymous")
+    
+    CheckBox
+      id: anonymousCheckBox
+      anchors.top: priceEdit.bottom
+      anchors.right: priceEdit.right
+      margin-top: 15
+      size: 20 20
+      text: Anonymous
+      font: poppins semibold 12
+      color: #ffffff
+      text-offset: 25 0
+    
+    AllianceStraightBlueButton
+      id: confirmSellButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.right: parent.horizontalCenter
+      margin-bottom: 18
+      margin-right: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Confirm")
+      @onClick: modules.game_market.confirmSell()
+
+    NewRedButton
+      id: cancelSellButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.left: parent.horizontalCenter
+      margin-bottom: 18
+      margin-left: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Cancel")
+      @onClick: modules.game_market.closeSellConfig()
+
+  UIWidget
+    id: createRequestWindow
+    size: 600 450
+    anchors.centerIn: parent
+    visible: false
+    image-source: /images/newui/background_3
+    image-border: 15
+    
+    NewRedCloseButton
+      id: closeRequestButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_market.closeCreateRequest()
+    
+    UIWidget
+      id: createRequestTitleBar
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 12
+      margin-left: 14
+      size: 220 36
+      image-source: /images/general_ui/name_base
+      phantom: true
+
+      Label
+        id: createRequestTitle
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 15
+        margin-top: 2
+        font: poppins semibold 16
+        text-auto-resize: true
+        color: #ffffff
+        !text: tr("Create Buy Request")
+    
+    PoppinsSemibold14
+      id: categoryLabel
+      anchors.top: createRequestTitleBar.bottom
+      anchors.left: parent.left
+      margin-top: 14
+      margin-left: 30
+      color: #ffffff
+      !text: tr("Category:")
+    
+    NewComboBox
+      id: categoryComboBox
+      size: 200 32
+      anchors.top: categoryLabel.bottom
+      anchors.left: parent.left
+      margin-left: 30
+      margin-top: 5
+      font: poppins semibold 12
+      color: #ffffff
+      image-source: /images/general_ui/combobox_background
+      image-border: 6
+
+    UIWidget
+      id: createSearchPanel
+      size: 300 30
+      anchors.right: parent.right
+      anchors.top: categoryComboBox.top
+      margin-right: 20
+      image-border: 3
+  
+      EntergameTextEdit
+        id: createSearchEdit
+        anchors.fill: parent
+        font: poppins semibold 14
+        placeholder: "Search items..."
+        placeholder-offset: 15 5
+        image-source: /images/general_ui/combobox_background
+        image-border: 6
+        @onTextChange: modules.game_market.onCreateSearchTextChanged(self:getText())
+        color: #ffffff
+        text-offset: 15 5
+    
+    PoppinsSemibold14
+      id: itemLabel
+      anchors.top: categoryComboBox.bottom
+      anchors.left: parent.left
+      margin-top: 15
+      margin-left: 30
+      color: #ffffff
+      !text: tr("Item:")
+    
+    ScrollablePanel
+      id: itemListPanel
+      size: 540 180
+      anchors.top: itemLabel.bottom
+      anchors.left: parent.left
+      margin-left: 30
+      margin-top: 5
+      vertical-scrollbar: itemListScroll
+      image-source: /images/newui/background_2
+      image-border: 10
+      
+      layout:
+        type: grid
+        cell-size: 40 40
+        cell-spacing: 5
+        flow: true
+    
+    AllianceVerticalScrollBar
+      id: itemListScroll
+      anchors.top: itemListPanel.top
+      anchors.bottom: itemListPanel.bottom
+      anchors.right: itemListPanel.right
+      margin-right: 2
+      step: 20
+      pixels-scroll: true
+    
+    PoppinsSemibold14
+      id: requestQuantityLabel
+      anchors.top: itemListPanel.bottom
+      anchors.left: parent.left
+      margin-top: 15
+      margin-left: 30
+      color: #ffffff
+      !text: tr("Quantity:")
+    
+    AllianceSpinBox
+      id: requestQuantityEdit
+      size: 100 32
+      anchors.top: requestQuantityLabel.top
+      anchors.right: parent.horizontalCenter
+      margin-right: 10
+      focusable: true
+      font: poppins semibold 12
+      text-align: center
+      padding-left: 12
+      padding-right: 18
+      color: #ffffff
+      image-source: /images/general_ui/combobox_background
+      image-border: 6
+
+    AllianceHorizontalScrollBar
+      id: requestQuantityScrollBar
+      anchors.left: requestQuantityLabel.right
+      anchors.right: requestQuantityEdit.left
+      anchors.verticalCenter: requestQuantityEdit.verticalCenter
+      margin-left: 15
+      margin-right: 10
+      focusable: false
+
+    PoppinsSemibold14
+      id: requestPriceLabel
+      anchors.top: requestQuantityLabel.top
+      anchors.left: parent.horizontalCenter
+      margin-left: 10
+      color: #ffffff
+      !text: tr("Price per unit:")
+    
+    EntergameTextEdit
+      id: requestPriceEdit
+      size: 120 32
+      anchors.top: requestPriceLabel.top
+      anchors.right: parent.right
+      margin-right: 30
+      font: poppins semibold 12
+      padding-left: 15
+      text-offset: 0 0
+      text-align: center
+      color: #ffffff
+      image-source: /images/general_ui/combobox_background
+      image-border: 6
+      text: 1000
+
+    UIWidget
+      id: requestPriceCurrencyIcon
+      size: 16 16
+      anchors.verticalCenter: requestPriceEdit.verticalCenter
+      anchors.right: requestPriceEdit.left
+      margin-right: 8
+      icon-source: @fa solid 16 f155
+      icon-color: #4ADE80
+      phantom: true
+
+    AllianceStraightBlueButton
+      id: confirmRequestButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.right: parent.horizontalCenter
+      margin-bottom: 18
+      margin-right: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Create")
+      @onClick: modules.game_market.confirmCreateRequest()
+
+    NewRedButton
+      id: cancelRequestButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.left: parent.horizontalCenter
+      margin-bottom: 18
+      margin-left: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Cancel")
+      @onClick: modules.game_market.closeCreateRequest()
+
+  UIWidget
+    id: buyConfirmWindow
+    size: 400 380
+    anchors.centerIn: parent
+    visible: false
+    image-source: /images/newui/background_3
+    image-border: 15
+    
+    NewRedCloseButton
+      id: closeBuyConfirmButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_market.closeBuyConfirm()
+    
+    UIWidget
+      id: buyConfirmTitleBar
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 12
+      margin-left: 14
+      size: 220 36
+      image-source: /images/general_ui/name_base
+      phantom: true
+
+      Label
+        id: buyConfirmTitle
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 15
+        margin-top: 2
+        font: poppins semibold 16
+        text-auto-resize: true
+        color: #ffffff
+        !text: tr("Confirm Purchase")
+    
+    UIItem
+      id: buyConfirmItem
+      virtual: true
+      size: 48 48
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: buyConfirmTitleBar.bottom
+      margin-top: 14
+    
+    PoppinsSemibold14
+      id: buyConfirmItemName
+      anchors.top: buyConfirmItem.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      color: #ffffff
+      text-align: center
+      text: Item Name
+    
+    Label
+      id: buyConfirmQuantityLabel
+      anchors.top: buyConfirmItemName.bottom
+      anchors.left: parent.left
+      margin-top: 20
+      margin-left: 30
+      font: poppins semibold 12
+      color: #ffffff
+      text-auto-resize: true
+      !text: tr("Quantity:")
+    
+    AllianceSpinBox
+      id: buyConfirmQuantityEdit
+      size: 100 32
+      anchors.top: buyConfirmQuantityLabel.top
+      anchors.right: parent.right
+      margin-right: 30
+      focusable: true
+      font: poppins semibold 12
+      text-align: center
+      padding-left: 12
+      padding-right: 18
+      color: #ffffff
+      image-source: /images/general_ui/combobox_background
+      image-border: 6
+
+    AllianceHorizontalScrollBar
+      id: buyConfirmQuantityScrollBar
+      anchors.left: buyConfirmQuantityLabel.right
+      anchors.right: buyConfirmQuantityEdit.left
+      anchors.verticalCenter: buyConfirmQuantityEdit.verticalCenter
+      margin-left: 15
+      margin-right: 10
+      focusable: false
+
+    Label
+      id: buyConfirmPriceLabel
+      anchors.top: buyConfirmQuantityEdit.bottom
+      anchors.left: parent.left
+      margin-top: 15
+      margin-left: 30
+      font: poppins semibold 12
+      color: #ffffff
+      text-auto-resize: true
+      !text: tr("Price per unit:")
+
+    Label
+      id: buyConfirmPriceValue
+      anchors.top: buyConfirmPriceLabel.top
+      anchors.right: parent.right
+      margin-right: 30
+      font: poppins semibold 12
+      color: #00ff00
+      text-auto-resize: true
+      text-align: right
+      text: 1000 gold
+
+    Label
+      id: buyConfirmTotalLabel
+      anchors.top: buyConfirmPriceValue.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 20
+      font: poppins semibold 16
+      color: #ffff00
+      text-auto-resize: true
+      text-align: center
+      !text: tr("Total: 1,000 gold")
+
+    Label
+      id: buyConfirmPriceAlert
+      anchors.top: buyConfirmTotalLabel.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 12
+      margin-left: 25
+      margin-right: 25
+      font: poppins semibold 11
+      color: #ff5555
+      text-align: center
+      text-wrap: true
+      text-auto-resize: true
+      visible: false
+
+    AllianceStraightBlueButton
+      id: confirmBuyButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.right: parent.horizontalCenter
+      margin-bottom: 18
+      margin-right: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Confirm")
+      @onClick: modules.game_market.confirmBuyNow()
+
+    NewRedButton
+      id: cancelBuyButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.left: parent.horizontalCenter
+      margin-bottom: 18
+      margin-left: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Cancel")
+      @onClick: modules.game_market.closeBuyConfirm()
+
+  UIWidget
+    id: sellNowConfirmWindow
+    size: 400 330
+    anchors.centerIn: parent
+    visible: false
+    image-source: /images/newui/background_3
+    image-border: 15
+    
+    NewRedCloseButton
+      id: closeSellNowConfirmButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_market.closeSellNowConfirm()
+    
+    UIWidget
+      id: sellNowConfirmTitleBar
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 12
+      margin-left: 14
+      size: 220 36
+      image-source: /images/general_ui/name_base
+      phantom: true
+
+      Label
+        id: sellNowConfirmTitle
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 15
+        margin-top: 2
+        font: poppins semibold 16
+        text-auto-resize: true
+        color: #ffffff
+        !text: tr("Confirm Sale")
+    
+    UIItem
+      id: sellNowConfirmItem
+      virtual: true
+      size: 48 48
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: sellNowConfirmTitleBar.bottom
+      margin-top: 14
+    
+    PoppinsSemibold14
+      id: sellNowConfirmItemName
+      anchors.top: sellNowConfirmItem.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      color: #ffffff
+      text-align: center
+      text: Item Name
+    
+    Label
+      id: sellNowConfirmQuantityLabel
+      anchors.top: sellNowConfirmItemName.bottom
+      anchors.left: parent.left
+      margin-top: 15
+      margin-left: 30
+      font: poppins semibold 12
+      text-auto-resize: true
+      color: #ffffff
+      !text: tr("Quantity:")
+    
+    AllianceSpinBox
+      id: sellNowConfirmQuantityEdit
+      size: 100 32
+      anchors.top: sellNowConfirmQuantityLabel.top
+      anchors.right: parent.right
+      margin-right: 30
+      focusable: true
+      font: poppins semibold 12
+      text-align: center
+      padding-left: 12
+      padding-right: 18
+      color: #ffffff
+      image-source: /images/general_ui/combobox_background
+      image-border: 6
+
+    AllianceHorizontalScrollBar
+      id: sellNowConfirmQuantityScrollBar
+      anchors.left: sellNowConfirmQuantityLabel.right
+      anchors.right: sellNowConfirmQuantityEdit.left
+      anchors.verticalCenter: sellNowConfirmQuantityEdit.verticalCenter
+      margin-left: 15
+      margin-right: 10
+      focusable: false
+
+    Label
+      id: sellNowConfirmPriceLabel
+      anchors.top: sellNowConfirmQuantityEdit.bottom
+      anchors.left: parent.left
+      margin-top: 15
+      margin-left: 30
+      font: poppins semibold 12
+      text-auto-resize: true
+      color: #ffffff
+      !text: tr("Price per unit:")
+    
+    Label
+      id: sellNowConfirmPriceValue
+      anchors.top: sellNowConfirmPriceLabel.top
+      anchors.right: parent.right
+      margin-right: 30
+      font: poppins semibold 12
+      text-auto-resize: true
+      color: #00ff00
+      text-align: right
+      text: 1000 gold
+    
+    Label
+      id: sellNowConfirmTotalLabel
+      anchors.top: sellNowConfirmPriceValue.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 20
+      font: poppins semibold 16
+      text-auto-resize: true
+      color: #ffff00
+      text-align: center
+      !text: tr("Total: 1,000 gold")
+    
+    AllianceStraightBlueButton
+      id: confirmSellNowButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.right: parent.horizontalCenter
+      margin-bottom: 18
+      margin-right: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Confirm")
+      @onClick: modules.game_market.confirmSellNow()
+
+    NewRedButton
+      id: cancelSellNowButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.left: parent.horizontalCenter
+      margin-bottom: 18
+      margin-left: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Cancel")
+      @onClick: modules.game_market.closeSellNowConfirm()
+
+  UIWidget
+    id: cancelOfferConfirmWindow
+    size: 400 300
+    anchors.centerIn: parent
+    visible: false
+    image-source: /images/newui/background_3
+    image-border: 15
+
+    NewRedCloseButton
+      id: closeCancelOfferButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_market.closeCancelOfferConfirm()
+
+    UIWidget
+      id: cancelOfferTitleBar
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 12
+      margin-left: 14
+      size: 220 36
+      image-source: /images/general_ui/name_base
+      phantom: true
+
+      Label
+        id: cancelOfferTitle
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 15
+        margin-top: 2
+        font: poppins semibold 16
+        text-auto-resize: true
+        color: #ffffff
+        !text: tr("Cancel Offer")
+
+    UIItem
+      id: cancelOfferItem
+      virtual: true
+      size: 48 48
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: cancelOfferTitleBar.bottom
+      margin-top: 18
+
+    PoppinsSemibold14
+      id: cancelOfferItemName
+      anchors.top: cancelOfferItem.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      color: #ffffff
+      text-align: center
+      text: Item Name
+
+    Label
+      id: cancelOfferMessage
+      anchors.top: cancelOfferItemName.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 18
+      margin-left: 30
+      margin-right: 30
+      font: poppins semibold 12
+      text-auto-resize: true
+      text-wrap: true
+      text-align: center
+      color: #ffffff
+      !text: tr("This offer will be removed from the market.")
+
+    AllianceStraightBlueButton
+      id: confirmCancelOfferButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.right: parent.horizontalCenter
+      margin-bottom: 18
+      margin-right: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Remove")
+      @onClick: modules.game_market.confirmCancelOffer()
+
+    NewRedButton
+      id: keepCancelOfferButton
+      size: 120 35
+      anchors.bottom: parent.bottom
+      anchors.left: parent.horizontalCenter
+      margin-bottom: 18
+      margin-left: 10
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("Keep")
+      @onClick: modules.game_market.closeCancelOfferConfirm()
+
+  SellItemsPanel
+
+  MarketCategoryLabel
+    id: requestsLabel
+    anchors.left: parent.left
+    margin-left: 15
+    anchors.top: prev.bottom
+    margin-top: 5
+    !text: tr("My Requests")
+
+  BuyRequestsPanel
+
+  UIWidget
+    id: historicWindow
+    size: 800 500
+    anchors.centerIn: parent
+    visible: false
+    image-source: /images/newui/background_3
+    image-border: 15
+    
+    NewRedCloseButton
+      id: closeHistoricButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_market.closeHistoric()
+    
+    UIWidget
+      id: historicTitleBar
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 12
+      margin-left: 14
+      size: 220 36
+      image-source: /images/general_ui/name_base
+      phantom: true
+
+      Label
+        id: historicTitle
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 15
+        margin-top: 2
+        font: poppins semibold 16
+        text-auto-resize: true
+        color: #ffffff
+        !text: tr("Market Historic")
+    
+    UIWidget
+      id: historicListBackground
+      size: 760 400
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: historicTitleBar.bottom
+      margin-top: 14
+      image-source: /images/newui/background_2
+      image-border: 10
+      
+      ScrollablePanel
+        id: historicListPanel
+        size: 730 380
+        anchors.left: parent.left
+        anchors.top: parent.top
+        margin-left: 10
+        margin-top: 10
+        vertical-scrollbar: historicScroll
+        
+        layout:
+          type: verticalBox
+          spacing: 2
+      
+      AllianceVerticalScrollBar
+        id: historicScroll
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        margin-top: 10
+        margin-bottom: 10
+        margin-right: 7
+        step: 20
+        pixels-scroll: true
+
+  UIWidget
+    id: balanceBar
+    size: 170 22
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 20
+    margin-bottom: 15
+    phantom: true
+
+    UIWidget
+      id: balanceIcon
+      size: 16 16
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      icon-source: @fa solid 16 f155
+      icon-color: #4ADE80
+
+    PoppinsSemibold14
+      id: balanceLabel
+      color: #ffffff
+      anchors.left: balanceIcon.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 5
+      text: 0
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_market.hideGameMarket()
+
+  UIWidget
+    id: dragSellHint
+    anchors.fill: parent
+    phantom: true
+    visible: false
+    background-color: #000000b3
+
+    PoppinsSemibold18
+      id: dragSellHintLabel
+      anchors.centerIn: parent
+      color: #ffffff
+      text-align: center
+      !text: tr("Drop here to sell")

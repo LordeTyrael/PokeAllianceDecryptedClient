@@ -1,0 +1,99 @@
+ItemSelectorWindow < NewOpaqueWindow
+  id: itemSelector
+  size: 330 176
+  anchors.centerIn: parent
+  focusable: true
+
+  PoppinsSemibold14
+    id: title
+    !text: tr("Select item")
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    color: #ffffff
+
+  Item
+    id: item
+    virtual: true
+    size: 34 34
+    anchors.left: parent.left
+    anchors.top: title.bottom
+    margin-top: 26
+    margin-left: 16
+
+  PoppinsSemibold12
+    id: itemIdLabel
+    !text: tr("Item ID")
+    anchors.left: item.right
+    anchors.top: title.bottom
+    margin-top: 14
+    margin-left: 14
+    color: #aebfd2
+
+  SpinBox
+    id: itemId
+    anchors.left: itemIdLabel.left
+    anchors.top: itemIdLabel.bottom
+    margin-top: 3
+    width: 80
+    height: 24
+    minimum: 0
+    maximum: 999999
+    focusable: true
+    text-align: center
+    color: #ffffff
+    image-source: /images/general_ui/combobox_background
+    image-border: 6
+
+  PoppinsSemibold12
+    id: countLabel
+    !text: tr("Count / SubType")
+    anchors.left: itemId.right
+    anchors.top: itemIdLabel.top
+    margin-left: 18
+    color: #aebfd2
+
+  AllianceHorizontalScrollBar
+    id: itemCount
+    anchors.left: countLabel.left
+    anchors.right: parent.right
+    anchors.verticalCenter: itemId.verticalCenter
+    margin-right: 16
+    focusable: false
+
+  PoppinsSemibold12
+    id: countValueLabel
+    anchors.top: itemCount.bottom
+    anchors.horizontalCenter: itemCount.horizontalCenter
+    margin-top: 4
+    color: #ffcc00
+
+  AllianceStraightBlueButton
+    id: okButton
+    !text: tr('Ok')
+    font: poppins semibold 12
+    text-align: center
+    size: 92 30
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 14
+
+  AllianceSoftBlackButton
+    id: clearButton
+    !text: tr('Clear')
+    font: poppins semibold 12
+    text-align: center
+    size: 92 30
+    anchors.verticalCenter: okButton.verticalCenter
+    anchors.right: okButton.left
+    margin-right: 12
+
+  NewRedButton
+    id: cancelButton
+    !text: tr('Cancel')
+    font: poppins semibold 12
+    text-align: center
+    size: 92 30
+    anchors.verticalCenter: okButton.verticalCenter
+    anchors.left: okButton.right
+    margin-left: 12

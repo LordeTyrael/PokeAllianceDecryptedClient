@@ -1,0 +1,31 @@
+MainWindow
+  id: inviteGuildWindow
+  !text: tr('Invite Player')
+  height: 130
+  width: 260
+  visible: false
+  Label
+    id: inviteGuildLabel
+    !text: tr('Player Name:')
+    anchors.top: parent.top
+    anchors.left: parent.left
+  TextEdit
+    id: inviteGuildText
+    anchors.top: inviteGuildLabel.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 17
+  Button
+    id: buttonCancel
+    !text: tr('Cancel')
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: modules.game_guild.closeGuildPanels()
+  Button
+    id: buttonOk
+    !text: tr('Ok')
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: modules.game_guild.inviteToGuild()

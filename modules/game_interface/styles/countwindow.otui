@@ -1,0 +1,194 @@
+CountWindow < NewOpaqueWindow
+  id: countWindow
+  size: 280 190
+  anchors.centerIn: parent
+  focusable: true
+
+  PoppinsSemibold14
+    id: title
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    color: #ffffff
+    !text: tr('Move Stackable Item')
+
+  NewRedCloseButton
+    id: closeBtn
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+
+  Item
+    id: item
+    size: 48 48
+    anchors.top: title.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    focusable: false
+    virtual: true
+    forceShowCount: true
+
+  AllianceAmountSpinner
+    id: countSpinner
+    anchors.top: item.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+
+  NewStraightBlueButton
+    id: buttonOk
+    size: 90 30
+    !text: tr('Confirm')
+    anchors.right: parent.horizontalCenter
+    margin-right: 6
+    anchors.bottom: parent.bottom
+    margin-bottom: 14
+    focusable: false
+
+  NewRedButton
+    id: buttonCancel
+    size: 90 30
+    !text: tr('Cancel')
+    anchors.left: parent.horizontalCenter
+    margin-left: 6
+    anchors.bottom: parent.bottom
+    margin-bottom: 14
+    focusable: false
+
+DepotStashCountWindow < NewOpaqueWindow
+  id: countWindow
+  size: 280 190
+  anchors.centerIn: parent
+  focusable: true
+
+  PoppinsSemibold14
+    id: title
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    color: #ffffff
+    !text: tr('Withdraw from Depot Stash')
+
+  NewRedCloseButton
+    id: closeBtn
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+
+  Item
+    id: item
+    size: 48 48
+    anchors.top: title.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    focusable: false
+    virtual: true
+    forceShowCount: true
+
+  AllianceAmountSpinner
+    id: countSpinner
+    anchors.top: item.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+
+  NewStraightBlueButton
+    id: buttonOk
+    size: 90 30
+    !text: tr('Confirm')
+    anchors.right: parent.horizontalCenter
+    margin-right: 6
+    anchors.bottom: parent.bottom
+    margin-bottom: 14
+    focusable: false
+
+  NewRedButton
+    id: buttonCancel
+    size: 90 30
+    !text: tr('Cancel')
+    anchors.left: parent.horizontalCenter
+    margin-left: 6
+    anchors.bottom: parent.bottom
+    margin-bottom: 14
+    focusable: false
+
+BuyItemCountWindow < NewOpaqueWindow
+  id: countWindow
+  size: 280 220
+  anchors.centerIn: parent
+  focusable: true
+
+  PoppinsSemibold14
+    id: title
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    color: #ffffff
+    !text: tr('Confirm Buy Item')
+
+  NewRedCloseButton
+    id: closeBtn
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+
+  Item
+    id: item
+    size: 48 48
+    anchors.top: title.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    focusable: false
+    virtual: true
+    forceShowCount: true
+
+  UIWidget
+    id: priceLabel
+    anchors.top: item.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+    width: 100
+    height: 25
+    layout:
+      type: horizontalBox
+      spacing: 5
+      fit-children: true
+
+    UIWidget
+      id: priceIcon
+      size: 18 18
+      fixed-size: true
+
+    Label
+      id: priceCost
+      text-auto-resize: true
+      font: poppins semibold 14
+      text-align: center
+      !text: tr("0")
+
+  AllianceAmountSpinner
+    id: countSpinner
+    anchors.top: priceLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+
+  NewStraightBlueButton
+    id: buttonOk
+    size: 90 30
+    !text: tr('Buy')
+    anchors.right: parent.horizontalCenter
+    margin-right: 6
+    anchors.bottom: parent.bottom
+    margin-bottom: 14
+    focusable: false
+
+  NewRedButton
+    id: buttonCancel
+    size: 90 30
+    !text: tr('Cancel')
+    anchors.left: parent.horizontalCenter
+    margin-left: 6
+    anchors.bottom: parent.bottom
+    margin-bottom: 14
+    focusable: false

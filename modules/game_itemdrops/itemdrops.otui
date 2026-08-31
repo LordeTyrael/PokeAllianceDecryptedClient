@@ -1,0 +1,137 @@
+// Same paint as NewOpaqueWindow, without UIWindow: a window cell is draggable
+// (UIWindow.create -> setDraggable) and focusable, which ate the clicks and made the
+// scroll area jump to the focused cell.
+MonsterDropCell < UIWidget
+  size: 64 80
+  image-source: /images/newui/background_3
+  image-border: 15
+  focusable: false
+
+  UICreature
+    id: creatureDisplay
+    size: 52 52
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    phantom: true
+    new-scaling: true
+    min-scale: 2.0
+    max-scale: 2.0
+
+  PoppinsSemibold12
+    id: dropAmount
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 2
+    color: #cccccc
+
+  UIWidget
+    id: dexButton
+    size: 14 14
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 2
+    margin-right: 2
+    icon-source: @fa solid 10 f02d
+    icon-color: #8899aa
+    phantom: false
+    focusable: false
+    cursor: pointer
+    !tooltip: tr('Open in PokeDex')
+
+    $hover:
+      icon-color: #55bbff
+
+NewOpaqueWindow
+  id: itemdropsWindow
+  size: 380 400
+  anchors.centerIn: parent
+  draggable: true
+  phantom: false
+  @onEscape: modules.game_itemdrops.hide()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 300 36
+    image-source: /images/modules/store_ui/name_base
+    phantom: true
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 28
+      image-source: /images/modules/store_ui/base_icon
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Item Drops")
+
+  UIItem
+    id: itemDisplay
+    size: 32 32
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: base_name.bottom
+    margin-top: 10
+    virtual: true
+    phantom: true
+
+  Label
+    id: noDropsLabel
+    font: verdana-11px-rounded
+    !text: tr("This item is not part of any creature's base drop.")
+    anchors.top: itemDisplay.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 15
+    margin-left: 15
+    margin-right: 15
+    text-align: center
+    text-wrap: true
+    color: #ff6666
+    visible: false
+
+  ScrollablePanel
+    id: monsterGrid
+    anchors.top: itemDisplay.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: monsterGridScrollBar.left
+    margin-top: 10
+    margin-left: 10
+    margin-bottom: 10
+    vertical-scrollbar: monsterGridScrollBar
+    padding: 4
+
+    layout:
+      type: grid
+      cell-size: 64 80
+      num-columns: 5
+      cell-spacing: 4
+
+  AllianceVerticalScrollBar
+    id: monsterGridScrollBar
+    anchors.top: itemDisplay.bottom
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-top: 10
+    margin-bottom: 10
+    margin-right: 10
+    step: 84
+    pixels-scroll: true
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_itemdrops.hide()

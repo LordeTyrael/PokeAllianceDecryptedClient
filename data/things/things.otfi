@@ -1,0 +1,9 @@
+DatSpr
+  extended: true
+  custom: false
+  transparency: true
+  frame-durations: false
+  frame-groups: false
+  metadata-file: things.dat
+  sprites-file: things.spr
+  otml-file: things.otml

@@ -1,0 +1,297 @@
+InfoPokeballWidget < UIWidget
+  size: 16 16
+  image-source: images/empty_ball
+
+HealthBar < ProgressBar
+  id: healthBar
+  background-color: red
+  width: 114
+  image-color: red
+  icon: /images/ui/pokemon_window/health_bar
+  icon-align: right
+  icon-offset: 3 0
+  border-width: 0
+  anchors.top: parent.top
+  anchors.right: parent.right
+  margin-top: 1
+  margin-right: 3
+  --border-width: 3
+  --border-color: red
+  !tooltip: tr('Trainer Health Points')
+
+PokeHealthBar < ProgressBar
+  id: pokeHealthBar
+  background-color: #3fac35
+  width: 114
+  image-color: blue
+  icon: /images/ui/pokemon_window/pokehealth_bar_on
+  icon-align: right
+  icon-offset: 3 0
+  border-width: 0
+  anchors.top: prev.bottom
+  anchors.right: parent.right
+  margin-top: 3
+  margin-right: 3
+  !tooltip: tr('Pokémon Health Points')
+
+BarSeparator < HorizontalSeparator
+  id: separator
+  anchors.top: pokeHealthBar.bottom
+  anchors.right: parent.right
+  anchors.left: parent.left
+  margin-top: 5
+  margin-right: 5
+  margin-left: 3
+  opacity: 0.5
+
+PokeballBar < UIWidget
+  id: pokeballBar
+  size: 111 16
+  anchors.top: separator.bottom
+  anchors.left: slot10.right
+  margin-top: 3
+  
+  InfoPokeballWidget
+    id: pokeball_1
+    anchors.left: parent.left
+    anchors.top: parent.top
+
+  InfoPokeballWidget
+    id: pokeball_2
+    anchors.left: prev.right
+    margin-left: 3
+    anchors.top: parent.top
+
+  InfoPokeballWidget
+    id: pokeball_3
+    anchors.left: prev.right
+    margin-left: 3
+    anchors.top: parent.top
+
+  InfoPokeballWidget
+    id: pokeball_4
+    anchors.left: prev.right
+    margin-left: 3
+    anchors.top: parent.top
+
+  InfoPokeballWidget
+    id: pokeball_5
+    anchors.left: prev.right
+    margin-left: 3
+    anchors.top: parent.top
+
+  InfoPokeballWidget
+    id: pokeball_6
+    anchors.left: prev.right
+    margin-left: 3
+    anchors.top: parent.top
+
+InventoryItem < ContainerItem
+
+LegSlot < InventoryItem
+  id: slot7
+  image-color: #FFFFFF00
+  &position: {x=65535, y=7, z=0}
+  size: 32 32
+  border-image: 35
+
+FeetSlot < InventoryItem
+  id: slot8
+  image-source: /images/general_ui/flatpanel
+  size: 32 32
+  &position: {x=65535, y=8, z=0}
+
+  UIWidget
+    size: 22 22
+    anchors.centerIn: parent
+    phantom: true
+    image-source: /images/newui/miniwindow/pokeball_slot
+
+NeckSlot < InventoryItem
+  id: slot2
+  &position: {x=65535, y=2, z=0}
+
+LeftSlot < InventoryItem
+  id: slot6
+  &position: {x=65535, y=6, z=0}
+
+FingerSlot < InventoryItem
+  id: slot9
+  &position: {x=65535, y=9, z=0}
+
+BackSlot < InventoryItem
+  id: slot3
+  &position: {x=65535, y=3, z=0}
+
+RightSlot < InventoryItem
+  id: slot5
+  &position: {x=65535, y=5, z=0}
+
+AmmoSlot < InventoryItem
+  id: slot10
+  size: 32 32
+  image-source: /images/general_ui/flatpanel
+  &position: {x=65535, y=10, z=0}
+
+  UIWidget
+    size: 22 22
+    anchors.centerIn: parent
+    phantom: true
+    image-source: /images/newui/miniwindow/pokeball_slot
+
+AllianceMiniWindow
+  id: pokemonWindow
+  height: 145
+  image-source: ""
+  @onClose: modules.game_pokemon.onMiniWindowClose()
+  &save: true
+
+  MiniWindowContents
+    id: contentsPanel
+    margin-top: 28
+    margin-left: 5
+
+    UIWidget
+      id: pokemonBackground
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-top: 3
+      size: 70 70
+      image-source: images/portrait
+
+    UICreature
+      id: pokemonLooktype
+      anchors.centerIn: pokemonBackground
+      margin-top: 3
+      anchors.top: parent.top
+      size: 64 64
+      new-scaling: true
+      max-scale: 1
+
+    PokeballBar
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      anchors.left: pokemonBackground.right
+      margin-left: 8
+
+    UIWidget
+      id: backgroundHealthBar
+      size: 105 18
+      anchors.centerIn: healthBar
+      image-source: images/base_life
+
+    UIProgressBar
+      id: healthBar
+      anchors.left: pokemonBackground.right
+      size: 101 14
+      anchors.top: pokeballBar.bottom
+      margin-left: 8
+      margin-top: 8
+      image-border: 3
+      image-source: images/player_life
+      font: poppins semibold 11
+
+    UIWidget
+      id: backgroundPokeHealthBar
+      size: 105 18
+      anchors.centerIn: pokeHealthBar
+      image-source: images/base_life
+
+    UIProgressBar
+      id: pokeHealthBar
+      anchors.left: pokemonBackground.right
+      anchors.top: healthBar.bottom
+      margin-left: 8
+      size: 101 14
+      margin-top: 10
+      image-border: 3
+      image-source: images/poke_life
+      font: poppins semibold 11
+
+    HeadSlot
+      anchors.top: parent.top
+      anchors.left: parent.left
+      visible: false
+
+    LegSlot
+      anchors.top: parent.top
+      anchors.left: parent.left
+      visible: false
+
+    FeetSlot
+      anchors.top: pokemonBackground.bottom
+      anchors.left: pokemonBackground.left
+      margin-top: 8
+
+    NeckSlot
+      anchors.top: parent.top
+      anchors.left: parent.left
+      visible: false
+
+    LeftSlot
+      anchors.top: parent.top
+      anchors.left: parent.left
+      visible: false
+
+    FingerSlot
+      anchors.top: parent.top
+      anchors.left: parent.left
+      visible: false
+
+    BackSlot
+      anchors.top: parent.top
+      anchors.left: parent.left
+      visible: false
+
+    RightSlot
+      anchors.top: parent.top
+      anchors.left: parent.left
+      visible: false
+
+    AmmoSlot
+      anchors.top: slot8.top
+      anchors.right: pokemonBackground.right
+
+    Panel
+      id: testBox
+      image-source: images/fight_mode
+      size: 96 30
+      anchors.verticalCenter: slot10.verticalCenter
+      anchors.horizontalCenter: pokeHealthBar.horizontalCenter
+
+      UICheckBox
+        id: fightOffensiveBox
+        anchors.left: parent.left
+        size: 32 30
+        anchors.top: parent.top
+        @onCheckChange: if self:isChecked() then self:setImageSource("images/offensive_box") else self:setImageSource() end
+        UIWidget
+          anchors.centerIn: parent
+          size: 20 20
+          image-source: images/offensive
+          phantom: true
+
+      UICheckBox
+        id: fightBalancedBox
+        anchors.left: prev.right
+        size: 32 30
+        anchors.top: parent.top
+        @onCheckChange: if self:isChecked() then self:setImageSource("images/balanced_box") else self:setImageSource() end
+        UIWidget
+          anchors.centerIn: parent
+          size: 21 22
+          image-source: images/balanced
+          phantom: true
+
+      UICheckBox
+        id: fightDefensiveBox
+        anchors.left: prev.right
+        size: 32 30
+        anchors.top: parent.top
+        @onCheckChange: if self:isChecked() then self:setImageSource("images/defensive_box") else self:setImageSource() end
+        UIWidget
+          anchors.centerIn: parent
+          size: 20 28
+          image-source: images/defensive
+          phantom: true

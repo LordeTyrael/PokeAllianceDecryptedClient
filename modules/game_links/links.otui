@@ -1,0 +1,158 @@
+LinksWindow < HeadlessWindow
+  id: window
+  size: 547 449
+  anchors.centerIn: parent
+  image-source: images/background
+  opacity: 0.95
+
+  Label
+    id: main_text
+    size: 100 120
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("Official Links")
+    margin-top: 60
+    font: poppins regular 15
+
+  UIWidget
+    id: website
+    size: 120 120
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 45
+    margin-top: 98
+    image-source: images/pokealliance
+    !tooltip: tr("Official Website")
+    @onClick: g_platform.openUrl("https://www.pokealliance.com.br")
+
+  Label
+    id: website_text
+    size: 120 30
+    anchors.top: parent.top
+    anchors.left: website.left  
+    margin-top: 210
+    !text: tr('Official Website')    
+    font: poppins regular 15
+    text-align: center
+    !tooltip: tr("Official Website")
+
+  UIWidget
+    id: discord
+    size: 120 120
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter    
+    margin-top: 98
+    image-source: images/discord    
+    !tooltip: tr("Discord Server")
+    @onClick: g_platform.openUrl("https://discord.gg/pokealliance")
+
+  Label
+    id: discord_text
+    size: 120 30    
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 210
+    text-align: center    
+    !text: tr('Discord Server')    
+    font: poppins regular 15
+    !tooltip: tr("Discord Server")
+
+  UIWidget
+    id: wiki
+    size: 120 120
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-right: 45
+    margin-top: 90
+    image-source: images/wiki
+    !tooltip: tr("Wiki PokeAlliance")
+    @onClick: g_platform.openUrl("https://wiki.pokealliance.com.br")
+
+  Label
+    id: wiki_text
+    size: 140 30    
+    anchors.right: parent.right    
+    anchors.top: parent.top
+    margin-top: 210
+    margin-right: 33    
+    text-align: center
+    !text: tr('Wiki PokeAlliance')
+    text-align: center    
+    font: poppins regular 15
+    !tooltip: tr("Wiki PokeAlliance")
+
+  UIWidget
+    id: instagram
+    size: 120 120
+    anchors.top: website_text.top
+    anchors.left: parent.left
+    margin-left: 45
+    margin-top: 52
+    image-source: images/instagram
+    !tooltip: tr("Instagram")
+    @onClick: g_platform.openUrl("https://instagram.com/oficial.pokealliance")
+
+  Label
+    id: instagram_text
+    size: 120 30
+    anchors.bottom: facebook_text.bottom 
+    anchors.left: instagram.left  
+    margin-top: -6
+    !text: tr('Instagram')    
+    font: poppins regular 15
+    text-align: center
+    !tooltip: tr("Instagram")    
+
+  UIWidget
+    id: twitch
+    size: 120 120
+    anchors.top: discord_text.top
+    anchors.horizontalCenter: parent.horizontalCenter    
+    margin-top: 52
+    image-source: images/twitch        
+    !tooltip: tr("Twitch Channel")
+    @onClick: g_platform.openUrl("https://twitch.tv/oficialpokealliance")
+
+  Label
+    id: twitch_text
+    size: 120 30    
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: facebook_text.bottom
+    margin-top: -6
+    text-align: center    
+    !text: tr('Twitch Channel')    
+    font: poppins regular 15
+    !tooltip: tr("Twitch Channel")
+
+  UIWidget
+    id: facebook
+    size: 120 120
+    anchors.top: wiki_text.top
+    anchors.right: parent.right
+    margin-top: 52
+    margin-right: 43    
+    image-source: images/facebook
+    !tooltip: tr("Facebook")
+    @onClick: g_platform.openUrl("https://facebook.com/oficial.pokealliance")
+
+  Label
+    id: facebook_text
+    size: 140 30
+    anchors.top: facebook.bottom
+    anchors.right: parent.right
+    margin-right: 35
+    margin-top: -6
+    text-align: center
+    !text: tr('Facebook')
+    text-align: center    
+    font: poppins regular 15
+    !tooltip: tr("Facebook")
+
+  UIWidget
+    id: closeButton
+    size: 28 29
+    anchors.top: parent.top
+    anchors.right: parent.right    
+    margin-right: 6
+    image-source: images/close
+    @onClick: self:getParent():hide()

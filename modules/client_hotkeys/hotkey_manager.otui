@@ -1,0 +1,239 @@
+ActionWidget < UIWidget
+  height: 27
+  margin: 2
+  border: 1 alpha
+  background-color: #00000000
+  $hover:
+    background-color: #355d8940
+  $focus:
+    border: 1 #4a90d9
+    background-color: #355d8960
+
+  Label
+    id: actionName
+    size: 125 25
+    font: poppins semibold 12
+    text-align: center
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: primaryKey.left
+    margin-top: 1
+
+  AllianceSoftBlackButton
+    id: tertiaryKey
+    size: 150 25
+    margin-left: 0
+    font: poppins semibold 12
+    text-align: center
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-right: 5
+    margin-top: 1
+
+  AllianceSoftBlackButton
+    id: secondaryKey
+    size: 150 25
+    margin-left: 0
+    font: poppins semibold 12
+    text-align: center
+    anchors.top: parent.top
+    anchors.right: prev.left
+    margin-right: 5
+    margin-top: 1
+
+  AllianceSoftBlackButton
+    id: primaryKey
+    size: 150 25
+    margin-left: 0
+    font: poppins semibold 12
+    text-align: center
+    anchors.top: parent.top
+    anchors.right: prev.left
+    margin-right: 5
+    margin-top: 1
+
+NewOpaqueWindow
+  id: hotkeyWindow
+  size: 710 600
+  anchors.horizontalCenter: parent.horizontalCenter
+  anchors.verticalCenter: parent.verticalCenter
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/general_ui/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 32
+      image-source: /images/general_ui/icons/options
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Hotkeys")
+
+  NewRedCloseButton
+    id: closeButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+
+  OptionsComboBox
+    id: profileSelector
+    size: 230 25
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 15
+    focusable: false
+
+  UIWidget
+    id: renameProfile
+    size: 20 20
+    anchors.verticalCenter: profileSelector.verticalCenter
+    anchors.left: profileSelector.right
+    margin-left: 8
+    image-source: /modules/game_spectate/images/channel_open/edit
+    image-size: 16 16
+    cursor: pointer
+
+  OptionsComboBox
+    id: hotkeyProfile
+    size: 120 25
+    anchors.top: base_name.bottom
+    anchors.left: renameProfile.right
+    margin-top: 15
+    margin-left: 8
+    focusable: false
+
+  AllianceSoftBlackButton
+    id: saveProfile
+    size: 80 25
+    margin-left: 0
+    font: poppins semibold 12
+    text-align: center
+    !text: tr("Save")
+    anchors.top: base_name.bottom
+    anchors.right: resetProfile.left
+    margin-top: 15
+    margin-right: 5
+
+  AllianceSoftBlackButton
+    id: resetProfile
+    size: 80 25
+    margin-left: 0
+    font: poppins semibold 12
+    text-align: center
+    !text: tr("Reset")
+    anchors.top: base_name.bottom
+    anchors.right: parent.right
+    margin-top: 15
+    margin-right: 15
+
+  HorizontalSeparator
+    anchors.top: profileSelector.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 15
+    margin-left: 15
+
+  OptionsComboBox
+    id: actionProfile
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 15
+    margin-right: 15
+
+  UIWidget
+    id: headerRow
+    height: 30
+    anchors.top: actionProfile.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 15
+    margin-right: 42
+
+    Label
+      id: headerAction
+      font: poppins semibold 16
+      color: #a0b0c0
+      text-align: center
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: headerPrimary.left
+      !text: tr("Action")
+      height: 30
+
+    Label
+      id: headerTertiary
+      size: 150 30
+      font: poppins semibold 16
+      color: #a0b0c0
+      text-align: center
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-right: 5
+      !text: tr("Terciary Key")
+
+    Label
+      id: headerSecondary
+      size: 150 30
+      font: poppins semibold 16
+      color: #a0b0c0
+      text-align: center
+      anchors.top: parent.top
+      anchors.right: headerTertiary.left
+      margin-right: 5
+      !text: tr("Secondary Key")
+
+    Label
+      id: headerPrimary
+      size: 150 30
+      font: poppins semibold 16
+      color: #a0b0c0
+      text-align: center
+      anchors.top: parent.top
+      anchors.right: headerSecondary.left
+      margin-right: 5
+      !text: tr("Primary Key")
+
+  AllianceVerticalScrollBar
+    id: scrollBar
+    anchors.top: headerRow.bottom
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    step: 14
+    pixels-scroll: true
+    margin: 15
+    margin-top: 5
+
+  ScrollablePanel
+    id: actionsPanel
+    anchors.top: headerRow.bottom
+    anchors.left: parent.left
+    anchors.right: scrollBar.left
+    anchors.bottom: parent.bottom
+    margin: 15
+    margin-top: 5
+    vertical-scrollbar: scrollBar
+    layout:
+      type: verticalBox
+      cell-size: 104 104
+      cell-spacing: 2
+      flow: true

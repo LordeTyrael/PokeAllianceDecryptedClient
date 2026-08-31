@@ -1,0 +1,86 @@
+NewOpaqueWindow
+  id: guild_create
+  size: 248 225
+  visible: false
+  focusable: true
+
+  PoppinsSemibold20
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+    !text: tr("Create Guild")
+
+  UIWidget
+    margin-top: 55
+    margin-right: 20
+    margin-left: 20
+    margin-bottom: 20
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+
+    Label
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      !text: tr("Guild Name")
+
+    EntergameTextEdit
+      id: name
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: prev.bottom
+      margin-top: 5
+      font: poppins semibold 12
+      text-offset: 14 2
+      focusable: true
+      color: white
+      image-source: /modules/client_entergame/images/labelbox_noselect
+
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    UIWidget
+      id: balance
+      anchors.left: parent.left
+      anchors.top: prev.bottom
+      margin-top: 5
+      !text: tr("Your balance: ")
+      text-auto-resize: true
+
+    UIWidget
+      id: balanceValue
+      anchors.left: balance.right
+      anchors.top: prev.top
+      !text: "0"
+      text-auto-resize: true
+
+    UIWidget
+      id: costAlert
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: prev.bottom
+      !text: tr("CAUTION! To create a guild you will need to pay a fee of 5KK ($5,000,000) from your Balance.")
+      margin-top: 10
+      text-auto-resize: true
+      text-wrap: true
+      textColor: "#FFCA59"
+
+    AllianceStraightBlueButton
+      id: button
+      !text: tr('Create')
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 15
+      @onClick: modules.game_guild.createGuildSubmit()
+
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_guild.createGuildClose()

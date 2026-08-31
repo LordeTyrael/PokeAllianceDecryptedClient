@@ -1,0 +1,256 @@
+MiniWindow < UIMiniWindow
+  font: verdana-11px-antialised
+  icon-rect: 6 7 16 16  
+  height: 192
+  text-offset: 27 8
+  text-align: topLeft
+  image-source: /images/ui/windows/miniwindow
+  --image-border: 4
+  --image-border-top: 1
+  image-border-bottom: 50
+  focusable: false
+  &minimizedHeight: 30
+
+  $on:
+    image-border-bottom: 2
+
+  UIWidget
+    id: miniwindowTopBar
+    anchors.top: parent.top
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-right: 3
+    margin-left: 3
+    margin-top: 3
+    size: 258 18
+    phantom: true
+
+  UIButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 7
+    size: 14 14
+    image-source: /images/ui/windows/miniwindow_buttons
+    image-clip: 28 0 14 14
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14
+
+  UIButton
+    id: minimizeButton
+    anchors.top: closeButton.top
+    anchors.right: closeButton.left
+    margin-right: 3
+    size: 14 14
+    image-source: /images/ui/windows/miniwindow_buttons
+    image-clip: 0 0 14 14
+
+    $hover:
+      image-clip: 0 14 14 14
+
+    $pressed:
+      image-clip: 0 28 14 14
+
+    $on:
+      image-clip: 14 0 14 14
+
+    $on hover:
+      image-clip: 14 14 14 14
+
+    $on pressed:
+      image-clip: 14 28 14 14
+
+  UIButton
+    id: lockButton
+    anchors.top: minimizeButton.top
+    anchors.right: minimizeButton.left
+    margin-right: 3
+    size: 14 14
+    image-source: /images/ui/windows/miniwindow_buttons
+    image-clip: 56 0 14 14
+
+    $hover:
+      image-clip: 56 14 14 14
+
+    $pressed:
+    image-clip: 56 28 14 14
+
+    $on:
+      image-clip: 70 0 14 14
+
+    $on hover:
+      image-clip: 70 14 14 14
+
+    $on pressed:
+      image-clip: 70 28 14 14
+
+  DockableOptionsButton
+    id: optionsButton
+    // centred like every other title-bar button: top-aligning to lockButton, which is taller than
+    // the rest, left it sitting off the row
+    anchors.verticalCenter: lockButton.verticalCenter
+    anchors.right: lockButton.left
+    margin-right: 7
+
+  VerticalScrollBar
+    id: miniwindowScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 14
+    margin-top: 28
+    margin-right: 8
+    margin-bottom: 5
+    pixels-scroll: true
+
+    $!on:
+      width: 0
+
+  ResizeBorder
+    id: bottomResizeBorder
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 3
+    minimum: 48
+    margin-left: 3
+    margin-right: 3
+    background: #ffffff88
+
+HeadlessMiniWindow < MiniWindow
+
+AllianceMiniWindow < UIMiniWindow
+  icon-rect: 6 7 16 16  
+  size: 194 146
+  text-align: topLeft
+  focusable: false
+  image-border: 12
+  &minimizedHeight: 26
+  draggable: true
+
+  UIWidget
+    id: miniwindowBackground
+    anchors.fill: parent
+    image-source: /images/general_ui/bordered_background
+    phantom: true
+
+  AllianceMiniwindowTopbar
+
+  UIWidget
+    id: miniwindowIcon
+    size: 16 16
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 8
+    margin-top: 5
+    icon: /images/ui/topbuttons/miniwindowicon/pokemon
+
+  Label
+    id: miniwindowName
+    text-auto-resize: true
+    anchors.left: miniwindowIcon.right
+    margin-left: 5
+    anchors.verticalCenter: miniwindowIcon.verticalCenter
+    font: poppins semibold 14
+    !text: tr('Pokémon')
+    text-offset: 0 4
+
+  NewButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    image-source: /images/newui/miniwindow/close
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $pressed:
+      opacity: 0.75
+
+  NewButton
+    id: minimizeButton
+    anchors.right: closeButton.left
+    margin-right: 5
+    anchors.verticalCenter: closeButton.verticalCenter
+    size: 11 7
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 7 11 7
+
+  NewButton
+    id: lockButton
+    anchors.right: minimizeButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+    size: 13 15
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 0 13 15
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.right: lockButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+
+  ResizeBorder
+    id: bottomResizeBorder
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 3
+    minimum: 48
+    margin-left: 3
+    margin-right: 3
+    background: #ffffff88
+
+  VerticalScrollBar
+    id: miniwindowScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 14
+    margin-top: 28
+    margin-bottom: 5
+    pixels-scroll: true
+
+    $!on:
+      width: 0
+
+AllianceMiniWindowContents < ScrollablePanel
+  id: contentsPanel
+  anchors.fill: parent
+  margin-left: 5
+  margin-bottom: 3
+  margin-top: 27
+
+AllianceHeadlessMiniWindow < MiniWindow
+
+AllianceMiniwindowTopbar < UIWidget
+  id: miniwindowTopBar
+  anchors.top: parent.top
+  anchors.right: parent.right
+  anchors.left: parent.left
+  size: 258 26
+  phantom: true

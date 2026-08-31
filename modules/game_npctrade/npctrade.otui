@@ -1,0 +1,209 @@
+NPCItemBox < ShopItemCard
+  &priceIcon:
+    icon-source: @fa solid 14 f155
+    icon-color: #f5c542
+
+  $!on:
+    opacity: 0.45
+
+NewOpaqueWindow
+  id: npcWindow
+  anchors.centerIn: parent
+  size: 781 600
+  focusable: true
+  @onEscape: modules.game_npctrade.closeNpcTrade()
+
+  UIWidget
+    id: titleBackground
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/modules/store_ui/name_base
+    phantom: true
+
+    UIWidget
+      id: iconWidget
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 21 17
+      phantom: true
+      image-source: images/icon
+
+    Label
+      id: title
+      anchors.left: iconWidget.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("NPC Trade")
+      margin-top: 2
+      font: poppins semibold 20
+      text-auto-resize: true
+
+  AllianceSoftBlackButton
+    id: buyTab
+    !tooltip: tr("List of items that you're able to buy")
+    !text: tr('Buy')
+    checked: true
+    on: true
+    anchors.left: parent.left
+    anchors.right: parent.horizontalCenter
+    anchors.top: titleBackground.bottom
+    margin-left: 10
+    margin-right: 10
+    margin-top: 10
+
+    $on:
+      image-source: /modules/game_guild/images/guild_shop/selected_item_background
+
+  AllianceSoftBlackButton
+    id: sellTab
+    !tooltip: tr("List of items that you're able to sell")
+    !text: tr('Sell')
+    anchors.left: parent.horizontalCenter
+    anchors.right: parent.right
+    margin-left: 10
+    margin-right: 10
+    anchors.top: buyTab.top
+
+    $on:
+      image-source: /modules/game_guild/images/guild_shop/selected_item_background
+
+  EntergameTextEdit
+    id: searchText
+    anchors.left: parent.left
+    anchors.top: buyTab.bottom
+    margin-top: 8
+    margin-left: 10
+    width: 280
+    height: 28
+    text-offset: 35 2
+    placeholder-offset: 35 -2
+    text-align: left
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    placeholder: Search
+    placeholder-color: #aaaaaa
+    @onTextChange: modules.game_npctrade.onSearchTextChange()
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+    UIWidget
+      id: lupa
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 24 24
+      image-source: /images/game/icons/lupa
+
+  UILabel
+    id: showAllItemsLabel
+    !text: tr('Show all items')
+    anchors.verticalCenter: searchText.verticalCenter
+    anchors.right: showAllItems.left
+    margin-right: 8
+    font: poppins semibold 14
+    text-auto-resize: true
+    visible: false
+
+  SwitchBox
+    id: showAllItems
+    anchors.verticalCenter: searchText.verticalCenter
+    anchors.right: parent.right
+    margin-right: 15
+    visible: false
+    image-source: /images/general_ui/icons/base_slider_selected
+    checked: true
+
+    &sliderButton:
+      margin-left: 20
+
+    @onCheckChange: |
+      local checked = self:isChecked()
+      local margin = checked and 20 or 2
+      local imageSource = checked and "/images/general_ui/icons/base_slider_selected" or "/images/general_ui/icons/base_slider"
+      if self.sliderButton then
+        self.sliderButton:setMarginLeft(margin)
+      end
+      self:setImageSource(imageSource)
+      modules.game_npctrade.onShowAllItemsChange()
+
+  FlatPanel
+    id: itemPanel
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: searchText.bottom
+    anchors.bottom: moneyIcon.top
+    margin-left: 10
+    margin-right: 15
+    margin-top: 8
+    margin-bottom: 10
+
+    AllianceVerticalScrollBar
+      id: itemsPanelListScrollBar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      margin-top: 5
+      margin-bottom: 5
+      margin-right: 2
+      step: 30
+      pixels-scroll: true
+
+    ScrollablePanel
+      id: itemsPanel
+      anchors.left: parent.left
+      anchors.right: itemsPanelListScrollBar.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      vertical-scrollbar: itemsPanelListScrollBar
+      margin-left: 5
+      margin-right: 4
+      margin-top: 5
+      margin-bottom: 5
+      image-border: 15
+      image-source: /images/newui/background_3
+      padding: 8
+      auto-focus: none
+      layout:
+        type: grid
+        cell-size: 175 160
+        cell-spacing: 6
+        num-columns: 4
+        auto-spacing: true
+
+  UIWidget
+    id: moneyIcon
+    size: 20 20
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 15
+    margin-bottom: 15
+    icon-source: @fa solid 16 f155
+    icon-color: #f5c542
+
+  Label
+    id: money
+    anchors.verticalCenter: moneyIcon.verticalCenter
+    anchors.left: moneyIcon.right
+    margin-left: 6
+    font: poppins semibold 14
+    text-auto-resize: true
+
+  NewStraightBlueButton
+    id: sellAllButton
+    !text: tr('Sell all')
+    width: 100
+    anchors.right: parent.right
+    anchors.verticalCenter: moneyIcon.verticalCenter
+    margin-right: 15
+    visible: false
+    @onClick: modules.game_npctrade.sellAllConfirm()
+
+  NewRedCloseButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-right: 10
+    margin-top: 10
+    @onClick: modules.game_npctrade.closeNpcTrade()

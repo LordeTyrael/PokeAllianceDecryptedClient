@@ -1,0 +1,110 @@
+guildBossHud < UIWidget
+  id: guildBossHud
+  size: 312 116
+  image-source: /images/newui/background_3
+  image-border: 15
+  opacity: 0.97
+  focusable: false
+
+  NewRedCloseButton
+    id: closeBtn
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+
+  UIWidget
+    id: bossFrame
+    size: 82 82
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 12
+    image-source: /images/modules/guild/boss_base
+
+  UICreature
+    id: bossPhoto
+    size: 76 76
+    new-scaling: true
+    max-scale: 2.0
+    min-scale: 2.0
+    scale: 0.6
+    anchors.centerIn: bossFrame
+    focusable: false
+    phantom: true
+
+  Label
+    id: title
+    anchors.top: parent.top
+    anchors.left: bossFrame.right
+    margin-top: 12
+    margin-left: 12
+    text: GUILD BOSS ABERTO
+    color: #f5c542
+    font: poppins semibold 11
+    text-auto-resize: true
+    phantom: true
+
+  UIWidget
+    id: pulseDot
+    size: 8 8
+    anchors.left: title.right
+    anchors.verticalCenter: title.verticalCenter
+    margin-left: 7
+    background-color: #f5c542
+    phantom: true
+
+  Label
+    id: bossName
+    anchors.top: title.bottom
+    anchors.left: bossFrame.right
+    margin-top: 2
+    margin-left: 12
+    text: -
+    color: #35c1ee
+    font: poppins semibold 15
+    text-auto-resize: true
+    phantom: true
+
+  AllianceProgressBar
+    id: timerBar
+    height: 8
+    anchors.top: bossName.bottom
+    anchors.left: bossFrame.right
+    anchors.right: parent.right
+    margin-top: 8
+    margin-left: 12
+    margin-right: 14
+
+  Label
+    id: timerLabel
+    anchors.top: timerBar.bottom
+    anchors.left: bossFrame.right
+    margin-top: 4
+    margin-left: 12
+    text: fecha em --:--
+    color: #b8c6d0
+    font: poppins semibold 10
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: participants
+    anchors.verticalCenter: enterBtn.verticalCenter
+    anchors.left: bossFrame.right
+    margin-left: 12
+    text: 0/0 na luta
+    color: #ffffff
+    font: poppins semibold 10
+    text-auto-resize: true
+    phantom: true
+
+  NewStraightBlueButton
+    id: enterBtn
+    size: 84 26
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 12
+    margin-right: 14
+    text: Entrar
+    text-align: center
+    font: poppins semibold 12

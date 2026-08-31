@@ -1,0 +1,47 @@
+// Outer wrapper. User-settable height (clip vertically anything < natural 16).
+AllianceProgressBar < UIWidget
+  __class: UIAllianceProgressBar
+  height: 16
+  clipping: true
+  phantom: true
+
+  // bg + clipper render at natural image height (16) and are vertically
+  // centered so any custom outer height clips evenly top + bottom.
+  UIWidget
+    id: bg
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    height: 16
+    image-source: /images/modules/progressbar_load_bg
+    image-border-left: 10
+    image-border-right: 10
+    image-repeated: true
+    phantom: true
+
+  // Horizontal clipper: width controlled by setPercent. Ancorado ao bg com 1px de margem (top/bottom/left;
+  // a direita vem do fullW-2 no updateFill) para o bg aparecer como uma borda de 1px em volta do fill.
+  UIWidget
+    id: clipper
+    anchors.left: bg.left
+    anchors.top: bg.top
+    anchors.bottom: bg.bottom
+    margin-left: 1
+    margin-top: 1
+    margin-bottom: 1
+    width: 0
+    clipping: true
+    phantom: true
+
+    // Fill renders at full bar width + natural height. Clippers crop it.
+    UIWidget
+      id: fill
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 0
+      image-source: /images/modules/progressbar_load_overlay
+      image-border-left: 9
+      image-border-right: 9
+      image-repeated: true
+      phantom: true

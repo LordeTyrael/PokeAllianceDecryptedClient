@@ -1,0 +1,588 @@
+NewSkillWidget < UIWidget
+  size: 274 44
+  image-source: character_list/basestats
+
+  UIWidget
+    id: skillIcon
+    size: 25 25
+    anchors.left: parent.left
+    margin-left: 5
+    anchors.verticalCenter: parent.verticalCenter
+
+  Label
+    id: skillName
+    anchors.left: prev.right
+    anchors.top: prev.top
+    margin-left: 10
+    text-auto-resize: true
+    text-align: left
+    font: poppins semibold 13
+    textColor: "#88a6cd"
+
+  Label
+    id: skillValue
+    anchors.top: prev.top
+    !text: "0"
+    anchors.right: parent.right
+    margin-right: 30
+    text-auto-resize: true
+    text-align: left
+
+  UIWidget
+    id: skillProgressBase
+    anchors.left: skillName.left
+    anchors.top: skillName.bottom
+    margin-top: 5
+    anchors.right: skillValue.right
+    image-source: character_list/empty_stats
+
+  UIWidget
+    id: skillProgressValue
+    anchors.left: skillName.left
+    anchors.top: skillName.bottom
+    margin-top: 5
+    anchors.right: skillValue.right
+
+NewCharacterWidget < UIWidget
+  size: 122 122
+  image-source: character_list/base_char
+  padding: 2
+  @onFocusChange: modules.client_entergame.updateCharacterListFocus(self)
+  @onSetup: modules.client_entergame.updateCharacterListFocus(self)
+
+  UIWidget
+    id: icon
+    anchors.fill: parent
+    margin-left: 5
+    margin-right: 5
+    margin-top: 30
+    image-source: character_list/icons/default_icon
+
+  Label
+    id: level
+    font: poppins semibold 11
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 6
+    margin-bottom: 3
+    text-auto-resize: true
+    text-align: left
+
+  Label
+    id: name
+    font: poppins semibold 11
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-left: 3
+    margin-right: 3
+    margin-top: 3
+    text-align: center
+
+  NewButton
+    id: newCharacter
+    size: 26 26
+    anchors.centerIn: parent
+    visible: false
+    image-source: character_list/add
+    @onClick: CharacterList.showCreateCharacter()
+
+CreateCharacterWidget < NewButton
+  width: 420
+  height: 100
+  image-source: images/box_createcharacter
+  margin-top: 30
+  !tooltip: tr('Create Character')
+  @onClick: CharacterList.showCreateCharacter()
+
+  UIWidget
+    id: iconMore
+    anchors.centerIn: parent
+    image-source: images/icon_more
+    phantom: true
+    focusable: false
+
+CharacterWidget < UIWidget
+  width: 420
+  height: 100
+
+  $first:
+    margin-top: 20
+
+  $!first:
+    margin-top: 30
+  
+  UIWidget
+    id: characterWidgetBackground
+    anchors.fill: parent
+    image-source: images/character_widget
+
+  UIWidget
+    id: characterWidgetTop
+    anchors.bottom: characterWidgetBackground.top
+    margin-bottom: -5
+    image-source: images/topbox_selectcharacter
+
+  UIWidget
+    id: characterWidgetBottom
+    anchors.top: characterWidgetBackground.bottom
+    margin-top: -5
+    image-source: images/downbox_selectcharacter
+
+  UIWidget
+    id: characterInformations
+    size: 100 60
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: icon.right
+    margin-left: 25
+
+    Label
+      id: name
+      !text: ("Name")
+      color: #bbbbbb
+      anchors.top: parent.top
+      anchors.left: parent.left
+      font: poppins semibold 13
+      text-auto-resize: true
+      background-color: alpha
+      margin-top: 3
+      &baseText: 'Name: %s'
+      color: #F3E1BB
+
+    Label
+      id: level
+      !text: ("Level")
+      color: #bbbbbb
+      anchors.top: name.bottom
+      anchors.left: parent.left  
+      font: poppins semibold 13
+      text-auto-resize: true
+      background-color: alpha
+      margin-top: 3
+      &baseText: 'Level: %s'
+      color: #F3E1BB
+  
+    Label
+      id: worldName
+      !text: ("World Name")
+      color: #bbbbbb
+      anchors.top: level.bottom
+      anchors.left: parent.left  
+      font: poppins semibold 13
+      text-auto-resize: true
+      background-color: alpha
+      margin-top: 3
+      &baseText: 'World: %s'
+      color: #F3E1BB
+
+  UIWidget
+    id: pokeballsInformation
+    size: 90 60
+    anchors.right: parent.right
+    margin-right: 10
+    anchors.verticalCenter: parent.verticalCenter
+
+    layout:
+      type: grid
+      cell-size: 25 25
+      num-columns: 3
+      cell-spacing: 5
+  
+  UIWidget
+    id: icon
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 30
+    image-size: 50 50
+    image-source: images/image_slot
+
+  UIWidget
+    id: guildIcon
+    anchors.right: parent.right
+    image-size: 50 50
+
+PokeballWidget < UIWidget
+  size: 85 85
+  image-source: character_list/empty_poke
+
+  UIWidget
+    id: pokemonImage
+    anchors.fill: parent
+
+UIWindow
+  id: charactersWindow
+  visible: false  
+  anchors.fill: parent
+  @onEnter: CharacterList.doLogin()
+  @onEscape: CharacterList.hide(true)
+  @onSetup: |
+    g_keyboard.bindKeyPress('Left', function() self.backgroundLabel.characterList:focusPreviousChild(KeyboardFocusReason) end, self)
+    g_keyboard.bindKeyPress('Right', function() self.backgroundLabel.characterList:focusNextChild(KeyboardFocusReason) end, self)
+  image-source: character_list/list_background
+
+  UIWidget
+    id: backgroundLabel
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    height: 190
+    image-source: character_list/bottom
+
+    UIScrollArea
+      id: characterList
+      size: 890 122
+      anchors.verticalCenter: parent.verticalCenter
+      margin-bottom: 10
+      anchors.horizontalCenter: parent.horizontalCenter
+      horizontal-scrollbar: scrollableBar
+      auto-focus: first
+      layout:
+        type: horizontal-grid
+        cell-size: 122 122
+        cell-spacing: 5
+        flow: true
+        num-lines: 1
+
+    AllianceHorizontalScrollBar
+      id: scrollableBar
+      anchors.top: characterList.bottom
+      anchors.left: characterList.left
+      anchors.right: characterList.right
+      height: 10
+      margin-top: 15
+      step: 100
+
+  UIWidget
+    id: accountInformation
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 400 400
+
+    UIWidget
+      id: baseIcon
+      size: 122 122
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-left: 10
+      margin-top: 10
+      image-source: character_list/base_char
+
+    UIWidget
+      id: playerIcon
+      anchors.fill: baseIcon
+      margin-top: 30
+
+    UIWidget
+      id: accountInfo
+      size: 200 100
+      anchors.left: playerIcon.right
+      anchors.top: parent.top
+      margin-left: 10
+      margin-top: 10
+
+      Label
+        id: welcomeLabel
+        font: poppins semibold 26
+        anchors.left: parent.left
+        margin-left: 5
+        anchors.top: parent.top
+        margin-top: 5
+        text-auto-resize: true
+        !text: tr('Welcome!')
+
+      Label
+        id: accountStatusCaption
+        !text: tr('Free Account')
+        anchors.left: welcomeLabel.left
+        anchors.top: welcomeLabel.bottom
+        margin-top: 10
+        image-source: character_list/account_status
+        width: 120
+        height: 24
+        font: poppins semibold 12
+        text-align: center
+
+      UIWidget
+        id: itemBackground
+        size: 25 25
+        anchors.left: welcomeLabel.left
+        anchors.top: prev.bottom
+        margin-top: 10
+        image-source: character_list/boxdiamond
+
+        UIItem
+          anchors.left: parent.left
+          anchors.top: parent.top
+          size: 25 25
+          margin-left: 1
+          margin-top: 1
+          item-id: 3028
+
+      Label
+        id: diamondCount
+        !text: "0"
+        text-auto-resize: true
+        anchors.left: itemBackground.right
+        margin-left: 8
+        anchors.verticalCenter: itemBackground.verticalCenter
+        margin-top: 1
+        font: poppins boldbordered 14
+        textColor: "#669ee7"
+
+    UIWidget
+      id: characterSkills
+      size: 400 250
+      anchors.left: parent.left
+      anchors.top: playerIcon.bottom
+      margin-top: 15
+
+      NewSkillWidget
+        id: experience
+        anchors.left: parent.left
+        anchors.top: parent.top
+        margin-left: 10
+
+      NewSkillWidget
+        id: fishing
+        anchors.left: parent.left
+        anchors.top: prev.bottom
+        margin-top: 10
+        margin-left: 10
+
+      NewSkillWidget
+        id: headbutt
+        anchors.left: parent.left
+        anchors.top: prev.bottom
+        margin-top: 10
+        margin-left: 10
+
+      NewSkillWidget
+        id: rockSmash
+        anchors.left: parent.left
+        anchors.top: prev.bottom
+        margin-top: 10
+        margin-left: 10
+
+      NewSkillWidget
+        id: balance
+        anchors.left: parent.left
+        anchors.top: prev.bottom
+        margin-top: 10
+        margin-left: 10
+
+  UIWidget
+    id: gameLogo
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 20
+    size: 250 250
+    image-source: /images/pka/logo
+
+  Label
+    id: selectCharacter
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: gameLogo.bottom
+    font: poppins boldbordered 30
+    !text: tr('Select your Character')
+    text-auto-resize: true
+    margin-top: 10
+
+  UIWidget
+    id: selectedCharacterInfo
+    size: 808 425
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: selectCharacter.bottom
+    image-source: character_list/base_character
+
+    UIWidget
+      id: playerIcon
+      size: 190 160
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      margin-bottom: 30
+
+    Label
+      id: name
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 60
+      margin-top: 50
+      !text: ('PlayerName')
+      anchors.top: parent.top
+      font: poppins semibold 28
+
+    UIWidget
+      id: guildIcon
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      size: 25 25
+      image-source: /images/guildIcons/0
+
+    Label
+      id: guildName
+      text-auto-resize: true
+      anchors.top: prev.top
+      anchors.left: prev.right
+      textColor: "#40cef6"
+      margin-left: 3
+      font: poppins semibold 18
+      !text: ('No Guild')
+
+    Label
+      id: level
+      text-auto-resize: true
+      anchors.top: prev.bottom
+      anchors.left: name.left
+      font: poppins semibold 18
+      !text: ('Nv. 1')
+
+    Label
+      id: worldName
+      text-auto-resize: true
+      anchors.top: prev.bottom
+      anchors.left: prev.left
+      textColor: "#bbbbbb"
+      font: poppins semibold 16
+      !text: ('PokeAlliance')
+
+    UIWidget
+      id: pokemonWindow
+      size: 555 85
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.bottom: parent.bottom
+      margin-bottom: 55
+      
+      PokeballWidget
+        id: pokeball1
+        size: 85 85
+        anchors.left: parent.left
+        anchors.top: parent.top
+
+      PokeballWidget
+        id: pokeball2
+        size: 85 85
+        anchors.left: prev.right
+        margin-left: 10
+        anchors.top: parent.top
+
+      PokeballWidget
+        id: pokeball3
+        size: 85 85
+        anchors.left: prev.right
+        margin-left: 10
+        anchors.top: parent.top
+
+      PokeballWidget
+        id: pokeball4
+        size: 85 85
+        anchors.left: prev.right
+        margin-left: 10
+        anchors.top: parent.top
+
+      PokeballWidget
+        id: pokeball5
+        size: 85 85
+        anchors.left: prev.right
+        margin-left: 10
+        anchors.top: parent.top
+
+      PokeballWidget
+        id: pokeball6
+        size: 85 85
+        anchors.left: prev.right
+        margin-left: 10
+        anchors.top: parent.top
+
+  NewButton
+    id: enterGame
+    font: poppins semibold 16
+    !text: tr("Login")
+    size: 209 36
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: selectedCharacterInfo.bottom 
+    image-source: character_list/baseconnect
+    @onClick: CharacterList.doLogin()
+
+  NewButton
+    id: accountManagement
+    size: 181 40
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-right: 5
+    margin-top: 10
+    font: poppins semibold 13
+    !text: tr('Change Password')
+    image-source: character_list/account_management
+    @onClick: CharacterList.showChangePassword()
+
+  NewButton
+    id: changeEmail
+    size: 181 40
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-right: 5
+    margin-top: 15
+    font: poppins semibold 13
+    !text: tr('Change Email')
+    image-source: character_list/account_management
+    @onClick: CharacterList.showChangeEmail()
+
+  NewButton
+    id: logoutButton
+    size: 132 40
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-right: 5
+    margin-top: 15
+    font: poppins semibold 13
+    !text: tr('Logout')
+    image-source: character_list/logout
+    @onClick: CharacterList.accountLogout()
+
+  UIWidget
+    id: buttonBackground
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-right: 5
+    margin-top: 15
+    size: 40 40
+    image-source: character_list/boxConfig
+
+    NewButton
+      id: configButton
+      size: 22 22
+      anchors.centerIn: parent
+      image-source: character_list/config
+      @onClick: modules.client_options.toggle()
+
+  UIWidget
+    id: hiddenBackground
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-right: 6
+    margin-top: 15
+    size: 40 40
+    image-source: character_list/boxConfig
+
+    NewButton
+      id: configButton
+      size: 22 18
+      anchors.centerIn: parent
+      image-source: new_images/view_hover
+      @onClick: CharacterList.toggleCharacterWidget()
+      !tooltip: tr("Hidden/Show Selected Character")
+
+  NewButton
+    id: changePassword
+    width: 148
+    height: 50
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: login.bottom
+    @onClick: CharacterList.showChangePassword()
+    !text: tr('Change Password')
+    !tooltip: tr('Change Password')
+    image-source: /images/newui/btngreen_large
+    font: poppins semibold 13
+    image-size: 148 50
+    margin-top: 10
+    visible: false

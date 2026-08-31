@@ -1,0 +1,180 @@
+DifficultyButton < NewOpaqueWindow
+  size: 80 25
+  opacity: 0.5
+  cursor: pointer
+  text-align: center
+  textColor: #fadf9f
+
+  $hover:
+    opacity: 0.8
+
+  $!on:
+    opacity: 0.5
+
+  $on:
+    opacity: 1.0
+
+NewOpaqueWindow
+  size: 640 400
+  anchors.centerIn: parent
+  @onEscape: modules.game_dungeon.hide()
+
+  UIWidget
+    anchors.fill: parent
+    phantom: true
+    draggable: false
+    image-source: images/background_effect
+
+  PoppinsSemibold22
+    id: dungeonName
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    text-auto-resize: true
+    margin-top: 10
+    font: poppins semibold 22
+
+  AllianceHorizontalSeparator
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 3
+
+  UIWidget
+    id: dungeonImage
+    size: 300 300
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 20
+
+  NewBlueButton
+    id: buttonStart
+    size: 150 35
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    image-source: images/start
+    margin-bottom: 20
+    opacity: 0.6
+    $hover:
+      opacity: 1
+
+  PoppinsSemibold14
+    anchors.centerIn: buttonStart
+    !text: tr("Start")
+    !tooltip: tr("Start Dungeon")
+
+  PoppinsSemibold14
+    anchors.bottom: PanelDifficult.top
+    margin-bottom: 5
+    anchors.horizontalCenter: PanelDifficult.horizontalCenter
+    !text: tr("Informations")
+    textColor: #ffd672
+
+  Panel
+    id: PanelDifficult
+    height: 90
+    anchors.left: parent.left
+    anchors.right: buttonStart.horizontalCenter
+    anchors.top: dungeonImage.top
+    margin-top: 50
+    margin-left: 20
+    margin-right: 30
+
+    Panel
+      id: DifficultyButtons
+      size: 240 30
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 5
+      layout:
+        type: horizontalBox
+        spacing: 5
+        align-center: true
+
+    PoppinsSemibold12
+      id: LabelLevelMinimo
+      anchors.top: DifficultyButtons.bottom
+      anchors.left: DifficultyButtons.left
+      margin-top: 10
+      margin-left: 5
+      textColor: #ffd672
+
+    Label
+      id: LabelPlayers
+      anchors.top: LabelLevelMinimo.bottom
+      anchors.left: DifficultyButtons.left
+      font: poppins semibold 12
+      text-auto-resize: true
+      margin-top: 5
+      icon: images/player
+      icon-align: left
+      text-offset: 20 2
+      icon-offset: 0 0
+      icon-size: 20 20
+
+  Panel
+    id: PanelRequerimentos
+    height: 60
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: prev.right
+    margin-top: 20
+    margin-left: 30
+
+    PoppinsSemibold12
+      !text: tr("Required Items")
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-left: 5
+      textColor: #ffd672
+
+    ScrollablePanel
+      id: RequerimentoList
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-left: 5
+      margin-top: 5
+      layout:
+        type: grid
+        cell-size: 35 35
+        cell-spacing: 8
+        flow: true
+
+  Panel
+    id: PanelRecompense
+    height: 100
+    anchors.top: PanelRequerimentos.bottom
+    anchors.left: parent.left
+    anchors.right: prev.right
+    margin-top: 6
+    margin-left: 30
+
+    PoppinsSemibold12
+      !text: tr("Available Rewards")
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-left: 5
+      textColor: #ffd672
+
+    ScrollablePanel
+      id: RewardList
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-right: 50
+      anchors.bottom: parent.bottom
+      margin-left: 5
+      layout:
+        type: grid
+        cell-size: 32 32
+        cell-spacing: 1
+        num-columns: 6
+        num-lines: 2
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    @onClick: modules.game_dungeon.hide()
+    margin-top: 10
+    margin-right: 10

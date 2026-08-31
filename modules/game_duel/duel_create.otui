@@ -1,0 +1,163 @@
+DuelIconButton < UIWidget
+  size: 12 12
+  cursor: pointer
+
+DuelAcceptButton < DuelIconButton
+  image-source: images/accept_icon
+  size: 12 12
+
+DuelRejectButton < DuelIconButton
+  image-source: images/reject_icon
+  size: 12 12
+
+DuelSwitchButton < DuelIconButton
+  image-source: images/switch_icon
+  size: 12 12
+
+InviteItemWidget < UIWidget
+  size: 130 40
+
+  UIWidget
+    id: playerIcon
+    size: 29 29
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    image-source: images/player_icon
+
+  Label
+    id: playerName
+    size: 100 20
+    font: poppins semibold 12
+    anchors.left: playerIcon.right
+    anchors.top: playerIcon.top
+    margin-left: 5
+
+  DuelAcceptButton
+    id: acceptButton
+    anchors.left: playerIcon.right
+    anchors.top: playerName.bottom
+    margin-left: 5
+    !tooltip: tr('Accept Duel')
+
+  DuelRejectButton
+    id: rejectButton
+    anchors.left: prev.right
+    anchors.top: playerName.bottom
+    margin-left: 5
+    !tooltip: tr('Reject Duel')
+
+NewOpaqueWindow
+  @onEscape: modules.game_duel.hide()
+  id: duelCreateWindow    
+  size: 399 390
+  anchors.centerIn: parent
+  draggable: true
+  focusable: true
+
+  UIWidget
+    id: background
+    phantom: true
+    anchors.fill: parent
+
+    UIWidget
+      id: titleBackground
+      phantom: true
+      size: 223 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      image-source: images/title_background
+
+      UIWidget
+        id: titleIcon
+        phantom: true
+        size: 29 29
+        anchors.verticalCenter: titleName.verticalCenter
+        anchors.right: titleName.left
+        margin-right: 10
+        image-source: images/title_icon
+
+      Label
+        id: titleName
+        phantom: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        text-auto-resize: true
+        margin-left: 5
+        font: poppins semibold 20
+        !text: tr("Duel")
+
+  NewSolidWindow
+    id: inviteList_background
+    padding: 10
+    size: 180 310
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 18
+    margin-top: 20
+
+    Label
+      !text: tr("Duel Invites")
+      text-wrap: false
+      text-auto-resize: true
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+
+    UIWidget
+      size: 150 2
+      image-source: images/separator
+      margin-top: 5
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+
+    UIScrollArea
+      id: invitePanel
+      size: 150 250
+      padding: 10
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      vertical-scrollbar: scrollableBar
+    
+      layout:
+        type: grid
+        num-columns: 1
+        cell-size: 150 30
+
+    AllianceVerticalScrollBar
+      id: scrollableBar
+      anchors.top: invitePanel.top
+      anchors.bottom: invitePanel.bottom
+      anchors.right: invitePanel.right
+      margin-top: 15
+      margin-bottom: 15
+      step: 30
+      pixels-scroll: true
+
+  NewButton
+    id: createNewDuel
+    size: 180 310
+    margin-top: 20
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    margin-right: 18
+    @onClick: modules.game_duel.create(6) 
+
+    UIWidget
+      size: 44 44
+      phantom: true
+      image-source: images/new_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+
+    Label
+      !text: tr("Create Duel")
+      phantom: true
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 8
+    margin-top: 8
+    @onClick: modules.game_duel.hide()

@@ -1,0 +1,13 @@
+ItemTooltip < UITooltip
+  background-color: #111111cc
+  width: 230
+  padding: 4
+  border: 1 #595555
+
+  layout: verticalBox
+    fit-children: true
+
+  Label
+    id: itemName
+    text-auto-resize: true
+    color: white

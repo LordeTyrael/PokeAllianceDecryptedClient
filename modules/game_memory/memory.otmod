@@ -1,0 +1,9 @@
+Module
+  name: game_memory
+  description: Ditto Memory
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ memory ]
+  @onLoad: init()
+  @onUnload: terminate()

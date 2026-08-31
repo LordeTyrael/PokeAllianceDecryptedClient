@@ -1,0 +1,98 @@
+MainWindow
+  id: shop
+  size: 260 260
+  !text: tr('Attention')
+  visible: false
+  anchors.centerIn: parent
+  image-source: /images/newui/background
+  @onEscape: modules.game_onlineshop.closeConfirmWindow()
+
+  UIWidget
+    id: itemInfo
+    size: 120 130
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 5
+    image-source: images/store_widget
+    opacity: 0.90
+  
+    UIWidget
+      id: name
+      height: 40
+      width: 128
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 7
+      text-wrap: true
+      text-align: center
+      text-offset: 0 0
+      text-auto-resize: false
+      font: verdana-11px-rounded
+      phantom: true
+  
+    UIItem
+      id: item
+      size: 32 32
+      anchors.top: name.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 5
+      phantom: true
+      visible: false
+  
+    NewButton
+      id: priceInfo
+      size: 100 30
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+  
+      UIWidget
+        id: price
+        width: 25
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        text-align: center
+        margin-left: 10
+        text-auto-resize: true
+        phantom: true
+        !text: tr("0")
+  
+      UIWidget
+        id: onlineShopIcon
+        size: 25 25
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: price.left
+        image-source: images/onlinepoints
+        phantom: true  
+    
+  HorizontalScrollBar
+    id: amount
+    size: 150 14
+    anchors.bottom: confirm.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 20
+    minimum: 1
+    maximum: 100
+    @onValueChange: modules.game_onlineshop.onAmountChange()
+    
+  NewButton
+    id: confirm
+    size: 80 30    
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-right: 60
+    !text: tr("Confirm")
+    @onClick: modules.game_onlineshop.buyItem(self)
+    image-source: /images/newui/btnblue_small
+
+  NewButton
+    id: close
+    size: 80 30    
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-left: 60
+    !text: tr("Cancel")
+    @onClick: modules.game_onlineshop.closeConfirmWindow()
+    image-source: /images/newui/btnred_small
+
+      

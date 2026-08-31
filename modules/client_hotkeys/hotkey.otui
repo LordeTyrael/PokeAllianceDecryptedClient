@@ -1,0 +1,137 @@
+NewOpaqueWindow
+  id: assignHotkeyWindow
+  size: 400 260
+  anchors.centerIn: parent
+  opacity: 0.9
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr("Edit Hotkey")
+
+    Label
+      id: base_action_name
+      text-auto-resize: true
+      anchors.left: base_text.right
+      margin-left: 6
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      color: #55bbff
+
+  FlatLabel
+    id: display
+    height: 33
+    text-align: center
+    font: poppins semibold 14
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 15
+    margin-left: 15
+    margin-right: 15
+
+  Label
+    id: desc
+    text-align: center
+    font: poppins semibold 12
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    multi-line: true
+    height: 40
+    text-wrap: true
+
+  Label
+    id: warning
+    text-align: center
+    font: poppins semibold 12
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 15
+    margin-right: 15
+    multi-line: true
+    height: 40
+    text-wrap: true
+    color: #ff4444
+
+  Label
+    id: keyBindLabel
+    !text: tr('Key Bind Type')
+    font: poppins semibold 12
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 15
+
+  OptionsComboBox
+    id: keyBindType
+    anchors.top: prev.top
+    anchors.left: prev.right
+    anchors.right: parent.right
+    margin-left: 10
+    margin-top: -4
+    margin-right: 15
+
+    @onSetup: |
+      self:addOption(tr("On Key Press"), 1)
+      self:addOption(tr("On Key Down"), 2)
+      self:addOption(tr("On Key Up"), 3)
+
+  HorizontalSeparator
+    anchors.top: prev.bottom
+    margin-top: 10
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 15
+    margin-right: 15
+
+  AllianceSoftBlueButton
+    id: buttonClose
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    size: 70 30
+    margin-left: 0
+    font: poppins semibold 12
+    text-align: center
+    !text: tr('Close')
+    margin-right: 15
+    margin-bottom: 15
+
+  AllianceSoftBlueButton
+    id: buttonClear
+    anchors.right: prev.left
+    margin-right: 10
+    anchors.bottom: parent.bottom
+    size: 70 30
+    margin-left: 0
+    font: poppins semibold 12
+    text-align: center
+    !text: tr('Clear')
+    margin-bottom: 15
+
+  AllianceSoftBlueButton
+    id: buttonOk
+    anchors.right: prev.left
+    margin-right: 10
+    anchors.bottom: parent.bottom
+    size: 70 30
+    margin-left: 0
+    font: poppins semibold 12
+    text-align: center
+    text: Ok
+    margin-bottom: 15

@@ -1,0 +1,46 @@
+BerriesPanel < ScrollablePanel
+  id: berriesPanel
+  anchors.fill: parent
+  margin-left: 3
+  margin-top: 3
+  margin-bottom: 3
+  margin-right: 3
+  image-source: /images/ui/miniwindow
+
+  UIItem
+    id: item
+    size: 48 48
+    anchors.verticalCenter: parent.verticalCenter
+    margin-bottom: 8
+    anchors.left: parent.left
+    margin-left: 8
+    phantom: true
+    visible: true
+    image-source: images/item_widget
+
+  UIProgressRect
+    id: progress
+    size: 46 46
+    font: verdana-11px-rounded
+    background: #585858AA
+    percent: 100
+    focusable: false
+    anchors.left: parent.left
+    anchors.top: parent.top
+    visible: true
+    margin-top: 23
+    margin-left: 16
+
+UIWindow
+  id: imageWindow    
+  width: 350
+  height: 100
+  anchors.centerIn: parent
+  draggable: false
+  visible: false
+  @onEscape: self:hide()
+  background: black
+  @onClick: self:hide()
+  opacity: 0.8
+
+  BerriesPanel

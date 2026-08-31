@@ -1,0 +1,36 @@
+NewOpaqueWindow
+  id: guestGuild
+  size: 248 232
+  anchors.centerIn: parent
+  border-top: 35
+  draggable: false
+
+  PoppinsSemibold20
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 5
+    !text: tr("Guild Options")
+
+  AllianceStraightBlueButton
+    id: create
+    !text: tr('Create Guild')
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 80
+    @onClick: modules.game_guild.createGuildOpen()
+
+  AllianceStraightBlueButton
+    id: invites
+    !text: tr('Invite List')
+    margin-top: 10
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    @onClick: modules.game_guild.playerInvitesOpen()
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_guild.toggle()

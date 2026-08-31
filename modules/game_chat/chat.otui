@@ -1,0 +1,389 @@
+ConsoleLabel < UITextEdit
+  font: verdana-11px-antialised
+  height: 14
+  color: yellow
+  margin-left: 2
+  text-wrap: true
+  text-auto-resize: true
+  selection-color: #111416
+  selection-background-color: #999999
+  change-cursor-image: false
+  cursor-visible: false
+  editable: false
+  draggable: true
+
+ChatCopyToast < NewOpaqueWindow
+  size: 240 50
+  focusable: false
+  phantom: true
+
+  UIWidget
+    id: icon
+    size: 16 16
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 14
+    margin-top: -6
+    icon-source: @fa solid 16 f00c
+    icon-color: #5BD75B
+    phantom: true
+
+  Label
+    id: text
+    anchors.left: prev.right
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 10
+    margin-right: 14
+    margin-top: -6
+    font: poppins semibold 12
+    color: #FFFFFF
+    text-align: left
+    phantom: true
+
+  AllianceProgressBar
+    id: timer
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-left: 12
+    margin-right: 12
+    margin-bottom: 6
+    height: 4
+    phantom: true
+
+EmotesButtonUI < UIButton
+  size: 14 14
+  font: verdana-11px-antialised
+  image-color: #ffffff
+  change-cursor-image: true
+  cursor: pointer
+  $hover:
+    image-color: #c1c1c1
+  $pressed:
+    image-color: #cccccc
+  $disabled:
+    image-color: #dfdfdf88
+    opacity: 0.8
+    change-cursor-image: false
+
+ConsolePhantomLabel < UILabel
+  font: verdana-11px-antialised
+  height: 14
+  color: yellow
+  text-wrap: true
+  text-auto-resize: true
+  selection-color: #111416
+  selection-background-color: #999999
+
+ChatPreviewLabel < UILabel
+  font: poppins semibold 12
+  color: yellow
+  text-wrap: true
+  text-auto-resize: true
+  phantom: true
+  focusable: false
+
+ChatPreviewPanel < Panel
+  phantom: true
+  focusable: false
+  layout:
+    type: verticalBox
+    fit-children: true
+    spacing: 2
+
+ConsoleTabBar < MoveableTabBar
+  height: 28
+
+ConsoleTabBarPanel < MoveableTabBarPanel
+  id: consoleTab
+  moveable: true
+
+//TextPanel
+  ScrollablePanel
+    id: consoleBuffer
+    anchors.fill: parent
+    clipping: true
+    margin-right: 15
+    margin-bottom: 8
+    vertical-scrollbar: consoleScrollBar
+    layout:
+      type: verticalBox
+      align-bottom: true
+    inverted-scroll: true
+    padding: 1
+
+  AllianceVerticalScrollBar
+    id: consoleScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-top: 1
+    margin-bottom: 10
+    margin-right: 0
+    step: 16
+
+ConsoleTabBarButton < MoveableTabBarButton
+  height: 28
+  padding: 15
+  font: poppins semibold 12
+  change-cursor-image: false
+  cursor-visible: false
+  color: #aaaaaa
+  opacity: 0.6
+  moveable: true
+
+  $hover !checked:
+    opacity: 0.9
+    color: #D8E7F0
+
+  $disabled:
+    icon-color: #888888
+
+  $checked:
+    opacity: 1.0
+    color: white
+
+  UIWidget
+    id: previewMutedIcon
+    size: 10 10
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    // parent anchors resolve against the padding rect, and the label fills
+    // everything inside it - only the 15px padding strip is free
+    margin-right: -9
+    icon-source: @fa solid 10 f070
+    icon-color: #8a8a8a
+    margin-bottom: 2
+    icon-offset: 0 1
+    phantom: true
+    visible: false
+
+UIWindow
+  id: chat
+  visible: false
+  &save: true
+  @onEnter: sendCurrentMessage()
+
+  ResizeBorder
+    id: rB
+    anchors.right: parent.right
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    enabled: true
+    maximum: 100
+
+  ResizeBorder
+    id: rB2
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    enabled: true
+    maximum: 100
+
+  ResizeBorder
+    id: rB3
+    anchors.right: parent.right
+    anchors.top: parent.top
+    anchors.left: parent.left
+    enabled: true
+    maximum: 100
+
+  ResizeBorder
+    id: rB4
+    anchors.bottom: parent.bottom
+    anchors.top: parent.top
+    anchors.left: parent.left
+    enabled: true
+    maximum: 100
+
+  UIWindow
+    id: background
+    focusable: false
+    size: 600 255
+    image-border: 12
+    image-source: /images/general_ui/background
+    anchors.fill: parent
+    phantom: true
+
+  UIWindow
+    id: backgroundkeys
+    focusable: false
+    size: 600 255
+    image-border: 10
+    anchors.fill: parent
+    phantom: true
+
+  Panel
+    id: textLineWindow
+    image-source: images/bacckground_label
+    image-border: 15
+    size: 100 100
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: enterBackground.left
+    anchors.right: enterBackground.right
+    phantom: true
+    focusable: false
+
+  TabChatButton
+    id: prevChannelButton
+    icon: images/icons/leftarrow
+    anchors.left: enterBackground.left
+    anchors.top: parent.top
+    margin-top: 10
+    change-cursor-image: true
+    cursor: pointer
+    $pressed:
+      change-cursor-image: false
+
+  ConsoleTabBar
+    id: consoleTabBar
+    phantom: true
+    anchors.left: prev.right
+    anchors.top: parent.top
+    anchors.right: next.left
+    margin-left: 3
+    margin-top: 3
+    margin-right: 3
+    tab-spacing: 20
+    movable: true
+    focusable: false
+
+  TabChatButton
+    id: nextChannelButton
+    icon: images/icons/rightarrow
+    anchors.right: next.left
+    anchors.top: parent.top
+    margin-right: 2
+    margin-top: 10
+    change-cursor-image: true
+    cursor: pointer
+    $pressed:
+      change-cursor-image: false
+
+  TabChatButton
+    id: closeChannelButton
+    icon: images/icons/closechannel
+    anchors.right: next.left
+    anchors.top: parent.top
+    enabled: false
+    margin-right: 3
+    margin-top: 10
+    @onClick: removeCurrentTab()
+    change-cursor-image: true
+    cursor: pointer
+    $disabled:
+      change-cursor-image: false
+
+  TabChatButton
+    id: clearChannelButton
+    icon: images/icons/clearchannel
+    anchors.right: next.left
+    anchors.top: parent.top
+    margin-right: 2
+    margin-top: 10
+    @onClick: |
+      local consoleTabBar = self:getParent():getChildById('consoleTabBar')
+      clearChannel(consoleTabBar)
+    change-cursor-image: true
+    cursor: pointer
+    focusable: false
+    $disabled:
+      change-cursor-image: false
+
+  TabChatButton
+    id: channelsButton
+    icon: images/icons/channels
+    anchors.right: next.left
+    anchors.top: parent.top
+    margin-right: 2
+    margin-top: 10
+    @onClick: g_game.requestChannels()
+    change-cursor-image: true
+    cursor: pointer
+    focusable: false
+    $disabled:
+      change-cursor-image: false
+
+  TabChatButton
+    id: ignoreButton
+    icon: images/icons/ignore
+    anchors.right: next.left
+    anchors.top: parent.top
+    margin-right: 10
+    margin-top: 10
+    @onClick: onClickIgnoreButton()
+    change-cursor-image: true
+    cursor: pointer
+    focusable: false
+    $disabled:
+      change-cursor-image: false
+
+  TabChatButton
+    id: lockButton
+    image-source: /images/newui/miniwindow/lock
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 10
+    margin-top: 12
+    @onClick: onClickLockButton()
+    change-cursor-image: true
+    size: 13 15
+    image-clip: 0 15 13 15
+    opacity: 1.0
+    cursor: pointer
+    focusable: false
+    $disabled:
+      change-cursor-image: false
+
+    $hover:
+      opacity: 0.5
+      image-clip: 0 15 13 15
+
+    $on:
+      image-clip: 0 0 13 15
+
+  Panel
+    id: contentPanel
+    // the tab strip, not prev: prev is whichever button happens to be declared last above (today
+    // lockButton, a 15px icon), so the buffer hung off an unrelated widget and reached up into the
+    // strip. Anchored here it also follows the strip if its height ever changes.
+    anchors.top: consoleTabBar.bottom
+    anchors.left: enterBackground.left
+    anchors.right: enterBackground.right
+    anchors.bottom: textEdit.top
+    margin-left: 6
+    margin-right: 6
+    margin-bottom: 4
+    margin-top: 6
+    padding: 1
+    focusable: false
+    moveable: true
+
+  UIWidget
+    id: enterBackground
+    focusable: false
+    image-source: images/text_edit
+    image-border: 10
+    size: 554 21
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-bottom: 9
+    margin-right: 15
+    margin-left: 15
+
+  UITextEdit
+    id: textEdit
+    focusable: false
+    font: verdana-11px-antialised
+    color: #aaaaaa
+    size: 86 21
+    anchors.left: enterBackground.left
+    anchors.right: enterBackground.right
+    anchors.bottom: parent.bottom
+    margin-left: 5
+    margin-right: 5
+    margin-bottom: 7
+    shift-navigation: true
+    max-length: 255

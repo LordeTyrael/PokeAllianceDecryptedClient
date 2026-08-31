@@ -1,0 +1,7 @@
+Module
+  name: game_poketask
+  description: Displays pokemon tasks
+  sandboxed: true
+  scripts: [ protocol, poketask ]
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,9 @@
+Module
+  name: game_itemdrops
+  description: Sistema de consulta de drops de itens
+  author: PokeAlliance
+  website: 
+  sandboxed: true
+  scripts: [ itemdrops ]
+  @onLoad: init()
+  @onUnload: terminate()

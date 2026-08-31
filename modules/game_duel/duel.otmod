@@ -1,0 +1,9 @@
+Module
+  name: game_duel
+  description: Call player to duel
+  author: Noninhouh
+  website: none
+  sandboxed: true
+  scripts: [ duel ]
+  @onLoad: init()
+  @onUnload: terminate()

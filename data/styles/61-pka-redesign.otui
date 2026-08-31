@@ -1,0 +1,179 @@
+PkaCardTitle < UILabel
+  font: poppins bold 20
+  color: #f2f6fd
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PkaCardSubtitle < UILabel
+  font: poppins regular 12
+  color: #a0b2d2b3
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PkaArtTitle < UILabel
+  font: poppins bold 24
+  color: #ffffff
+  text-align: left
+  text-wrap: true
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PkaArtSubtitle < UILabel
+  font: poppins regular 12
+  color: #e2eaf6d9
+  text-align: left
+  text-wrap: true
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PkaFieldLabel < UILabel
+  font: poppins semibold 10
+  color: #a0b2d2bf
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PkaInput < UITextEdit
+  height: 40
+  font: poppins semibold 13
+  color: #e9eefb
+  placeholder-color: #a0b2d280
+  text-offset: 13 11
+  placeholder-offset: 13 11
+  selection-color: #e9eefb
+  selection-background-color: #2c68b2
+  image-source: /modules/client_entergame/images/redesign/input
+  image-border: 11
+
+  $focus:
+    image-source: /modules/client_entergame/images/redesign/input-focus
+
+PkaPrimaryButton < UIButton
+  height: 46
+  font: poppins bold 14
+  color: #ffffff
+  text-align: center
+  cursor: pointer
+  change-cursor-image: true
+  image-source: /modules/client_entergame/images/redesign/btn-primary
+  image-border: 12
+
+  $hover !disabled:
+    image-source: /modules/client_entergame/images/redesign/btn-primary-hover
+
+  $pressed:
+    image-color: #e0e0e0
+
+  $disabled:
+    opacity: 0.6
+    change-cursor-image: false
+
+PkaGhostButton < UIButton
+  height: 46
+  font: poppins semibold 12
+  color: #c3cee0
+  text-align: center
+  cursor: pointer
+  change-cursor-image: true
+  image-source: /modules/client_entergame/images/redesign/btn-ghost
+  image-border: 12
+
+  $hover !disabled:
+    image-source: /modules/client_entergame/images/redesign/btn-ghost-hover
+
+PkaGenderSegment < UIWidget
+  height: 46
+  font: poppins semibold 13
+  color: #aeb9cc
+  text-align: center
+  text-offset: 10 0
+  focusable: false
+  cursor: pointer
+  image-source: /modules/client_entergame/images/redesign/segment-off
+  image-border: 12
+
+  $on:
+    image-source: /modules/client_entergame/images/redesign/segment-on
+    color: #eaf2fd
+
+PkaWorldCombo < UIComboBox
+  height: 46
+  font: poppins semibold 13
+  color: #eaf0fb
+  text-align: left
+  text-offset: 32 0
+  cursor: pointer
+  image-source: /modules/client_entergame/images/redesign/input
+  image-border: 11
+
+  $disabled:
+    color: #6b7280
+    opacity: 0.7
+
+  UIWidget
+    id: onlineDot
+    size: 8 8
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 14
+    icon-source: @fa solid 8 f111
+    icon-color: #4ade80
+    phantom: true
+
+  UIWidget
+    id: chevron
+    size: 14 14
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 14
+    icon-source: @fa solid 12 f078
+    icon-color: #96a6c4cc
+    phantom: true
+
+  UIWidget
+    id: tagChip
+    height: 22
+    anchors.right: chevron.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    padding-left: 11
+    padding-right: 11
+    text-horizontal-auto-resize: true
+    font: poppins semibold 10
+    text-align: center
+    text-offset: 0 1
+    color: #e8c66a
+    image-source: /modules/client_entergame/images/redesign/soft-capsule
+    image-border: 10
+    image-color: #e8c66a
+    visible: false
+    phantom: true
+
+PkaWorldComboPopupMenu < UIPopupMenu
+  image-source: /modules/client_entergame/images/redesign/popup
+  image-border: 11
+  padding: 6
+
+PkaWorldComboPopupMenuButton < UIButton
+  height: 30
+  font: poppins semibold 12
+  color: #c9d4e8
+  text-align: left
+  text-offset: 10 0
+  background-color: alpha
+
+  $hover !disabled:
+    color: #eaf2fd
+    background-color: #3aa6f622
+
+PkaInfoBox < UIWidget
+  height: 46
+  focusable: false
+  phantom: true
+  image-source: /modules/client_entergame/images/redesign/soft-panel
+  image-border: 12
+  image-color: #3aa6f6

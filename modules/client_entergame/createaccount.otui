@@ -1,0 +1,177 @@
+UIWidget
+  id: createAccountWindow
+  size: 668 480
+  focusable: true
+  anchors.centerIn: parent
+  image-source: images/redesign/card-frame
+  image-border: 18
+
+  UIWidget
+    id: artPanel
+    width: 266
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    phantom: true
+    clip-transparency: true
+    image-source: images/redesign/card-art-mask
+    image-border: 18
+
+    UIWidget
+      anchors.fill: parent
+      phantom: true
+      image-source: images/redesign/card-art
+      image-clip: 0 22 266 480
+
+  UIWidget
+    id: logo
+    size: 76 76
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 30
+    margin-left: 26
+    image-source: /images/pka/logo
+    image-smooth: true
+    phantom: true
+
+  PkaArtSubtitle
+    id: artSubtitle
+    width: 214
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 26
+    margin-bottom: 30
+    !text: tr('Create your trainer account and join thousands of players in the Alliance.')
+
+  PkaArtTitle
+    id: artTitle
+    width: 214
+    anchors.left: parent.left
+    anchors.bottom: artSubtitle.top
+    margin-left: 26
+    margin-bottom: 8
+    !text: tr('Begin your adventure')
+
+  PkaCardTitle
+    id: title
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 24
+    margin-left: 296
+    !text: tr('Create Account')
+
+  PkaCardSubtitle
+    id: subtitle
+    anchors.top: title.bottom
+    anchors.left: title.left
+    margin-top: 2
+    !text: tr('Fill in the details below to get started.')
+
+  PkaFieldLabel
+    id: accountNameLabel
+    anchors.top: subtitle.bottom
+    anchors.left: parent.left
+    margin-top: 16
+    margin-left: 296
+    !text: tr('ACCOUNT NAME')
+
+  PkaInput
+    id: accountNameTextEdit
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+
+  PkaFieldLabel
+    id: emailLabel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 296
+    !text: tr('EMAIL')
+
+  PkaInput
+    id: emailTextEdit
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+
+  PkaFieldLabel
+    id: passwordLabel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 296
+    !text: tr('PASSWORD')
+
+  PkaFieldLabel
+    id: passwordConfirmationLabel
+    anchors.top: emailTextEdit.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 472
+    !text: tr('CONFIRM')
+
+  PkaInput
+    id: passwordTextEdit
+    width: 166
+    text-hidden: true
+    anchors.top: passwordLabel.bottom
+    anchors.left: parent.left
+    margin-top: 6
+    margin-left: 296
+
+  PkaInput
+    id: passwordConfirmationTextEdit
+    text-hidden: true
+    anchors.top: passwordLabel.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 472
+    margin-right: 30
+
+  PkaFieldLabel
+    id: referralLabel
+    anchors.top: passwordTextEdit.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 296
+    !text: tr('REFERRAL CODE (OPTIONAL)')
+
+  PkaInput
+    id: referralCodeTextEdit
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+    !placeholder: tr("Friend's code")
+
+  PkaGhostButton
+    id: backButton
+    size: 84 44
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin-bottom: 28
+    margin-left: 296
+    !text: tr('Back')
+    @onClick: CreateAccount.doOpenEnterGameWindow()
+
+  PkaPrimaryButton
+    id: confirmButton
+    height: 44
+    anchors.bottom: parent.bottom
+    anchors.left: backButton.right
+    anchors.right: parent.right
+    margin-bottom: 28
+    margin-left: 9
+    margin-right: 30
+    !text: tr('Create Account')
+    @onClick: CreateAccount.doCreateAccount()

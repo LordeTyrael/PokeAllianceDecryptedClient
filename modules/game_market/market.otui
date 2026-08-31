@@ -1,0 +1,962 @@
+HistoricLabel < UIWidget
+  height: 25
+  font: verdana-11px-antialised
+  text-align: left
+  margin-left: 10
+  image-source: images/label_categorie
+  margin-top: 5
+
+BuyNowWindow < UIWidget
+  id: buyNowWindow
+  font: verdana-11px-antialised
+  anchors.centerIn: parent
+  size: 300 200
+  visible: false
+  image-source: images/background_popup
+  @onEscape: show()
+  opacity: 0.9
+
+  Label
+    id: buyItemName
+    !text: tr("BUY ITEM")
+    font: poppins semibold 22
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 15
+    text-auto-resize: true
+
+  Item
+    id: item
+    font: poppins semibold 11
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: buyItemName.bottom
+    size: 48 48
+    margin-top: 4
+    margin-left: 4
+    focusable: false
+    virtual: true
+    image-source: images/slot_item
+
+  HorizontalScrollBar
+    id: countScrollBar
+    width: 160
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: item.bottom
+    margin-left: 10
+    margin-top: 15
+    focusable: false
+
+  UIWidget
+    id: price
+    font: poppins semibold 11
+    height: 20
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: countScrollBar.bottom
+    text-auto-resize: true
+    margin-top: 7
+    focusable: false
+  NewButton
+    id: buttonOk
+    font: poppins boldbordered 16
+    !text: tr('Confirm')
+    size: 120 30
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 20
+    margin-right: 70
+    focusable: false
+    image-source: /images/newui/btngreen_large
+  NewButton
+    id: buttonCancel
+    font: poppins boldbordered 16
+    !text: tr('Cancel')
+    size: 120 30
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 20
+    margin-left: 70
+    focusable: false
+    image-source: /images/newui/btnred_large
+
+PageButton < Button
+  size: 20 20
+  font: lucida-11px-rounded
+  anchors.verticalCenter: parent.verticalCenter
+  anchors.left: parent.left
+  @onClick: modules.game_market.togglePage(self:getId())
+  $!first:
+    anchors.left: prev.right
+    margin-left: 2
+
+PageWidget < UIWidget
+  id: pageWidget
+  font: verdana-11px-antialised
+  size: 330 30
+  anchors.bottom: parent.bottom
+  margin-bottom: 50
+  anchors.horizontalCenter: parent.horizontalCenter
+
+  NewButton
+    id: prev
+    anchors.verticalCenter: pageIndex.verticalCenter
+    anchors.right: pageIndex.left
+    margin-right: 10
+    size: 105 30
+    !text: tr("PREV")
+    font: sans-bold-16px
+    text-align: center
+    text-offset: 0 6
+    @onClick: prevPage()
+    image-source: /images/newui/btnblue_small
+    @onClick: modules.game_market.togglePage(self:getId())
+
+  UIWidget
+    id: pageIndex
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    size: 100 30
+    font: sans-bold-16px
+    text-offset: 0 6
+    text-align: center
+    !text: tr("PAGE: 1/1")
+
+  NewButton
+    id: next
+    anchors.verticalCenter: pageIndex.verticalCenter
+    anchors.left: pageIndex.right
+    margin-left: 10
+    size: 105 30
+    !text: tr("NEXT")
+    text-offset: 0 6
+    text-align: center
+    font: sans-bold-16px
+    @onClick: nextPage()
+    image-source: /images/newui/btnblue_small
+    @onClick: modules.game_market.togglePage(self:getId())
+
+UIWidgetToMarketItem < UIItem
+  height: 30
+  font: lucida-11px-rounded
+  anchors.top: parent.top
+  anchors.left: parent.left
+  virtual: true
+  phantom: true
+
+MarketSellItem < UIWidget
+  height: 30
+  font: lucida-11px-rounded
+  margin-left: 50
+
+  $!first:
+    margin-top: 5
+
+  UIWidget
+    id: itemInfoBackground
+    anchors.left: time.left
+    anchors.right: timer.right
+    image-source: images/label_categorie
+
+  UIWidgetToMarketItem
+    id: time
+    font: lucida-11px-rounded
+    margin-left: 10
+    width: 40
+  UIWidgetToMarketItem
+    id: item
+    font: lucida-11px-rounded
+    width: 30
+    anchors.left: prev.right
+    phantom: false
+  UIWidgetToMarketItem
+    id: name
+    font: lucida-11px-rounded
+    width: 150
+    anchors.left: prev.right
+    text-align: center
+  UIWidgetToMarketItem
+    id: type
+    font: lucida-11px-rounded
+    width: 80
+    anchors.left: prev.right
+    text-align: center
+  UIWidgetToMarketItem
+    id: amount
+    width: 70
+    font: lucida-11px-rounded
+    anchors.left: prev.right
+  UIWidgetToMarketItem
+    id: price
+    font: lucida-11px-rounded
+    width: 100
+    anchors.left: prev.right
+    text-align: center
+    text-offset: 3 0
+  UIWidgetToMarketItem
+    id: timer
+    font: lucida-11px-rounded
+    width: 90
+    anchors.left: prev.right
+    text-align: center
+    text-offset: 3 0
+  NewButton
+    id: cancel
+    text: CANCEL
+    size: 80 30
+    anchors.left: timer.right
+    margin-left: 10
+    anchors.top: parent.top
+    image-source: /images/newui/btnred_large
+    @onClick: modules.game_market.cancelSellItem(self:getParent())
+
+MarketItem < UIWidget
+  height: 30
+  font: lucida-11px-rounded
+
+  $!first:
+    margin-top: 5
+
+  NewButton
+    id: purchase
+    text: PURCHASE
+    size: 130 30
+    anchors.left: parent.left
+    margin-left: 10
+    anchors.top: parent.top
+    image-source: /images/newui/btngreen_large
+    @onClick: modules.game_market.buyItem(self:getParent())
+
+  UIWidget
+    id: itemInfoBackground
+    anchors.left: time.left
+    anchors.right: timer.right
+    image-source: images/label_categorie
+
+  UIWidgetToMarketItem
+    id: time
+    font: lucida-11px-rounded
+    anchors.left: purchase.right
+    margin-left: 10
+    width: 40
+  UIWidgetToMarketItem
+    id: item
+    font: lucida-11px-rounded
+    width: 30
+    anchors.left: time.right
+    phantom: false
+  UIWidgetToMarketItem
+    id: name
+    font: lucida-11px-rounded
+    width: 180
+    anchors.left: item.right
+    text-align: center
+  UIWidgetToMarketItem
+    id: seller
+    font: lucida-11px-rounded
+    width: 155
+    anchors.left: name.right
+  UIWidgetToMarketItem
+    id: amount
+    width: 70
+    font: lucida-11px-rounded
+    anchors.left: seller.right
+  UIWidgetToMarketItem
+    id: price
+    font: lucida-11px-rounded
+    width: 100
+    anchors.left: amount.right
+    text-align: center
+    text-offset: 3 0
+  UIWidgetToMarketItem
+    id: timer
+    font: lucida-11px-rounded
+    width: 90
+    anchors.left: price.right
+    text-align: center
+    text-offset: 3 0
+
+MarketRequestItem < UIWidget
+  height: 30
+  font: lucida-11px-rounded
+  margin-left: 50
+
+  $!first:
+    margin-top: 5
+
+  UIWidget
+    id: itemInfoBackground
+    anchors.left: time.left
+    anchors.right: timer.right
+    image-source: images/label_categorie
+
+  UIWidgetToMarketItem
+    id: time
+    font: lucida-11px-rounded
+    margin-left: 10
+    width: 40
+  UIWidgetToMarketItem
+    id: item
+    font: lucida-11px-rounded
+    width: 30
+    anchors.left: prev.right
+    phantom: false
+  UIWidgetToMarketItem
+    id: name
+    font: lucida-11px-rounded
+    width: 150
+    anchors.left: prev.right
+    text-align: center
+  UIWidgetToMarketItem
+    id: type
+    font: lucida-11px-rounded
+    width: 80
+    anchors.left: prev.right
+    text-align: center
+  UIWidgetToMarketItem
+    id: amount
+    width: 70
+    font: lucida-11px-rounded
+    anchors.left: prev.right
+  UIWidgetToMarketItem
+    id: price
+    font: lucida-11px-rounded
+    width: 100
+    anchors.left: prev.right
+    text-align: center
+    text-offset: 3 0
+  UIWidgetToMarketItem
+    id: status
+    font: lucida-11px-rounded
+    width: 90
+    anchors.left: prev.right
+    text-align: center
+  UIWidgetToMarketItem
+    id: timer
+    font: lucida-11px-rounded
+    width: 90
+    anchors.left: prev.right
+    text-align: center
+    text-offset: 3 0
+  NewButton
+    id: cancel
+    text: CANCEL
+    size: 80 30
+    anchors.left: timer.right
+    margin-left: 10
+    anchors.top: parent.top
+    image-source: /images/newui/btnred_large
+    @onClick: modules.game_market.cancelRequest(self:getParent())
+
+MarketTab < UIWidget
+  height: 30
+  font: lucida-11px-rounded
+  anchors.top: comboBox.top
+  anchors.left: comboBox.right
+
+HistoricPanel < UIWidget
+  id: historicPanel
+  font: lucida-11px-rounded
+  anchors.fill: parent
+  anchors.top: buyTabButton.bottom
+  visible: false
+
+  UIScrollArea
+    id: list
+    layout: verticalBox
+    font: lucida-11px-rounded
+    anchors.fill: parent
+    margin-left: 15
+    margin-top: 10
+    margin-right: 25
+    margin-bottom: 50
+    vertical-scrollbar: historicVerticalSrollBar
+    image-source: images/background_label
+
+  NewVerticalScrollBar
+    font: lucida-11px-rounded
+    id: historicVerticalSrollBar
+    anchors.top: list.top
+    anchors.bottom: list.bottom
+    anchors.left: list.right
+    margin-left: 6
+    step: 20
+    pixels-scroll: true
+
+RequestsPanel < UIWidget
+  id: requestsPanel
+  font: lucida-11px-rounded
+  anchors.fill: parent
+  anchors.top: buyTabButton.bottom
+  visible: false
+
+  UIWidget
+    id: backgroundImage
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: images/background_label
+    margin-top: 10
+    margin-left: 140
+    margin-right: 140
+    margin-bottom: 100
+
+  MarketTab
+    id: time
+    font: lucida-11px-rounded
+    width: 40
+    text: #
+    anchors.top: backgroundImage.top
+    anchors.left: backgroundImage.left
+    margin-top: 5
+    margin-left: 50
+
+  MarketTab
+    id: item
+    font: lucida-11px-rounded
+    width: 30
+    anchors.left: time.right
+    anchors.top: prev.top
+    !text: tr("Item")
+  MarketTab
+    id: name
+    width: 180
+    font: lucida-11px-rounded
+    anchors.left: item.right
+    anchors.top: prev.top
+    !text: tr("Name")
+  MarketTab
+    id: amount
+    font: lucida-11px-rounded
+    width: 70
+    anchors.left: prev.right
+    anchors.top: prev.top
+    !text: tr("Qtd.")
+  MarketTab
+    id: price
+    font: lucida-11px-rounded
+    width: 100
+    anchors.left: amount.right
+    anchors.top: prev.top
+    !text: tr("Preço")
+  MarketTab
+    id: status
+    font: lucida-11px-rounded
+    width: 90
+    anchors.left: price.right
+    anchors.top: prev.top
+    !text: tr("Status")
+  MarketTab
+    id: timer
+    width: 90
+    font: lucida-11px-rounded
+    anchors.left: status.right
+    anchors.top: prev.top
+    !text: tr("Tempo")
+  MarketTab
+    id: cancel
+    font: lucida-11px-rounded
+    size: 80 30
+    anchors.top: prev.top
+    anchors.left: timer.right
+    text-align: center
+    margin-top: 0
+    !text: tr("-")
+
+  UIScrollArea
+    id: items
+    font: lucida-11px-rounded
+    layout: verticalBox
+    anchors.top: time.bottom
+    anchors.bottom: backgroundImage.bottom
+    anchors.left: backgroundImage.left
+    anchors.right: backgroundImage.right
+    vertical-scrollbar: scrollbar
+    margin-bottom: 10
+    margin-top: 10
+
+  NewVerticalScrollBar
+    id: scrollbar
+    anchors.top: backgroundImage.top
+    anchors.right: backgroundImage.right
+    anchors.bottom: items.bottom
+    margin-right: 6
+    margin-top: 3
+    step: 40
+
+  NewButton
+    id: refreshButton3
+    font: sans-bold-16px
+    size: 105 45
+    anchors.top: backgroundImage.bottom
+    anchors.left: parent.left
+    margin-left: 120
+    margin-top: 15
+    !text: tr("Refresh")
+    image-source: /images/newui/btngreen_small
+    @onClick: modules.game_market.getMyRequests()
+
+SellPanelWindow < HeadlessWindow
+  id: sellPanelWindow
+  font: verdana-11px-antialised
+  size: 450 250  
+  anchors.centerIn: parent
+  visible: false
+  image-source: images/background_sell_confirm
+
+  UIWidget
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 3
+    margin-right: 8
+    @onClick: self:getParent():hide()
+    image-source: images/close
+
+  Button
+    id: sell_selectitem
+    font: verdana-11px-antialised
+    size: 115 30
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter    
+    margin-top: 50
+    text: Select Item
+    !tooltip: tr("Select an Item")
+    @onClick: modules.game_market.selectItemToSell()
+  Item
+    id: sell_item
+    font: verdana-11px-antialised
+    size: 36 36
+    anchors.top: parent.top
+    anchors.left: parent.left    
+    margin-top: 75
+    margin-left: 30
+  UIWidget
+    id: sell_itemname
+    font: verdana-11px-antialised
+    size: 200 30
+    anchors.top: sell_item.top
+    anchors.left: prev.right
+    margin-top: 5    
+    margin-left: 5
+    text-align: left
+  UIWidget
+    id: sell_pricelabel
+    font: verdana-11px-antialised
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 75
+    margin-right: 17
+    !text: tr("Price per Unit")
+  TextEdit
+    id: sell_priceedit
+    size: 80 20
+    anchors.top: sell_pricelabel.bottom
+    anchors.right: parent.right
+    margin-top: 5
+    margin-right: 17
+    max-length: 9
+    @onTextChange: modules.game_market.onSellPriceChange()
+  HorizontalScrollBar
+    id: sell_amount
+    size: 203 12
+    anchors.top: prev.bottom    
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 15
+    enabled: false
+    margin-left: 25
+    margin-right: 25
+  HorizontalSeparator
+    id: separator
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom    
+    margin-top: 10
+    margin-left: 10
+    margin-right: 10
+  ComboBox
+    id: sell_timebox
+    font: verdana-11px-antialised
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-top: 5
+    visible: false  
+  CheckBox2
+    id: sell_anonymous
+    !text: tr('Sell as anonymous')        
+    anchors.right: parent.right
+    anchors.top: sell_amount.bottom
+    margin-top: 15
+    width: 150
+  UIWidget
+    id: sell_value
+    font: verdana-11px-antialised
+    width: 130
+    height: 60    
+    anchors.left: parent.left
+    anchors.top: sell_amount.bottom
+    margin-top: 15
+    margin-left: 30
+    text-align: topLeft     
+  Button
+    id: sell_confirm
+    font: verdana-11px-antialised
+    size: 75 25
+    anchors.top: sell_anonymous.bottom
+    anchors.right: parent.right
+    margin-right: 20
+    margin-top: 5
+    !text: tr("Confirm")
+    @onClick: modules.game_market.onConfirmSellItem()  
+
+SellPanel < UIWidget
+  id: sellPanel
+  font: lucida-11px-rounded
+  anchors.fill: parent
+  anchors.top: buyTabButton.bottom
+  visible: false
+
+  UIWidget
+    id: backgroundImage
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: images/background_label
+    margin-top: 10
+    margin-left: 140
+    margin-right: 140
+    margin-bottom: 100
+
+  MarketTab
+    id: time
+    font: lucida-11px-rounded
+    width: 40
+    text: #
+    anchors.top: backgroundImage.top
+    anchors.left: backgroundImage.left
+    margin-top: 5
+    margin-left: 50
+
+  MarketTab
+    id: item
+    font: lucida-11px-rounded
+    width: 30
+    anchors.left: time.right
+    anchors.top: prev.top
+    !text: tr("Item")
+  MarketTab
+    id: name
+    width: 150
+    font: lucida-11px-rounded
+    anchors.left: item.right
+    anchors.top: prev.top
+    !text: tr("Name")
+  MarketTab
+    id: type
+    font: lucida-11px-rounded
+    width: 80
+    anchors.left: prev.right
+    anchors.top: prev.top
+    !text: tr("Type")
+  MarketTab
+    id: amount
+    font: lucida-11px-rounded
+    width: 70
+    anchors.left: prev.right
+    anchors.top: prev.top
+    !text: tr("Qtd.")
+  MarketTab
+    id: price
+    font: lucida-11px-rounded
+    width: 100
+    anchors.left: amount.right
+    anchors.top: prev.top
+    !text: tr("Preço")
+  MarketTab
+    id: timer
+    width: 90
+    font: lucida-11px-rounded
+    anchors.left: price.right
+    anchors.top: prev.top
+    !text: tr("Tempo")
+  MarketTab
+    id: cancel
+    font: lucida-11px-rounded
+    size: 80 30
+    anchors.top: prev.top
+    anchors.left: timer.right
+    text-align: center
+    margin-top: 0
+    !text: tr("-")
+
+  UIScrollArea
+    id: items
+    font: lucida-11px-rounded
+    layout: verticalBox
+    anchors.top: time.bottom
+    anchors.bottom: backgroundImage.bottom
+    anchors.left: backgroundImage.left
+    anchors.right: backgroundImage.right
+    vertical-scrollbar: scrollbar
+    margin-bottom: 10
+    margin-top: 10
+
+  NewVerticalScrollBar
+    id: scrollbar
+    anchors.top: backgroundImage.top
+    anchors.right: backgroundImage.right
+    anchors.bottom: items.bottom
+    margin-right: 6
+    margin-top: 3
+    step: 40
+
+  NewButton
+    id: refreshButton2
+    font: sans-bold-16px
+    size: 105 45
+    anchors.top: backgroundImage.bottom
+    anchors.left: parent.left
+    margin-left: 120
+    margin-top: 15
+    !text: tr("Refresh")
+    image-source: /images/newui/btngreen_small
+    @onClick: modules.game_market.getSellItems()
+
+  NewButton
+    id: sellWindowButton
+    font: sans-bold-16px
+    size: 105 45
+    anchors.left: refreshButton2.right
+    anchors.bottom: refreshButton2.bottom
+    margin-left: 10
+    !text: tr("Sell Item")
+    image-source: /images/newui/btngreen_small
+    @onClick: modules.game_market.showSellPanelWindow()
+
+BuyPanel < UIWidget
+  id: buyPanel
+  font: lucida-11px-rounded
+  anchors.fill: parent
+  anchors.top: buyTabButton.bottom
+
+  UIWidget
+    id: backgroundImage
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: images/background_label
+    margin-top: 10
+    margin-left: 43
+    margin-right: 43
+    margin-bottom: 100
+
+  NewComboBox
+    id: comboBox
+    size: 150 32
+    font: lucida-11px-rounded
+    anchors.top: backgroundImage.top
+    anchors.left: backgroundImage.left
+    text-align: center
+    text-offset: 16 0
+    margin-top: 5
+    margin-left: 15
+    image-source: images/label_select
+
+  UIWidget
+    id: filterImage
+    anchors.left: comboBox.left
+    anchors.verticalCenter: comboBox.verticalCenter
+    margin-left: 10
+    size: 16 16
+    image-source: images/icon_filter
+
+  MarketTab
+    id: time
+    font: lucida-11px-rounded
+    width: 40
+    text: #
+  MarketTab
+    id: item
+    font: lucida-11px-rounded
+    width: 30
+    padding: 2 4
+    anchors.left: time.right
+    !text: tr("Item")
+  MarketTab
+    id: name
+    width: 180
+    font: lucida-11px-rounded
+    anchors.left: item.right
+    !text: tr("Name")
+  MarketTab
+    id: seller
+    width: 155
+    font: lucida-11px-rounded
+    anchors.left: name.right
+    !text: tr("Vendedor")
+  MarketTab
+    id: amount
+    font: lucida-11px-rounded
+    width: 70
+    anchors.left: seller.right
+    !text: tr("Qtd.")
+  MarketTab
+    id: price
+    font: lucida-11px-rounded
+    width: 100
+    anchors.left: amount.right
+    !text: tr("Preço")
+  MarketTab
+    id: timer
+    width: 90
+    font: lucida-11px-rounded
+    anchors.left: price.right
+    !text: tr("Tempo")
+  UIScrollArea
+    id: items
+    font: lucida-11px-rounded
+    layout: verticalBox
+    anchors.top: time.bottom
+    anchors.bottom: backgroundImage.bottom
+    anchors.left: comboBox.left
+    anchors.right: timer.right
+    vertical-scrollbar: scrollbar
+    margin-bottom: 10
+    margin-top: 10
+  NewVerticalScrollBar
+    id: scrollbar
+    anchors.top: timer.top
+    anchors.left: timer.right
+    anchors.bottom: items.bottom
+    margin-left: 8
+    step: 20
+  PageWidget
+  NewButton
+    id: refreshButton
+    font: sans-bold-16px
+    size: 105 30
+    anchors.bottom: pageWidget.bottom
+    anchors.right: backgroundImage.right
+    margin-right: 10
+    !text: tr("Refresh")
+    image-source: /images/newui/btngreen_small
+    @onClick: modules.game_market.getBuyItems()
+BuyTabButton < NewButton
+  id: buyTabButton
+  font: poppins semibold 12
+  size: 92 32
+  anchors.top: parent.top
+  anchors.left: parent.left
+  margin-top: 65
+  margin-left: 43
+  text: Buy
+  !tooltip: tr("Check offers")
+  @onClick: modules.game_market.showBuyPanel()
+  image-source: images/label_unit
+SellTabButton < NewButton
+  id: sellTabButton
+  font: verdana-11px-antialised
+  size: 92 32
+  anchors.top: buyTabButton.top
+  anchors.left: buyTabButton.right
+  margin-left: 10
+  text: Sell
+  !tooltip: tr("Advertise your items")
+  @onClick: modules.game_market.showSellPanel()
+  image-source: images/label_search
+HistoricTabButton < NewButton
+  id: historicTabButton
+  font: verdana-11px-antialised
+  size: 92 32
+  anchors.top: buyTabButton.top
+  anchors.left: sellTabButton.right
+  margin-left: 10
+  text: Trade Logs
+  !tooltip: tr("Check your trade logs")
+  @onClick: modules.game_market.showHistoricPanel()
+  image-source: images/label_search
+RequestsTabButton < NewButton
+  id: requestsTabButton
+  font: verdana-11px-antialised
+  size: 92 32
+  anchors.top: buyTabButton.top
+  anchors.left: historicTabButton.right
+  margin-left: 10
+  text: My Requests
+  !tooltip: tr("Check your buy requests")
+  @onClick: modules.game_market.showRequestsPanel()
+  image-source: images/label_search
+SearchText < TextEdit
+  id: searchEdit
+  size: 120 32
+  text-offset: 0 16
+  text-align: center
+  color: white
+  anchors.top: buyTabButton.top
+  anchors.right: parent.right
+  margin-right: 43
+  @onTextChange: modules.game_market.onTextChange()
+  image-source: images/label_search
+
+  $focus:
+    image-source: images/label_select
+
+MarketClose < NewButton
+  id: close
+  anchors.top: background.top
+  anchors.right: background.right
+  margin-top: 10
+  margin-right: 6
+  @onClick: modules.game_market.hide()
+  image-source: images/close
+
+UIWidget
+  id: market
+  size: 940 600
+  anchors.centerIn: parent
+  padding: 2
+  @onEscape: modules.game_market.hide()
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    image-source: images/background_market
+    margin-top: 20
+    margin-bottom: 20
+
+  UIWidget
+    id: downbox_store
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: background.bottom
+    image-source: /images/newinterface/downbox_store
+    margin-top: -5
+
+  UIWidget
+    id: topbox_store
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: background.top
+    image-source: /images/newinterface/topbox_store
+    margin-bottom: -5
+
+  MarketClose
+  BuyTabButton
+  SellTabButton
+  HistoricTabButton
+  RequestsTabButton
+  SearchText
+  NewButton
+    id: lupa
+    anchors.verticalCenter: searchEdit.verticalCenter
+    size: 32 32
+    anchors.right: searchEdit.left
+    margin-right: 5
+    image-source: images/lupa
+    @onClick: modules.game_market.getBuyItems()
+  BuyPanel
+  SellPanel
+  HistoricPanel
+  RequestsPanel

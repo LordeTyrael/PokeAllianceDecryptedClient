@@ -1,0 +1,15 @@
+Font
+  type: ttf
+  family: roboto
+  default: true
+  styles:
+    regular:
+      file: roboto-bold
+      outline-width: 1
+    bold:
+      file: roboto-bold
+      outline-width: 1
+    semibold:
+      file: roboto-semibold
+      outline-width: 1
+      spacing: 4 0

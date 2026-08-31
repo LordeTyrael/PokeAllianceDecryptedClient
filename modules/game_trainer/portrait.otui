@@ -1,0 +1,60 @@
+PortraitIcon < UIWidget
+  size: 73 72
+  &updateSelected: |
+    function(self)
+      self:setBackgroundColor((self:isFocused() and "#7e7e7e" or "#131414"))
+    end
+  @onFocusChange: self:updateSelected()
+  @onSetup: self:updateSelected()
+
+UIWindow
+  @onEscape: self:hide()
+  id: portraitwindow
+  size: 412 246
+  anchors.centerIn: parent
+  text-offset: 0 8  
+  padding: 2
+  visible: false
+  image-source: images/bg_profile
+
+  UIScrollArea
+    id: list
+    width: 380
+    height: 150
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: 5
+    margin-top: 50
+    margin-left: 15
+    vertical-scrollbar: scrollbar
+    layout:
+      type: grid        
+      cell-size: 73 72
+      cell-spacing: 20        
+      num-columns: 4
+      flow: false
+  VerticalScrollBar
+    id: scrollbar
+    anchors.top: list.top
+    anchors.bottom: list.bottom
+    anchors.right: list.right
+    step: 30
+  Button
+    id: cancel
+    size: 70 20
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    !text: tr("Cancel")
+    margin-left: 25
+    margin-bottom: 15
+    @onClick: self:getParent():hide()
+  Button
+    id: confirm
+    size: 70 20
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    !text: tr("Confirm")
+    margin-right: 25
+    margin-bottom: 15
+    @onClick: modules.game_trainer.changeIcon()

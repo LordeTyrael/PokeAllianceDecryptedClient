@@ -1,0 +1,320 @@
+AlbumCard < UIWidget
+  size: 140 190
+  image-source: images/card_slot
+  cursor: pointer
+  border-width: 0
+  border-color: #00000000
+  @onClick: modules.game_album.onCardClick(self)
+
+  $hover:
+    border-width: 2
+    border-color: #ffe08a
+
+  UIWidget
+    id: cardImage
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 158
+    margin: 2
+    phantom: true
+
+  UIWidget
+    id: lockIcon
+    size: 36 36
+    anchors.horizontalCenter: cardImage.horizontalCenter
+    anchors.verticalCenter: cardImage.verticalCenter
+    icon-source: @fa solid 34 f023
+    icon-color: #6b7b8d
+    icon-size: 34 34
+    visible: false
+    phantom: true
+
+  Label
+    id: newBadge
+    anchors.top: cardImage.top
+    anchors.right: cardImage.right
+    margin-top: 5
+    margin-right: 5
+    padding: 1 5 1 5
+    text-auto-resize: true
+    background-color: #ffd24a
+    color: #1a2330
+    font: poppins bold 9
+    !text: tr("NEW")
+    visible: false
+    phantom: true
+
+  UIWidget
+    id: nameplate
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 29
+    image-source: images/card_nameplate
+    phantom: true
+
+  Label
+    id: cardName
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 29
+    text-align: center
+    font: poppins semibold 11
+    text-offset: 6 0
+    color: #ffffff
+    phantom: true
+
+AlbumFilterButton < UIWidget
+  size: 88 26
+  font: poppins semibold 11
+  text-align: center
+  textColor: #cfd8e0
+  image-source: /images/newui/grayStraight
+  image-border: 4
+  cursor: pointer
+
+  $on:
+    image-source: /images/newui/blueStraight
+    textColor: #ffffff
+
+  $hover !on:
+    textColor: #ffffff
+
+NewOpaqueWindow
+  id: albumWindow
+  size: 1180 720
+  anchors.centerIn: parent
+  focusable: true
+  visible: false
+  @onEscape: modules.game_album.close()
+
+  UIWidget
+    id: field
+    anchors.fill: parent
+    margin: 14
+    image-source: images/album_field
+    phantom: true
+
+  Label
+    id: title
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 42
+    margin-top: 34
+    font: poppins bold 24
+    color: #ffffff
+    text-auto-resize: true
+    !text: tr("Alliance World Cup Album")
+
+  UIWidget
+    id: searchIcon
+    size: 16 16
+    anchors.verticalCenter: searchEdit.verticalCenter
+    anchors.left: searchEdit.left
+    margin-left: 8
+    icon-source: @fa solid 14 f002
+    icon-color: #2b3a4a
+    phantom: true
+
+  EntergameTextEdit
+    id: searchEdit
+    size: 210 30
+    anchors.top: parent.top
+    anchors.right: closeButton.left
+    margin-top: 36
+    margin-right: 16
+    text-offset: 28 6
+    placeholder-offset: 28 6
+    !placeholder: tr("Search card")
+    placeholder-color: #88909a
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 20
+    margin-right: 22
+    @onClick: modules.game_album.close()
+
+  AlbumFilterButton
+    id: rankingButton
+    size: 116 26
+    anchors.verticalCenter: searchEdit.verticalCenter
+    anchors.right: searchEdit.left
+    margin-right: 10
+    !text: tr("Ranking")
+    @onClick: modules.game_album.openRanking()
+
+  UIWidget
+    id: filterBar
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 116
+    height: 24
+    layout:
+      type: horizontalBox
+      spacing: 6
+      fit-children: true
+
+    AlbumFilterButton
+      id: filterAll
+      !text: tr("All")
+      @onClick: modules.game_album.setFilter('all')
+
+    AlbumFilterButton
+      id: filterOwned
+      !text: tr("Owned")
+      @onClick: modules.game_album.setFilter('owned')
+
+    AlbumFilterButton
+      id: filterMissing
+      !text: tr("Missing")
+      @onClick: modules.game_album.setFilter('missing')
+
+  AlbumCard
+    id: card1
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 110
+    margin-top: 168
+
+  AlbumCard
+    id: card2
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 285
+    margin-top: 168
+
+  AlbumCard
+    id: card5
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 745
+    margin-top: 168
+
+  AlbumCard
+    id: card6
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 920
+    margin-top: 168
+
+  AlbumCard
+    id: card3
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 110
+    margin-top: 380
+
+  AlbumCard
+    id: card4
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 285
+    margin-top: 380
+
+  AlbumCard
+    id: card7
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 745
+    margin-top: 380
+
+  AlbumCard
+    id: card8
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 920
+    margin-top: 380
+
+  Label
+    id: emptyState
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.verticalCenter: parent.verticalCenter
+    font: poppins semibold 18
+    color: #ffffff
+    text-align: center
+    text-auto-resize: true
+    visible: false
+    !text: tr("No cards match your search")
+
+  AllianceProgressBar
+    id: collectProgress
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 45
+    margin-bottom: 34
+    width: 240
+    height: 16
+
+  Label
+    id: progressLabel
+    anchors.left: collectProgress.left
+    anchors.bottom: collectProgress.top
+    margin-bottom: 3
+    font: poppins bold 15
+    color: #f4fff3
+    text-auto-resize: true
+
+  UIWidget
+    id: prevArrow
+    size: 38 38
+    anchors.verticalCenter: pageLabel.verticalCenter
+    anchors.right: pageLabel.left
+    margin-right: 30
+    image-source: /images/modules/doublearrow_left
+    image-color: #ffffff
+    cursor: pointer
+    @onClick: modules.game_album.prevPage()
+
+    $disabled:
+      image-color: #ffffff55
+
+  Label
+    id: pageLabel
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 30
+    font: poppins bold 21
+    color: #f4fff3
+    text-auto-resize: true
+    text-align: center
+
+  UIWidget
+    id: nextArrow
+    size: 38 38
+    anchors.verticalCenter: pageLabel.verticalCenter
+    anchors.left: pageLabel.right
+    margin-left: 30
+    image-source: /images/modules/doublearrow_right
+    image-color: #ffffff
+    cursor: pointer
+    @onClick: modules.game_album.nextPage()
+
+    $disabled:
+      image-color: #ffffff55
+
+  AlbumFilterButton
+    id: jumpButton
+    size: 130 26
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-right: 40
+    margin-bottom: 30
+    !text: tr("Go to missing")
+    @onClick: modules.game_album.jumpToMissing()
+
+  AlbumFilterButton
+    id: sortButton
+    size: 54 26
+    anchors.right: jumpButton.left
+    anchors.bottom: jumpButton.bottom
+    margin-right: 8
+    @onClick: modules.game_album.cycleSort()

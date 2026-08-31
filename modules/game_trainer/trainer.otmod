@@ -1,0 +1,9 @@
+Module
+  name: game_trainer
+  description: Gerencia informações, dinheiro e afins do jogador.
+  author: Danvrb
+  sandboxed: true
+  dependencies: [client_topmenu, game_walking, game_interface]
+  scripts: [ trainer ]
+  @onLoad: init()
+  @onUnload: terminate()

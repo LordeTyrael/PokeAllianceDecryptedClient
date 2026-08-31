@@ -1,0 +1,7 @@
+Module
+  name: game_mail
+  description: game mail system
+  sandboxed: true
+  scripts: [ protocol, mail ]
+  @onLoad: init()
+  @onUnload: terminate()

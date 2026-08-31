@@ -1,0 +1,153 @@
+OutfitToList < UICreature
+  id: outfitToList
+  width: 80
+  height: 100
+  scale: 0.9
+  image-source: /images/ui/outfit_widget
+  old-scaling: true
+
+AddonsPanel < ScrollablePanel
+  id: addonPanel
+  anchors.fill: parent
+  margin-left: 3
+  margin-top: 3
+  margin-bottom: 3
+  margin-right: 3
+  image-source: /images/ui/miniwindow
+
+  UIWidget
+    id: availableAddons
+    size: 300 250
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin-top: 10
+    margin-left: 10
+    margin-bottom: 10
+    background-color: #222222
+
+    layout:
+      type: grid    
+      cell-size: 74 74
+      num-columns: 4
+      padding: 64 0
+
+  Panel
+    id: colorBoxPanel
+    size: 260 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-right: 15
+    margin-bottom: 20
+    layout:
+      type: grid
+      cell-size: 11 11
+      cell-spacing: 3
+      num-columns: 19
+      num-lines: 7
+
+  UIWidget
+    id: confirmButton
+    size: 80 18
+    !text: tr('Confirm')
+    anchors.top: colorBoxPanel.bottom
+    anchors.horizontalCenter: colorBoxPanel.horizontalCenter
+    !tooltip: tr('Confirm')
+    image-source: /images/ui/blue_confirm
+    @onClick: modules.game_addons.onConfirm()
+
+  UIWidget
+    id: name
+    anchors.bottom: template.top
+    anchors.horizontalCenter: colorBoxPanel.horizontalCenter
+    margin-bottom: 15
+    font: poppins regular 15
+    text-auto-resize: true
+    !text: tr("Addon Name")
+
+  UICreature
+    id: outfit
+    size: 64 64
+    anchors.bottom: name.top
+    anchors.horizontalCenter: name.horizontalCenter    
+    margin-bottom: 15
+    fixed-creature-size: true
+    old-scaling: true
+
+  UIWidget
+    id: template
+    size: 260 22
+    anchors.bottom: colorBoxPanel.top
+    anchors.left: colorBoxPanel.left
+    margin-bottom: 5
+
+    AddonsButton
+      id: head
+      size: 62 22
+      anchors.top: parent.top
+      anchors.left: parent.left
+      !tooltip: tr('Head')
+      !text: tr('Head')
+      checked: true         
+      image-source: /images/ui/panels/tabbutton_off
+      color: white
+      auto-focus: first
+
+      $focus:        
+        color: #00a8ff
+
+    AddonsButton
+      id: primary
+      size: 70 22
+      anchors.top: parent.top
+      anchors.left: head.right
+      !tooltip: tr('Primary')
+      !text: tr('Primary')
+      checked: true
+      image-source: /images/ui/panels/tabbutton_off
+      color: white
+      margin-left: 5
+
+      $focus:        
+        color: #00a8ff
+
+    AddonsButton
+      id: secondary
+      size: 80 22
+      anchors.top: parent.top
+      anchors.left: primary.right            
+      !tooltip: tr('Secondary')
+      !text: tr('Secondary')
+      checked: true
+      image-source: /images/ui/panels/tabbutton_off
+      color: white
+      margin-left: 5
+      $focus:        
+        color: #00a8ff
+
+    AddonsButton
+      id: detail
+      size: 62 22
+      anchors.top: parent.top
+      anchors.left: secondary.right
+      margin-left: 5      
+      !tooltip: tr('Detail')
+      !text: tr('Detail')
+      checked: true
+      image-source: /images/ui/panels/tabbutton_off
+      color: white
+      margin-left: 5 
+      $focus:        
+        color: #00a8ff
+
+UIWindow
+  id: addonWindow    
+  width: 600
+  height: 300
+  anchors.centerIn: parent
+  draggable: false
+  visible: false
+  @onEscape: self:hide()
+  background: black
+
+  AddonsPanel

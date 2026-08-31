@@ -1,0 +1,60 @@
+bossHealthWindow < HeadlessWindow
+  id: window
+  size: 543 116
+  anchors.left: parent.left
+  anchors.top: parent.top
+  margin-left: 30
+  margin-top: 30
+  image-source: ""
+  opacity: 0.95
+
+  UIWidget
+    id: hpBackground
+    size: 416 60
+    anchors.verticalCenter: boss_background.verticalCenter
+    anchors.left: boss_background.horizontalCenter
+    image-source: /images/newui/background_3
+    image-border: 15
+    focusable: false
+
+  UIProgressBar
+    id: health_bar
+    size: 416 56
+    anchors.top: hpBackground.top
+    anchors.right: hpBackground.right
+    phantom: true
+    focusable: false
+    background-color: #08b365
+    margin-top: 2
+    margin-bottom: 2
+    margin-right: 2
+    opacity: 0.9
+
+  UIWidget
+    id: boss_background
+    size: 100 100
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    image-source: /images/modules/guild/boss_base
+
+  UICreature
+    id: bossPhoto
+    size: 96 96
+    new-scaling: true
+    max-scale: 2.0
+    min-scale: 2.0
+    scale: 0.7
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    focusable: false
+
+  UIWidget
+    id: hpPercent
+    text-auto-resize: true
+    color: #ffffff
+    font: poppins regular 22
+    text-align: center
+    text: #
+    anchors.centerIn: health_bar
+    phantom: true
+    focusable: false

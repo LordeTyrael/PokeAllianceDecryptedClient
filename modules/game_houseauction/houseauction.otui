@@ -1,0 +1,170 @@
+NewOpaqueWindow
+  id: houseAuctionWindow
+  size: 550 330
+  anchors.centerIn: parent
+  visible: false
+  focusable: true
+  @onEscape: modules.game_houseauction.close()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 250 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    @onClick: modules.game_houseauction.close()
+
+  UIWidget
+    id: clockIcon
+    size: 20 20
+    icon-source: @fa solid 16 f017
+    icon-color: #ffffff
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 18
+    margin-left: 35
+    phantom: true
+
+  PoppinsSemibold14
+    id: countdownLabel
+    anchors.verticalCenter: clockIcon.verticalCenter
+    anchors.left: clockIcon.right
+    margin-left: 8
+    color: #ffffff
+
+  PoppinsSemibold11
+    id: countdownHint
+    anchors.top: clockIcon.bottom
+    anchors.left: clockIcon.left
+    margin-top: 4
+    color: #a0b0c0
+
+  UIWidget
+    id: houseImage
+    size: 110 110
+    image-source: /images/game/icons/house
+    image-size: 110 110
+    image-smooth: true
+    anchors.top: countdownHint.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 35
+    phantom: true
+
+  PoppinsSemibold13
+    id: ownerKey
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 20
+    margin-left: 215
+    color: #e8d36a
+    !text: tr('Owner')
+
+  PoppinsSemibold13
+    id: ownerValue
+    anchors.verticalCenter: ownerKey.verticalCenter
+    anchors.right: parent.right
+    margin-right: 30
+    color: #ffffff
+
+  PoppinsSemibold13
+    id: statusKey
+    anchors.top: ownerKey.bottom
+    anchors.left: ownerKey.left
+    margin-top: 10
+    color: #e8d36a
+    !text: tr('Status')
+
+  PoppinsSemibold13
+    id: statusValue
+    anchors.verticalCenter: statusKey.verticalCenter
+    anchors.right: parent.right
+    margin-right: 30
+    color: #ffffff
+
+  PoppinsSemibold13
+    id: sizeKey
+    anchors.top: statusKey.bottom
+    anchors.left: ownerKey.left
+    margin-top: 10
+    color: #e8d36a
+    !text: tr('Size')
+
+  PoppinsSemibold13
+    id: sizeValue
+    anchors.verticalCenter: sizeKey.verticalCenter
+    anchors.right: parent.right
+    margin-right: 30
+    color: #ffffff
+
+  PoppinsSemibold13
+    id: priceKey
+    anchors.top: sizeKey.bottom
+    anchors.left: ownerKey.left
+    margin-top: 10
+    color: #e8d36a
+    !text: tr('Price')
+
+  PoppinsSemibold13
+    id: priceValue
+    anchors.verticalCenter: priceKey.verticalCenter
+    anchors.right: parent.right
+    margin-right: 30
+    color: #ffffff
+
+  PoppinsSemibold13
+    id: currentBidKey
+    anchors.top: priceKey.bottom
+    anchors.left: ownerKey.left
+    margin-top: 10
+    color: #e8d36a
+    !text: tr('Current bid')
+
+  PoppinsSemibold13
+    id: currentBidValue
+    anchors.verticalCenter: currentBidKey.verticalCenter
+    anchors.right: parent.right
+    margin-right: 30
+    color: #ffffff
+
+  PoppinsSemibold13
+    id: maxBidKey
+    anchors.top: currentBidKey.bottom
+    anchors.left: ownerKey.left
+    margin-top: 10
+    color: #e8d36a
+    !text: tr('Your maximum bid')
+
+  PoppinsSemibold13
+    id: maxBidValue
+    anchors.verticalCenter: maxBidKey.verticalCenter
+    anchors.right: parent.right
+    margin-right: 30
+    color: #ffffff
+
+  AllianceStraightBlueButton
+    id: bidButton
+    size: 200 34
+    font: poppins semibold 14
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr('Bid')
+    @onClick: modules.game_houseauction.openBidWindow()

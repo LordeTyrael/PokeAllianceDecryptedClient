@@ -1,0 +1,44 @@
+PaymentToast < NewOpaqueWindow
+  size: 290 65
+  focusable: false
+
+  UIItem
+    id: diamond
+    size: 32 32
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 12
+    margin-top: -6
+    phantom: true
+
+  Label
+    id: text
+    anchors.left: prev.right
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 12
+    margin-right: 30
+    margin-top: -6
+    font: poppins semibold 13
+    height: 40
+    textColor: #FFCA59
+    text-align: left
+    text-wrap: true
+    text-auto-resize: false
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+
+  AllianceProgressBar
+    id: timer
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-left: 15
+    margin-right: 15
+    margin-bottom: 6
+    height: 6

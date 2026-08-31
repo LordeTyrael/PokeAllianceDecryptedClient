@@ -1,0 +1,9 @@
+Module
+  name: game_twitchshop
+  description: Resgate de itens da Twitch
+  author: PokeAlliance
+  website: https://pokealliance.com
+  sandboxed: true
+  scripts: [ twitchshop ]
+  @onLoad: init()
+  @onUnload: terminate()

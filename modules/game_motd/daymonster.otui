@@ -1,0 +1,96 @@
+MainWindow
+  id: mainMotdWindow
+  size: 801 405
+  !text: tr('Monster of the Day')
+  image-source: images/background
+  font: poppins regular 15
+  opacity: 0.95
+  @onEscape: modules.game_task.close()
+
+  UIWidget
+    id: closeButton
+    anchors.bottom: parent.top
+    anchors.right: parent.right
+    image-source: images/close
+    @onClick: modules.game_task.close()
+
+  UIScrollArea
+    id: panelTasks
+    image-border: 20
+    visible: true
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+    margin-top: 20
+    margin-bottom: 20
+    vertical-scrollbar: tasksBar
+    padding-top: 10
+    padding-bottom: 10
+
+  VerticalScrollBar
+    id: tasksBar
+    anchors.top: panelTasks.top
+    anchors.bottom: panelTasks.bottom
+    anchors.right: panelTasks.right
+    width: 20
+    height: 40
+    pixels-scroll: true
+    step: 30
+
+NpcPanel < UIWidget
+  id: npcPanel
+  visible: true
+  anchors.left: parent.left
+  anchors.right: parent.right
+  margin-right: 25
+  size: 720 100
+  margin-top: 10
+
+  UICreature
+    id: outfit
+    size: 48 48
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 18
+    margin-left: 10
+    phantom: true
+    visible: true
+    scale: 1
+    old-scaling: true
+
+  UIWidget
+    id: npcName
+    font: poppins regular 15
+    anchors.top: prev.bottom
+    anchors.centerIn: prev
+    margin-top: 40
+    margin-left: 5
+    text-auto-resize: true
+    visible: true
+
+CreaturePanel < UIWidget
+  id: creaturePanel
+  visible: true
+  anchors.top: outfit.top
+  margin-left: 20
+  size: 48 48
+
+  UICreature
+    id: creatureOutfit
+    size: 32 32
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 12
+    margin-right: 2
+    phantom: true
+    visible: true
+
+  UIWidget
+    id: creatureCount
+    font: poppins regular 15
+    anchors.top: prev.bottom
+    anchors.right: prev.right
+    margin.top: 2
+    text-auto-resize: true
+    visible: true

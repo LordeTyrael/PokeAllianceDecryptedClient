@@ -1,0 +1,121 @@
+UIWindow
+  id: displacementWindow
+  size: 300 350
+  image-source: /images/newui/background_popup
+  anchors.centerIn: parent
+  draggable: true
+
+  UICreature
+    id: creatureOutfit
+    size: 128 128
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    phantom: true
+
+  UILabel
+    text: "Direction:"
+    anchors.top: creatureOutfit.bottom
+    margin-top: 8
+    anchors.horizontalCenter: parent.horizontalCenter
+
+  ComboBox
+    id: directionButtons
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    spacing: 4
+
+    @onOptionChange: modules.game_displacement.setDirection(self.currentIndex)
+    @onSetup: |
+      self:addOption("N")
+      self:addOption("E")
+      self:addOption("S")
+      self:addOption("W")
+
+  UILabel
+    id: outfitLabel
+    text: "Outfit Displacement"
+    anchors.top: directionButtons.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+
+  Label
+    id: dispX
+    text-auto-wrap: true
+    anchors.right: next.left
+    anchors.top: next.top
+    margin-right: 6
+    text: "X: "
+
+  UITextEdit
+    @onTextChange: modules.game_displacement.sendDisplacementUpdate()
+    id: outfitDispX
+    size: 60 20
+    text: "0"
+    anchors.top: outfitLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-right: 50
+
+  Label
+    id: dispY
+    text-auto-wrap: true
+    anchors.right: next.left
+    anchors.top: next.top
+    margin-right: 6
+    text: "Y: "
+
+  UITextEdit
+    @onTextChange: modules.game_displacement.sendDisplacementUpdate()
+    id: outfitDispY
+    size: 60 20
+    text: "0"
+    anchors.top: outfitLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-left: 50
+
+  UILabel
+    id: nameDisp
+    text: "Name Displacement"
+    anchors.top: outfitDispX.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+
+  Label
+    id: dispX
+    text-auto-wrap: true
+    anchors.right: next.left
+    anchors.top: next.top
+    margin-right: 6
+    text: "X: "
+
+  UITextEdit
+    @onTextChange: modules.game_displacement.sendDisplacementUpdate()
+    id: nameDispX
+    size: 60 20
+    text: "0"
+    anchors.top: nameDisp.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-right: 50
+
+  Label
+    id: dispY
+    text-auto-wrap: true
+    anchors.right: next.left
+    anchors.top: next.top
+    margin-right: 6
+    text: "Y: "
+
+  UITextEdit
+    @onTextChange: modules.game_displacement.sendDisplacementUpdate()
+    id: nameDispY
+    size: 60 20
+    text: "0"
+    anchors.top: nameDisp.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-left: 50
+
+  UIButton
+    id: sendButton
+    text: "Salvar"
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 10

@@ -1,0 +1,246 @@
+ScrollBarSlider < UIButton
+  id: sliderButton
+  anchors.centerIn: parent
+  size: 8 17
+  image-source: /images/ui/scrollbar
+  image-clip: 0 26 13 13
+  image-border: 5
+  image-color: #ffffffff
+  $hover:
+    image-clip: 13 26 13 13
+  $pressed:
+    image-clip: 26 26 13 13
+  $disabled:
+    image-color: #ffffff66
+
+ScrollBarValueLabel < Label
+  id: valueLabel
+  anchors.fill: parent
+  color: white
+  text-align: center  
+
+VerticalScrollBar < UIScrollBar
+  orientation: vertical
+  width: 8
+  height: 39
+  image-source: /images/ui/scrollbar
+  image-clip: 39 0 13 65
+  image-border: 5
+  pixels-scroll: true
+
+  UIButton
+    id: decrementButton
+    visible: false
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-source: /images/ui/scrollbar
+    image-clip: 0 0 13 13
+    image-color: #ffffffff
+    size: 1 1
+    $hover:
+      image-clip: 13 0 13 13
+    $pressed:
+      image-clip: 26 0 13 13
+    $disabled:
+      image-color: #ffffff66
+
+  UIButton
+    id: incrementButton
+    visible: false
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    size: 1 1
+    image-source: /images/ui/scrollbar
+    image-clip: 0 13 13 13
+    image-color: #ffffffff
+    $hover:
+      image-clip: 13 13 13 13
+    $pressed:
+      image-clip: 26 13 13 13
+    $disabled:
+      image-color: #ffffff66
+
+  ScrollBarSlider
+  ScrollBarValueLabel
+
+HorizontalScrollBar < UIScrollBar
+  orientation: horizontal
+  height: 13
+  width: 39
+  image-border: 5
+  image-source: /images/ui/scrollbar
+  image-clip: 0 65 52 13
+  image-border: 6
+
+  $disabled:
+    color: #bbbbbb88
+
+  UIButton
+    id: decrementButton
+    visible: false
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-source: /images/ui/scrollbar
+    image-clip: 0 39 13 13
+    image-color: #ffffffff
+    size: 1 1
+    $hover:
+      image-clip: 13 39 13 13
+    $pressed:
+      image-clip: 26 39 13 13
+    $disabled:
+      image-color: #ffffff66
+
+  UIButton
+    id: incrementButton
+    visible: false
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    size: 1 1
+    image-source: /images/ui/scrollbar
+    image-clip: 0 52 13 13
+    image-color: #ffffffff
+    $hover:
+      image-clip: 13 52 13 13
+    $pressed:
+      image-clip: 26 52 13 13
+    $disabled:
+      image-color: #ffffff66
+
+  ScrollBarSlider
+  ScrollBarValueLabel
+
+
+NewScrollBar < UIScrollBar
+  orientation: vertical
+  width: 8
+  height: 39
+  image-source: /images/newui/scroll_sheet
+  image-clip: 39 0 13 65
+  image-border: 5
+  pixels-scroll: true
+
+  UIButton
+    id: decrementButton
+    visible: false
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-source: /images/ui/scrollbar
+    image-clip: 0 0 13 13
+    image-color: #ffffffff
+    size: 1 1
+    $hover:
+      image-clip: 13 0 13 13
+    $pressed:
+      image-clip: 26 0 13 13
+    $disabled:
+      image-color: #ffffff66
+
+  UIButton
+    id: incrementButton
+    visible: false
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    size: 1 1
+    image-source: /images/ui/scrollbar
+    image-clip: 0 13 13 13
+    image-color: #ffffffff
+    $hover:
+      image-clip: 13 13 13 13
+    $pressed:
+      image-clip: 26 13 13 13
+    $disabled:
+      image-color: #ffffff66
+
+  ScrollBarSlider
+  ScrollBarValueLabel
+
+AllianceVerticalScrollBarSlider < UIButton
+  id: sliderButton
+  anchors.centerIn: parent
+  size: 12 53
+  image-source: /images/ui/scrollbar/slider_vertical
+  image-clip: 0 0 12 53
+  image-border: 5
+  image-color: #ffffffff
+  $hover:
+    image-clip: 12 0 12 53
+  $pressed:
+    image-clip: 24 0 12 53
+  $disabled:
+    image-color: #ffffff66
+
+AllianceScrollBarSlider < UIButton
+  id: sliderButton
+  anchors.centerIn: parent
+  size: 50 10
+  image-source: /images/ui/scrollbar/slider
+  image-clip: 0 0 50 10
+  image-border: 5
+  image-color: #ffffffff
+  cursor: pointer
+  $hover:
+    image-clip: 0 10 50 10
+  $pressed:
+    image-clip: 0 20 50 10
+  $disabled:
+    image-color: #ffffff66
+
+AllianceScrollBarValueLabel < Label
+  id: valueLabel
+  anchors.fill: parent
+  color: white
+  text-align: center  
+
+AllianceHorizontalScrollBar < UIScrollBar
+  orientation: horizontal
+  size: 382 12
+
+  UIButton
+    id: decrementButton
+    size: 10 10
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-right: 6
+    image-source: /images/ui/alliance_arrow_horizontal
+    image-clip: 0 0 7 10
+    cursor: pointer
+    $hover:
+      image-clip: 0 10 7 10
+    $pressed:
+      image-clip: 0 20 7 10
+    $disabled:
+      image-color: #ffffff66
+
+  UIButton
+    id: incrementButton
+    size: 10 10
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    margin-left: 6
+    image-source: /images/ui/alliance_arrow_horizontal
+    image-clip: 7 0 7 10
+    cursor: pointer
+    $hover:
+      image-clip: 7 10 7 10
+    $pressed:
+      image-clip: 7 20 7 10
+    $disabled:
+      image-color: #ffffff66
+
+  UIWidget
+    id: backgroundImage
+    height: 4
+    image-source: /images/ui/scrollbar/slider_base
+    anchors.left: decrementButton.right
+    anchors.right: incrementButton.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 6
+    margin-right: 6
+    image-border: 1
+  
+    $disabled:
+      color: #bbbbbb88
+
+  AllianceScrollBarSlider
+  AllianceScrollBarValueLabel

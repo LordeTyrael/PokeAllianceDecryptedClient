@@ -1,0 +1,7 @@
+Module
+  name: game_store
+  description: Venda de itens premium do servidor
+  sandboxed: true
+  scripts: [ store ]
+  @onLoad: init()
+  @onUnload: terminate()

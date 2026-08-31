@@ -1,0 +1,60 @@
+Panel
+  anchors.centerIn: gameMapPanel
+  size: 500 100
+  focusable: false
+  margin-bottom: 250
+  margin-right: 10
+  
+  Panel
+    id: background
+    anchors.fill: parent
+    margin-top: 20
+    margin-bottom: 20
+    image-source: /images/newinterface/background
+    opacity: 0.6
+
+  ProgressBar
+    id: progressBar
+    width: 118
+    height: 7
+    background-color: #4444ff
+    anchors.bottom: background.bottom
+    anchors.horizontalCenter: background.horizontalCenter
+    margin-left: 20
+    margin-bottom: 1
+    margin-right: 20
+
+  UIWidget
+    id: downbox_store
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: background.bottom
+    image-source: /images/newinterface/downbox_store
+    margin-top: -5
+
+  UIWidget
+    id: topbox_store
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: background.top
+    image-source: /images/newinterface/topbox_store
+    margin-bottom: -5
+
+  Label
+    id: centerTextMessagePanel
+    anchors.verticalCenter: background.verticalCenter
+    anchors.left: background.left
+    anchors.right: closeButton.left
+    margin-right: 8
+    margin-left: 8
+    font: verdana-11px-antialised
+    text-align: center
+    text-wrap: true
+    text-auto-resize: true
+
+  EnterGameCheckBox2
+    id: closeButton
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.right: parent.right
+    @onClick: modules.game_textmessage:confirmWarning()
+    margin-right: 10

@@ -1,0 +1,152 @@
+AvailableMoveItem < UIWidget
+  size: 32 32
+  margin-left: 3
+  margin-right: 3
+  
+  UIItem
+    id: icon
+    size: 32 32
+    anchors.centerIn: parent
+    virtual: false
+    item-visible: true
+
+ComboMoveItem < UIWidget
+  size: 32 32
+  margin-left: 3
+  margin-right: 3
+  
+  UIItem
+    id: icon
+    size: 32 32
+    anchors.centerIn: parent
+    virtual: false
+    item-visible: true
+    cursor: pointer
+
+NewOpaqueWindow
+  @onEscape: modules.game_autocombo.closeWindow()
+  id: autoComboWindow
+  size: 500 340
+  draggable: true
+  anchors.centerIn: parent
+
+  UIWidget
+    id: topBackground
+    size: 281 36
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    font: poppins semibold 20
+    !text: tr('Auto Combo')
+    image-source: /images/general_ui/top_background
+    phantom: true
+
+  UICreature
+    id: pokemonCombo
+    size: 80 80
+    outfit-id: 329
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: topBackground.bottom
+    margin-top: 15
+
+  Label
+    id: pokemonNameLabel
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: pokemonCombo.bottom
+    margin-top: 5
+    font: poppins semibold 14
+    text-align: center
+    text-auto-resize: true
+    text: ---
+
+  Label
+    id: messageLabel
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: pokemonNameLabel.bottom
+    margin-top: 5
+    font: poppins semibold 13
+    color: #00FF00
+    text-align: center
+    visible: false
+
+  Label
+    id: availableLabel
+    anchors.left: parent.left
+    anchors.top: messageLabel.bottom
+    margin-left: 15
+    margin-top: 5
+    font: poppins semibold 14
+    color: #FFFFFF
+    !text: tr("Available Moves:")
+    text-auto-resize: true
+
+  Panel
+    id: availableMovesContainer
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: availableLabel.bottom
+    margin-top: 8
+    width: 470
+    height: 36
+    background-color: #00000066
+
+    UIWidget
+      id: availableMovesPanel
+      anchors.fill: parent
+      layout:
+        type: horizontalBox
+        spacing: 0
+        align-center: true
+
+  Label
+    id: comboLabel
+    anchors.left: parent.left
+    anchors.top: availableMovesContainer.bottom
+    margin-left: 15
+    margin-top: 20
+    font: poppins semibold 14
+    !text: tr("Combo Moves:")
+    text-auto-resize: true
+
+  Label
+    id: comboCounter
+    anchors.right: parent.right
+    anchors.top: availableMovesContainer.bottom
+    margin-right: 15
+    margin-top: 20
+    font: poppins semibold 12
+    color: #CCCCCC
+    !text: tr("%d move(s)", 0)
+    text-align: right
+
+  Panel
+    id: comboSequenceContainer
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: comboLabel.bottom
+    margin-top: 8
+    width: 470
+    height: 36
+    background-color: #00000066
+
+    Label
+      id: emptyComboLabel
+      anchors.centerIn: parent
+      font: poppins semibold 12
+      color: #888888
+      !text: tr("Drag Moves here to enable AutoCombo.")
+      text-align: center
+      phantom: true
+
+    UIWidget
+      id: comboSequencePanel
+      anchors.fill: parent
+      layout:
+        type: horizontalBox
+        align-center: true
+
+  NewRedCloseButton
+    id: closeButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 5
+    margin-right: 5
+    @onClick: modules.game_autocombo.closeWindow()

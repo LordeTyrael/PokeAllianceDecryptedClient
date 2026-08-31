@@ -1,0 +1,10 @@
+Module
+  name: game_pokemonbrokes
+  description: PokeAlliance
+  author: Tanjiro
+  website: pokealliance.com
+  dependencies: [ client_hotkeys, game_interface ]
+  sandboxed: true
+  scripts: [ brokes_tracker, brokes ]
+  @onLoad: init()
+  @onUnload: terminate()

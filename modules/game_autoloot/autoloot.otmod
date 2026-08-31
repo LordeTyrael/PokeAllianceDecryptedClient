@@ -1,0 +1,14 @@
+Module
+  name: game_autoloot
+  description: Autoloot + loot pickup display
+  author: Dakos
+  website: otland.net
+  version: 1
+
+  autoload: true
+  autoload-priority: 1000
+  sandboxed: true
+  dependencies: [ client_hotkeys, game_interface ]
+  scripts: [ autoloot ]
+  @onLoad: init()
+  @onUnload: terminate()

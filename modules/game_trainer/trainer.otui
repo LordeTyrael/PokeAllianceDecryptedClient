@@ -1,0 +1,757 @@
+CosmeticItemWidget < UIWidget
+  size: 100 100
+  cursor: pointer
+  focusable: true
+  image-border: 3
+  border-width: 1
+  border-color: black
+
+  UIWidget
+    id: cosmeticImage
+    anchors.fill: parent
+    image-smooth: true
+    phantom: true
+
+  $focus:
+    image-source: /images/newui/blueStraight
+    image-border: 4
+
+ProfilyCategoryButton < NewButton
+  size: 180 25
+  image-border: 15
+  margin-left: 5
+  cursor: pointer
+
+  PoppinsSemibold14
+    id: category_name
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    phantom: true
+
+InfoBlueBadge < UIWidget
+  size: 140 22
+
+  PoppinsSemibold12
+    id: badgeLabel
+    anchors.centerIn: parent
+    text-align: center
+    phantom: true
+    text-offset: 0 4
+
+InfoCard < NewStraightBlueButton
+  height: 50
+  padding: 5
+  padding-right: 0
+
+  InfoBlueBadge
+    id: badge
+    anchors.left: parent.left
+    anchors.top: parent.top
+
+    &badgeLabel
+      text-offset: 0 -3
+
+  PoppinsSemibold12
+    id: cardValue
+    anchors.horizontalCenter: badge.horizontalCenter
+    anchors.top: badge.bottom
+    margin-top: 4
+
+  UIWidget
+    id: cardIcon
+    size: 90 50
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    image-smooth: true
+
+InfoStatRow < UIWidget
+  height: 30
+
+  InfoBlueBadge
+    id: statBadge
+    image-source: /images/newui/blueStraight
+    image-border: 4
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    size: 130 22
+
+  PoppinsSemibold12
+    id: statValue
+    anchors.left: statBadge.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    text-align: left
+    text-offset: 0 4
+
+SkillRow < UIWidget
+  height: 40
+
+  PoppinsSemibold12
+    id: skillName
+    anchors.left: parent.left
+    anchors.top: parent.top
+    text-align: left
+    text-offset: 0 4
+    phantom: true
+
+  PoppinsSemibold12
+    id: skillLevel
+    anchors.right: parent.right
+    anchors.top: parent.top
+    text-align: right
+    text-offset: 0 4
+    color: #aaaaaa
+    phantom: true
+
+  UIWidget
+    id: skillBarBg
+    height: 16
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    image-source: /images/modules/progressbar_load_bg
+    image-border-left: 10
+    image-border-right: 10
+    phantom: true
+
+    UIWidget
+      id: skillBarFill
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 0
+      image-source: /images/modules/progressbar_load_overlay
+      image-border-left: 10
+      image-border-right: 10
+      phantom: true
+
+NewOpaqueWindow
+  @onEscape: modules.game_trainer.hide()
+  id: trainerWindow
+  size: 930 660
+  anchors.centerIn: parent
+  padding: 10
+  focusable: true
+
+  PoppinsSemibold28
+    id: title
+    anchors.left: background.left
+    anchors.top: parent.top
+    !text: tr("Profile")
+
+  EntergameTextEdit
+    id: searchPlayer
+    text-offset: 35 2
+    placeholder-offset: 35 -2
+    size: 175 28
+    anchors.verticalCenter: settingsButton.verticalCenter
+    text-align: left
+    anchors.right: settingsButton.left
+    margin-right: 10
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    !placeholder: tr('Search Player')
+    placeholder-color: #aaaaaa
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+    UIWidget
+      id: lupa
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 24 24
+      image-source: /images/game/icons/lupa
+
+  UIWidget
+    id: settingsButton
+    size: 20 20
+    anchors.right: close.left
+    anchors.verticalCenter: title.verticalCenter
+    margin-right: 8
+    image-source: /images/game/icons/options_icon
+    image-size: 20 20
+    cursor: pointer
+    @onClick: modules.game_trainer.openCosmeticPanel()
+
+  NewRedCloseButton
+    id: close
+    anchors.verticalCenter: title.verticalCenter
+    anchors.right: background.right
+    @onClick: modules.game_trainer.hide()
+
+  UIWidget
+    id: background
+    size: 855 217
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 40
+    image-source: /images/profile_backgrounds/1
+    image-smooth: true
+
+  UIVideo
+    id: backgroundVideo
+    size: 855 217
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 40
+    loop: true
+    volume: 0
+    visible: false
+    focusable: false
+    phantom: true
+
+  UIWidget
+    id: perfil
+    size: 125 125
+    anchors.left: categoryPanel.right
+    border-width: 1
+    border-color: black
+    margin-left: 20
+    anchors.top: background.verticalCenter
+    margin-bottom: 30
+    image-source: /images/profile_avatars/1
+    image-smooth: true    
+
+  NewOpaqueWindow
+    id: categoryPanel
+    anchors.left: background.left
+    anchors.top: background.bottom
+    size: 210 310
+    margin-top: 25
+    padding: 10
+    draggable: false
+    layout:
+      type: grid
+      num-columns: 1
+      cell-size: 180 25
+      cell-spacing: 4
+      flow: true
+
+  NewOpaqueWindow
+    id: informationPanel
+    anchors.left: perfil.left
+    anchors.top: categoryPanel.top
+    margin-top: 10
+    anchors.right: background.right
+    anchors.bottom: categoryPanel.bottom
+    image-source: ""
+    draggable: false
+
+    PoppinsSemibold18
+      id: characterName
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-top: 8
+
+    UIWidget
+      id: vipIcon
+      size: 30 28
+      anchors.verticalCenter: characterName.verticalCenter
+      anchors.left: characterName.right
+      margin-left: 5
+      image-source: /images/game/icons/vip
+
+    UIItem
+      id: blessItem
+      size: 32 32
+      anchors.verticalCenter: vipIcon.verticalCenter
+      anchors.left: vipIcon.right
+      margin-left: 5
+
+    PoppinsSemibold22
+      id: levelLabel
+      anchors.right: parent.right
+      anchors.top: parent.top
+      margin-right: 10
+      margin-top: 8
+      text-align: right
+
+    PoppinsSemibold12
+      id: characterTitle
+      anchors.left: parent.left
+      anchors.top: characterName.bottom
+      margin-left: 10
+      margin-top: 2
+      color: #aaaaaa
+
+    PoppinsSemibold12
+      id: rankLabel
+      anchors.right: parent.right
+      anchors.top: levelLabel.bottom
+      margin-right: 10
+      margin-top: 2
+      color: #aaaaaa
+      text-align: right
+
+    InfoCard
+      id: worldCard
+      anchors.left: parent.left
+      anchors.top: characterTitle.bottom
+      margin-top: 12
+      width: 260
+
+    InfoCard
+      id: guildCard
+      anchors.top: worldCard.top
+      anchors.right: parent.right
+      width: 260
+
+      &cardIcon
+        image-source: /images/game/icons/panel_background
+        image-border: 15
+        margin-right: -4
+
+      UIWidget
+        id: guildIcon
+        size: 32 32
+        anchors.verticalCenter: cardIcon.verticalCenter
+        anchors.horizontalCenter: cardIcon.horizontalCenter
+
+    AllianceSeparator
+      id: separator
+      anchors.left: worldCard.left
+      anchors.right: guildCard.right
+      anchors.top: worldCard.bottom
+      margin-top: 12
+
+    SkillRow
+      id: skillRockSmash
+      anchors.left: worldCard.left
+      anchors.top: separator.bottom
+      margin-top: 8
+      width: 190
+
+    SkillRow
+      id: skillHeadbutt
+      anchors.left: skillRockSmash.right
+      anchors.top: skillRockSmash.top
+      margin-left: 15
+      width: 190
+
+    SkillRow
+      id: skillFishing
+      anchors.left: skillHeadbutt.right
+      anchors.top: skillRockSmash.top
+      margin-left: 15
+      width: 190
+
+    AllianceSeparator
+      id: separatorSkills
+      anchors.left: worldCard.left
+      anchors.right: guildCard.right
+      anchors.top: skillRockSmash.bottom
+      margin-top: 12
+
+    InfoStatRow
+      id: statRow1Left
+      anchors.left: worldCard.left
+      anchors.top: separatorSkills.bottom
+      margin-top: 12
+      width: 270
+
+    InfoStatRow
+      id: statRow1Right
+      anchors.right: guildCard.right
+      anchors.top: statRow1Left.top
+      width: 175
+
+    InfoStatRow
+      id: statRow2Left
+      anchors.left: worldCard.left
+      anchors.top: statRow1Left.bottom
+      margin-top: 6
+      width: 270
+
+    InfoStatRow
+      id: statRow2Right
+      anchors.right: guildCard.right
+      anchors.top: statRow2Left.top
+      width: 175
+
+    InfoStatRow
+      id: statRow3Left
+      anchors.left: worldCard.left
+      anchors.top: statRow2Left.bottom
+      margin-top: 6
+      width: 270
+
+    InfoStatRow
+      id: statRow3Right
+      anchors.right: guildCard.right
+      anchors.top: statRow3Left.top
+      width: 175
+
+  NewOpaqueWindow
+    id: walletPanel
+    anchors.left: perfil.left
+    anchors.top: categoryPanel.top
+    margin-top: 10
+    anchors.right: background.right
+    anchors.bottom: categoryPanel.bottom
+    image-source: ""
+    visible: false
+    draggable: false
+
+    PoppinsSemibold18
+      id: walletTitle
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-top: 8
+      !text: tr("Wallet")
+
+    AllianceSeparator
+      id: walletSeparator
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: walletTitle.bottom
+      margin-top: 10
+      margin-left: 10
+      margin-right: 10
+
+    InfoStatRow
+      id: walletBalance
+      anchors.left: parent.left
+      anchors.top: walletSeparator.bottom
+      margin-top: 20
+      margin-left: 10
+      width: 300
+
+    InfoStatRow
+      id: walletCasino
+      anchors.left: parent.left
+      anchors.top: walletBalance.bottom
+      margin-top: 8
+      margin-left: 10
+      width: 300
+
+    InfoStatRow
+      id: walletOnlinePoints
+      anchors.left: parent.left
+      anchors.top: walletCasino.bottom
+      margin-top: 8
+      margin-left: 10
+      width: 300
+
+    NewStraightBlueButton
+      id: pixButton
+      size: 120 36
+      anchors.left: parent.left
+      anchors.bottom: parent.bottom
+      margin-left: 10
+      margin-bottom: 15
+      !text: tr("Pix")
+      text-offset: 0 4
+      @onClick: modules.game_trainer.showPixSubPanel()
+
+    NewStraightBlueButton
+      id: withdrawButton
+      size: 120 36
+      anchors.left: prev.right
+      anchors.bottom: parent.bottom
+      margin-left: 10
+      margin-bottom: 15
+      !text: tr("Withdraw")
+      text-offset: 0 4
+      @onClick: modules.game_trainer.showWithdrawSubPanel()
+
+  NewOpaqueWindow
+    id: cosmeticPanel
+    anchors.left: perfil.left
+    anchors.top: categoryPanel.top
+    margin-top: 10
+    anchors.right: background.right
+    anchors.bottom: categoryPanel.bottom
+    image-source: ""
+    visible: false
+    draggable: false
+
+    NewStraightBlueButton
+      id: cosmeticProfileBtn
+      size: 120 30
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-top: 8
+      margin-left: 10
+      !text: tr("Profile")
+      text-offset: 0 4
+      @onClick: modules.game_trainer.switchCosmeticTab("profiles")
+
+    NewStraightGrayButton
+      id: cosmeticBannerBtn
+      size: 120 30
+      anchors.left: cosmeticProfileBtn.right
+      anchors.top: parent.top
+      margin-top: 8
+      margin-left: 8
+      !text: tr("Banner")
+      text-offset: 0 4
+      @onClick: modules.game_trainer.switchCosmeticTab("backgrounds")
+
+    NewStraightBlueButton
+      id: cosmeticConfirmBtn
+      size: 140 32
+      anchors.right: parent.right
+      anchors.top: parent.top
+      margin-top: 8
+      margin-right: 10
+      !text: tr("Confirm")
+      text-offset: 0 4
+      @onClick: modules.game_trainer.onCosmeticConfirm()
+
+    ScrollablePanel
+      id: cosmeticGrid
+      anchors.left: parent.left
+      anchors.top: cosmeticProfileBtn.bottom
+      anchors.right: cosmeticScrollBar.left
+      anchors.bottom: parent.bottom
+      margin-top: 10
+      margin-left: 10
+      margin-right: 5
+      margin-bottom: 10
+      vertical-scrollbar: cosmeticScrollBar
+      layout:
+        type: grid
+        num-columns: 4
+        cell-size: 105 105
+        cell-spacing: 8
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: cosmeticScrollBar
+      anchors.top: cosmeticProfileBtn.bottom
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      margin-top: 10
+      margin-bottom: 10
+      margin-right: 5
+      step: 155
+      pixels-scroll: true
+
+  NewOpaqueWindow
+    id: pixOverlay
+    anchors.centerIn: parent
+    size: 400 200
+    margin-top: 10
+    visible: false
+    focusable: true
+
+    PoppinsSemibold18
+      id: pixTitle
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 15
+      !text: tr("Pix - Search Player")
+
+    AllianceSeparator
+      id: pixSeparator
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: pixTitle.bottom
+      margin-top: 10
+      margin-left: 10
+      margin-right: 10
+
+    PoppinsSemibold14
+      id: pixNameLabel
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixSeparator.bottom
+      margin-top: 15
+      !text: tr("Player Name")
+      text-offset: 0 4
+
+    EntergameTextEdit
+      id: pixNameEdit
+      size: 250 30
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixNameLabel.bottom
+      margin-top: 8
+      text-offset: 14 5
+      placeholder-offset: 14 5
+      placeholder: Enter player name
+      placeholder-color: #aaaaaa
+      color: white
+      image-source: /modules/client_entergame/images/labelbox_noselect
+
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    NewStraightBlueButton
+      id: pixSearchConfirm
+      size: 180 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixNameEdit.bottom
+      margin-top: 20
+      !text: tr("Search")
+      text-offset: 0 4
+      @onClick: modules.game_trainer.doSearchPixInline()
+
+    NewRedCloseButton
+      id: pixBackButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_trainer.hidePixSubPanel()
+
+  NewOpaqueWindow
+    id: pixConfirmOverlay
+    size: 400 310
+    anchors.centerIn: parent
+    visible: false
+    focusable: true
+
+    PoppinsSemibold18
+      id: pixConfirmTitle
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 15
+      !text: tr("Pix - Send")
+
+    AllianceSeparator
+      id: pixConfirmSeparator
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: pixConfirmTitle.bottom
+      margin-top: 10
+      margin-left: 10
+      margin-right: 10
+
+    UIWidget
+      id: pixPlayerIcon
+      size: 73 72
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixConfirmSeparator.bottom
+      margin-top: 10
+
+    PoppinsSemibold14
+      id: pixPlayerName
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixPlayerIcon.bottom
+      margin-top: 5
+      text-offset: 0 4
+
+    PoppinsSemibold12
+      id: pixPlayerLevel
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixPlayerName.bottom
+      margin-top: 2
+      color: #aaaaaa
+      text-offset: 0 4
+
+    PoppinsSemibold14
+      id: pixValueLabel
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixPlayerLevel.bottom
+      margin-top: 8
+      !text: tr("Value")
+      text-offset: 0 4
+
+    EntergameTextEdit
+      id: pixValueEdit
+      size: 250 30
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixValueLabel.bottom
+      margin-top: 5
+      text-offset: 14 5
+      placeholder-offset: 14 5
+      placeholder: Enter value
+      placeholder-color: #aaaaaa
+      color: white
+      image-source: /modules/client_entergame/images/labelbox_noselect
+
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    NewStraightBlueButton
+      id: pixConfirmButton
+      size: 180 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pixValueEdit.bottom
+      margin-top: 10
+      !text: tr("Confirm")
+      text-offset: 0 4
+      @onClick: modules.game_trainer.doPixInline()
+
+    NewRedCloseButton
+      id: pixConfirmBackButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_trainer.hidePixConfirmSubPanel()
+
+  NewOpaqueWindow
+    id: withdrawOverlay
+    size: 400 250
+    anchors.centerIn: parent
+    visible: false
+    focusable: true
+
+    PoppinsSemibold18
+      id: withdrawTitle
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 15
+      !text: tr("Withdraw")
+
+    AllianceSeparator
+      id: withdrawSeparator
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: withdrawTitle.bottom
+      margin-top: 10
+      margin-left: 10
+      margin-right: 10
+
+    PoppinsSemibold14
+      id: withdrawDesc
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: withdrawSeparator.bottom
+      margin-top: 20
+      !text: tr("Create a prepaid card.")
+      text-offset: 0 4
+      color: #aaaaaa
+
+    PoppinsSemibold14
+      id: withdrawValueLabel
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: withdrawDesc.bottom
+      margin-top: 15
+      !text: tr("Value")
+      text-offset: 0 4
+
+    EntergameTextEdit
+      id: withdrawValueEdit
+      size: 250 30
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: withdrawValueLabel.bottom
+      margin-top: 8
+      text-offset: 14 5
+      placeholder-offset: 14 5
+      placeholder: Enter value
+      placeholder-color: #aaaaaa
+      color: white
+      image-source: /modules/client_entergame/images/labelbox_noselect
+
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    NewStraightBlueButton
+      id: withdrawConfirmButton
+      size: 180 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: withdrawValueEdit.bottom
+      margin-top: 20
+      !text: tr("Confirm")
+      text-offset: 0 4
+      @onClick: modules.game_trainer.doWithdrawInline()
+
+    NewRedCloseButton
+      id: withdrawBackButton
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      @onClick: modules.game_trainer.hideWithdrawSubPanel()

@@ -1,0 +1,82 @@
+NewOpaqueWindow
+  id: purchaseLevelWindow
+  size: 300 180
+  anchors.centerIn: parent
+  visible: false
+  focusable: true
+  @onEnter: modules.game_pass.confirmPurchaseLevel()
+  @onEscape: modules.game_pass.closePurchaseLevelWindow()
+
+  PoppinsSemibold14
+    id: titleLabel
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    color: #269bf3
+    !text: tr("Buy Level")
+
+  PoppinsSemibold12
+    id: messageLabel
+    anchors.top: titleLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+    color: #ffffff
+    text-auto-resize: true
+    text-align: center
+    !text: tr("How many levels do you want to buy?")
+
+  AllianceHorizontalScrollBar
+    id: quantityScrollBar
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: messageLabel.bottom
+    margin-left: 20
+    margin-right: 20
+    margin-top: 12
+    focusable: false
+
+  Panel
+    id: costPanel
+    anchors.top: quantityScrollBar.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 6
+    height: 32
+    layout:
+      type: horizontalBox
+      spacing: 8
+      fit-children: true
+
+    PoppinsSemibold12
+      id: levelCountLabel
+      color: #ffe584
+      text-auto-resize: true
+      text: 1 Level
+      margin-top: 8
+
+    UIItem
+      id: diamondItem
+      size: 32 32
+      item-id: 3028
+      item-count: 4
+      phantom: true
+      virtual: true
+
+  AllianceStraightBlueButton
+    id: confirmButton
+    size: 100 30
+    anchors.bottom: parent.bottom
+    anchors.right: parent.horizontalCenter
+    margin-right: 5
+    margin-bottom: 12
+    !text: tr("Ok")
+    @onClick: modules.game_pass.confirmPurchaseLevel()
+
+  AllianceStraightBlueButton
+    id: cancelButton
+    size: 100 30
+    anchors.bottom: parent.bottom
+    anchors.left: parent.horizontalCenter
+    margin-left: 5
+    margin-bottom: 12
+    !text: tr("Cancel")
+    @onClick: modules.game_pass.closePurchaseLevelWindow()

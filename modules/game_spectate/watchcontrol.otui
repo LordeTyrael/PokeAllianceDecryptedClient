@@ -1,0 +1,265 @@
+UIMiniWindow
+  id: spectateWatchWindow
+  // 232 = 200 + as 2 linhas do zoneName (30) + margem; clipping:true esconde tudo que passar da
+  // altura, e o valor hardcoded em hideWatching() (spectate.lua) tem que acompanhar este número
+  size: 192 232
+  &save: true
+  &autoOpen: false
+  focusable: false
+  clipping: true
+  image-source: /images/general_ui/bordered_background
+  image-border: 12
+  &minimizedHeight: 26
+
+  UIWidget
+    id: hudTopBar
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 26
+    phantom: true
+
+  UIItem
+    id: cameraIcon
+    anchors.left: hudTopBar.left
+    margin-left: 6
+    anchors.verticalCenter: hudTopBar.verticalCenter
+    size: 18 18
+    phantom: true
+    virtual: true
+    item-id: 5080
+
+  Label
+    id: channelControl
+    anchors.left: cameraIcon.right
+    margin-left: 5
+    anchors.verticalCenter: cameraIcon.verticalCenter
+    anchors.right: optionsButton.left
+    margin-right: 2
+    !text: tr("Cam")
+    text-offset: 0 0
+    font: poppins semibold 12
+
+  NewButton
+    id: leaveButton
+    anchors.top: hudTopBar.top
+    anchors.right: hudTopBar.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    image-source: /images/newui/miniwindow/close
+    @onClick: modules.game_spectate.stopSpectating()
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+  NewButton
+    id: collapseButton
+    anchors.right: leaveButton.left
+    margin-right: 5
+    anchors.verticalCenter: leaveButton.verticalCenter
+    size: 11 7
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    @onClick: modules.game_spectate.hideWatching()
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 7 11 7
+
+  NewButton
+    id: lockButton
+    anchors.right: collapseButton.left
+    margin-right: 5
+    anchors.verticalCenter: leaveButton.verticalCenter
+    size: 13 15
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 0 13 15
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.right: lockButton.left
+    margin-right: 7
+    anchors.verticalCenter: leaveButton.verticalCenter
+
+  UIWidget
+    id: timeChannelIcon
+    size: 15 15
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: hudTopBar.bottom
+    margin-top: 10
+    margin-right: 50
+    image-source: images/channel_management/time
+    phantom: true
+
+  Label
+    id: timeChannelOpenned
+    anchors.verticalCenter: timeChannelIcon.verticalCenter
+    anchors.left: timeChannelIcon.right
+    margin-left: 5
+    text-align: center
+    text-auto-resize: true
+    font: poppins semibold 13
+    text-offset: 0 1
+
+  UIWidget
+    id: viewerCountIcon
+    size: 16 13
+    anchors.verticalCenter: timeChannelIcon.verticalCenter
+    anchors.right: viewerCount.left
+    margin-right: 3
+    image-source: images/channel_list/view
+    phantom: true
+
+  Label
+    id: viewerCount
+    anchors.verticalCenter: timeChannelOpenned.verticalCenter
+    anchors.horizontalCenter: iconsPanel.horizontalCenter
+    margin-left: 50
+    text: 0
+    text-auto-resize: true
+    text-align: center
+    font: poppins semibold 13
+    text-offset: 0 1
+
+  UIWidget
+    size: 192 24
+    id: iconsPanel
+    anchors.top: timeChannelIcon.bottom
+    margin-top: 10
+    anchors.horizontalCenter: parent.horizontalCenter
+
+    UIWidget
+      id: pokemonPanel
+      size: 192 24
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+
+      layout:
+        type: grid
+        cell-size: 30 30
+        num-columns: 6
+        auto-spacing: true
+        flow: true
+
+  Label
+    id: channelName
+    anchors.top: iconsPanel.bottom
+    margin-top: 15
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 10
+    margin-right: 10
+    height: 30
+    !text: tr("Channel Name")
+    text-align: center
+    text-wrap: true
+    font: poppins semibold 14
+
+  Label
+    id: zoneName
+    anchors.top: channelName.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 10
+    margin-right: 10
+    height: 30
+    // text-wrap obrigatório: centralizado e sem wrap, nome longo é cortado nas DUAS pontas (só
+    // ~172px úteis). Duas linhas cabem em 30, igual o channelName acima.
+    text-wrap: true
+    text-align: center
+    font: poppins semibold 11
+    color: #9fb0bd
+
+  UIWidget
+    id: camOptions
+    size: 180 30
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: zoneName.bottom
+    margin-top: 5
+
+    NewButton
+      id: middleButton
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      image-source: images/channel_watch/middle_button
+      @onClick: modules.game_spectate.requestChannelCameras()
+
+    NewButton
+      anchors.verticalCenter: middleButton.verticalCenter
+      anchors.left: middleButton.right
+      margin-left: 25
+      !text: tr("Next")
+      text-align: center
+      font: poppins semibold 12
+      text-auto-resize: true
+      @onClick: modules.game_spectate.nextCamera()
+
+    NewButton
+      id: nextButton
+      size: 12 17
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: prev.right
+      margin-left: 3
+      @onClick: modules.game_spectate.nextCamera()
+      image-source: images/channel_watch/next_button
+
+    NewButton
+      anchors.verticalCenter: middleButton.verticalCenter
+      anchors.right: middleButton.left
+      margin-right: 25
+      !text: tr("Prev")
+      text-align: center
+      font: poppins semibold 12
+      text-auto-resize: true
+      @onClick: modules.game_spectate.previousCamera()
+
+    NewButton
+      id: previousButton
+      size: 12 17
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: prev.left
+      margin-right: 3
+      @onClick: modules.game_spectate.previousCamera()
+      image-source: images/channel_watch/prev_button
+
+  NewButton
+    id: closeCamera
+    size: 106 28
+    anchors.top: camOptions.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+    !text: tr("Leave Channel")
+    @onClick: modules.game_spectate.stopSpectating()
+    image-source: images/channel_watch/leave_channel
+    opacity: 1.0
+
+    $hover !on:
+      opacity: 0.8
+
+PokemonIcon < UIWidget
+  id: pokemon
+  size: 30 30
+
+  UIWidget
+    id: pokemonBackground
+    size: 30 30
+    anchors.centerIn: parent
+    image-source: images/channel_watch/pokemon_base
+
+  UIItem
+    id: pokemonIcon
+    size: 28 28
+    virtual: true
+    anchors.centerIn: pokemonBackground

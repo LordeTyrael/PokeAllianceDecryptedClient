@@ -1,0 +1,177 @@
+PreyWidget < UIWidget
+  size: 100 180
+  image-source: images/prey_background
+
+  UIWidget
+    id: pokemonImage
+    size: 70 70
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 5
+    image-source: images/none_pokemon
+    phantom: true
+
+  Label
+    id: pokemonName
+    font: poppins semibold 16
+    anchors.horizontalCenter: pokemonImage.horizontalCenter
+    anchors.top: pokemonImage.bottom
+    margin-top: 10
+    text-auto-resize: true
+    visible: false
+
+  UIWidget
+    id: buffIcon
+    size: 30 30
+    anchors.horizontalCenter: pokemonImage.horizontalCenter
+    anchors.top: pokemonName.bottom
+    margin-top: 5
+    visible: false
+
+  NewButton
+    id: confirmButton
+    size: 105 25
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: pokemonImage.bottom
+    margin-top: 50
+    image-source: images/collect
+    !text: tr("Select Prey")
+    @onClick: modules.game_prey.selectPrey(self)
+
+  UIWidget
+    id: progressBackground
+    size: 80 26
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: buffIcon.bottom
+    margin-top: 5
+    image-source: images/progress_background
+    visible: false
+
+    UIWidget
+      id: progress
+      anchors.fill: parent
+      image-source: images/collect
+
+    Label
+      id: progressText
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      !text: tr("0/0")
+      font: poppins semibold 14
+
+  NewRedCloseButton
+    id: closeButton
+    size: 13 13
+    anchors.top: parent.top
+    margin-top: 2
+    anchors.right: parent.right
+    margin-right: 2
+    @onClick: modules.game_prey.removePrey(self)
+    visible: false
+
+  NewButton
+    id: lockButton
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-top: 2
+    margin-left: 2
+    size: 13 15
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+    visible: false
+
+    $hover:
+      opacity: 0.5
+
+    @onClick: modules.game_prey.sendChangeLockPrey(self)
+
+UIWindow
+  id: medalWindow    
+  size: 425 500
+  anchors.centerIn: parent
+  margin-bottom: 30
+  draggable: true
+  focusable: false
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    phantom: true
+    image-source: images/background
+
+    UIWidget
+      id: titleBackground
+      size: 368 36
+      anchors.left: parent.left
+      anchors.top: parent.top
+      image-source: images/title_background
+      phantom: true
+
+      UIWidget
+        id: titleIcon
+        size: 29 29
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        margin-left: 10
+        image-source: images/title_icon
+
+      Label
+        id: titleName
+        anchors.verticalCenter: titleIcon.verticalCenter
+        text-auto-resize: true
+        anchors.left: prev.right
+        margin-left: 5
+        font: poppins semibold 18
+        phantom: true
+        !text: tr("Pokémon Prey")
+
+  UIScrollArea
+    id: preysPanel
+    size: 345 375
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.horizontalCenter: parent.horizontalCenter
+
+    layout:
+      type: grid
+      cell-size: 100 180
+      num-columns: 3
+      cell-spacing: 15
+
+  UIWidget
+    id: buttonsPanel
+    anchors.left: preysPanel.left
+    anchors.right: preysPanel.right
+    anchors.top: preysPanel.bottom
+    height: 30
+    margin-top: 15
+    image-source: images/buttons_background
+
+    UIItem
+      id: preyCardIcon
+      size: 26 26
+      virtual: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      item-id: 47864
+
+    Label
+      id: preyCardCount
+      text-auto-resize: true
+      anchors.verticalCenter: preyCardIcon.verticalCenter
+      anchors.left: preyCardIcon.right
+      margin-left: 3
+      !text: tr("0x")
+
+
+  NewButton
+    id: closeButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    image-source: /images/newui/close
+    @onClick: modules.game_prey.hidePreyWindow()

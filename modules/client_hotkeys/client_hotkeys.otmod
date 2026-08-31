@@ -1,0 +1,9 @@
+Module
+  name: client_hotkeys
+  description: Manage client hotkeys
+  author: 
+  website: 
+  sandboxed: true
+  scripts: [ hotkeys_data, hotkeys_lib, hotkeys_manager ]
+  @onLoad: init()
+  @onUnload: terminate()

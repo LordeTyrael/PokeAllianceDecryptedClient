@@ -1,0 +1,10 @@
+Module
+  name: game_pokebar
+  description: Pokebar management
+  author: PokeAlliance
+  website: www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ pokebar ]
+  dependencies: [ client_hotkeys, game_chat, game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

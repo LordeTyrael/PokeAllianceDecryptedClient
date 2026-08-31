@@ -1,0 +1,11 @@
+Module
+  name: game_notifications
+  description: Corner notification cards (image/creature/item + title + message)
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  autoload: true
+  sandboxed: true
+  scripts: [ notifications ]
+  dependencies: [ game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

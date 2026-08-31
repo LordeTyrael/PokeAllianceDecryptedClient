@@ -1,0 +1,490 @@
+CreateWindow < NewPopupWindow
+  id: createWindow
+  size: 340 286
+  anchors.centerIn: parent
+  &save: true
+  phantom: false
+  focusable: true
+  draggable: false
+  @onEscape: self:hide()
+  NewPopupWindow
+    anchors.fill: parent
+    phantom: true
+    focusable: false
+
+  NewUIItem
+    id: item
+    size: 48 48
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+    virtual: true
+    searchable: false
+    focusable: false
+
+  Label
+    id: name
+    anchors.top: item.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    font: poppins regular 15
+    text-auto-resize: true
+    phantom: true
+  Label
+    id: label
+    anchors.top: name.bottom
+    anchors.left: parent.left
+    margin-top: 5
+    margin-left: 17
+    font: verdana-11px-rounded
+    !text: tr('Required Materials')
+    text-auto-resize: true
+    phantom: true
+  UIWidget
+    id: recipe
+    size: 302 74
+    anchors.top: label.bottom
+    anchors.left: label.left
+    margin-top: 5
+    phantom: true
+    layout:
+      type: grid
+      cell-size: 36 36
+      num-columns: 8
+      num-lines: 2
+      cell-spacing: 2
+
+  Label
+    id: labelTotal
+    height: 30
+    anchors.top: recipe.bottom
+    anchors.left: recipe.left
+    margin-top: 2
+    text-align: topLeft
+    font: verdana-11px-rounded
+    text-wrap: true
+    !text: tr("Total units: 1\nTotal time: 1")
+    phantom: true
+
+  AllianceAmountSpinner
+    id: qntSpinner
+    anchors.top: labelTotal.bottom
+    anchors.horizontalCenter: recipe.horizontalCenter
+    margin-top: 6
+
+  AllianceSoftBlueButton
+    id: create
+    size: 78 25
+    anchors.top: qntSpinner.bottom
+    anchors.horizontalCenter: qntSpinner.horizontalCenter
+    margin-top: 8
+    @onClick: doCreateItem()
+    opacity: 0.8
+    !text: tr("Craft")
+    
+    $hover:
+      opacity: 1
+    
+    $pressed:
+      opacity: 0.9
+
+
+  NewRedCloseButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: self:getParent():hide()
+
+NewCraftItemWidget < UIWidget
+  size: 418 95
+  anchors.top: parent.top
+  anchors.left: parent.left
+  anchors.right: parent.right
+  image-border: 15
+  image-source: /images/newui/background_3
+  focusable: true
+  @onMousePress: self:focus()
+
+  $!first:
+    anchors.top: prev.bottom
+    margin-top: 2
+
+  NewUIItem
+    id: item
+    size: 48 48
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-top: 8
+    margin-left: 5
+    virtual: true
+    searchable: false
+    focusable: false
+  UIWidget
+    id: workshopId
+    phantom: true
+  UIWidget
+    id: desc
+    size: 175 65
+    anchors.top: parent.top
+    anchors.left: item.right
+    margin-top: 5
+    margin-left: 20
+    text-align: center
+    text-wrap: true
+    font: verdana-11px-rounded
+    phantom: true
+  UIWidget
+    id: recipe
+    height: 64
+    anchors.top: parent.top
+    margin-top: 5
+    anchors.left: desc.right
+    anchors.right: parent.right
+    margin-right: 2
+    margin-left: 10
+    phantom: true
+    layout:
+      type: grid
+      cell-size: 32 32
+      num-columns: 5
+      cell-spacing: 1
+  Label
+    id: clockLabel
+    anchors.left: item.left
+    anchors.bottom: parent.bottom
+    margin-bottom: 10
+    icon-source: @fa solid 14 f017
+    icon-align: left
+    text-offset: 18 1
+    text-auto-resize: true
+    font: verdana-11px-rounded
+    color: #c0c0c0
+    phantom: true
+    margin-left: 5
+
+  UIWidget
+    id: progressBg
+    height: 16
+    anchors.left: clockLabel.right
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-left: 16
+    margin-right: 8
+    margin-bottom: 6
+    image-source: /images/modules/progressbar_load_bg
+    image-border-left: 10
+    image-border-right: 10
+    visible: false
+    phantom: true
+
+    UIWidget
+      id: progressFill
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 0
+      image-source: /images/modules/progressbar_load_overlay
+      image-border-left: 10
+      image-border-right: 10
+      phantom: true
+
+    UIWidget
+      id: progressText
+      anchors.fill: parent
+      text-align: center
+      text-offset: 0 1
+      font: verdana-11px-rounded
+      color: white
+      phantom: true
+
+NewOpaqueWindow
+  id: craftWindow
+  size: 565 550
+  anchors.centerIn: parent
+  margin-bottom: 100
+  &save: true
+  text-align: top
+  @onEscape: hide()
+
+  UIWidget
+    id: titleBackground
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/modules/store_ui/name_base
+    phantom: true
+
+    UIWidget
+      id: iconWidget
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 30
+      phantom: true
+      image-source: /images/modules/craft_icon
+
+    Label
+      id: title
+      anchors.left: iconWidget.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Craft")
+      margin-top: 2
+      font: poppins semibold 20
+      text-auto-resize: true
+
+  NewRedCloseButton
+    id: close
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_craft.hide()
+
+  ScrollablePanel
+    id: elementListPanel
+    size: 90 500
+    anchors.left: parent.left
+    anchors.top: titleBackground.bottom
+    anchors.bottom: parent.bottom
+    margin-bottom: 50
+    margin-left: 6
+    margin-top: 10
+  
+    UIButton
+      id: bug
+      size: 90 24
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-top: 2
+      image-source: /images/ui/types/bug
+      @onClick: selectTypeToDraw("bug")
+      cursor: pointer
+  
+    UIButton
+      id: dark
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/dark
+      @onClick: selectTypeToDraw("dark")
+      cursor: pointer
+  
+    UIButton
+      id: dragon
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/dragon
+      @onClick: selectTypeToDraw("dragon")
+      cursor: pointer
+  
+    UIButton
+      id: electric
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/electric
+      @onClick: selectTypeToDraw("electric")
+      cursor: pointer
+  
+    UIButton
+      id: fairy
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/fairy
+      @onClick: selectTypeToDraw("fairy")
+      cursor: pointer
+  
+    UIButton
+      id: fighting
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/fighting
+      @onClick: selectTypeToDraw("fighting")
+      cursor: pointer
+  
+    UIButton
+      id: fire
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/fire
+      @onClick: selectTypeToDraw("fire")
+      cursor: pointer
+  
+    UIButton
+      id: flying
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/flying
+      @onClick: selectTypeToDraw("flying")
+      cursor: pointer
+  
+    UIButton
+      id: ghost
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/ghost
+      @onClick: selectTypeToDraw("ghost")
+      cursor: pointer
+  
+    UIButton
+      id: grass
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/grass
+      @onClick: selectTypeToDraw("grass")
+      cursor: pointer
+  
+    UIButton
+      id: ground
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/ground
+      @onClick: selectTypeToDraw("ground")
+      cursor: pointer
+  
+    UIButton
+      id: ice
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/ice
+      @onClick: selectTypeToDraw("ice")
+      cursor: pointer
+  
+    UIButton
+      id: normal
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/normal
+      @onClick: selectTypeToDraw("normal")
+      cursor: pointer
+  
+    UIButton
+      id: poison
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/poison
+      @onClick: selectTypeToDraw("poison")
+      cursor: pointer
+  
+    UIButton
+      id: psychic
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/psychic
+      @onClick: selectTypeToDraw("psychic")
+      cursor: pointer
+  
+    UIButton
+      id: rock
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/rock
+      @onClick: selectTypeToDraw("rock")
+      cursor: pointer
+  
+    UIButton
+      id: steel
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/steel
+      @onClick: selectTypeToDraw("steel")
+      cursor: pointer
+  
+    UIButton
+      id: water
+      size: 90 24
+      anchors.left: prev.left
+      anchors.top: prev.bottom
+      margin-top: 2
+      image-source: /images/ui/types/water
+      @onClick: selectTypeToDraw("water")
+      cursor: pointer
+  
+  ScrollablePanel
+    id: craftListPanel
+    anchors.left: parent.left
+    anchors.top: titleBackground.bottom
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-left: 100
+    margin-top: 10
+    margin-bottom: 50
+    margin-right: 20
+    vertical-scrollbar: craftListScrollBar
+    padding: 10
+    image-border: 15
+    image-source: /images/newui/background_3
+  
+  AllianceVerticalScrollBar
+    id: craftListScrollBar
+    anchors.top: craftListPanel.top
+    anchors.bottom: craftListPanel.bottom
+    anchors.left: craftListPanel.right
+    margin-left: 8
+    step: 48
+    pixels-scroll: true
+
+  AllianceSoftBlueButton
+    id: craftItemCreate
+    size: 100 32
+    font: poppins semibold 12
+    text-align: center
+    !text: tr('Craft')
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 10
+    margin-right: 20
+    enabled: false
+    @onClick: showCreateWindow()
+    opacity: 1.0
+
+    $disabled:
+      opacity: 0.4
+
+  AllianceSoftBlueButton
+    id: craftItemCollect
+    size: 100 32
+    font: poppins semibold 12
+    text-align: center
+    !text: tr('Collect')
+    anchors.bottom: parent.bottom
+    anchors.right: prev.left
+    margin-bottom: 10
+    margin-right: 10
+    enabled: false
+    @onClick: collectItemCraft()
+    opacity: 1.0
+
+    $disabled:
+      opacity: 0.4

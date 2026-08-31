@@ -1,0 +1,52 @@
+UIWindow
+  @onEscape: self:hide()
+  id: pixWindow
+  size: 267 232
+  anchors.centerIn: parent
+  visible: false
+  image-source: images/background_pix
+  UIWidget
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: images/close
+    @onClick: self:getParent():hide()
+  UIWidget
+    id: icon
+    size: 73 72
+    margin-top: 35
+    margin-left: 2
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+  UIWidget
+    id: name
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    text-auto-resize: true
+    margin-top: 111
+  UIWidget
+    id: level
+    anchors.top: name.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    text-auto-resize: true
+    margin-top: 5
+  UIWidget
+    id: value
+    anchors.top: level.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("Amount")
+    text-auto-resize: true
+    margin-top: 5
+  TextEdit
+    id: edit_value
+    size: 180 20
+    anchors.top: value.bottom
+    anchors.horizontalCenter: parent.horizontalCenter    
+  UIWidget
+    id: confirm
+    anchors.top: edit_value.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    image-source: images/confirm_pix
+    !text: tr("Confirm")
+    @onClick: modules.game_trainer.doPix()

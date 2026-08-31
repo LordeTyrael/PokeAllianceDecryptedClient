@@ -1,0 +1,235 @@
+GamePassTabBar < TabBar
+  size: 852 36
+  padding-left: 4
+
+GamePassTabBarButton < UIButton
+  size: 282 35
+  font: poppins semibold 14
+  cursor: pointer
+
+  $first:
+    anchors.left: parent.left
+
+  $!first:
+    anchors.left: prev.right
+
+  $!checked:
+    background-color: #273142
+
+  $checked:
+    background-color: #323e50
+
+GamePassProgress < Panel
+  size: 73 20
+
+  GamePassExpLabel
+    id: progressLabel
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    font: poppins semibold 11
+    text-auto-resize: true
+    text-align: center
+    text-offset: 20 0
+    color: white
+    text: 50/100
+
+  UIWidget
+    id: progressBg
+    anchors.top: progressLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 2
+    size: 73 5
+    background-color: #313d4f
+
+  UIProgressBar
+    id: progress
+    anchors.top: progressLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 2
+    size: 73 5
+    background-color: #2ea1f8
+    percent: 50
+
+GamePassExpLabel < UILabel
+  text-align: left
+  text-auto-resize: true
+  text-offset: 16 0
+  icon-source: images/exp
+  icon-align: left
+  color: #ffe584
+
+GamePassAccumulateCheckBox < UICheckBox
+  size: 18 18
+  icon-source: @fa solid 18 f5fd
+  checked: true
+  enabled: false
+  cursor: pointer
+
+  $checked !disabled:
+    icon-color: #ffffff
+    !tooltip: tr("Deaccumulate")
+
+  $!checked:
+    icon-color: #a8aab7
+    !tooltip: tr("Accumulate")
+
+  $disabled:
+    icon-color: #a8aab7
+
+GamePassInfoLabel < UILabel
+  font: poppins bold 20
+  text-auto-resize: true
+  text-offset: 25 0
+  icon-source: @fa solid 20 f05a
+  icon-align: left
+  visible: false
+
+  $on:
+    text:
+  $!on:
+    !text: tr("You have no missions available.")
+
+UIWindow
+  anchors.verticalCenter: parent.verticalCenter
+  anchors.horizontalCenter: parent.horizontalCenter
+  size: 852 491
+  image-source: images/background
+
+  Panel
+    id: topPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 852 88
+
+    UIWidget
+      id: topBar
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      size: 313 36
+      image-source: images/topbar
+      phantom: true
+
+    Label
+      id: title
+      anchors.verticalCenter: topBar.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      font: poppins bold 18
+      text-auto-resize: true
+      !text: tr('Game Pass')
+
+    UIWidget
+      id: titleIcon
+      anchors.right: prev.left
+      anchors.verticalCenter: prev.verticalCenter
+      margin-right: 3
+      size: 35 29
+      icon-source: images/icon
+
+    Label
+      id: points
+      anchors.verticalCenter: topBar.verticalCenter
+      anchors.left: topBar.right
+      margin-left: 10
+      icon-source: images/points
+      icon-align: left
+      font: poppins semibold 15
+      text-auto-resize: true
+      text-align-left: true
+      text-offset: 22 0
+      text: 0
+
+    UIWidget
+      id: info
+      anchors.verticalCenter: topBar.verticalCenter
+      anchors.left: parent.left
+      size: 18 18
+      margin-left: 10
+      icon-source: @fa solid 18 f06a
+      icon-color: #a8aab7
+
+      $hover:
+        icon-color: white
+      $!hover:
+        icon-color: #a8aab7
+
+    UIButton
+      id: status
+      anchors.verticalCenter: topBar.verticalCenter
+      anchors.left: prev.right
+      margin-left: 12
+      size: 90 17
+      image-source: images/toprect
+      icon-source: images/miniicon
+      icon-offset: -27 -1
+      text-offset: 30 3
+      font: poppins semibold 10
+      @onClick: modules.game_pass.purchase()
+
+    NewRedCloseButton
+      id: close
+      anchors.verticalCenter: topBar.verticalCenter
+      anchors.right: parent.right
+      size: 20 20
+      margin-right: 10
+      !tooltip: tr("Close")
+      @onClick: modules.game_pass.hide()
+
+    UIWidget
+      id: endsAt
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: topBar.bottom
+      size: 264 14
+      image-offset-y: -1
+      image-source: images/endsatbar
+      font: poppins semibold 12
+      text-offset: 0 -2
+      text: Ends in 27 days
+      color: #7f8fa4
+      phantom: true
+
+    Label
+      id: levelLabel
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      margin: 10 0 0 10
+      font: poppins bold 22
+      text-auto-resize: true
+      text: LEVEL 20
+
+    GamePassProgress
+      id: progressPanel
+      anchors.verticalCenter: prev.verticalCenter
+      anchors.left: prev.right
+      margin-left: 10
+
+    UIButton
+      id: buyLevelButton
+      anchors.verticalCenter: prev.verticalCenter
+      anchors.left: prev.right
+      margin-left: 6
+      size: 22 22
+      icon-source: @fa solid 16 2b
+      icon-color: #ffe584
+      cursor: pointer
+      !tooltip: tr("Buy Level")
+      @onClick: modules.game_pass.purchaseLevel()
+
+      $hover !disabled:
+        icon-color: #ffffff
+      $!hover:
+        icon-color: #ffe584
+      $disabled:
+        icon-color: #555555
+
+  Panel
+    id: tabContent
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: next.top
+
+  GamePassTabBar
+    id: tabBar
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 3

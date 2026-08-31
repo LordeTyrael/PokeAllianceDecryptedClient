@@ -1,0 +1,10 @@
+Module
+  name: game_viplist
+  description: Manage vip list window
+  author: baxnie, edubart
+  website: https://github.com/edubart/otclient
+  sandboxed: true
+  scripts: [ viplist ]
+  dependencies: [ client_hotkeys, game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

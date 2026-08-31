@@ -1,0 +1,222 @@
+UIPokeBarItem < UIWidget
+  size: 180 45
+  draggable: true
+  focusable: false
+
+  UIWidget
+    id: bar
+    draggable: true
+    size: 180 45
+    image-source: /images/modules/pokebar/background
+    anchors.top: parent.top
+    anchors.left: parent.left
+    phantom: true
+
+  UIWidget
+    id: portraitClip
+    size: 32 32
+    anchors.verticalCenter: bar.verticalCenter
+    anchors.left: bar.left
+    margin-left: 5
+    image-source: /images/modules/circle_clip
+    image-size: 32 32
+    clip-transparency: true
+    phantom: true
+
+    UIWidget
+      id: portrait
+      anchors.fill: parent
+      phantom: true
+
+  UIWidget
+    id: lifeBackground
+    size: 125 15
+    anchors.top: parent.top
+    anchors.left: portraitClip.right
+    margin-top: 10
+    margin-left: 5
+    image-source: /images/modules/pokebar/progresslife_background
+    phantom: true
+
+  UIWidget
+    id: life
+    draggable: true
+    size: 123 13
+    anchors.centerIn: lifeBackground
+    image-source: /images/modules/pokebar/progresslife_fill
+    phantom: true
+
+  Label
+    id: percent
+    font: poppins semibold 12
+    draggable: true
+    text-auto-resize: true
+    text-offset: 0 2
+    color: #c5e4f9
+    anchors.centerIn: life
+    phantom: true
+
+  UIWidget
+    id: cooldownBackground
+    size: 86 14
+    anchors.top: lifeBackground.bottom
+    anchors.left: lifeBackground.left
+    margin-top: 4
+    image-source: /images/modules/pokebar/progresscd_background
+    phantom: true
+
+  UIWidget
+    id: cooldownProgress
+    size: 84 12
+    anchors.centerIn: cooldownBackground
+    image-source: /images/modules/pokebar/progresscd_fill
+    phantom: true
+
+  Label
+    id: cooldownText
+    text-auto-resize: true
+    color: #ffffff
+    font: poppins semibold 12
+    anchors.left: cooldownBackground.right
+    anchors.verticalCenter: cooldownBackground.verticalCenter
+    margin-left: 5
+    phantom: true
+
+  Label
+    id: hotkeyLabel
+    visible: false
+    text-auto-resize: true
+    color: #ffffff
+    font: poppins semibold 13
+    anchors.centerIn: cooldownBackground
+    phantom: true
+    margin-top: 1
+
+UIMiniWindow
+  id: pokeBar
+  width: 185
+  focusable: false
+  draggable: true
+  image-source: ""
+  &minimizedHeight: 24
+  &save: true
+
+  // phantom so the press falls through to the window, which owns the drag/dock. That is also why
+  // the buttons below are siblings of the bar and not its children: phantom kills hit testing for
+  // every descendant.
+  UIWidget
+    id: miniwindowTopBar
+    size: 180 24
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-source: /images/newui/background_popup
+    image-border: 10
+    phantom: true
+
+  Label
+    id: headerTitle
+    !text: tr('Pokebar')
+    font: poppins semibold 12
+    color: #c5e4f9
+    text-auto-resize: true
+    text-offset: 0 1
+    anchors.left: miniwindowTopBar.left
+    anchors.verticalCenter: miniwindowTopBar.verticalCenter
+    margin-left: 10
+    phantom: true
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.right: minimizeButton.left
+    anchors.verticalCenter: miniwindowTopBar.verticalCenter
+    margin-right: 6
+
+  UIWidget
+    id: minimizeButton
+    size: 16 16
+    anchors.right: lockButton.left
+    anchors.verticalCenter: miniwindowTopBar.verticalCenter
+    margin-right: 6
+    icon-source: @fa solid 12 f077
+    icon-color: #aaaaaa
+    cursor: pointer
+    draggable: false
+
+    $on:
+      icon-source: @fa solid 12 f078
+
+  UIWidget
+    id: lockButton
+    size: 16 16
+    anchors.right: miniwindowTopBar.right
+    anchors.verticalCenter: miniwindowTopBar.verticalCenter
+    margin-right: 8
+    icon-source: @fa solid 12 f09c
+    icon-color: #aaaaaa
+    cursor: pointer
+    draggable: false
+
+    $on:
+      icon-source: @fa solid 14 f023
+      icon-color: #ffffff
+
+  // margin-top clears the 24px top bar: UIMiniWindow:setContentHeight derives the window height
+  // from this margin plus the content, so anchoring under the bar instead left it 24px short and
+  // the last slot hung out the bottom.
+  Panel
+    id: contentsPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-top: 27
+
+    UIPokeBarItem
+      id: poke1
+      draggable: true
+      anchors.top: parent.top
+      anchors.left: parent.left
+
+    UIPokeBarItem
+      id: poke2
+      draggable: true
+      anchors.top: poke1.bottom
+      anchors.left: parent.left
+      margin-top: 5
+
+    UIPokeBarItem
+      id: poke3
+      draggable: true
+      anchors.top: poke2.bottom
+      anchors.left: parent.left
+      margin-top: 5
+
+    UIPokeBarItem
+      id: poke4
+      draggable: true
+      anchors.top: poke3.bottom
+      anchors.left: parent.left
+      margin-top: 5
+
+    UIPokeBarItem
+      id: poke5
+      draggable: true
+      anchors.top: poke4.bottom
+      anchors.left: parent.left
+      margin-top: 5
+
+    UIPokeBarItem
+      id: poke6
+      draggable: true
+      anchors.top: poke5.bottom
+      anchors.left: parent.left
+      margin-top: 5
+
+  ResizeBorder
+    id: bottomResizeBorder
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 1
+    minimum: 24
+    visible: false

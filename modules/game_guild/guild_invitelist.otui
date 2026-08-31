@@ -1,0 +1,64 @@
+NewOpaqueWindow
+  id: guild_invitelist
+  size: 280 175
+  visible: false
+
+  PoppinsSemibold20
+    anchors.top: parent.top
+    margin-top: 5
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("Invite List")
+
+  UIScrollArea
+    id: invitesContent
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    anchors.right: invitesContentScrollBar.left
+    width: 248
+    margin-top: 40
+    margin-left: 15
+    margin-right: 5
+    margin-bottom: 15
+    vertical-scrollbar: invitesContentScrollBar    
+
+  AllianceVerticalScrollBar
+    id: invitesContentScrollBar
+    anchors.right: parent.right
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    margin-top: 45
+    margin-right: 15
+    margin-bottom: 15
+    step: 30
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: inviteListClose()
+
+GuildInviteRow < UIWidget
+  height: 30
+
+  CommonCell
+    id: name
+    size: 140 30
+    anchors.left: parent.left
+    text-align: left
+    !text: tr("Player Name")
+
+  CommonCell
+    id: level
+    size: 50 30
+    anchors.left: prev.right
+    !text: tr("Level")
+
+  CommonCell
+    id: action
+    size: 46 30
+    anchors.left: prev.right
+    anchors.right: parent.right
+    !text: tr("Action")

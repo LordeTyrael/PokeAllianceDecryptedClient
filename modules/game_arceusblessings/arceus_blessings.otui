@@ -1,0 +1,203 @@
+HazardLabel < Label
+  size: 110 28
+  cursor: pointer
+  text-align: center
+  phantom: false
+  font: poppins semibold 14
+  image-source: images/button_background
+  text-auto-resize: false
+  @onClick: modules.game_arceusblessings.selectHazardLevel(self:getParent())
+
+HazardInfoLabel < Label
+  size: 210 14
+  text-align: center
+  cursor: pointer
+  phantom: false
+  font: poppins semibold 12
+  text-auto-resize: false
+
+NewOpaqueWindow
+  @onEscape: modules.game_arceusblessings:closeWindow()
+  id: arceusMainWindow
+  size: 580 620
+  draggable: true
+  anchors.centerIn: parent
+  margin-bottom: 100
+
+  UIWidget
+    id: topBackground
+    size: 281 36
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    font: poppins semibold 20
+    margin-top: 15
+    !text: tr('Arceus Blessings')
+    phantom: true
+
+  UIWidget
+    id: arceusImage
+    size: 520 133
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: topBackground.bottom
+    margin-top: 15
+    phantom: true
+    image-source: images/arceus
+
+    UIWidget
+      id: region_name
+      size: 158 98
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 10
+      image-source: images/title_background
+      !text: tr("Hoenn Region")
+      text-align: top
+      text-offset: 0 2
+      font: poppins semibold 18
+
+    UIWidget
+      id: region_image
+      anchors.horizontalCenter: region_name.horizontalCenter
+      anchors.bottom: region_name.bottom
+      image-source: images/hoenn_region
+
+  ScrollablePanel
+    id: hazardPanel
+    size: 267 340
+    focusable: false
+    anchors.right: arceusImage.right
+    anchors.top: arceusImage.bottom
+    vertical-scrollbar: hazardScroll
+    padding-left: 15
+    padding-right: 15
+    padding-top: 10
+    padding-bottom: 10
+    margin-top: 20
+    auto-focus: none
+    image-source: images/widget_background
+    layout:
+      type: grid
+      num-columns: 2
+      cell-size: 110 28
+      cell-spacing: 5
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: hazardScroll
+    anchors.top: hazardPanel.top
+    anchors.bottom: hazardPanel.bottom
+    anchors.right: hazardPanel.right
+    margin-right: 10
+    margin-top: 15
+    margin-bottom: 15
+    step: 30
+    pixels-scroll: true
+
+  NewBlueButton
+    id: selectButton
+    size: 185 32
+    anchors.horizontalCenter: hazardPanel.horizontalCenter
+    anchors.top: hazardPanel.bottom
+    margin-top: 10
+    text-offset: 0 1
+    font: poppins semibold 18
+    !text: tr("Select Level")
+
+  UIWidget
+    id: informationPanel
+    size: 225 340
+    anchors.left: arceusImage.left
+    anchors.top: arceusImage.bottom
+    anchors.bottom: selectButton.bottom
+    image-source: images/widget_background
+    margin-top: 20
+
+    Label
+      id: hazardLevel
+      font: poppins semibold 20
+      !text: tr("Level 0")
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 30
+      text-auto-resize: true
+
+    UIWidget
+      id: buffIcon
+      size: 22 24
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: prev.bottom
+      margin-top: 5
+      image-source: images/buff_icon
+
+    UIWidget
+      id: buffLabels
+      size: 210 45
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: buffIcon.bottom
+      margin-top: 5
+
+      layout:
+        type: grid
+        num-columns: 1
+        cell-size: 210 14
+        cell-spacing: 5
+        flow: true
+
+    UIWidget
+      id: debuffIcon
+      size: 22 24
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: buffLabels.bottom
+      margin-top: 5
+      image-source: images/debuff_icon
+
+    UIWidget
+      id: debuffLabels
+      size: 210 100
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: debuffIcon.bottom
+      margin-top: 5
+
+      layout:
+        type: grid
+        num-columns: 1
+        cell-size: 210 14
+        cell-spacing: 2
+        flow: true
+
+    UIWidget
+      id: rewardsIcon
+      size: 22 23
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: debuffLabels.bottom
+      margin-top: 15
+      image-source: images/drop_icon
+
+    UIWidget
+      id: rewardLabels
+      size: 210 45
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: rewardsIcon.bottom
+      margin-top: 5
+
+      layout:
+        type: grid
+        num-columns: 1
+        cell-size: 210 14
+        cell-spacing: 5
+        flow: true
+
+  UIWidget
+    size: 55 55
+    anchors.horizontalCenter: informationPanel.horizontalCenter
+    anchors.top: informationPanel.top
+    margin-top: -27
+    image-source: images/button
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 5
+    margin-right: 5
+    @onClick: modules.game_arceusblessings:closeWindow()

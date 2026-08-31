@@ -1,0 +1,135 @@
+OptionPanel
+  OptionCheckBox
+    id: showInfoMessagesInConsole
+    !text: tr('Show info messages in console')
+
+  OptionCheckBox
+    id: showEventMessagesInConsole
+    !text: tr('Show event messages in console')
+
+  OptionCheckBox
+    id: showStatusMessagesInConsole
+    !text: tr('Show status messages in console')
+
+  OptionCheckBox
+    id: showTimestampsInConsole
+    !text: tr('Show timestamps in console')
+
+  OptionCheckBox
+    id: showLevelsInConsole
+    !text: tr('Show levels in console')
+
+  OptionCheckBox
+    id: showPrivateMessagesInConsole
+    !text: tr('Show private messages in console')
+
+  OptionCheckBox
+    id: showPrivateMessagesOnScreen
+    !text: tr('Show private messages on screen')
+
+  OptionCheckBox
+    id: showChatPreview
+    !text: tr('Show chat messages on screen')
+    !tooltip: tr('Float recent channel messages on screen while the chat window is hidden')
+
+  Label
+    margin-top: 2
+    margin-left: 4
+    text-wrap: true
+    text-auto-resize: true
+    font: poppins semibold 11
+    color: #9b9b9b
+    !text: tr('Hold Shift to drag the preview on screen')
+
+  OptionCheckBox
+    id: chatPreviewShowPrivate
+    !text: tr('Show private messages in preview')
+
+  Label
+    margin-top: 2
+    margin-left: 4
+    text-wrap: true
+    text-auto-resize: true
+    font: poppins semibold 11
+    color: #9b9b9b
+    !text: tr('Right-click a chat tab to hide that channel from the preview')
+
+  OptionCheckBox
+    id: chatPreviewMuteStopsBlink
+    !text: tr('Hidden channels stop blinking')
+    !tooltip: tr('A channel hidden from the preview also stops blinking its tab in the chat window')
+
+  Panel
+    id: chatPreviewDurationPanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: chatPreviewDurationLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+      @onSetup: |
+        local value = modules.client_options.getOption('chatPreviewDuration')
+        self:setText(tr('Chat preview duration: %ss', value))
+
+    AllianceHorizontalScrollBar
+      id: chatPreviewDuration
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 2
+      maximum: 15
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: chatPreviewLinesPanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: chatPreviewLinesLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+      @onSetup: |
+        local value = modules.client_options.getOption('chatPreviewLines')
+        self:setText(tr('Chat preview lines: %s', value))
+
+    AllianceHorizontalScrollBar
+      id: chatPreviewLines
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 1
+      maximum: 12
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: chatPreviewFontSizePanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: chatPreviewFontSizeLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+      @onSetup: |
+        local value = modules.client_options.getOption('chatPreviewFontSize')
+        self:setText(tr('Chat preview text size: %s', value))
+
+    AllianceHorizontalScrollBar
+      id: chatPreviewFontSize
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 10
+      maximum: 22
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())

@@ -1,0 +1,52 @@
+AlliancePaginationArrow < UIWidget
+  size: 8 14
+  cursor: pointer
+  opacity: 1.0
+
+  $disabled:
+    opacity: 0.35
+
+AlliancePagination < UIWidget
+  height: 22
+
+  AlliancePaginationArrow
+    id: firstPage
+    size: 14 14
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    image-source: /images/modules/doublearrow_left
+    !tooltip: tr("First page")
+
+  AlliancePaginationArrow
+    id: prevPage
+    anchors.left: firstPage.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 12
+    image-source: /images/modules/arrow_left
+    !tooltip: tr("Previous page")
+
+  Label
+    id: pageLabel
+    anchors.centerIn: parent
+    font: poppins semibold 13
+    text-align: center
+    text-auto-resize: true
+    text: 1/1
+
+  AlliancePaginationArrow
+    id: nextPage
+    anchors.right: lastPage.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 12
+    image-source: /images/modules/arrow_right
+    !tooltip: tr("Next page")
+
+  AlliancePaginationArrow
+    id: lastPage
+    size: 14 14
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 8
+    image-source: /images/modules/doublearrow_right
+    !tooltip: tr("Last page")

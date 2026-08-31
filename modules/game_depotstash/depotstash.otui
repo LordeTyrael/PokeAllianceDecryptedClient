@@ -1,0 +1,141 @@
+DepotStashItem < UIWidget
+  size: 35 35
+  change-cursor-image: true
+  cursor: pointer
+  border-width: 0
+  border-color: green
+  background-color: alpha
+  @onClick: modules.game_depotstash.onCollectItem(self)
+  
+  $hover:
+    background-color: #787878
+    border-width: 3
+    border-color: #444444
+
+  UIItem
+    id: stashItem
+    size: 30 30
+    anchors.centerIn: parent
+    virtual: true
+    phantom: true
+
+NewOpaqueWindow
+  id: lootStashWindow
+  size: 425 500
+  draggable: true
+  anchors.centerIn: parent
+  @onEscape: modules.game_depotstash.destroyStashWindow()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 200 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: titleName
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr("Depot Stash")
+
+  UIScrollArea
+    id: stashPanel
+    padding: 1
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: base_name.bottom
+    height: 400
+    margin-bottom: 4
+    margin-right: 3
+    margin-top: 2
+    vertical-scrollbar: scrollableBar
+    visible: true
+    phantom: true
+    padding: 20
+  
+    layout:
+      type: grid
+      cell-size: 35 35
+      num-columns: 10
+      cell-spacing: 4
+  
+  AllianceVerticalScrollBar
+    id: scrollableBar
+    anchors.top: stashPanel.top
+    anchors.bottom: stashPanel.bottom
+    anchors.right: stashPanel.right
+    margin-right: 2
+    margin-top: 5
+    margin-bottom: 5
+    step: 30
+    pixels-scroll: true
+    visible: true
+
+  NewRedCloseButton
+    id: closeButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    @onClick: modules.game_depotstash.destroyStashWindow()
+
+  UIWidget
+    id: separator
+    size: 300 3
+    image-source: images/info_separator
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: stashPanel.bottom
+    margin-top: 5
+
+  NewButton
+    id: quickCollectStash
+    size: 28 28
+    anchors.left: parent.left
+    anchors.top: separator.bottom
+    margin-top: 10
+    margin-left: 20
+    image-source: images/selected_button_off
+    @onClick: modules.game_depotstash.changeQuickCollect(self)
+
+  Label
+    id: quickCollectStashDesc
+    anchors.verticalCenter: quickCollectStash.verticalCenter
+    anchors.left: quickCollectStash.right
+    margin-left: 4
+    font: poppins semibold 12
+    !text: tr("Quick Collect")
+
+  UITextEdit
+    id: searchItemEdit
+    font: poppins semibold 14
+    color: white
+    size: 177 26
+    text-offset: 0 2
+    opacity: 1
+    focusable: true
+    padding: 4
+    padding-left: 10
+    selection-color: #272727
+    selection-background-color: #cccccc
+    anchors.verticalCenter: quickCollectStash.verticalCenter
+    anchors.right: parent.right
+    margin-right: 20
+    image-source: images/search_background
+    $disabled:
+      color: #27272788
+      opacity: 0.5
+    @onTextChange: modules.game_depotstash.onSearchTextChange(self:getText())
+
+    UIWidget
+      id: searchItemEditIcon
+      size: 11 11
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      image-source: images/search_icon
+      margin-right: 4

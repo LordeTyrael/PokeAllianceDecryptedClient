@@ -1,0 +1,9 @@
+Module
+  name: game_bosshealth
+  description: Relogio no Client
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ healthboss ]
+  @onLoad: init()
+  @onUnload: terminate()

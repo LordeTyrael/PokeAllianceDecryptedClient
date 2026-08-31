@@ -1,0 +1,1304 @@
+BlackButton < UIWidget
+  size: 139 32
+  image-source: images/black_button
+  color: #ffffff
+  $on:
+    color: #000000
+    image-source: images/white_button
+
+GuildShopItem < UIWidget
+  size: 153 95
+  image-source: images/guild_shop/item_background
+
+  $focus:
+    image-source: images/guild_shop/selected_item_background
+
+  UIWidget
+    id: item_icon
+    size: 33 33
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 8
+    image-source: images/guild_shop/item_icon_background
+    phantom: true
+
+  UIItem
+    id: item
+    size: 32 32
+    anchors.centerIn: item_icon
+    phantom: true
+
+  Label
+    id: itemName
+    text-auto-resize: true
+    font: poppins semibold 12
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: item_icon.bottom
+    margin-top: 5
+    phantom: true
+
+  UIWidget
+    id: priceInfo
+    size: 35 24
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: itemName.bottom
+    margin-top: 3
+    phantom: true
+
+    UIItem
+      size: 24 24
+      item-id: 39993
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      phantom: true
+
+    Label
+      id: itemPrice
+      text-auto-resize: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      phantom: true
+
+GuildTabButton < UIWidget
+  height: 32
+  font: poppins semibold 14
+  color: #b0b8c0
+  text-align: center
+  cursor: pointer
+  border-width: 0
+  image-source: /images/modules/guild/button_background
+  image-border: 12
+  $on:
+    color: #ffffff
+    image-source: /images/newui/blueSoft
+    image-border: 8
+
+BuffWidget < UIWindow
+  size: 120 108
+  image-source: /images/newui/background_3
+  image-border: 15
+  focusable: false
+  draggable: false
+  
+  UIWidget
+    id: background
+    size: 56 56
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-top: 8
+    margin-left: 8
+    phantom: true
+
+  Label
+    id: buffLevel
+    size: 24 24
+    anchors.left: background.right
+    margin-left: -12
+    anchors.bottom: background.bottom
+    font: poppins boldbordered 12
+    text-align: center
+    phantom: true
+
+  Label
+    id: buffName
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: background.bottom
+    margin-top: 3
+    margin-left: 6
+    margin-right: 6
+    height: 32
+    text-wrap: true
+    text-align: center
+    font: poppins semibold 12
+    phantom: true
+
+  NewButton
+    id: buffImprovement
+    size: 14 14
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    image-source: /images/game/minimap/cross
+    margin-right: 6
+    margin-bottom: 6
+    @onClick: modules.game_guild.progressGuildBuff(self:getParent())
+
+  UIProgressBar
+    id: levelProgress
+    size: 20 56
+    anchors.top: background.top
+    anchors.bottom: background.bottom
+    anchors.right: parent.right
+    margin-right: 6
+    image-source: images/progressExperience
+    phantom: true
+
+  UIProgressBar
+    id: progressPercent
+    size: 20 56
+    anchors.right: levelProgress.right
+    anchors.bottom: levelProgress.bottom
+    anchors.top: levelProgress.top
+    image-source: images/progress
+    image-border: 5
+    phantom: true
+
+RankMembers < UIWidget
+  id: rankRow
+  margin-top: 8
+
+  UIWidget
+    id: rankTitle
+    font: sans-bold-16px
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+
+  UIWidget
+    id: members
+    margin-top: 8
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    layout:
+      type: grid
+      cell-size: 165 60
+      num-columns: 3
+      cell-spacing: 1
+      flow: true
+
+RankMember < NewOpaqueWindow
+  width: 165
+  height: 60
+
+  UIWidget
+    id: emblem
+    size: 40 40
+    margin-left: 4
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+
+  UIWidget
+    margin-left: 2
+    margin-top: 2
+    anchors.top: parent.top
+    anchors.left: prev.right
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    anchors.verticalCenter: parent.verticalCenter
+
+    UIWidget
+      id: name
+      font: poppins semibold 12
+      text-align: center
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+
+    UIWidget
+      id: level
+      font: poppins semibold 11
+      text-align: center
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+
+    UIWidget
+      id: lastLogin
+      size: 20 18
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: prev.bottom
+      margin-top: 2
+
+      UIWidget
+        id: loginIcon
+        size: 14 14
+        anchors.top: parent.top
+        anchors.left: parent.left
+        margin-left: 30
+        phantom: true
+
+      UIWidget
+        id: lastLoginTime
+        font: poppins semibold 11
+        anchors.top: parent.top
+        anchors.left: loginIcon.right
+        margin-left: 4
+        text-auto-resize: true
+        text-align: center
+        phantom: true
+
+CommonCell < UIItem
+  height: 30
+  font: poppins semibold 10
+  anchors.top: parent.top
+  anchors.left: parent.left
+  border-width-bottom: 1
+  border-color: #2F3239
+  virtual: true
+  phantom: true
+
+AuditRow < UIWidget
+  height: 30
+  margin-top: 0
+  margin-left: 10
+  margin-right: 10
+
+  CommonCell
+    id: time
+    width: 130
+    text-align: left
+    text-offset: 3 0
+    anchors.left: parent.left    
+
+  CommonCell
+    id: action
+    text-align: left
+    anchors.left: prev.right
+    anchors.right: parent.right
+    text-offset: 10 0
+    text-wrap: true
+
+AuditHeaderRow < UIWidget
+  height: 30
+  margin-left: 10
+  margin-right: 10
+  background-color: #1a1e25
+
+  CommonCell
+    id: time
+    width: 130
+    text-align: left
+    text-offset: 3 0
+    anchors.left: parent.left
+    color: #8090a0
+
+  CommonCell
+    id: action
+    text-align: left
+    anchors.left: prev.right
+    anchors.right: parent.right
+    text-offset: 10 0
+    color: #8090a0
+
+AuditEmptyRow < UIWidget
+  height: 30
+
+  CommonCell
+    id: text
+    text-align: left
+    anchors.left: parent.left
+    anchors.right: parent.right
+
+RankingRow < UIWidget
+  height: 30
+
+  CommonCell
+    id: position
+    width: 50
+    anchors.left: parent.left
+
+  CommonCell
+    id: emblem
+    width: 50
+    anchors.left: prev.right
+
+  CommonCell
+    id: name
+    width: 239
+    anchors.left: prev.right
+    text-align: left
+    text-offset: 10 0
+
+  CommonCell
+    id: leader
+    width: 80
+    anchors.left: prev.right
+
+  CommonCell
+    id: members
+    width: 80
+    anchors.left: prev.right
+
+  CommonCell
+    id: level
+    width: 80
+    anchors.left: prev.right
+
+  CommonCell
+    id: experience
+    width: 160
+    anchors.left: prev.right
+
+InviteRow < UIWidget
+  height: 130
+
+  CommonCell
+    id: position
+    width: 50
+    anchors.left: parent.left
+
+  CommonCell
+    id: emblem
+    width: 50
+    anchors.left: prev.right
+
+  CommonCell
+    id: name
+    width: 239
+    anchors.left: parent.left
+    text-align: left
+    text-offset: 300 0
+
+  CommonCell
+    id: leader
+    width: 80
+    anchors.left: prev.right
+
+  CommonCell
+    id: members
+    width: 80
+    anchors.left: prev.right
+
+  CommonCell
+    id: level
+    width: 80
+    anchors.left: prev.right
+
+  CommonCell
+    id: experience
+    width: 160
+    anchors.left: prev.right
+
+GuildInfo < UIWidget
+  height: 26
+  margin-top: 2
+
+  UIWidget
+    id: image
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    size: 22 22
+
+  UIWidget
+    id: label
+    font: poppins semibold 12
+    text-align: left
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: prev.right
+    anchors.right: parent.right
+    margin-left: 6
+
+NewOpaqueWindow
+  id: guild
+  size: 960 550
+  anchors.centerIn: parent
+  draggable: true
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 12
+    margin-right: 12
+    @onClick: modules.game_guild.toggle()
+
+  UIWindow
+    id: leaveGuild
+    size: 248 232
+    visible: false
+    anchors.centerIn: parent
+    image-source: images/bg_guild
+    border-top: 35
+
+    UIWidget
+      id: close
+      size: 28 29
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 3
+      margin-right: 6
+      image-source: images/close
+      @onClick: onLeaveGuildClose()
+
+    UIWidget
+      margin-top: 55
+      margin-right: 20
+      margin-left: 20
+      margin-bottom: 20
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      anchors.left: parent.left
+
+      Button
+        id: button
+        !text: tr('Confirm')
+        anchors.top: prev.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 15
+        @onClick: onLeaveGuildSubmit()
+
+  UIWidget
+    id: guildInfoWindow
+    visible: false
+    width: 400
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-top: 15
+    margin-left: 15
+    margin-bottom: 15
+
+    UIWidget
+      id: infoWindow
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+
+      UIWidget
+        id: inviteButton
+        anchors.top: parent.top
+        anchors.right: parent.right
+        size: 22 24
+        margin-right: 5
+        margin-top: 5
+        image-source: /images/modules/guild/invite_icon
+        cursor: pointer
+        !tooltip: tr('Invite a Player')
+
+      UIWidget
+        id: inviteList
+        anchors.top: inviteButton.bottom
+        anchors.right: parent.right
+        size: 27 20
+        margin-right: 5
+        margin-top: 5
+        image-source: /images/modules/guild/invites_icon
+        cursor: pointer
+        !tooltip: tr('Invite List')
+
+      UIWidget
+        id: leaveButton
+        anchors.top: parent.top
+        anchors.left: parent.left
+        size: 21 19
+        margin-right: 5
+        margin-top: 5
+        image-source: /images/modules/guild/leave_icon
+        cursor: pointer
+        !tooltip: tr('Leave Guild')
+
+      UIWidget
+        id: disbandButton
+        anchors.top: parent.top
+        anchors.left: parent.left
+        size: 21 19
+        margin-right: 5
+        margin-top: 5
+        image-source: /images/modules/guild/leave_icon
+        cursor: pointer
+        !tooltip: tr('Disband Guild')
+
+      UIWidget
+        id: guildImage
+        size: 80 80
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        margin-top: 30
+        image-source: /images/guild_banners/0.png
+        cursor: pointer
+
+      UIWidget
+        id: guildName
+        font: poppins semibold 18
+        color: #00e5ff
+        text: ""
+        anchors.top: guildImage.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 8
+        text-align: center
+        text-auto-resize: true
+
+      UIWidget
+        id: guildLevelRow
+        height: 18
+        anchors.top: guildName.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 5
+        margin-left: 20
+        margin-right: 20
+
+        UIWidget
+          id: guildLevel
+          font: poppins semibold 12
+          text: ""
+          text-auto-resize: true
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+
+        UIWidget
+          id: guildExperience
+          font: verdana-11px-rounded
+          text-auto-resize: true
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          text-align: right
+
+      ProgressBar
+        id: progressBar
+        height: 12
+        background-color: #16eef4
+        anchors.top: guildLevelRow.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 4
+        margin-left: 20
+        margin-right: 20
+
+      UIWidget
+        id: guildItems
+        height: 84
+        anchors.top: progressBar.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 8
+        margin-left: 20
+        margin-right: 20
+        layout: verticalBox
+
+        GuildInfo
+          id: guildLeader
+          height: 14
+          &image
+            image-source: /images/modules/guild/leader_icon
+            size: 14 12
+
+        GuildInfo
+          id: guildMembers
+          height: 12
+          &image
+            image-source: /images/modules/guild/member_icons
+            size: 12 12
+
+        GuildInfo
+          id: guildBalance
+          height: 15
+          &image
+            size: 9 15
+            image-source: /images/modules/guild/balance_icon
+
+          NewButton
+            id: addButton
+            anchors.right: parent.right
+            margin-right: 5
+            size: 15 15
+            anchors.verticalCenter: parent.verticalCenter
+            image-source: /images/newui/add
+            @onClick: modules.game_guild.showBalanceGuildWindow()
+
+      UIWidget
+        id: motdPanel
+        anchors.top: motdHeader.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        margin-left: 10
+        margin-right: 10
+        margin-bottom: 10
+        image-source: /images/modules/guild/motd_background
+        image-border: 8
+
+      UIWidget
+        id: motdHeader
+        height: 26
+        anchors.top: guildItems.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 8
+        margin-left: 10
+        margin-right: 10
+        image-source: /images/modules/guild/motd_base
+
+        Label
+          !text: tr('Overview')
+          font: poppins semibold 14
+          text-auto-resize: true
+          anchors.left: parent.left
+          margin-left: 5
+          anchors.verticalCenter: parent.verticalCenter
+
+        UIWidget
+          id: motdEdit
+          size: 26 26
+          anchors.right: parent.right
+          anchors.verticalCenter: parent.verticalCenter
+          image-source: /images/modules/guild/edit_motd
+          cursor: pointer
+          !tooltip: tr('Edit description')
+
+      UIWidget
+        id: motdText
+        anchors.top: motdPanel.top
+        anchors.left: motdPanel.left
+        anchors.right: motdPanel.right
+        anchors.bottom: motdPanel.bottom
+        margin-left: 12
+        margin-right: 12
+        margin-top: 30
+        margin-bottom: 10
+        !text: tr('')
+        text-wrap: true
+        text-align: topLeft
+        font: poppins semibold 12
+
+      NewButton
+        id: guildRankingEmblem
+        image-source: images/guild_shop
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        margin-right: 10
+        margin-bottom: 10
+        size: 40 40
+        opacity: 0.8
+        visible: false
+        !tooltip: tr("Guild Shop")
+        @onClick: modules.game_guild.openShopWindow()
+
+  UIWidget
+    id: menus
+    visible: false
+    anchors.top: parent.top
+    anchors.left: guildInfoWindow.right
+    anchors.right: close.left
+    height: 42
+    margin-top: 12
+    margin-left: 10
+    margin-right: 10
+
+    UIWidget
+      height: 32
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      layout:
+        type: grid
+        cell-size: 80 32
+        auto-spacing: true
+        flow: true
+
+      GuildTabButton
+        id: tabMain
+        !text: tr('General')
+        @onClick: chooseTab('main')
+
+      GuildTabButton
+        id: tabMembers
+        !text: tr('Members')
+        @onClick: chooseTab('members')
+
+      GuildTabButton
+        id: tabBoss
+        !text: tr('Boss')
+        @onClick: chooseTab('boss')
+
+      GuildTabButton
+        id: tabBuffs
+        !text: tr('Buffs')
+        @onClick: chooseTab('buffs')
+
+      GuildTabButton
+        id: tabShop
+        !text: tr('Shop')
+        @onClick: chooseTab('shop')
+
+      GuildTabButton
+        id: tabAudits
+        !text: tr('Log')
+        @onClick: chooseTab('audits')
+
+  UIWidget
+    id: mainContent
+    visible: false
+    anchors.top: menus.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: guildInfoWindow.right
+    anchors.right: parent.right
+    margin-top: 5
+    margin-left: 10
+    margin-right: 15
+    margin-bottom: 15
+
+    Label
+      id: dailyTitle
+      !text: tr('Daily Missions')
+      text-auto-resize: true
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      font: poppins semibold 18
+
+    AllianceSeparator
+      id: separator
+      size: 250 2
+      anchors.horizontalCenter: dailyTitle.horizontalCenter
+      anchors.top: dailyTitle.bottom
+
+    UIWidget
+      id: dailyPanel
+      anchors.top: dailyTitle.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: refreshRow.top
+      margin-top: 10
+      margin-left: 10
+      margin-right: 10
+      margin-bottom: 5
+      focusable: false
+
+    UIWidget
+      id: refreshRow
+      size: 200 43
+      visible: false
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-bottom: 10
+      image-border: 12
+
+      UIWidget
+        anchors.left: refreshDaily.horizontalCenter
+        anchors.top: refreshDaily.top
+        image-source: /images/modules/guild/button_background
+        size: 164 36
+        cursor: pointer
+        @onClick: modules.game_guild.resetDaily()
+
+        Label
+          !text: tr('Reset Missions')
+          font: poppins semibold 14
+          text-auto-resize: true
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          margin-left: 25
+          margin-right: 15
+          phantom: true
+
+      UIWidget
+        id: refreshDaily
+        size: 41 43
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 15
+        image-source: /images/modules/guild/resetmission_icon
+        cursor: pointer
+        @onClick: modules.game_guild.resetDaily()
+
+  UIWidget
+    id: membersContent
+    visible: false
+    anchors.top: menus.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: guildInfoWindow.right
+    anchors.right: parent.right
+
+    UIScrollArea
+      id: membersScrollArea
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: membersContentScrollBar.left
+      margin-top: 5
+      margin-left: 10
+      margin-bottom: 15
+      vertical-scrollbar: membersContentScrollBar
+
+    AllianceVerticalScrollBar
+      id: membersContentScrollBar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      margin-top: 5
+      margin-bottom: 15
+      margin-right: 15
+      step: 30
+
+  UIWidget
+    id: bossContent
+    visible: false
+    anchors.top: menus.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: guildInfoWindow.right
+    anchors.right: parent.right
+
+    UIScrollArea
+      id: bossScrollArea
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: bossContentScrollBar.left
+      margin-top: 15
+      margin-left: 15
+      margin-bottom: 15
+      vertical-scrollbar: bossContentScrollBar
+      layout:
+        type: verticalBox
+        spacing: 10
+
+    AllianceVerticalScrollBar
+      id: bossContentScrollBar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      margin-top: 15
+      margin-bottom: 15
+      margin-right: 15
+      step: 30
+
+  UIWidget
+    id: buffsContent
+    visible: false
+    anchors.top: menus.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: guildInfoWindow.right
+    anchors.right: parent.right
+
+    UIScrollArea
+      id: buffsScrollArea
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: buffsContentScrollBar.left
+      margin-top: 5
+      margin-left: 10
+      margin-bottom: 15
+      vertical-scrollbar: buffsContentScrollBar
+
+      layout:
+        type: grid
+        cell-size: 120 108
+        cell-spacing: 6
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: buffsContentScrollBar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      margin-top: 5
+      margin-bottom: 15
+      margin-right: 15
+      step: 30
+
+  UIWidget
+    id: auditsContent
+    visible: false
+    anchors.top: menus.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: guildInfoWindow.right
+    anchors.right: parent.right
+
+    UIScrollArea
+      id: auditsScrollArea
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: auditsContentScrollBar.left
+      margin-top: 5
+      margin-left: 10
+      margin-bottom: 15
+      vertical-scrollbar: auditsContentScrollBar
+
+    AllianceVerticalScrollBar
+      id: auditsContentScrollBar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      margin-top: 5
+      margin-bottom: 15
+      margin-right: 15
+      step: 30
+
+  UIWidget
+    id: shopContent
+    visible: false
+    anchors.top: menus.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: guildInfoWindow.right
+    anchors.right: parent.right
+    margin-top: 5
+    margin-left: 10
+    margin-right: 15
+    margin-bottom: 15
+
+    ScrollablePanel
+      id: shopPanel
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: buyPanel.top
+      margin-top: 10
+      margin-left: 5
+      margin-right: 20
+      margin-bottom: 5
+      vertical-scrollbar: shopPanelScrollBar
+      image-border: 15
+      image-source: /images/newui/background_3
+      auto-focus: none
+      padding: 10
+      layout:
+        type: grid
+        num-columns: 3
+        cell-size: 153 95
+        cell-spacing: 7
+        flow: true
+
+    AllianceVerticalScrollBar
+      visible: false
+      id: shopPanelScrollBar
+      anchors.top: shopPanel.top
+      anchors.bottom: shopPanel.bottom
+      anchors.left: shopPanel.right
+      margin-left: 5
+      step: 30
+      pixels-scroll: true
+
+    UIWidget
+      id: buyPanel
+      height: 90
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-left: 5
+      margin-right: 5
+      margin-bottom: 5
+
+      NewOpaqueWindow
+        anchors.fill: parent
+
+      UIWidget
+        id: item_icon
+        size: 33 33
+        anchors.left: parent.left
+        anchors.top: parent.top
+        margin-top: 8
+        margin-left: 10
+        image-source: images/guild_shop/item_icon_background
+
+      UIItem
+        id: item
+        size: 32 32
+        anchors.centerIn: item_icon
+
+      Label
+        id: itemName
+        anchors.verticalCenter: item_icon.verticalCenter
+        anchors.left: item_icon.right
+        margin-left: 5
+        font: poppins semibold 12
+        text-auto-resize: true
+
+      UIItem
+        id: itemCost
+        size: 24 24
+        anchors.top: item_icon.bottom
+        margin-top: 5
+        anchors.left: parent.left
+        margin-left: 10
+
+      Label
+        id: costDescription
+        text-auto-resize: true
+        font: poppins semibold 12
+        anchors.verticalCenter: itemCost.verticalCenter
+        anchors.left: itemCost.right
+        margin-left: 5
+
+      AllianceHorizontalScrollBar
+        id: quantityScroll
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: itemCost.bottom
+        margin-top: 5
+        margin-left: 10
+        margin-right: 10
+        minimum: 1
+        maximum: 100
+        step: 1
+        @onValueChange: modules.game_guild.onQuantityShopValueChange(self:getValue())
+
+      NewBlueButton
+        id: confirmButton
+        anchors.right: parent.right
+        anchors.top: parent.top
+        margin-top: 10
+        margin-right: 10
+        !text: tr('Buy')
+        @onClick: modules.game_guild.buyGuildItemShop()
+
+      UIItem
+        id: coinItem
+        size: 32 32
+        anchors.verticalCenter: confirmButton.verticalCenter
+        anchors.right: coinCount.left
+        margin-right: 7
+
+      Label
+        id: coinCount
+        text-auto-resize: true
+        font: poppins semibold 12
+        anchors.verticalCenter: confirmButton.verticalCenter
+        anchors.right: confirmButton.left
+        margin-right: 10
+
+TaskWidget < UIWidget
+  height: 50
+  anchors.left: parent.left
+  anchors.top: parent.top
+  anchors.right: parent.right
+  margin-top: 5
+  margin-left: 10
+  margin-right: 10
+  image-source: /images/modules/guild/task_base
+
+  $!first:
+    anchors.top: prev.bottom
+    margin-top: 5
+
+  UICreature
+    id: pokemon
+    size: 60 60
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 2
+    scale: 0.7
+    new-scaling: true
+    max-scale: 2.0
+
+  // shown instead of the outfit on killElement dailies, where the sprite was only a representative
+  // pokemon for the element and told the player less than the element icon does
+  UIWidget
+    id: elementIcon
+    visible: false
+    size: 32 32
+    anchors.centerIn: pokemon
+    phantom: true
+    min-scale: 2.0
+
+  Label
+    id: taskDescription
+    anchors.left: pokemon.right
+    anchors.right: status.left
+    height: 20
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    margin-right: 8
+    text-wrap: true
+    font: poppins semibold 12
+
+  UIWidget
+    id: status
+    size: 28 28
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    visible: false
+    image-source: /images/modules/guild/check_icon
+
+DailyOptionWidget < NewStraightBlueButton
+  size: 100 32
+  anchors.horizontalCenter: parent.horizontalCenter
+  anchors.verticalCenter: parent.verticalCenter
+  font: poppins semibold 16
+
+// ============================================================================================
+// Seletor da guild daily: abas de TIER no topo, grade 6x3 de ELEMENTOS no meio, Confirm embaixo.
+//
+// O layout mora AQUI, e nao em aritmetica de margem no Lua, de proposito: a versao anterior
+// posicionava os 18 icones por conta no guild.lua e quebrou duas vezes -- primeiro transbordando a
+// largura do painel (so 4 das 6 colunas apareciam), depois sem ancora nenhuma (nada aparecia).
+// Com ancora declarativa o Lua so cuida de estado e clique.
+// ============================================================================================
+
+GuildDailyTierTab < GuildTabButton
+  width: 108
+
+GuildDailyElementCell < UIWidget
+  size: 44 44
+  focusable: true
+  cursor: pointer
+  image-source: /images/modules/guild/button_background
+  image-border: 10
+  $checked:
+    image-source: /images/newui/blueSoft
+    image-border: 8
+
+  UIWidget
+    id: icon
+    size: 24 24
+    phantom: true
+    anchors.centerIn: parent
+
+GuildDailyPicker < UIWidget
+  anchors.fill: parent
+
+  UIWidget
+    id: tierTabs
+    size: 340 32
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    layout:
+      type: horizontalBox
+      spacing: 8
+
+  UIWidget
+    id: elementGrid
+    // 6 colunas de 44 + 5 espacos de 8 = 304; 3 linhas de 44 + 2 de 8 = 148
+    size: 304 148
+    anchors.top: tierTabs.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 14
+    layout:
+      type: grid
+      cell-size: 44 44
+      cell-spacing: 8
+      num-columns: 6
+
+  NewStraightBlueButton
+    id: confirmButton
+    size: 140 32
+    !text: tr('Confirm')
+    font: poppins semibold 16
+    enabled: false
+    anchors.top: elementGrid.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 14
+
+// Objetivo atual, quando ja existe daily ativa: centralizado no lugar da grade.
+GuildDailyCurrent < UIWidget
+  anchors.fill: parent
+
+  UIWidget
+    id: elementIcon
+    size: 24 24
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 6
+
+  Label
+    id: currentTitle
+    text-auto-resize: true
+    text-align: center
+    font: poppins semibold 16
+    anchors.top: elementIcon.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 6
+
+  Label
+    id: currentProgress
+    text-auto-resize: true
+    text-align: center
+    color: #b0b8c0
+    anchors.top: currentTitle.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 4
+
+BossWidget < UIWidget
+  image-source: /images/modules/guild/boss_background
+  height: 125
+
+  UIWidget
+    id: banner
+    size: 125 125
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    image-source: /images/modules/guild/boss_base
+
+  UICreature
+    id: pokemon
+    anchors.centerIn: banner
+    size: 96 96
+    scale: 1
+    new-scaling: true
+    scale: 0.7
+    max-scale: 2.0
+    min-scale: 2.0
+
+  UIWidget
+    id: costIcon
+    size: 16 16
+    image-source: /images/modules/guild/price_icon.png
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 12
+    margin-right: 15
+
+  Label
+    id: costLabel
+    font: poppins semibold 14
+    text-auto-resize: true
+    anchors.right: costIcon.left
+    anchors.verticalCenter: costIcon.verticalCenter
+    margin-right: 5
+
+  Label
+    id: bossName
+    font: poppins semibold 18
+    color: #00ccff
+    text-auto-resize: true
+    anchors.top: parent.top
+    anchors.left: banner.right
+    margin-top: 12
+    margin-left: 15
+
+  UIWidget
+    id: levelIcon
+    size: 14 14
+    image-source: /images/modules/guild/level_icon.png
+    anchors.top: bossName.bottom
+    anchors.left: bossName.left
+    margin-top: 6
+
+  Label
+    id: levelLabel
+    font: poppins semibold 12
+    text-auto-resize: true
+    anchors.left: levelIcon.right
+    anchors.verticalCenter: levelIcon.verticalCenter
+    margin-left: 5
+
+  Label
+    id: rewardsTitle
+    font: poppins semibold 12
+    !text: tr('REWARDS')
+    text-auto-resize: true
+    anchors.top: levelIcon.bottom
+    anchors.left: bossName.left
+    margin-top: 10
+
+  UIWidget
+    id: rewardsPanel
+    height: 30
+    anchors.top: rewardsTitle.bottom
+    anchors.left: bossName.left
+    anchors.right: unlockBoss.left
+    margin-top: 4
+    margin-right: 10
+    layout:
+      type: horizontalBox
+      spacing: 4
+
+  NewButton
+    id: unlockBoss
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-bottom: 15
+    margin-right: 15
+    size: 110 30
+    image-source: /images/newui/label

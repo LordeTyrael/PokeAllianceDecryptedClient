@@ -1,0 +1,181 @@
+ItemSlot < UIItem
+  size: 32 32
+  virtual: true
+  phantom: true
+  image-source: /modules/game_poketask/images/itemslot
+
+RewardsTooltip < UITooltip
+  width: 160
+  follow-mouse-offset: -180 -40
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 4
+  padding-left: 9
+  padding-right: 9
+
+  layout: verticalBox
+    fit-children: true
+
+  Label
+    height: 25
+    font: poppins bold 15
+    text-align: center
+    !text: tr("Rewards")
+    phantom: true
+
+  Panel
+    id: rewards
+    height: 34
+    phantom: true
+    layout:
+      type: grid
+      cell-size: 34 34
+      cell-spacing: 2
+      num-columns: 4
+      flow: true
+
+TaskPanel < NewOpaqueWindow
+  height: 90
+  margin-top: 5
+  margin-bottom: 5
+  opacity: 0.7
+  phantom: false
+  draggable: false
+
+  $hover:
+    opacity: 1.0
+
+  PoppinsSemibold14
+    id: taskName
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+
+  PoppinsSemibold12
+    id: taskDescription
+    anchors.top: taskName.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 3
+    color: #cccccc
+
+  UICreature
+    id: outfit
+    size: 80 80
+    anchors.top: parent.top
+    margin-top: 1
+    anchors.left: parent.left
+    phantom: true
+    new-scaling: true
+
+    Label
+      id: taskProgress
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      font: poppins semibold 12
+      text-auto-resize: true
+      color: #ffffff
+
+  UIWidget
+    id: chest
+    size: 25 25
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 10
+    image-source: /modules/game_poketask/images/chest
+    visible: false
+
+    $hover:
+      opacity: 1.0
+
+    $!hover:
+      opacity: 0.75
+
+  NewStraightBlueButton
+    id: startButton
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    size: 80 30
+    !text: tr('Start')
+    font: poppins semibold 12
+
+  NewRedButton
+    id: cancelButton
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    size: 80 30
+    !text: tr('Cancel')
+    font: poppins semibold 12
+    visible: false
+
+  UIButton
+    id: favoriteButton
+    anchors.right: startButton.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 8
+    size: 16 16
+    image-source: /images/modules/empty_star
+    image-size: 16 16
+    cursor: pointer
+    !tooltip: tr('Favorite')
+
+NewOpaqueWindow
+  id: linkedTasksWindow
+  size: 600 460
+  margin-bottom: 70
+  anchors.centerIn: parent
+  @onEscape: modules.game_linkedtasks.hide()
+  phantom: false
+
+  UIWidget
+    id: header
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 368 37
+    image-offset: 1 0
+    image-source: /modules/game_ruinedascendant/images/header
+    font: poppins bold 20
+    text-align: left
+    text-offset: 45 0
+    !text: tr("Linked Tasks")
+
+  UIWidget
+    size: 50 50
+    image-source: images/icon
+    anchors.verticalCenter: header.verticalCenter
+    anchors.left: header.left
+
+  AllianceVerticalScrollBar
+    id: taskListScrollBar
+    anchors.top: header.bottom
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-top: 15
+    margin-right: 10
+    margin-bottom: 15
+    step: 28
+    pixels-scroll: true
+
+  ScrollablePanel
+    id: taskList
+    anchors.top: header.bottom
+    anchors.left: parent.left
+    anchors.right: taskListScrollBar.left
+    anchors.bottom: parent.bottom
+    margin-top: 5
+    margin-left: 15
+    margin-right: 10
+    margin-bottom: 15
+    vertical-scrollbar: taskListScrollBar
+    layout:
+      type: verticalBox
+      spacing: 2
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_linkedtasks.hide()

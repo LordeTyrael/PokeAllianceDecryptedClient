@@ -1,0 +1,156 @@
+UIWindow
+  id: imageWindow    
+  size: 400 280
+  @onEscape: modules.game_guild.hideBalance()
+  anchors.centerIn: parent
+  focusable: true
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    phantom: true
+    image-source: images/new_background
+
+    UIWidget
+      id: titleBackground
+      anchors.left: parent.left
+      anchors.top: parent.top
+      image-source: images/name_base
+      size: 220 36
+
+    Label
+      id: titleName
+      anchors.left: prev.left
+      anchors.verticalCenter: prev.verticalCenter
+      text-auto-resize: true
+      font: poppins semibold 20
+      !text: tr("Guild Contribuition")
+      margin-left: 15
+
+    UIWidget
+      id: contribuitionPanel
+      size: 300 165
+      margin-top: 15
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      image-border: 3
+
+      UIWidget
+        id: cashPanel
+        size: 140 165
+        anchors.left: parent.left
+        anchors.top: parent.top
+        image-source: images/imput_base
+        padding: 10
+
+        UIItem
+          id: cashItem
+          anchors.horizontalCenter: parent.horizontalCenter
+          anchors.top: parent.top
+          virtual: true
+          size: 32 32
+  
+        Label
+          id: cashContribuition
+          anchors.horizontalCenter: parent.horizontalCenter
+          size: 120 40
+          anchors.top: prev.bottom
+          margin-top: 5
+          font: poppins semibold 10
+          !text: tr("0/0")
+          text-wrap: true
+          text-align: center
+
+        UIWidget
+          id: separator
+          height: 5
+          anchors.left: parent.left
+          anchors.right: parent.right
+          anchors.top: cashContribuition.bottom
+          margin-top: 10
+          image-source: images/separator
+
+        NewButton
+          id: cashConfirm
+          size: 80 34
+          anchors.top: prev.bottom
+          margin-top: 15
+          anchors.horizontalCenter: parent.horizontalCenter
+          image-source: images/button
+          font: poppins semibold 12
+          !text: tr("Contribute")
+          @onClick: modules.game_guild.contributeGuildBalance(1)
+
+      UIWidget
+        id: diamondPanel
+        size: 140 165
+        anchors.right: parent.right
+        anchors.top: parent.top
+        image-source: images/imput_base
+        padding: 10
+
+        UIItem
+          id: diamondItem
+          anchors.horizontalCenter: parent.horizontalCenter
+          anchors.top: parent.top
+          virtual: true
+          size: 32 32
+  
+        Label
+          id: diamondContribuition
+          anchors.horizontalCenter: parent.horizontalCenter
+          size: 120 40
+          anchors.top: prev.bottom
+          margin-top: 5
+          font: poppins semibold 12
+          !text: tr("No limit, but the price is increased")
+          text-wrap: true
+          text-align: center
+
+        UIWidget
+          id: separator
+          height: 5
+          anchors.left: parent.left
+          anchors.right: parent.right
+          anchors.top: diamondContribuition.bottom
+          margin-top: 10
+          image-source: images/separator
+
+        NewButton
+          id: diamondConfirm
+          size: 80 34
+          anchors.top: prev.bottom
+          margin-top: 15
+          anchors.horizontalCenter: parent.horizontalCenter
+          image-source: images/button
+          @onClick: modules.game_guild.contributeGuildBalance(2)
+
+          UIItem
+            id: diamondIcon
+            size: 32 32
+            anchors.verticalCenter: parent.verticalCenter
+            virtual: true
+            phantom: true
+            anchors.right: next.left
+            margin-right: 5
+
+          Label
+            id: diamondCost
+            phantom: true
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            text-auto-resize: true
+            font: poppins semibold 12
+            !text: tr("1")
+            text-align: center
+            margin-left: 10
+
+    NewButton
+      id: closeButton
+      anchors.right: parent.right
+      anchors.top: parent.top
+      size: 20 20
+      image-source: images/new_close
+      @onClick: modules.game_guild.hideBalance()
+      margin-top: 6
+      margin-right: 6

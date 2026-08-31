@@ -1,0 +1,544 @@
+FragmentEarnWidget < UIWidget
+  id: fragmentsOverlay
+  anchors.fill: parent
+
+  NewOpaqueWindow
+    id: fragmentsPanel
+    anchors.centerIn: parent
+    size: 200 200
+
+    Label
+      id: title
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 5
+      font: poppins semibold 14
+      text-auto-resize: true
+      !text: tr("Fragments Received")
+
+    UIWidget
+      size: 80 80
+      id: fragmentsContainer
+      anchors.top: prev.bottom
+      margin-top: 10
+      anchors.horizontalCenter: parent.horizontalCenter
+
+FragmentShopItem < UIWidget
+  size: 140 100
+  image-source: /images/newui/background_3
+  image-border: 15
+  focusable: true
+  cursor: pointer
+
+  UIItem
+    id: itemIcon
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    size: 48 48
+    virtual: true
+    phantom: true
+
+  Label
+    id: itemName
+    anchors.top: itemIcon.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 4
+    font: poppins semibold 10
+    color: #ffffff
+    !text: tr('Item Name')
+    text-align: center
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: itemCost
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 8
+    font: poppins semibold 10
+    color: #ffcc00
+    text: 0 shards
+    text-auto-resize: true
+    phantom: true
+
+FragmentBuyConfirmWindow < NewOpaqueWindow
+  id: fragmentBuyConfirmWindow
+  size: 280 216
+  anchors.centerIn: parent
+  visible: false
+  focusable: true
+  @onEscape: modules.game_gacha.closeFragmentBuyConfirm()
+
+  PoppinsSemibold14
+    id: confirmTitle
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    color: #ffffff
+    !text: tr('Confirm')
+
+  UIItem
+    id: confirmItem
+    size: 48 48
+    anchors.top: confirmTitle.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+    phantom: true
+    virtual: true
+
+  AllianceAmountSpinner
+    id: confirmSpinner
+    anchors.top: confirmItem.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+
+  PoppinsSemibold12
+    id: confirmCostLabel
+    anchors.top: confirmSpinner.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+    color: #ffcc00
+
+  NewStraightBlueButton
+    id: confirmBuyButton
+    size: 90 30
+    anchors.right: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-right: 6
+    margin-bottom: 14
+    !text: tr("Claim")
+    @onClick: modules.game_gacha.confirmFragmentClaim()
+
+  NewRedButton
+    id: cancelButton
+    size: 90 30
+    anchors.left: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-left: 6
+    margin-bottom: 14
+    !text: tr("Cancel")
+    @onClick: modules.game_gacha.closeFragmentBuyConfirm()
+
+  NewRedCloseButton
+    id: closeConfirmBtn
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+    @onClick: modules.game_gacha.closeFragmentBuyConfirm()
+
+ItemSlot < UIItem
+  size: 32 32
+  virtual: true
+  phantom: true
+  image-source: /images/itemslot
+
+RewardItemWidget < Panel
+  size: 64 84
+  
+  UIWidget
+    id: itemBorder
+    size: 64 64
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    image-source: images/border_0
+    phantom: false
+  
+  UIItem
+    id: itemIcon
+    size: 64 64
+    anchors.top: parent.top
+    anchors.left: parent.left
+    virtual: true
+    
+  Label
+    id: itemAmount
+    anchors.bottom: itemIcon.bottom
+    anchors.right: itemIcon.right
+    margin-bottom: 9
+    margin-right: 9
+    font: poppins semibold 12
+    text-auto-resize: true
+    phantom: false
+    
+  UIWidget
+    id: cardCover
+    anchors.fill: itemIcon
+    image-source: images/card
+    phantom: false
+
+FragmentWidget < Panel
+  size: 300 60
+  focusable: false
+  phantom: false
+  cursor: pointer
+  
+  UICreature
+    id: fragmentOutfitFemale
+    size: 80 80
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: -5
+    margin-bottom: 10
+    phantom: true
+
+  UICreature
+    id: fragmentOutfitMale
+    size: 80 80
+    anchors.centerIn: fragmentOutfitFemale
+    margin-right: 10
+    margin-top: 20
+    phantom: true
+    
+  Panel
+    anchors.left: fragmentOutfitFemale.right
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: -15
+    margin-right: 5
+    height: 60
+    phantom: true
+    
+    Label
+      id: fragmentName
+      !text: tr('Fragment')
+      anchors.top: parent.top
+      anmchors.horizontalCenter: progressBarContainer.horizontalCenter
+      font: poppins semibold 15
+      textColor: "#e7d7be"
+      text-auto-resize: true
+    
+    Panel
+      id: progressBarContainer
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      margin-top: 2
+      margin-left: 15
+      size: 200 40
+      
+      UIWidget
+        id: emptyProgress
+        anchors.fill: parent
+        image-source: images/empty_progress
+        phantom: true
+        
+      UIWidget
+        id: fullProgress
+        anchors.left: parent.left
+        anchors.top: parent.top
+        image-source: images/full_progress
+        phantom: true
+      
+    Label
+      id: fragmentProgress
+      !text: tr('0/100')
+      anchors.centerIn: progressBarContainer
+      font: poppins semibold 15
+      text-auto-resize: true
+
+GachaItemsTooltip < UITooltip
+  width: 450
+  max-height: 600
+  margin-bottom: 100
+  anchors.centerIn: parent
+  follow-mouse: false
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 8
+  padding-left: 12
+  padding-right: 12
+
+  layout: verticalBox
+    fit-children: true
+    spacing: 8
+
+  Label
+    height: 30
+    font: poppins bold 16
+    text-align: center
+    !text: tr("Possible Items by Rarity")
+    phantom: true
+    color: #FFD700
+
+  Panel
+    id: categoriesContainer
+    height: 50
+    phantom: true
+    layout:
+      type: verticalBox
+      fit-children: true
+      spacing: 6
+
+CategorySection < Panel
+  height: 50
+  phantom: true
+  layout:
+    type: verticalBox
+    fit-children: true
+    spacing: 4
+
+  Label
+    id: categoryTitle
+    height: 22
+    font: poppins bold 13
+    text-align: left
+    phantom: true
+    color: #AADDFF
+
+  Panel
+    id: itemsGrid
+    height: 34
+    phantom: true
+    layout:
+      type: grid
+      cell-size: 34 34
+      cell-spacing: 2
+      num-columns: 10
+      flow: true
+
+NewOpaqueWindow
+  @onEscape: g_game.requestCloseGacha()
+  size: 1000 600
+  draggable: false
+
+  UIWidget
+    id: banner
+    phantom: true
+    anchors.fill: parent
+    margin-left: 4
+    margin-top: 4
+    margin-bottom: 4
+    margin-right: 4
+
+  UIWidget
+    id: header
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 368 37
+    image-offset: 1 0
+    image-source: /modules/game_ruinedascendant/images/header
+    font: poppins bold 20
+    text-align: left
+    text-offset: 45 0
+    !text: tr("Celebi Shrine")
+
+  UIWidget
+    size: 50 50
+    image-source: images/icon
+    anchors.verticalCenter: header.verticalCenter
+    anchors.left: header.left
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin: 10 10 0 0
+    @onClick: g_game.requestCloseGacha()
+    
+  NewOpaqueWindow
+    id: gachaPointsPanel
+    size: 110 60
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 50
+    margin-left: 20
+    opacity: 0.9
+    draggable: false
+    
+    UIWidget
+      id: gachaCoinIcon
+      size: 25 30
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 10
+      image-source: images/gacha_coin
+      phantom: true
+      
+    Label
+      id: gachaPoints
+      !text: tr('0')
+      anchors.left: prev.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 10
+      text-align: left
+      font: poppins semibold 15
+      color: #00ff00
+      text-auto-resize: true
+
+  NewButton
+    id: buyCoinsButton
+    size: 190 45
+    anchors.left: gachaPointsPanel.left
+    font: poppins bold 18
+    textColor: "#e7d7be"
+    anchors.top: gachaPointsPanel.bottom
+    margin-top: 15
+    image-source: images/points_background
+    text-align: center
+    !text: tr("Buy Coins")
+    @onClick: |
+      g_game.requestShopCategory("Promotions")
+      g_game.requestCloseGacha()
+
+  NewOpaqueWindow
+    id: fragmentsPanel
+    width: 300
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 50
+    margin-right: 10
+    opacity: 0.9
+    visible: false
+    draggable: false
+    
+    Panel
+      id: fragmentsContainer
+      anchors.fill: parent
+      margin: 10
+      layout:
+        type: verticalBox
+        spacing: 5
+    
+  Panel
+    id: gachaListPanel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 10
+    margin-right: 10
+    height: 100
+    layout:
+      type: verticalBox
+      spacing: 2
+
+  UIWidget
+    id: buttonsBackground
+    size: 650 90
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 20
+    draggable: false
+      
+    UIWidget
+      id: rollButton
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      size: 200 60
+      @onClick: modules.game_gacha.requestRoll(1)
+      cursor: pointer
+      image-source: images/open_1
+      font: poppins semibold 18
+      text-align: center
+      !text: tr("Wish x1")
+      textColor: "#e7d7be"
+  
+    UIWidget
+      id: secondaryRollButton
+      anchors.verticalCenter: prev.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      size: 200 60
+      @onClick: modules.game_gacha.requestRoll(2)
+      cursor: pointer
+      image-source: images/open_2
+      font: poppins semibold 18
+      text-align: center
+      !text: tr("Wish x25")
+      textColor: "#e7d7be"
+
+    UIWidget
+      id: thirdRollButton
+      anchors.verticalCenter: prev.verticalCenter
+      anchors.right: parent.right
+      size: 200 60
+      @onClick: modules.game_gacha.requestRoll(3)
+      cursor: pointer
+      image-source: images/open_2
+      font: poppins semibold 18
+      text-align: center
+      !text: tr("Wish x50")
+      textColor: "#e7d7be"
+
+  UIWidget
+    id: pokeballIcon
+    size: 200 230
+    anchors.centerIn: parent
+    margin-top: 20
+    image-source: images/pokeball
+    cursor: pointer
+    
+  NewOpaqueWindow
+    id: resultPanel
+    size: 400 300
+    anchors.centerIn: parent
+    margin: 10
+    draggable: false
+    visible: false
+    
+    Label
+      id: rewardsTitle
+      !text: tr('Rewards Obtained')
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 20
+      font: poppins semibold 22
+      textColor: "#e7d7be"
+      text-auto-resize: true
+      
+    Panel
+      id: rewardsContainer
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      margin-bottom: 10
+      size: 360 180
+      layout:
+        type: grid
+        cell-size: 64 84
+        cell-spacing: 10
+        flow: true
+        auto-spacing: true
+        
+    NewButton
+      id: skipButton
+      !text: tr('Skip Animations')
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-bottom: 5
+      size: 185 30
+      font: poppins semibold 15
+      textColor: "#e7d7be"
+      @onClick: modules.game_gacha.skipRewardsAnimation()
+        
+    NewButton
+      id: closeRewardsButton
+      !text: tr('Close')
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-bottom: 5
+      size: 80 30
+      font: poppins semibold 15
+      textColor: "#e7d7be"
+      visible: false
+      @onClick: modules.game_gacha.closeRewardsPanel()
+  
+  UIVideo
+    id: gachaVideo
+    anchors.fill: parent
+    visible: false
+    focusable: false
+    source: "videos/gacha_opening.mp4"
+    volume: 0.05
+  
+  NewButton
+    id: skipVideoButton
+    !text: tr('Press Space to Skip')
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 20
+    text-auto-resize: true
+    font: poppins semibold 16
+    textColor: "#e7d7be"
+    visible: false
+    @onClick: modules.game_gacha.skipGachaVideo()

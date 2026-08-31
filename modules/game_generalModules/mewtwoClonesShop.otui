@@ -1,0 +1,97 @@
+MewtwoShopRow < UIWidget
+  id: shop_row
+  size: 160 230
+
+  UIWidget
+    id: background
+    size: 160 185
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    image-source: mewtwoClones/shopItem_background
+
+  UIWidget
+    id: backgroundItem
+    size: 80 80
+    anchors.horizontalCenter: background.horizontalCenter
+    anchors.bottom: background.top
+    margin-bottom: -40
+    image-source: mewtwoClones/shopImage_background
+
+  UIWidget
+    id: buffImage
+    anchors.fill: backgroundItem
+
+  Label
+    id: description
+    size: 120 70
+    text-wrap: true
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: purchase.top
+    margin-bottom: 10
+    text-align: center
+
+  NewStraightBlueButton
+    id: purchase
+    size: 120 30
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: background.bottom
+    margin-bottom: 10
+    !text: tr("0K")
+    @onClick: modules.game_generalModules.confirmMewtwoShopRow(self)
+
+NewPopupWindow
+  @onEscape: modules.game_generalModules.hideBuffShopWindow()
+  id: mewtwoShopWindow
+  size: 700 350
+  draggable: true
+  anchors.centerIn: parent
+
+  Label
+    id: title
+    font: poppins semibold 22
+    !text: tr("Buff's Shop")
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 10
+    text-auto-resize: true
+
+  ScrollablePanel
+    id: shopArea
+    size: 670 230
+    anchors.horizontalCenter: parent.horizontalCenter
+    vertical-scrollbar: shopScroll
+    anchors.top: title.bottom
+    margin-top: 8
+
+    layout:
+      type: grid
+      cell-size: 160 230
+      cell-spacing: 10
+      num-columns: 4
+
+  AllianceVerticalScrollBar
+    id: shopScroll
+    anchors.top: shopArea.top
+    anchors.bottom: shopArea.bottom
+    anchors.right: shopArea.right
+    margin-right: 10
+    margin-top: 15
+    margin-bottom: 15
+    step: 30
+    pixels-scroll: true
+
+  NewStraightBlueButton
+    id: confirmButton
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: shopArea.bottom
+    margin-top: 15
+    !text: tr("Confirm")
+    @onClick: modules.game_generalModules.hideBuffShopWindow()
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 6
+    margin-right: 6
+    @onClick: modules.game_generalModules.hideBuffShopWindow()

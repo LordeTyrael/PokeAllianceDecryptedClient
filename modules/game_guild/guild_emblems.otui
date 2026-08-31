@@ -1,0 +1,54 @@
+UIWindow
+  id: guild_emblems
+  size: 502 332
+  visible: false    
+  image-source: images/bg_emblem
+
+  UIWidget
+    id: close
+    size: 28 29
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 3
+    margin-right: 6
+    image-source: images/close
+    @onClick: emblemClose()
+
+  UIScrollArea
+    id: emblemsContent
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.bottom: submit.bottom
+    anchors.right: emblemContentScrollBar.left
+    width: 220
+    margin-top: 40
+    margin-left: 15
+    margin-right: 5
+    layout:
+      type: grid
+      num-columns: 4
+      cell-size: 60 60
+      flow: true
+      auto-spacing: true
+    vertical-scrollbar: emblemContentScrollBar    
+
+  AllianceVerticalScrollBar
+    id: emblemContentScrollBar
+    anchors.right: parent.right
+    anchors.top: parent.top
+    anchors.bottom: submit.top
+    margin-top: 45
+    margin-right: 15
+    step: 30
+
+  Button
+    id: submit
+    anchors.bottom: parent.bottom
+    margin-right: 5
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr('Confirm')
+    @onClick: guildEmblemConfirm()
+
+EmblemWidget < UIWidget
+  border-color: #007fd2

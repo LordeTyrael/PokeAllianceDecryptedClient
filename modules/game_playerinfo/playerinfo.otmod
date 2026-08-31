@@ -1,0 +1,9 @@
+Module
+  name: game_playerinfo
+  description: Display useful info about player
+  author: pokealliance
+  website: https://pokealliance.com.br
+  sandboxed: true
+  scripts: [ playerinfo ] 
+  @onLoad: init()
+  @onUnload: terminate()

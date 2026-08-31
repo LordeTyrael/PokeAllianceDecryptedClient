@@ -1,0 +1,77 @@
+Label < UILabel
+  font: verdana-11px-antialised
+  color: #dfdfdf
+
+  $disabled:
+    color: #dfdfdf88
+
+FlatLabel < UILabel
+  font: verdana-11px-antialised
+  color: #dfdfdf
+  size: 86 20
+  text-offset: 3 3
+  image-source: /images/ui/panel_flat
+  image-border: 1
+
+  $disabled:
+    color: #dfdfdf88
+
+MenuLabel < Label
+
+GameLabel < UILabel
+  font: poppins semibold 12
+  color: #dfdfdf
+
+PoppinsSemibold28 < UILabel
+  font: poppins semibold 28
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PoppinsSemibold22 < UILabel
+  font: poppins semibold 22
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PoppinsSemibold20 < UILabel
+  font: poppins semibold 20
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PoppinsSemibold18 < UILabel
+  font: poppins semibold 18
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PoppinsSemibold14 < UILabel
+  font: poppins semibold 14
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PoppinsSemibold13 < UILabel
+  font: poppins semibold 13
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PoppinsSemibold12 < UILabel
+  font: poppins semibold 12
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PoppinsSemibold11 < UILabel
+  font: poppins semibold 11
+  text-auto-resize: true
+  focusable: false
+  phantom: true
+
+PoppinsSemibold10 < UILabel
+  font: poppins semibold 10
+  text-auto-resize: true
+  focusable: false
+  phantom: true

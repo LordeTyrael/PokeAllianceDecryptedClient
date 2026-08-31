@@ -1,0 +1,177 @@
+UIWindow
+  id: playerInfoSimple_widget
+  size: 209 146
+  draggable: true
+  focusable: false
+
+  UIWidget
+    id: lockButton
+    size: 14 14
+    anchors.verticalCenter: playerLevel.verticalCenter
+    anchors.left: playerLevel.right
+    margin-left: 6
+    icon-source: @fa solid 12 f09c
+    icon-color: #aaaaaa
+    cursor: pointer
+    !tooltip: tr("Click to lock window position")
+    @onClick: modules.game_playerinfo.toggleLock()
+
+  UIWidget
+    id: playerHUD
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 35
+    margin-bottom: 10
+    size: 163 60
+    image-source: images/playerhud
+    phantom: true
+
+  UIWidget
+    id: playerHealth
+    size: 114 18
+    image-source: images/progress_background
+    anchors.top: playerHUD.top
+    margin-top: 8
+    anchors.left: hudIcon.right
+    margin-left: 10
+    phantom: true
+
+    UIWidget
+      id: healthProgress
+      size: 110 14
+      anchors.centerIn: parent
+      image-source: images/lifebar
+      phantom: true
+
+    Label
+      id: healthPercent
+      font: poppins bold 12
+      anchors.centerIn: parent
+      text-align: center
+      text-offset: 0 3
+      text-auto-resize: true
+
+  UIWidget
+    id: playerExperience
+    size: 114 18
+    image-source: images/progress_background
+    anchors.bottom: playerHUD.bottom
+    margin-bottom: 8
+    anchors.left: playerHealth.left
+    draggable: true
+
+    UIWidget
+      id: experienceProgress
+      size: 110 14
+      anchors.centerIn: parent
+      image-source: images/xpbar
+      phantom: true
+
+    Label
+      id: experiencePercent
+      font: poppins bold 12
+      anchors.centerIn: parent
+      text-align: center
+      text-offset: 0 3
+      text-auto-resize: true
+
+  NewButton
+    id: hudIcon
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-bottom: 9
+    size: 60 60
+    image-source: images/hudicon
+    @onClick: modules.game_playerinfo.toggleHud()
+
+    UIWidget
+      id: playerIcon
+      anchors.centerIn: parent
+      phantom: true
+      size: 60 60
+
+  UIWidget
+    id: hudBorder
+    phantom: true
+    size: 72 72
+    image-source: images/hud_border
+    anchors.centerIn: hudIcon
+
+  UILabel
+    id: playerName
+    anchors.bottom: playerHUD.top
+    margin-bottom: -1
+    anchors.left: parent.left
+    margin-left: 25
+    font: poppins semibold 11
+    text-auto-resize: true
+    phantom: true
+
+  UILabel
+    id: playerLevel
+    anchors.bottom: playerHUD.top
+    margin-bottom: -1
+    margin-right: 20
+    anchors.right: playerHUD.right
+    text-auto-resize: true
+    font: poppins semibold 11
+    phantom: true
+
+  UIWidget
+    id: trainer_id
+    size: 32 32
+    image-source: images/icon_trainer
+    anchors.top: playerHUD.bottom         
+    margin-top: 4
+    anchors.left: playerHUD.left
+    margin-left: 15  
+    @onClick: modules.game_trainer.toggle()
+    !tooltip: tr("Open Trainer ID (Ctrl+T)")
+
+  UIWidget
+    id: fish_icon
+    size: 32 32
+    image-source: images/icon_fishing
+    anchors.top: prev.top
+    anchors.left: prev.right
+    margin-left: 4
+    @onClick: modules.game_player_actions.toggleFishing()
+    !tooltip: tr("Use fishing rod")
+
+  UIWidget
+    id: gamepass_icon
+    size: 32 32
+    icon-source: @fa solid 16 f445
+    icon-color: #bba808
+    anchors.top: prev.top
+    anchors.left: prev.right
+    margin-left: 4
+    @onClick: modules.game_pass.toggle()
+    cursor: pointer
+    !tooltip: tr("Open Game Pass")
+    image-source: images/icon_background
+
+  UIWidget
+    id: shrine_icon
+    size: 40 40
+    image-source: /modules/game_gacha/images/icon
+    margin-top: -4
+    anchors.top: prev.top
+    anchors.left: prev.right
+    margin-left: 4
+    @onClick: g_game.requestOpenGacha()
+    !tooltip: tr("Open Celebi Shrine")
+    cursor: pointer
+
+  Panel
+    id: conditionBar
+    anchors.top: trainer_id.bottom
+    anchors.left: trainer_id.left
+    margin-top: 4
+    height: 26
+    width: 200
+    phantom: true
+    background-color: alpha
+    layout:
+      type: horizontalBox
+      spacing: 2

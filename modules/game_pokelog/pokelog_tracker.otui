@@ -1,0 +1,259 @@
+PokelogTrackerEntry < UIWidget
+  height: 48
+  margin-left: 2
+  margin-right: 2
+
+  UICreature
+    id: creatureIcon
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    size: 48 48
+    phantom: true
+    new-scaling: true
+    max-scale: 2.0
+    min-scale: 2.0
+
+  Label
+    id: nameLabel
+    anchors.left: creatureIcon.right
+    anchors.top: parent.top
+    margin-left: 6
+    margin-top: 6
+    font: verdana-11px-antialised
+    color: white
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: progressLabel
+    anchors.left: creatureIcon.right
+    anchors.top: nameLabel.bottom
+    margin-left: 6
+    margin-top: 2
+    font: verdana-11px-antialised
+    color: #8899aa
+    text-auto-resize: true
+    phantom: true
+
+  NewRedCloseButton
+    id: removeButton
+    !tooltip: tr('Stop Tracking')
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 6
+    size: 14 14
+    cursor: pointer
+
+LinkedTaskTrackerEntry < UIWidget
+  height: 48
+  margin-left: 2
+  margin-right: 2
+
+  UICreature
+    id: creatureIcon
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    size: 48 48
+    phantom: true
+    new-scaling: true
+    max-scale: 2.0
+    min-scale: 2.0
+
+  Label
+    id: nameLabel
+    anchors.left: creatureIcon.right
+    anchors.top: parent.top
+    margin-left: 6
+    margin-top: 6
+    font: verdana-11px-antialised
+    color: white
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: progressLabel
+    anchors.left: creatureIcon.right
+    anchors.top: nameLabel.bottom
+    margin-left: 6
+    margin-top: 2
+    font: verdana-11px-antialised
+    color: #8899aa
+    text-auto-resize: true
+    phantom: true
+
+TrackerSectionHeader < Label
+  height: 18
+  margin-left: 6
+  margin-top: 4
+  margin-bottom: 2
+  font: poppins semibold 10
+  color: #8899aa
+  text-auto-resize: true
+  phantom: true
+
+UIMiniWindow
+  id: pokelogTrackerWindow
+  height: 120
+  @onClose: modules.game_pokelog.onTrackerClose()
+  &save: true
+  image-source: /images/general_ui/bordered_background
+  focusable: false
+  &minimizedHeight: 26
+  image-border: 12
+
+  ContainerMiniWindowTopbar
+    id: miniwindowTopBar
+    padding: 3
+
+  Label
+    id: miniwindowName
+    text-auto-resize: true
+    anchors.left: miniwindowTopBar.left
+    margin-left: 8
+    anchors.verticalCenter: miniwindowTopBar.verticalCenter
+    anchors.right: closeButton.left
+    margin-right: 2
+    font: poppins semibold 14
+    !text: tr('Tracker')
+    text-offset: 0 4
+
+  NewButton
+    id: closeButton
+    anchors.top: miniwindowTopBar.top
+    anchors.right: miniwindowTopBar.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    image-source: /images/newui/miniwindow/close
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $pressed:
+      opacity: 0.75
+
+  NewButton
+    id: minimizeButton
+    anchors.right: closeButton.left
+    margin-right: 5
+    anchors.verticalCenter: closeButton.verticalCenter
+    size: 11 7
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 7 11 7
+
+  NewButton
+    id: lockButton
+    anchors.right: minimizeButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+    size: 13 15
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 0 13 15
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.right: lockButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+
+  ResizeBorder
+    id: bottomResizeBorder
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 3
+    minimum: 48
+    margin-left: 3
+    margin-right: 3
+    background: #ffffff88
+
+  AllianceVerticalScrollBar
+    id: miniwindowScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 48
+    margin-top: 28
+    margin-bottom: 5
+    margin-right: 4
+    pixels-scroll: true
+
+  HorizontalSeparator
+    anchors.top: miniwindowTopBar.bottom
+    anchors.left: parent.left
+    anchors.right: miniwindowScrollBar.left
+    margin-right: 5
+    margin-left: 5
+    margin-top: 5
+    height: 2
+    image-source: /images/newui/horizontal_separator
+
+  MiniWindowContents
+    anchors.top: prev.bottom
+    margin-top: 6
+
+    Panel
+      id: trackerContent
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+      padding: 2
+      layout:
+        type: verticalBox
+        spacing: 0
+        fit-children: true
+
+      Panel
+        id: linkedTaskSection
+        visible: false
+        layout:
+          type: verticalBox
+          spacing: 2
+          fit-children: true
+
+        TrackerSectionHeader
+          id: linkedTaskHeader
+          !text: tr('Linked Task')
+
+        Panel
+          id: linkedTaskPanel
+          layout:
+            type: verticalBox
+            spacing: 2
+            fit-children: true
+
+      Panel
+        id: pokelogSection
+        visible: false
+        layout:
+          type: verticalBox
+          spacing: 2
+          fit-children: true
+
+        TrackerSectionHeader
+          id: pokelogHeader
+          !text: tr('Pokélog')
+
+        Panel
+          id: trackerList
+          layout:
+            type: verticalBox
+            spacing: 2
+            fit-children: true

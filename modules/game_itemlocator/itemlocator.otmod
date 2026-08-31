@@ -1,0 +1,11 @@
+Module
+  name: game_itemlocator
+  description: Item locator window (right click an item inside a bag)
+  author: PokeAlliance
+  sandboxed: true
+  autoload: true
+  autoload-priority: 1000
+  dependencies: [ game_interface ]
+  scripts: [ itemlocator ]
+  @onLoad: init()
+  @onUnload: terminate()

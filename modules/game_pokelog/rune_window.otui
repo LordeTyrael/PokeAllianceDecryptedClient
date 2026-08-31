@@ -1,0 +1,517 @@
+AttachConfirmCreature < UICreature
+  size: 64 64
+  phantom: true
+  new-scaling: true
+  max-scale: 2.0
+  min-scale: 2.0
+
+RuneStatusIconEquipped < UIWidget
+  size: 14 14
+  margin-top: 4
+  icon-source: @fa solid 11 f007
+  icon-color: #2ea1f8
+  phantom: true
+
+RuneStatusIconBusy < UIWidget
+  size: 14 14
+  margin-top: 4
+  icon-source: @fa solid 11 f017
+  icon-color: #d4a017
+  phantom: true
+
+RuneStatusIconLocked < UIWidget
+  size: 36 36
+  icon-source: @fa solid 28 f023
+  icon-color: #3a4f66
+  phantom: true
+
+RuneStatusIconAttach < UIWidget
+  size: 36 36
+  icon-source: @fa solid 28 f067
+  icon-color: #2ea1f8
+  phantom: true
+
+RuneBrowserRow < UIWidget
+  height: 110
+  margin-bottom: 6
+  image-border: 15
+  image-source: /images/newui/background_3
+
+  UIWidget
+    id: runeImage
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    size: 70 80
+    image-smooth: true
+    margin-left: 15
+    phantom: true
+
+  Label
+    id: runeLevelOverlay
+    anchors.bottom: runeImage.bottom
+    anchors.right: runeImage.right
+    margin-bottom: 8
+    margin-right: 4
+    font: poppins bold 16
+    color: #d4a017
+    text-auto-resize: true
+    visible: false
+
+  UIWidget
+    id: runeInfoPanel
+    anchors.left: runeImage.right
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: runeRightPanel.left
+    margin-left: 10
+    padding: 22 8 8 4
+    phantom: true
+
+    Label
+      id: runeNameLabel
+      anchors.top: parent.top
+      anchors.left: parent.left
+      font: poppins semibold 15
+      color: #ffffff
+      text-auto-resize: true
+      phantom: true
+
+    Label
+      id: runeActiveLabel
+      anchors.top: runeNameLabel.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 1
+      font: poppins semibold 10
+      color: #7f8fa4
+      text-auto-resize: true
+      text-wrap: true
+      phantom: true
+
+    Label
+      id: runeDescLabel
+      anchors.top: runeActiveLabel.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 1
+      font: poppins semibold 10
+      color: #7f8fa4
+      text-auto-resize: true
+      text-wrap: true
+      phantom: true
+
+    UIWidget
+      id: runeCostRow
+      anchors.bottom: upgradeBtn.top
+      anchors.horizontalCenter: upgradeBtn.horizontalCenter
+      size: 70 30
+      margin-bottom: 10
+      phantom: true
+
+      UIWidget
+        id: costIcon
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        size: 32 32
+        image-source: /images/modules/pokelog_points
+        phantom: true
+
+      Label
+        id: costLabel
+        anchors.left: costIcon.right
+        anchors.verticalCenter: parent.verticalCenter
+        margin-left: 3
+        height: 18
+        font: poppins semibold 12
+        color: #d4a017
+        text: 0
+        phantom: true
+        text-auto-resize: true
+
+      Label
+        id: maxLevelLabel
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        height: 18
+        font: poppins semibold 12
+        color: #5b9bd5
+        !text: tr('Max Level')
+        phantom: true
+        text-auto-resize: true
+        visible: false
+
+    UIWidget
+      id: runeBadgeRow
+      anchors.bottom: upgradeBtn.top
+      anchors.left: parent.left
+      height: 22
+      margin-bottom: 4
+      phantom: true
+      layout:
+        type: horizontalBox
+        spacing: 6
+
+      UIWidget
+        id: levelBadge
+        height: 22
+        width: 70
+        background-color: #1a2535
+        border-width: 1
+        border-color: #2a3f5f
+        padding: 0 6
+        phantom: true
+        visible: false
+        layout:
+          type: horizontalBox
+          spacing: 4
+
+        Label
+          id: levelText
+          height: 22
+          font: poppins semibold 12
+          color: #5b9bd5
+          text: 0
+          text-auto-resize: true
+          text-align: center
+          phantom: true
+
+      UIWidget
+        id: lockedBadge
+        height: 22
+        width: 80
+        background-color: #1a2535
+        border-width: 1
+        border-color: #2a3f5f
+        padding: 0 6
+        phantom: true
+        visible: false
+        layout:
+          type: horizontalBox
+          spacing: 4
+
+        UIWidget
+          size: 14 14
+          margin-top: 4
+          icon-source: @fa solid 11 f023
+          icon-color: #7f8fa4
+          phantom: true
+
+        Label
+          height: 22
+          font: poppins semibold 9
+          color: #7f8fa4
+          !text: tr('Locked')
+          text-auto-resize: true
+          text-align: center
+          phantom: true
+
+    AllianceStraightBlueButton
+      id: upgradeBtn
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      margin-bottom: 15
+      size: 82 26
+      !text: tr("Upgrade")
+      font: poppins semibold 11
+
+  UIWidget
+    id: runeRightPanel
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    width: 140
+    phantom: true
+
+    NewPopupWindow
+      anchors.fill: parent
+      opacity: 0.7
+      phantom: true
+
+    UIWidget
+      id: rightLocked
+      anchors.fill: parent
+      phantom: true
+
+      UIWidget
+        id: lockedBigIcon
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 18
+        size: 28 28
+        icon-source: @fa solid 22 f023
+        icon-color: #3a4f66
+        phantom: true
+
+      Label
+        id: lockedTitle
+        anchors.top: lockedBigIcon.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 4
+        font: poppins semibold 10
+        color: #5b7a99
+        !text: tr('Locked')
+        text-auto-resize: true
+        phantom: true
+
+      Label
+        anchors.top: lockedTitle.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 30
+        margin-top: 2
+        margin-left: 6
+        margin-right: 6
+        font: poppins semibold 10
+        color: #5b7a99
+        !text: tr('Unlock this rune to activate it.')
+        text-wrap: true
+        text-align: center
+        phantom: true
+
+    UIWidget
+      id: rightAttach
+      anchors.fill: parent
+      visible: false
+      cursor: pointer
+
+      UIWidget
+        id: attachIcon
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 18
+        size: 28 28
+        icon-source: @fa solid 22 f067
+        icon-color: #2ea1f8
+        phantom: true
+
+      Label
+        id: attachTitle
+        anchors.top: attachIcon.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 4
+        font: poppins semibold 10
+        color: #2ea1f8
+        !text: tr('Attach')
+        text-auto-resize: true
+        phantom: true
+
+      Label
+        anchors.top: attachTitle.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 30
+        margin-top: 2
+        margin-left: 6
+        margin-right: 6
+        font: poppins semibold 10
+        color: #5b7a99
+        !text: tr('Tap to attach a Pokemon.')
+        text-wrap: true
+        text-align: center
+        phantom: true
+
+    UIWidget
+      id: rightEquipped
+      anchors.fill: parent
+      phantom: true
+      visible: false
+
+      UICreature
+        id: equippedCreature
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 12
+        size: 64 64
+        phantom: true
+        new-scaling: true
+        max-scale: 2.0
+        min-scale: 2.0
+
+      Label
+        id: equippedCreatureName
+        anchors.top: equippedCreature.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 2
+        font: poppins semibold 9
+        color: #ffffff
+        text-auto-resize: true
+        phantom: true
+
+    UIWidget
+      id: rightBusy
+      anchors.fill: parent
+      phantom: true
+      visible: false
+
+      UIWidget
+        id: busyBigIcon
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 10
+        size: 28 28
+        icon-source: @fa solid 22 f017
+        icon-color: #d4a017
+        phantom: true
+
+      Label
+        id: busyTitle
+        anchors.top: busyBigIcon.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 4
+        font: poppins semibold 11
+        color: #d4a017
+        !text: tr('Busy')
+        text-auto-resize: true
+        phantom: true
+
+      Label
+        anchors.top: busyTitle.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 45
+        margin-top: 2
+        margin-left: 6
+        margin-right: 6
+        font: poppins semibold 10
+        color: #7f8fa4
+        !text: tr('Another rune in this category is already active.')
+        text-wrap: true
+        text-align: center
+        phantom: true
+
+NewOpaqueWindow
+  id: rune_window
+  anchors.centerIn: parent
+  size: 620 480
+  draggable: true
+  @onEscape: modules.game_pokelog.runeWindowClose()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 280 36
+    image-source: /images/general_ui/name_base
+
+    PoppinsSemibold20
+      id: base_text
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 14
+      !text: tr('Offensive Runes')
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    size: 20 20
+    margin-top: 10
+    margin-right: 10
+    cursor: pointer
+
+  UIWidget
+    id: pointsRow
+    anchors.top: parent.top
+    anchors.right: closeButton.left
+    height: 36
+    margin-right: 8
+    phantom: true
+    layout:
+      type: horizontalBox
+      spacing: 4
+
+    Label
+      id: pointsLabel
+      height: 36
+      font: poppins semibold 12
+      color: #d4a017
+      !text: tr('PokeLog Points: %d', 0)
+      text-auto-resize: true
+      text-align: center
+      phantom: true
+
+    UIWidget
+      size: 18 18
+      margin-top: 9
+      icon-source: @fa solid 14 f005
+      icon-color: #d4a017
+      phantom: true
+
+  ScrollablePanel
+    id: runeList
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: footerRow.top
+    margin: 10 8 0 8
+    layout:
+      type: verticalBox
+      spacing: 0
+
+  PoppinsSemibold12
+    id: emptyLabel
+    anchors.centerIn: runeList
+    color: #7f8fa4
+    !text: tr('Loading runes...')
+    phantom: true
+
+  UIWidget
+    id: footerRow
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 46
+    padding: 0 8
+    phantom: true
+
+    UIWidget
+      id: resetAllBtn
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      height: 30
+      width: 210
+      cursor: pointer
+      layout:
+        type: horizontalBox
+        spacing: 4
+
+      Label
+        id: resetAllLabel
+        height: 30
+        font: poppins semibold 14
+        color: #ff5555
+        !text: tr('Reset All Runes')
+        text-align: center
+        phantom: true
+
+      UIItem
+        id: resetCostItem
+        size: 20 20
+        margin-top: 5
+        virtual: true
+        phantom: true
+        item-id: 3028
+        item-count: 50
+
+        text-align: center
+        phantom: true
+
+    UIWidget
+      id: hintIcon
+      anchors.right: hintLabel.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 4
+      size: 14 14
+      icon-source: @fa solid 11 f05a
+      icon-color: #7f8fa4
+      phantom: true
+
+    Label
+      id: hintLabel
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      font: poppins semibold 10
+      color: #7f8fa4
+      !text: tr('Tap a rune to see more details.')
+      text-auto-resize: true
+      phantom: true

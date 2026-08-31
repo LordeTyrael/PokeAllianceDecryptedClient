@@ -1,0 +1,47 @@
+BannerWidget < UIWidget
+  border-color: white
+  &updateSelected: |
+    function(self)
+      self:setBorderWidth(self:isFocused() and 1 or 0)
+    end
+  @onFocusChange: self:updateSelected()
+  @onSetup: self:updateSelected()
+
+MainWindow
+  id: aboutGuildWindow
+  !text: tr('Change Guild Banner')
+  height: 175
+  width: 300
+  visible: false
+  UIScrollArea
+    id: banners
+    size: 255 100
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    vertical-scrollbar: scrollbar
+    layout:
+      type: grid
+      cell-size: 80 80
+      cell-spacing: 0
+      num-columns: 3
+      flow: true
+  VerticalScrollBar
+    id: scrollbar
+    width: 15
+    anchors.top: banners.top
+    anchors.right: banners.right
+    anchors.bottom: banners.bottom
+  Button
+    id: buttonCancel
+    !text: tr('Cancel')
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    @onClick: modules.game_guild.closeGuildPanels()
+  Button
+    id: buttonOk
+    !text: tr('Ok')
+    width: 100
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    @onClick: modules.game_guild.changeBanner()

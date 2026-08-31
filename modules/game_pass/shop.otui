@@ -1,0 +1,127 @@
+GamePassShopItemWidget < UIWidget
+  size: 160 130
+  image-source: /images/newui/background_3
+  image-border: 15
+  focusable: true
+  cursor: pointer
+
+  UIItem
+    id: itemIcon
+    anchors.verticalCenter: outfitIcon.verticalCenter
+    anchors.horizontalCenter: outfitIcon.horizontalCenter
+    margin-top: 10
+    size: 32 32
+    virtual: true
+    phantom: true
+
+  UICreature
+    id: outfitIcon
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+    size: 60 60
+    visible: false
+    phantom: true
+    old-scaling: true
+
+  PoppinsSemibold12
+    id: itemName
+    size: 140 34
+    anchors.top: outfitIcon.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 4
+    color: #ffffff
+    !text: tr('Item Name')
+    text-align: center
+    text-auto-resize: false
+    text-wrap: true
+
+  UIWidget
+    id: itemCostPanel
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 6
+    height: 16
+    layout:
+      type: horizontalBox
+      spacing: 3
+      fit-children: true
+    phantom: true
+
+    UIWidget
+      id: costIcon
+      size: 16 16
+      image-source: /modules/game_pass/images/points
+      image-size: 16 16
+      phantom: true
+
+    Label
+      id: costValue
+      font: poppins semibold 10
+      color: #ffcc00
+      text: 0
+      text-auto-resize: true
+      phantom: true
+
+Panel
+  id: ShopPanel
+
+  UIWidget
+    id: loading
+    anchors.centerIn: parent
+    size: 28 28
+    image-source: /images/newui/loading
+    visible: false
+
+  UIScrollArea
+    id: shopItemsPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: shopSearchField.top
+    margin-top: 10
+    margin-left: 16
+    margin-right: 28
+    margin-bottom: 8
+    vertical-scrollbar: shopScrollBar
+    layout:
+      type: grid
+      cell-size: 160 130
+      num-columns: 5
+      cell-spacing: 6
+
+  AllianceVerticalScrollBar
+    id: shopScrollBar
+    anchors.top: shopItemsPanel.top
+    anchors.right: parent.right
+    anchors.bottom: shopItemsPanel.bottom
+    margin-right: 10
+    step: 100
+    pixels-scroll: true
+
+  EntergameTextEdit
+    id: shopSearchField
+    text-offset: 35 2
+    placeholder-offset: 35 -2
+    size: 175 28
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin-bottom: 12
+    margin-left: 16
+    text-align: left
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    placeholder: Search Item
+    placeholder-color: #aaaaaa
+    @onTextChange: modules.game_pass.onShopSearchChange()
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+    UIWidget
+      id: lupa
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 24 24
+      image-source: /images/game/icons/lupa

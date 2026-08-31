@@ -1,0 +1,9 @@
+Module
+  name: game_globalbuff
+  description: Global Buff Contribution System
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  sandboxed: true
+  scripts: [ globalbuff ]
+  @onLoad: init()
+  @onUnload: terminate()

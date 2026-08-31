@@ -1,0 +1,8 @@
+Module
+  name: game_pokelog
+  description: Pokelog system
+  dependencies: [ game_interface, client_hotkeys ]
+  sandboxed: true
+  scripts: [ protocol, pokelog, pokelog_tracker, rune_window ]
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,691 @@
+SkillWidget < UIWidget
+  size: 432 30
+  focusable: false
+  
+  Label
+    id: skillNameAndLevel
+    !text: tr("Skill Name Lv. 0")
+    font: poppins semibold 12
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 5
+    width: 190
+    textColor: #ffe400
+
+  UIButton
+    id: lockButton
+    size: 18 18
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    icon-source: @fa solid 14 f09c
+    icon-color: #aaaaaa
+    cursor: pointer
+
+  UIProgressRect
+    id: skillProgress
+    background-color: #2c2c2c
+    border-color: #666666
+    border-width: 1
+    anchors.left: skillNameAndLevel.right
+    anchors.right: lockButton.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 10
+    margin-right: 6
+    height: 16
+
+    UIWidget
+      id: progressFill
+      background-color: #4CAF50
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 0
+
+  Label
+    id: skillPercent
+    text: 0%
+    font: poppins semibold 12
+    text-offset: 0 1
+    anchors.centerIn: skillProgress
+    text-auto-resize: true
+    textColor: white
+
+CreatureAddonWidget < NewButton
+  size: 64 64
+  image-source: images/pokemon_background
+  image-border: 7
+  focusable: true
+
+  $focus:
+    image-source: images/pokemon_background_selected
+
+  UICreature
+    id: creature
+    size: 54 54
+    anchors.centerIn: parent
+    phantom: true
+
+LockOptionsWidget < NewOpaqueWindow
+  size: 200 240
+  anchors.centerIn: parent
+
+  NewStraightBlueButton
+    id: 1
+    !text: tr("1 Day")
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 15
+    font: poppins semibold 12
+    @onClick: modules.game_pokeballmanagement.clickOnLockButton(self)
+
+  NewStraightBlueButton
+    id: 3
+    !text: tr("3 Days")
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    font: poppins semibold 12
+    @onClick: modules.game_pokeballmanagement.clickOnLockButton(self)
+
+  NewStraightBlueButton
+    id: 7
+    !text: tr("7 Days")
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    font: poppins semibold 12
+    @onClick: modules.game_pokeballmanagement.clickOnLockButton(self)
+
+  NewStraightBlueButton
+    id: 30
+    !text: tr("30 Days")
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: prev.bottom
+    margin-top: 5
+    font: poppins semibold 12
+    @onClick: modules.game_pokeballmanagement.clickOnLockButton(self)
+
+  Label
+    anchors.left: parent.left
+    margin-left: 10
+    anchors.right: parent.right
+    margin-right: 10
+    anchors.top: prev.bottom
+    margin-top: 10
+    anchors.bottom: parent.bottom
+    margin-bottom: 15
+    text-wrap: true
+    !text: tr("Please choice how many Days you want to Lock your Pokémon.")
+    text-align: center
+    font: poppins semibold 13
+
+  NewRedCloseButton
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 10
+    margin-top: 10
+    @onClick: modules.game_pokeballmanagement.closeLockWindow()
+
+EditPokemonNameWidget < NewOpaqueWindow
+  size: 300 200
+  anchors.centerIn: parent
+  focusable: true
+
+  Label
+    id: title
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 10
+    text-align: center
+    text-wrap: true
+    text-auto-resize: true
+    !text: tr("Enter your Pokémon's new Nickname")
+    font: poppins semibold 16
+
+  EntergameTextEdit
+    id: pokemonName
+    size: 175 32
+    font: poppins semibold 12
+    anchors.top: title.bottom
+    margin-top: 5
+    text-offset: 0 5
+    padding-left: 15
+    text-align: center
+    anchors.horizontalCenter: parent.horizontalCenter
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  Label
+    id: note
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: pokemonName.bottom
+    margin-top: 5
+    text-align: center
+    text-wrap: true
+    text-auto-resize: true
+    !text: tr("Remember: This action will cost you 1 Diamond.")
+    textColor: #db021f
+    font: poppins semibold 14
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 10
+    margin-top: 10
+    @onClick: modules.game_pokeballmanagement.closeOpenEditName()
+
+  NewStraightBlueButton
+    id: confirmButton
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: note.bottom
+    margin-top: 10
+    !text: tr("Confirm")
+    @onClick: modules.game_pokeballmanagement.confirmEditName()
+
+CreatureAuraWidget < NewButton
+  size: 64 64
+  image-source: images/pokemon_background
+  image-border: 7
+  focusable: true
+
+  $focus:
+    image-source: images/pokemon_background_selected
+
+  UIWidget
+    id: lockButton
+    size: 10 10
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: images/locked_icon
+    margin-left: 5
+    margin-top: 5
+    phantom: true
+
+  UICreature
+    id: pokemon
+    size: 64 64
+    anchors.centerIn: parent
+    phantom: true
+    new-scaling: true
+
+  UIWidget
+    id: blockImage
+    size: 32 32
+    image-source: images/none_background
+    anchors.centerIn: parent
+    visible: false
+    phantom: true
+
+UIWindow
+  @onEscape: modules.game_pokeballmanagement.destroyPokeballManagementWindow()
+  id: pokeballManagementWindow    
+  size: 730 460
+  draggable: true
+  anchors.centerIn: parent
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    phantom: true
+    image-source: images/background
+
+  UIWidget
+    id: titleBackground
+    size: 368 36
+    anchors.left: parent.left
+    anchors.top: parent.top
+    image-source: images/title_background
+
+    UIWidget
+      id: titleIcon
+      size: 29 29
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      image-source: images/title_icon
+
+    Label
+      id: titleName
+      anchors.verticalCenter: titleIcon.verticalCenter
+      text-auto-resize: true
+      anchors.left: prev.right
+      margin-left: 5
+      font: poppins semibold 20
+      phantom: true
+      !text: tr("Customize Pokéball")
+
+  Label
+    id: panelName
+    font: poppins semibold 16
+    anchors.left: optionPanel.left
+    anchors.bottom: optionPanel.top
+    margin-bottom: 5
+    !text: tr("Auras")
+    textColor: #ffe400
+    text-auto-resize: true
+
+  UIScrollArea
+    id: optionPanel
+    padding: 1
+    size: 456 278
+    anchors.left: parent.left
+    anchors.top: titleBackground.bottom
+    margin-left: 25
+    margin-top: 55
+    vertical-scrollbar: scrollableBar
+    visible: true
+    phantom: true
+    padding: 10
+    image-source: images/panel_background
+  
+    layout:
+      type: grid
+      cell-size: 64 64
+      num-columns: 6
+      cell-spacing: 8
+
+  UIScrollArea
+    id: trainingPanel
+    padding: 1
+    size: 456 300
+    anchors.left: parent.left
+    anchors.top: titleBackground.bottom
+    margin-left: 25
+    margin-top: 55
+    vertical-scrollbar: trainingScrollBar
+    visible: false
+    phantom: true
+    padding: 10
+    image-source: images/panel_background
+  
+    layout:
+      type: verticalBox
+      spacing: 5
+
+  UIWidget
+    id: addonsPanel
+    size: 456 320
+    anchors.left: parent.left
+    anchors.top: titleBackground.bottom
+    margin-left: 25
+    margin-top: 55
+    visible: false
+    phantom: true
+    padding: 10
+
+    UIWidget
+      id: availableAddons
+      size: 430 175
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 10
+      margin-left: 10
+      image-source: images/panel_background
+
+      layout:
+        type: grid
+        cell-size: 64 64
+        num-columns: 6
+        cell-spacing: 8
+
+    UIWidget
+      id: colorBoxPanel
+      size: 250 110
+      anchors.top: availableAddons.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      margin-left: 10
+      layout:
+        type: grid
+        cell-size: 13 13
+        cell-spacing: 3
+        num-columns: 19
+        num-lines: 7
+
+    UIWidget
+      id: clotheButtons
+      size: 50 100
+      anchors.right: colorBoxPanel.left
+      anchors.verticalCenter: colorBoxPanel.verticalCenter
+      margin-right: 5
+
+      AddonsButton
+        id: head
+        size: 50 25
+        anchors.left: parent.left
+        anchors.top: parent.top
+        text: Head
+        font: poppins semibold 10
+        checked: true
+        color: white
+
+        $focus:
+          color: #03b1fc
+
+      AddonsButton
+        id: body
+        size: 50 25
+        anchors.left: head.left
+        anchors.top: prev.bottom
+        text: Body
+        font: poppins semibold 10
+        checked: true
+        color: white
+
+        $focus:
+          color: #03b1fc
+
+      AddonsButton
+        id: legs
+        size: 50 25
+        anchors.left: body.left
+        anchors.top: prev.bottom
+        text: Legs
+        font: poppins semibold 10
+        checked: true
+        color: white
+
+        $focus:
+          color: #03b1fc
+
+      AddonsButton
+        id: feet
+        size: 50 25
+        anchors.left: legs.left
+        anchors.top: prev.bottom
+        text: Feet
+        font: poppins semibold 10
+        checked: true
+        color: white
+
+        $focus:
+          color: #03b1fc
+
+  AllianceVerticalScrollBar
+    id: scrollableBar
+    anchors.top: optionPanel.top
+    anchors.bottom: optionPanel.bottom
+    anchors.right: optionPanel.right
+    margin-right: 2
+    margin-top: 5
+    margin-bottom: 5
+    step: 30
+    pixels-scroll: true
+    visible: true
+
+  AllianceVerticalScrollBar
+    id: trainingScrollBar
+    anchors.top: trainingPanel.top
+    anchors.bottom: trainingPanel.bottom
+    anchors.right: trainingPanel.right
+    margin-right: 4
+    margin-top: 5
+    margin-bottom: 5
+    step: 30
+    pixels-scroll: true
+    visible: false
+
+  UIWidget
+    id: buttonsPanel
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    size: 195 42
+    image-source: images/buttons_background
+    image-border: 25
+
+    NewButton
+      id: auras
+      size: 28 28
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      image-source: images/select_button_background
+      margin-left: 15
+      !tooltip: tr("Auras")
+      @onClick: modules.game_pokeballmanagement.showAurasTab()
+
+      UIWidget
+        id: auras_icon
+        size: 20 24
+        image-source: images/auras_icon
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        phantom: true
+        image-color: white
+
+    NewButton
+      id: addons
+      size: 28 28
+      anchors.left: auras.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 8
+      image-source: images/button_background
+      !tooltip: tr("Addons")
+      @onClick: modules.game_pokeballmanagement.showAddonsTab()
+
+      UIWidget
+        id: addons_icon
+        size: 19 22
+        image-source: images/addons_icon
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        phantom: true
+
+    NewButton
+      id: pokeballs
+      size: 28 28
+      anchors.left: addons.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 8
+      image-source: images/button_background
+      !tooltip: tr("Pokeballs (Comming Soon)")
+
+      UIWidget
+        id: pokeballs_icon
+        size: 19 22
+        image-source: images/pokeballs_icon
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        phantom: true
+
+    NewButton
+      id: capsules
+      size: 28 28
+      anchors.left: pokeballs.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 8
+      image-source: images/button_background
+      !tooltip: tr("Capsules (Comming Soon)")
+
+      UIWidget
+        id: capsules_icon
+        size: 19 22
+        image-source: images/capsules_icon
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        phantom: true
+
+    NewButton
+      id: training
+      size: 28 28
+      anchors.left: capsules.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 8
+      image-source: images/button_background
+      !tooltip: tr("Training")
+      @onClick: modules.game_pokeballmanagement.showTrainingTab()
+
+      UIWidget
+        id: training_icon
+        size: 19 19
+        image-source: images/star_icon
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        phantom: true
+
+  UIWidget
+    id: rightPanel
+    width: 210
+    anchors.top: panelName.top
+    anchors.bottom: optionPanel.bottom
+    anchors.left: optionPanel.right
+    margin-left: 20
+    padding: 5
+    phantom: true
+
+    Label
+      id: pokemonName
+      text-auto-resize: true
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      font: poppins semibold 18
+      margin-right: 12
+      !text: tr("Pokémon Name")
+      phantom: true
+
+    NewButton
+      id: eraseButton
+      size: 12 12
+      anchors.verticalCenter: pokemonName.verticalCenter
+      anchors.right: parent.right
+      margin-right: 5
+      image-source: images/clear_name_icon
+      !tooltip: tr("Clean Pokemon Name")
+      @onClick: modules.game_pokeballmanagement.sendConfirmCleanName()
+
+    NewButton
+      id: editName
+      size: 12 12
+      anchors.verticalCenter: eraseButton.verticalCenter
+      anchors.right: eraseButton.left
+      margin-right: 5
+      image-source: images/edit_name_icon
+      !tooltip: tr("Edit Name")
+      @onClick: modules.game_pokeballmanagement.openEditName()
+
+    NewButton
+      id: lockPokemon
+      size: 18 22
+      anchors.right: eraseButton.right
+      anchors.bottom: pokemonOutfit.bottom
+      image-source: images/lock
+      !tooltip: tr("Lock your Pokémon")
+      @onClick: modules.game_pokeballmanagement.openLockWindow()
+
+    UICreature
+      id: pokemonOutfit
+      size: 96 96
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: pokemonName.bottom
+      margin-top: 20
+      new-scaling: true
+
+    NewButton
+      id: rotateButton
+      size: 18 18
+      anchors.horizontalCenter: pokemonOutfit.horizontalCenter
+      anchors.top: pokemonOutfit.bottom
+      margin-top: 22
+      margin-right: 18
+      image-source: images/rotate_icon
+      @onClick: modules.game_pokeballmanagement.setRotate()
+
+    NewButton
+      id: walkButton
+      size: 18 18
+      anchors.horizontalCenter: pokemonOutfit.horizontalCenter
+      anchors.top: pokemonOutfit.bottom
+      margin-top: 22
+      margin-left: 18
+      image-source: images/walk_icon
+      @onClick: modules.game_pokeballmanagement.setWalk()
+
+    Label
+      id: equipped
+      text-auto-resize: true
+      font: poppins semibold 16
+      anchors.horizontalCenter: pokemonOutfit.horizontalCenter
+      anchors.top: walkButton.bottom
+      margin-top: 25
+      !text: tr("Equipped")
+
+    UIWidget
+      id: equippedPanel
+      size: 200 48
+      anchors.horizontalCenter: pokemonOutfit.horizontalCenter
+      anchors.top: equipped.bottom
+      margin-top: 5
+
+      UIItem
+        id: heldX
+        size: 48 48
+        anchors.left: parent.left
+        anchors.top: parent.top
+        image-source: images/equipped_background
+        image-border: 7
+        virtual: true
+
+      UIItem
+        id: heldY
+        size: 48 48
+        anchors.left: prev.right
+        margin-left: 4
+        anchors.top: parent.top
+        image-source: images/equipped_background
+        image-border: 7
+        virtual: true
+
+      UIWidget
+        id: effectBackground
+        size: 48 48
+        anchors.left: prev.right
+        margin-left: 4
+        anchors.top: parent.top
+        image-source: images/equipped_background
+        image-border: 7
+
+      UIEffect
+        id: capsuleEffect
+        size: 48 48
+        anchors.left: effectBackground.left
+        margin-left: 4
+        margin-top: 10
+        anchors.top: parent.top
+
+      UIItem
+        id: pokeballColor
+        size: 48 48
+        anchors.left: effectBackground.right
+        margin-left: 4
+        anchors.top: parent.top
+        image-source: images/equipped_background
+        image-border: 7
+
+  NewButton
+    id: confirmButton
+    size: 156 25
+    !text: tr("Confirm")
+    font: poppins semibold 14
+    anchors.horizontalCenter: rightPanel.horizontalCenter
+    anchors.top: rightPanel.bottom
+    image-source: images/confirm_button
+    @onClick: modules.game_pokeballmanagement.onConfirmWindow()
+
+  NewButton
+    id: closeButton
+    size: 20 20
+    image-source: /images/newui/close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-right: 10
+    margin-top: 10
+    @onClick: modules.game_pokeballmanagement.destroyPokeballManagementWindow()
+
+  Label
+    anchors.bottom: optionPanel.top
+    margin-bottom: 5

@@ -1,0 +1,170 @@
+// Janela de criar marca no minimapa, no visual pka-redesign (data/styles/61-pka-redesign.otui).
+//
+// Usa o mesmo vocabulario do entergame redesenhado: card-* como fundo, PkaCardTitle/PkaCardSubtitle
+// no cabecalho, PkaFieldLabel + PkaInput nos campos e PkaPrimaryButton/PkaGhostButton no rodape.
+//
+// Sobre os icones: vem de Font Awesome via MapFlags (gamelib/mapflags.lua), definidos pelo
+// createFlagWindow no uiminimap.lua -- a MESMA tabela que o addFlag usa para desenhar a marca no
+// minimapa. Por isso o FlagButton nao declara icon-source nem icon-clip.
+//
+// Sobre os ids: flag0..flag19, casando com o markType (MAPMARK_* de src/enums.h). A versao anterior
+// numerava flag1..flag20 enquanto o laco lia flag0..flag19 -- o flag0 nao existia, o flag20 ficava
+// fora do radio group (botao morto) e cada botao salvava o markType do vizinho.
+
+FlagButton < UICheckBox
+  size: 30 30
+  image-source: /modules/client_entergame/images/redesign/soft-panel
+  image-border: 10
+  // icon fills the button, so offset is 0
+  icon-size: 30 30
+  icon-offset: 0 0
+  text:
+  cursor: pointer
+  change-cursor-image: true
+
+  $hover !checked:
+    image-color: #3aa6f6
+
+  $checked:
+    image-source: /modules/client_entergame/images/redesign/segment-on
+    image-border: 10
+
+FlagWindow < UIWindow
+  id: flagWindow
+  size: 420 340
+  image-border: 24
+  padding: 26
+  focusable: true
+
+  PkaCardTitle
+    id: title
+    !text: tr('Create Map Mark')
+    anchors.top: parent.top
+    anchors.left: parent.left
+
+  PkaCardSubtitle
+    id: subtitle
+    !text: tr('Pick an icon and describe this spot.')
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 2
+
+  // ---- posicao -------------------------------------------------------------------------
+  PkaFieldLabel
+    id: positionLabel
+    !text: tr('Position')
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 18
+
+  PkaInfoBox
+    id: positionBox
+    height: 34
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+
+    Label
+      id: position
+      font: poppins semibold 13
+      color: #e9eefb
+      text-auto-resize: true
+      phantom: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 13
+
+  // ---- descricao -----------------------------------------------------------------------
+  PkaFieldLabel
+    !text: tr('Description')
+    anchors.top: positionBox.bottom
+    anchors.left: parent.left
+    margin-top: 14
+
+  PkaInput
+    id: description
+    height: 36
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+
+  // ---- icones --------------------------------------------------------------------------
+  PkaFieldLabel
+    !text: tr('Icon')
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 14
+
+  // 20 markTypes em 10 colunas x 2 linhas.
+  // Largura: 10*30 + 9*4 = 336. Altura: 2*30 + 1*4 = 64.
+  // layout de grade em vez de anchors encadeadas: com prev.right um botao que mudasse de tamanho
+  // arrastava a linha inteira.
+  UIWidget
+    id: flagGrid
+    size: 336 64
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 8
+    layout:
+      type: grid
+      cell-size: 30 30
+      cell-spacing: 4
+      num-columns: 10
+
+    FlagButton
+      id: flag0
+    FlagButton
+      id: flag1
+    FlagButton
+      id: flag2
+    FlagButton
+      id: flag3
+    FlagButton
+      id: flag4
+    FlagButton
+      id: flag5
+    FlagButton
+      id: flag6
+    FlagButton
+      id: flag7
+    FlagButton
+      id: flag8
+    FlagButton
+      id: flag9
+    FlagButton
+      id: flag10
+    FlagButton
+      id: flag11
+    FlagButton
+      id: flag12
+    FlagButton
+      id: flag13
+    FlagButton
+      id: flag14
+    FlagButton
+      id: flag15
+    FlagButton
+      id: flag16
+    FlagButton
+      id: flag17
+    FlagButton
+      id: flag18
+    FlagButton
+      id: flag19
+
+  // ---- acoes ---------------------------------------------------------------------------
+  PkaGhostButton
+    id: cancelButton
+    !text: tr('Cancel')
+    width: 172
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+
+  PkaPrimaryButton
+    id: okButton
+    !text: tr('Create Mark')
+    width: 172
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right

@@ -1,0 +1,108 @@
+ShopItemCard < UIWidget
+  size: 175 160
+  opacity: 0.90
+  focusable: false
+
+  UIWidget
+    id: cardBackground
+    size: 175 145
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    image-source: /images/modules/store_ui/item_background
+    phantom: true
+
+  UIItem
+    id: item
+    size: 48 48
+    anchors.top: parent.top
+    margin-top: 25
+    anchors.horizontalCenter: parent.horizontalCenter
+    phantom: true
+
+  UIItem
+    id: priceIcon
+    size: 24 24
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 11
+
+  Label
+    id: oldPrice
+    anchors.verticalCenter: priceIcon.verticalCenter
+    anchors.left: priceIcon.right
+    color: #ff3b30
+    text-auto-resize: true
+    visible: false
+    phantom: true
+
+  UIWidget
+    id: oldPriceStrike
+    height: 1
+    anchors.left: oldPrice.left
+    anchors.right: oldPrice.right
+    anchors.verticalCenter: oldPrice.verticalCenter
+    background-color: #ff3b30
+    visible: false
+    phantom: true
+
+  UIWidget
+    id: price
+    width: 25
+    text-align: center
+    text-auto-resize: true
+    anchors.verticalCenter: priceIcon.verticalCenter
+    anchors.left: oldPrice.right
+    margin-left: 4
+
+  UIWidget
+    id: buy_background
+    size: 175 45
+    image-source: /images/modules/store_ui/buy_background
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+
+  NewButton
+    id: buyWidget
+    anchors.horizontalCenter: parent.horizontalCenter
+    size: 110 23
+    image-source: /images/modules/store_ui/buy_button
+    anchors.bottom: parent.bottom
+    margin-bottom: 10
+    !text: tr("Buy")
+
+  Label
+    id: name
+    size: 175 60
+    anchors.top: item.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: buy_background.top
+    margin-left: 10
+    margin-right: 10
+    margin-top: 3
+    text-wrap: true
+    text-align: center
+    font: poppins semibold 12
+    text-auto-resize: false
+    phantom: true
+
+// Donation forms (donatepix / donatecreditcard). label_search is 260x32: the 9-slice keeps
+// its rounded corners crisp at any width, and 32 is its native height, so the art never
+// stretches on either axis.
+DonateFieldLabel < Label
+  height: 14
+  anchors.left: parent.left
+  margin-left: 30
+  text-auto-resize: true
+
+DonateField < TextEdit
+  height: 32
+  anchors.left: parent.left
+  anchors.right: parent.right
+  margin-left: 30
+  margin-right: 30
+  margin-top: 3
+  image-source: /modules/game_store/newimages/label_search
+  image-border: 10
+  color: white

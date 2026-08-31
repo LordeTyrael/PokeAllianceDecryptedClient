@@ -1,0 +1,10 @@
+Module
+  name: game_analyzer
+  description: Analyzer system
+  author: PokeAlliance
+  website: https://pokealliance.com
+  sandboxed: true
+  autoload: true
+  scripts: [ analyzer ]
+  @onLoad: init()
+  @onUnload: terminate()

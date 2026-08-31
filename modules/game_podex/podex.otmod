@@ -1,0 +1,7 @@
+Module
+  name: game_podex
+  description: Gerencia atributos do jogador, ativos, e suas respectivas raridades.
+  sandboxed: true
+  scripts: [ podex ]
+  @onLoad: init()
+  @onUnload: terminate()

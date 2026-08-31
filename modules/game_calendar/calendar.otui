@@ -1,0 +1,198 @@
+NewOpaqueWindow
+  id: imageWindow 
+  size: 450 410
+  anchors.centerIn: parent
+  visible: false
+  @onEscape: self:hide()
+  margin-bottom: 100
+
+  UIWidget
+    id: titleBackground
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/modules/store_ui/name_base
+    phantom: true
+
+    UIWidget
+      id: iconWidget
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 21 17
+      phantom: true
+      image-source: images/icon
+
+    Label
+      id: title
+      anchors.left: iconWidget.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Monthly Calendar")
+      margin-top: 2
+      font: poppins semibold 20
+      text-auto-resize: true
+
+  UIWidget
+    id: calendarTopbar
+    size: 302 60
+    anchors.top: titleBackground.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+
+    AllianceSoftBlackButton
+      id: free
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-right: 70
+      size: 105 30
+      !text: tr("Free")
+      font: poppins semibold 14
+      @onClick: showCalendarInfo("free")
+      color: #ffffff
+
+      $hover !on:
+        color: #24fc03
+
+    AllianceSoftBlackButton
+      id: premium
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-left: 70
+      size: 105 30
+      !text: tr("Premium")
+      font: poppins semibold 14
+      @onClick: showCalendarInfo("premium")
+      color: #ffffff
+
+      $hover !on:
+        color: #24fc03
+
+  UIWidget
+    id: calendarRewards
+    size: 348 150
+    anchors.top: calendarTopbar.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+    layout:
+      type: grid
+      cell-size: 48 48
+      num-columns: 7
+      num-lines: 3
+      cell-spacing: 2
+
+  UIWidget
+    id: cadeadoBlockCalendarRewards
+    size: 348 150
+    anchors.fill: calendarRewards
+    image-source: images/cadeado
+    opacity: 0.8
+
+  Button
+    id: blockCalendarRewards
+    size: 348 150
+    anchors.fill: calendarRewards
+    image-source: /images/ui/oldPanel
+    opacity: 0.8
+
+    $hover !on:
+      opacity: 0
+
+    @onClick: modules.game_calendar.buyPremiumCalendar()
+
+  UIWidget
+    id: calendarAdittionalRewards
+    size: 250 60
+    anchors.top: calendarRewards.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    text-align: center
+    text-wrap: true
+
+  UIItem
+    id: calendarAdittionalRewardItem
+    size: 38 38
+    anchors.verticalCenter: calendarAdittionalRewards.verticalCenter
+    anchors.right: calendarAdittionalRewards.left
+
+
+  AllianceSoftBlackButton
+    id: claim
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 16
+    size: 105 30
+    !text: tr("Claim")
+    font: poppins semibold 14
+    color: #ffffff
+    opacity: 1.0
+    @onClick: collectReward()
+
+    $hover !on:
+      color: #24fc03
+
+    $disabled:
+      color: #7a8794
+      opacity: 0.45
+
+  Label
+    id: opCostWarning
+    anchors.top: calendarAdittionalRewards.bottom
+    anchors.bottom: claim.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 20
+    margin-right: 20
+    margin-top: 2
+    margin-bottom: 4
+    text-align: center
+    text-wrap: true
+    text-auto-resize: false
+    font: poppins semibold 12
+    color: #f5b342
+    !text: tr("Note: claiming today will cost 100 Online Points (delayed reward).")
+    visible: false
+
+  NewRedCloseButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_calendar.hidecalendarWindow()
+
+ItemCel < UIWidget
+  id: itemCel
+  size: 48 48
+
+  UIItem
+    id: celItem
+    size: 48 48
+    font: verdana-11px-rounded
+    padding: 1
+    image-source: /images/ui/newItem
+    font: verdana-11px-rounded
+    border-color: white
+    color: white
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: parent.top
+
+  UICreature
+    id: celOutfit
+    size: 48 48
+    scale: 1
+    old-scaling: true
+    image-source: /images/ui/newItem
+    anchors.centerIn: parent
+
+  Label
+    id: celText
+    anchors.top: prev.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 4
+    margin-right: 4
+    text-align: right
+    !text: tr("1")
+    font: verdana-11px-rounded
+  
+    $disabled:
+      color: #646464

@@ -1,0 +1,387 @@
+AchievementPokemonEntry < UIWidget
+  size: 86 96
+  phantom: true
+
+  UICreature
+    id: creature
+    size: 56 56
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    fixed-creature-size: true
+    new-scaling: true
+    max-scale: 1.3
+    min-scale: 1.3
+    phantom: true
+
+  Label
+    id: pokemonName
+    height: 32
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 2
+    text-align: center
+    text-wrap: true
+    font: poppins semibold 11
+    phantom: true
+
+AchievementPokemonTooltip < UITooltip
+  size: 320 376
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 8
+  phantom: true
+  follow-mouse-offset: -20 -20
+
+  Label
+    id: title
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    height: 22
+    font: poppins bold 13
+    text-align: center
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: progressText
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    height: 18
+    margin-top: 2
+    font: poppins semibold 12
+    text-align: center
+    text-auto-resize: true
+    color: #aaaaaa
+    phantom: true
+
+  ScrollablePanel
+    id: pokemonList
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 296
+    margin-top: 6
+    margin-right: 16
+    vertical-scrollbar: pokemonScroll
+    layout:
+      type: grid
+      cell-size: 86 96
+      cell-spacing: 4
+      num-columns: 3
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: pokemonScroll
+    anchors.top: pokemonList.top
+    anchors.bottom: pokemonList.bottom
+    anchors.right: parent.right
+    width: 12
+    step: 96
+    pixels-scroll: true
+
+  Label
+    id: footerLabel
+    anchors.top: pokemonList.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    height: 16
+    margin-top: 4
+    font: poppins semibold 12
+    color: #aaaaaa
+    !text: tr("Hold Shift to Inspect")
+    text-auto-resize: true
+    phantom: true
+
+CategoryButton < NewButton
+  size: 172 26
+  image-source: new_images/base_category
+  focusable: true
+
+  $focus:
+    image-source: new_images/selected_category
+
+  @onClick: modules.game_achievements.requestAchivementsCategory(self)
+
+  UIWidget
+    id: icon
+    size: 18 18
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 5
+    phantom: true
+
+  Label
+    id: name
+    anchors.left: icon.right
+    margin-left: 8
+    anchors.verticalCenter: parent.verticalCenter
+    text-auto-resize: true
+    font: poppins regular 15
+    phantom: true
+
+AchievementWidget < UIWidget
+  size: 463 68
+  focusable: false
+
+  UIWidget
+    id: baseWidget
+    size: 445 68
+    anchors.right: parent.right
+    anchors.top: parent.top
+    padding-left: 45
+    padding-top: 3
+    image-source: new_images/achievement_base
+
+    NewButton
+      id: favoriteButton
+      anchors.right: parent.right
+      anchors.top: parent.top
+      margin-right: 5
+      margin-top: 5
+      size: 15 13
+      opacity: 1.0
+
+      @onHoverChange:  |
+        if self:isHovered() then
+          local imageFavorite = self.isFavorite and "new_images/favorite_select" or "new_images/favorite"
+          self:setImageSource(imageFavorite)
+          self:setOpacity(0.7)
+        else
+          local imageFavorite = self.isFavorite and "new_images/favorite" or "new_images/favorite_select"
+          self:setImageSource(imageFavorite)
+          self:setOpacity(1.0)
+        end
+
+      @onClick: modules.game_achievements.setFavorite(self:getParent())
+
+    Label
+      id: achievementName
+      font: poppins semibold 16
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.top: parent.top
+
+    Label
+      id: achievementDescription
+      font: poppins semibold 12
+      height: 18
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: achievementName.bottom
+
+    UIWidget
+      id: progressBackground
+      size: 389 18
+      anchors.left: achievementDescription.left
+      anchors.top: achievementDescription.bottom
+      image-source: new_images/progress_background
+      margin-top: 2
+
+      UIWidget
+        id: progressBarBackground
+        size: 352 8
+        anchors.left: parent.left
+        margin-left: 5
+        anchors.verticalCenter: parent.verticalCenter
+        image-source: new_images/progress_base
+
+        UIProgressBar
+          id: percentProgress
+          size: 352 8
+          anchors.left: parent.left
+          image-border: 7
+          anchors.verticalCenter: parent.verticalCenter
+          font: poppins semibold 11
+          image-source: new_images/fill
+
+      Label
+        id: progressPercentText
+        anchors.verticalCenter: progressBarBackground.verticalCenter
+        anchors.left: progressBarBackground.right
+        text-offset: 0 2
+        margin-left: 4
+        text-auto-resize: true
+        font: poppins semibold 12
+
+      NewButton
+        id: collectButton
+        size: 69 18
+        anchors.right: parent.right
+        anchors.top: parent.top
+        !text: tr('Collect')
+        visible: false
+        image-source: new_images/collect
+        text-align: center
+        font: poppins semibold 11
+        @onClick: modules.game_achievements.collectReward(self:getParent())
+
+      UIWidget
+        id: collectWidget
+        visible: false
+        anchors.fill: progressBarBackground
+        phantom: true
+
+        UIWidget
+          id: icon
+          size: 13 12
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.left: parent.left
+          margin-left: 2
+          image-source: new_images/present
+
+        Label
+          id: collectText
+          anchors.verticalCenter: icon.verticalCenter
+          anchors.left: icon.right
+          margin-left: 8
+          text-auto-resize: true
+          text-offset: 0 2
+          !text: tr("Ready to collect")
+          font: poppins semibold 11
+
+  UIWidget
+    id: achievementIcon
+    size: 57 65
+    anchors.left: parent.left
+    anchors.verticalCenter: baseWidget.verticalCenter
+
+    UICreature
+      id: creatureIcon
+      size: 64 64
+      anchors.centerIn: parent
+
+    UIItem
+      id: itemIcon
+      size: 32 32
+      anchors.centerIn: parent
+
+    UIWidget
+      id: itemImage
+      size: 48 48
+      anchors.centerIn: parent
+
+NewOpaqueWindow
+  id: achievements
+  size: 743 460
+  @onEscape: modules.game_achievements.close()
+  anchors.centerIn: parent
+  visible: false
+  draggable: true
+
+  NewOpaqueWindow
+    id: background
+    anchors.fill: parent
+    phantom: true
+    focusable: false
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: new_images/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 27 29
+      image-source: new_images/base_icon
+
+    PoppinsSemibold20
+      id: base_text
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      !text: tr("Achievements")
+
+  NewOpaqueWindow
+    id: categoryBackground
+    anchors.fill: categoryArea
+    phantom: true
+    focusable: false
+
+  UIWidget
+    id: categoryArea
+    size: 181 389
+    anchors.left: parent.left
+    anchors.top: base_name.bottom
+    margin-left: 20
+    margin-top: 16
+    padding-left: 5
+    padding-right: 4
+    padding-top: 5
+    padding-bottom: 5
+    auto-focus: first
+    opacity: 0.75
+
+    layout:
+      type: grid
+      cell-size: 172 26
+      cell-spacing: 3
+      flow: true
+
+  PoppinsSemibold20
+    id: selectedCategoryName
+    !text: tr("General")
+    anchors.bottom: achievementPanel.top
+    anchors.left: categoryArea.right
+    margin-left: 16
+    margin-bottom: 5
+    textColor: #ffe400
+
+  ScrollablePanel
+    id: achievementPanel
+    size: 507 363
+    focusable: false
+    anchors.left: categoryArea.right
+    anchors.bottom: categoryArea.bottom
+    margin-left: 16
+    vertical-scrollbar: achievementsScroll
+    padding-left: 12
+    padding-right: 32
+    padding-top: 10
+    padding-bottom: 10
+    auto-focus: none
+    image-source: new_images/background_achievement
+    image-border: 12
+    layout:
+      type: grid
+      num-columns: 1
+      cell-size: 463 68
+      cell-spacing: 10
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: achievementsScroll
+    anchors.top: achievementPanel.top
+    anchors.bottom: achievementPanel.bottom
+    anchors.right: achievementPanel.right
+    margin-right: 10
+    margin-top: 10
+    margin-bottom: 10
+    step: 30
+    pixels-scroll: true
+
+  UIWidget
+    id: loadingScreen
+    anchors.fill: parent
+    focusable: false
+    image-source: new_images/background
+    image-border: 12
+
+    UIWidget
+      size: 64 64
+      anchors.centerIn: parent
+      image-source: new_images/loading
+      phantom: true
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_achievements.close()

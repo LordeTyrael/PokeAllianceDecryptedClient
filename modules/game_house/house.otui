@@ -1,0 +1,104 @@
+MainWindow
+  id: houseWindow
+  text-offset: 40 5
+  text-align: topLeft
+  color: #e8c05e
+  font: sans-bold-16px
+  !text: tr('Teste')
+  size: 337 215
+  image-source: images/window
+  anchors.centerIn: parent
+
+  Label
+    id: owner
+    color: #e8c05e
+    text-auto-resize: true
+    !text: tr('Owner:')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 22
+    margin-left: 10
+
+  Label
+    id: owner_name
+    color: white
+    text-auto-resize: true
+    text: -
+    anchors.top: owner.top
+    anchors.left: owner.left
+    margin-top: 0
+    margin-left: 77
+
+  Label
+    id: beds
+    color: #e8c05e
+    text-auto-resize: true
+    !text: tr('Beds:')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 47
+    margin-left: 10
+
+  Label
+    id: beds_count
+    color: white
+    text-auto-resize: true
+    text: 0
+    anchors.top: beds.top
+    anchors.left: beds.left
+    margin-top: 0
+    margin-left: 44
+
+  Label
+    id: price
+    color: #e8c05e
+    text-auto-resize: true
+    !text: tr('Price:')
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 69
+    margin-left: 10
+
+  Label
+    id: price_required
+    color: white
+    text-auto-resize: true
+    text: 0
+    anchors.top: price.top
+    anchors.left: price.left
+    margin-top: 0
+    margin-left: 39
+
+  UIButton
+    id: close
+    text-align: center
+    text-offset: 2 2
+    color: #e8c05e
+    !text: tr('Close')
+    image-source: images/button
+    size: 91 41
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 133
+    margin-left: 97
+    @onClick: naoexibir()
+
+    $hover:
+      image-source: images/button_hover
+
+  UIButton
+    id: buy_house
+    tooltip: Comprar esta casa
+    size: 34 39
+    icon-size: 16 11
+    icon: images/dollar
+    icon-offset: 9 14
+    image-source: images/button2
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 93
+    margin-left: 268
+    @onClick: g_game.talk("!buyhouse")
+
+    $hover:
+      image-source: images/button2_hover

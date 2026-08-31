@@ -1,0 +1,9 @@
+Module
+  name: game_dailies
+  description: 
+  author: Tanjiro mamada
+  website: 
+  sandboxed: true
+  scripts: [ dailies ]
+  @onLoad: init()
+  @onUnload: terminate()

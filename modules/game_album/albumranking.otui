@@ -1,0 +1,186 @@
+AlbumRankCell < UIWidget
+  font: poppins semibold 13
+  color: #e7edf3
+  text-align: center
+
+AlbumRankHeadCell < UIWidget
+  font: poppins bold 12
+  color: #8fb7d6
+  text-align: center
+
+AlbumRankRow < UIWidget
+  size: 546 34
+
+  AlbumRankCell
+    id: pos
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    width: 46
+
+  AlbumRankCell
+    id: nick
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    width: 200
+    text-align: left
+    text-offset: 12 0
+
+  AlbumRankCell
+    id: time
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    width: 160
+
+  AlbumRankCell
+    id: world
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    width: 140
+
+  AllianceSeparator
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+
+NewOpaqueWindow
+  id: albumRankingWindow
+  size: 600 470
+  anchors.centerIn: parent
+  focusable: true
+  visible: false
+  @onEscape: modules.game_album.closeRanking()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 220 36
+    image-source: /images/general_ui/name_base
+
+    UIWidget
+      id: titleIcon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 14
+      size: 18 18
+      icon-source: @fa solid 16 f091
+      icon-color: #ffd24a
+      phantom: true
+
+    Label
+      id: title
+      anchors.left: titleIcon.right
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 10
+      margin-top: 2
+      font: poppins semibold 16
+      color: #ffffff
+      text-auto-resize: true
+      !text: tr("Ranking")
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 12
+    @onClick: modules.game_album.closeRanking()
+
+  UIWidget
+    id: header
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-left: 24
+    margin-top: 16
+    size: 546 24
+
+    AlbumRankHeadCell
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      width: 46
+      !text: tr("#")
+
+    AlbumRankHeadCell
+      anchors.left: prev.right
+      anchors.verticalCenter: parent.verticalCenter
+      width: 200
+      text-align: left
+      text-offset: 12 0
+      !text: tr("Nickname")
+
+    AlbumRankHeadCell
+      anchors.left: prev.right
+      anchors.verticalCenter: parent.verticalCenter
+      width: 160
+      !text: tr("Completed")
+
+    AlbumRankHeadCell
+      anchors.left: prev.right
+      anchors.verticalCenter: parent.verticalCenter
+      width: 140
+      !text: tr("World")
+
+  ScrollablePanel
+    id: content
+    anchors.top: header.bottom
+    anchors.left: parent.left
+    margin-left: 24
+    margin-top: 4
+    size: 546 340
+    vertical-scrollbar: contentScrollbar
+    layout: verticalBox
+
+  AllianceVerticalScrollBar
+    id: contentScrollbar
+    anchors.top: content.top
+    anchors.bottom: content.bottom
+    anchors.left: content.right
+    margin-left: 6
+    step: 34
+
+  Label
+    id: emptyState
+    anchors.horizontalCenter: content.horizontalCenter
+    anchors.verticalCenter: content.verticalCenter
+    font: poppins semibold 16
+    color: #88909a
+    text-align: center
+    text-auto-resize: true
+    visible: false
+    !text: tr("No players yet")
+
+  UIWidget
+    id: rankPrev
+    size: 32 32
+    anchors.verticalCenter: rankPageLabel.verticalCenter
+    anchors.right: rankPageLabel.left
+    margin-right: 22
+    image-source: /images/modules/doublearrow_left
+    image-color: #ffffff
+    @onClick: modules.game_album.prevRankPage()
+
+    $disabled:
+      image-color: #ffffff55
+
+  Label
+    id: rankPageLabel
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 16
+    font: poppins bold 14
+    color: #e7edf3
+    text-auto-resize: true
+    text-align: center
+
+  UIWidget
+    id: rankNext
+    size: 32 32
+    anchors.verticalCenter: rankPageLabel.verticalCenter
+    anchors.left: rankPageLabel.right
+    margin-left: 22
+    image-source: /images/modules/doublearrow_right
+    image-color: #ffffff
+    @onClick: modules.game_album.nextRankPage()
+
+    $disabled:
+      image-color: #ffffff55

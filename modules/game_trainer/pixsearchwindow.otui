@@ -1,0 +1,33 @@
+UIWindow
+  @onEscape: self:hide()
+  id: pixSearchWindow
+  size: 267 143
+  anchors.centerIn: parent
+  visible: false
+  image-source: images/bg_search_pix
+  UIWidget
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    image-source: images/close
+    @onClick: self:getParent():hide()
+  UIWidget
+    id: label_name
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("Name")
+    margin-top: 40
+  TextEdit
+    id: edit_name
+    size: 180 20
+    anchors.top: label_name.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+  UIWidget
+    id: search
+    anchors.top: edit_name.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    image-source: images/confirm_pix
+    !text: tr("Search")
+    @onClick: modules.game_trainer.doSearchPix()

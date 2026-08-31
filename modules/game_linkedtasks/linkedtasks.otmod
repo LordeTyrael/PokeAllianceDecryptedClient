@@ -1,0 +1,9 @@
+Module
+  name: game_linkedtasks
+  description: Linked Tasks System
+  author: otclient.ovh
+  website: http://otclient.ovh
+  sandboxed: true
+  scripts: [ linkedtasks ]
+  @onLoad: init()
+  @onUnload: terminate()

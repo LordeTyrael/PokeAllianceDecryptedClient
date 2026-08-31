@@ -1,0 +1,70 @@
+NewOpaqueWindow
+  id: addWindow
+  size: 380 150
+  anchors.centerIn: parent
+  opacity: 0.9
+  focusable: true
+  @onEnter: modules.game_viplist.addVip()
+  @onEscape: modules.game_viplist.destroyAddWindow()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 240 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr('Add to Friend List')
+
+  NewRedCloseButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    @onClick: modules.game_viplist.destroyAddWindow()
+
+  Label
+    id: nameTitle
+    !text: tr('Character name') .. ':'
+    font: poppins semibold 12
+    color: #a0b0c0
+    text-auto-resize: true
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 24
+    margin-left: 15
+
+  EntergameTextEdit
+    id: name
+    height: 25
+    font: poppins semibold 12
+    text-offset: 10 2
+    color: white
+    focusable: true
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    anchors.verticalCenter: nameTitle.verticalCenter
+    anchors.left: nameTitle.right
+    anchors.right: parent.right
+    margin-left: 10
+    margin-right: 15
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  AllianceStraightBlueButton
+    id: buttonOK
+    size: 120 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr('Ok')
+    @onClick: modules.game_viplist.addVip()

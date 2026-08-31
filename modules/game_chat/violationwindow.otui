@@ -1,0 +1,84 @@
+NewOpaqueWindow
+  id: reportRuleWindow
+  size: 360 264
+  anchors.centerIn: parent
+  focusable: true
+
+  UIWidget
+    id: titleBar
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 240 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 15
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr('Report Rule Violation')
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    @onClick: self:getParent():onEscape()
+
+  Label
+    id: infoLabel
+    font: poppins semibold 11
+    color: #8fa0b4
+    text-wrap: true
+    text-auto-resize: true
+    anchors.top: titleBar.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 16
+    margin-right: 16
+    !text: tr('Please state the rule violation in one clear sentence and wait for a reply from a gamemaster. Please note that your message will disappear if you close the channel.')
+
+  TextEdit
+    id: text
+    multiline: true
+    text-wrap: true
+    max-length: 255
+    image-source: /images/newui/background_popup
+    image-border: 15
+    padding: 10
+    anchors.top: prev.bottom
+    anchors.bottom: next.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 16
+    margin-right: 16
+    margin-bottom: 12
+
+  AllianceStraightBlueButton
+    id: okButton
+    size: 105 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.right: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-right: 6
+    margin-bottom: 15
+    !text: tr('Ok')
+    @onClick: self:getParent():onEnter()
+
+  NewRedButton
+    id: cancelButton
+    size: 105 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.left: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-left: 6
+    margin-bottom: 15
+    !text: tr('Cancel')
+    @onClick: self:getParent():onEscape()

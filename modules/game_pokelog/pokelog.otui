@@ -1,0 +1,1023 @@
+PokelogRewardSlot < UIWidget
+  size: 40 40
+
+  UIWidget
+    id: iconBg
+    anchors.fill: parent
+    image-source: /modules/game_poketask/images/itemslot
+    phantom: true
+
+  UIWidget
+    id: iconImage
+    size: 34 34
+    anchors.centerIn: parent
+    phantom: true
+    visible: false
+
+  UIItem
+    id: itemDisplay
+    anchors.fill: parent
+    virtual: true
+    phantom: true
+
+  PoppinsSemibold12
+    id: countLabel
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    phantom: true
+
+PokelogRewardTooltip < UITooltip
+  width: 160
+  follow-mouse-offset: -180 -40
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 4
+  padding-left: 9
+  padding-right: 9
+
+  layout: verticalBox
+    fit-children: true
+
+  Label
+    id: tooltipTitle
+    height: 25
+    font: poppins bold 15
+    text-align: center
+    phantom: true
+
+  Panel
+    id: rewards
+    height: 34
+    phantom: true
+    layout:
+      type: grid
+      cell-size: 34 34
+      cell-spacing: 2
+      num-columns: 4
+      flow: true
+
+PokelogRewardChest < UIWidget
+  size: 40 40
+  cursor: pointer
+
+  UIWidget
+    id: chestIcon
+    anchors.centerIn: parent
+    size: 32 32
+    image-source: /modules/game_poketask/images/chest
+    image-size: 32 32
+    phantom: true
+
+  $hover:
+    opacity: 1.0
+
+  $!hover:
+    opacity: 0.85
+
+PokelogPokemonEntry < UIButton
+  size: 135 120
+  background-color: #1a2535
+  border-width: 1
+  border-color: #273142
+  cursor: pointer
+
+  $hover:
+    background-color: #253548
+    border-color: #2ea1f8
+
+  $checked:
+    background-color: #2a3f58
+    border-color: #2ea1f8
+
+  UIWidget
+    id: readyBadge
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 3
+    margin-right: 3
+    size: 16 16
+    icon-source: @fa solid 14 f06a
+    icon-color: #ffd700
+    phantom: true
+    visible: false
+
+  UICreature
+    id: outfitIcon
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 6
+    size: 64 64
+    phantom: true
+    new-scaling: true
+    max-scale: 1.5
+    min-scale: 1.5
+
+  UIWidget
+    id: elementRow
+    anchors.top: outfitIcon.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 1
+    height: 16
+    phantom: true
+    layout:
+      type: horizontalBox
+      spacing: 1
+
+    UIWidget
+      id: elementIcon
+      image-source: /modules/game_pokedex/elements
+      size: 16 16
+      image-clip: 0 0 24 24
+      phantom: true
+      visible: false
+
+    UIWidget
+      id: elementIcon2
+      image-source: /modules/game_pokedex/elements
+      size: 16 16
+      image-clip: 0 0 24 24
+      phantom: true
+      visible: false
+
+  Label
+    id: name
+    anchors.top: elementRow.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 1
+    font: verdana-11px-antialised
+    color: white
+    text-auto-resize: true
+    phantom: true
+
+  UIWidget
+    id: progressBarBg
+    size: 98 12
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 5
+    background-color: #0d1520
+
+    UIWidget
+      id: seg1
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 32
+      margin: 1 0 1 1
+
+      UIWidget
+        id: fill
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: 0
+        background-color: #2ea1f8
+
+    UIWidget
+      id: div1
+      anchors.left: seg1.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 2
+      background-color: #273142
+
+    UIWidget
+      id: seg2
+      anchors.left: div1.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 32
+      margin: 1 0 1 0
+
+      UIWidget
+        id: fill
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: 0
+        background-color: #d4a017
+
+    UIWidget
+      id: div2
+      anchors.left: seg2.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 2
+      background-color: #273142
+
+    UIWidget
+      id: seg3
+      anchors.left: div2.right
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 32
+      margin: 1 0 1 0
+
+      UIWidget
+        id: fill
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: 0
+        background-color: #00ff00
+
+PokelogElementButton < UIButton
+  background-color: #1a2535
+  border-width: 1
+  border-color: #273142
+  cursor: pointer
+
+  $hover:
+    background-color: #253548
+    border-color: #2ea1f8
+
+  $pressed:
+    background-color: #2a3f58
+
+  UIWidget
+    id: icon
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 6
+    size: 24 24
+    image-source: /modules/game_pokedex/elements
+    image-clip: 0 0 24 24
+    phantom: true
+
+  Label
+    id: typeName
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 4
+    font: verdana-11px-antialised
+    color: #c0c0c0
+    text-auto-resize: true
+    phantom: true
+
+  // Mesmo "!" dourado do readyBadge da criatura, para o jogador ligar os dois na primeira olhada.
+  UIWidget
+    id: claimBadge
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 3
+    margin-right: 3
+    size: 16 16
+    icon-source: @fa solid 14 f06a
+    icon-color: #ffd700
+    phantom: true
+    visible: false
+
+  // Quantos estao prontos naquele elemento. Fica logo abaixo do "!", alinhado a direita.
+  Label
+    id: claimCount
+    anchors.top: prev.bottom
+    anchors.right: parent.right
+    margin-top: -2
+    margin-right: 4
+    font: verdana-11px-antialised
+    color: #ffd700
+    text-auto-resize: true
+    phantom: true
+    visible: false
+
+PokelogRuneCard < UIButton
+  background-color: #1a2535
+  border-width: 1
+  border-color: #273142
+  cursor: pointer
+
+  $hover:
+    background-color: #223247
+    border-color: #2ea1f8
+
+  $pressed:
+    background-color: #2a3f58
+    border-color: #2ea1f8
+
+AttachPickerWindow < NewOpaqueWindow
+  anchors.centerIn: parent
+  size: 320 300
+  draggable: true
+  focusable: true
+
+  Label
+    id: pickerTitle
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 10
+    height: 20
+    font: poppins semibold 14
+    color: #ffffff
+    text-align: center
+    phantom: true
+
+  NewRedCloseButton
+    id: pickerClose
+    anchors.top: parent.top
+    anchors.right: parent.right
+    size: 20 20
+    margin-top: 8
+    margin-right: 8
+    cursor: pointer
+
+  EntergameTextEdit
+    id: pickerSearch
+    anchors.top: pickerTitle.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: 8 8 0 8
+    size: 0 28
+    text-offset: 35 2
+    placeholder-offset: 35 -2
+    text-align: left
+    color: white
+    focusable: true
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    placeholder: Search...
+    placeholder-color: #aaaaaa
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+    UIWidget
+      id: lupa
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 24 24
+      image-source: /images/game/icons/lupa
+
+  UIWidget
+    id: pickerListArea
+    anchors.top: pickerSearch.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 8
+    phantom: true
+
+    ScrollablePanel
+      id: pickerList
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: pickerScrollbar.left
+      anchors.bottom: parent.bottom
+      margin-right: 2
+      vertical-scrollbar: pickerScrollbar
+      layout:
+        type: grid
+        cell-size: 64 64
+        cell-spacing: 6
+        num-columns: 4
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: pickerScrollbar
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      anchors.right: parent.right
+      width: 8
+      step: 64
+
+  PoppinsSemibold12
+    id: pickerEmptyLabel
+    anchors.centerIn: pickerList
+    color: #7f8fa4
+    !text: tr('No creatures found.')
+    phantom: true
+    visible: false
+
+AttachPickerEntry < UIButton
+  size: 64 64
+  background-color: #1a2535
+  border-width: 1
+  border-color: #273142
+  cursor: pointer
+
+  $hover:
+    background-color: #253548
+    border-color: #2ea1f8
+
+  UICreature
+    id: creatureIcon
+    anchors.centerIn: parent
+    size: 64 64
+    phantom: true
+    new-scaling: true
+    max-scale: 2.0
+    min-scale: 2.0
+    border-color: #2ea1f8
+
+NewOpaqueWindow
+  id: pokelogWindow
+  size: 455 560
+  anchors.centerIn: parent
+  focusable: true
+  @onEscape: modules.game_pokelog.onEscape()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 260 36
+    image-source: /images/general_ui/name_base
+
+    PoppinsSemibold20
+      id: base_text
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 14
+      text: Pokélog
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    size: 20 20
+    margin-top: 10
+    margin-right: 10
+    !tooltip: tr("Close")
+    @onClick: modules.game_pokelog.close()
+
+  Panel
+    id: contentPanel
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: footerPanel.top
+    margin: 5 5 5 5
+    image-border: 15
+    image-source: /images/newui/background_3
+
+    Panel
+      id: elementGridPanel
+      anchors.fill: parent
+
+      AllianceStraightBlueButton
+        id: collectAllButton
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin: 6 6 0 6
+        height: 30
+        text-align: center
+        font: poppins semibold 12
+        !text: tr('Collect All')
+
+      Panel
+        id: elementGrid
+        anchors.top: collectAllButton.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        margin: 6
+        layout:
+          type: grid
+          cell-size: 140 50
+          cell-spacing: 6
+          num-columns: 3
+
+    Panel
+      id: pokemonListPanel
+      anchors.fill: parent
+      visible: false
+
+      UIButton
+        id: backButton
+        anchors.top: parent.top
+        anchors.left: parent.left
+        margin: 8 0 0 8
+        size: 60 24
+        font: verdana-11px-antialised
+        color: #2ea1f8
+        !text: tr('< Back')
+        cursor: pointer
+        @onClick: modules.game_pokelog.showElementGrid()
+
+      EntergameTextEdit
+        id: searchField
+        anchors.verticalCenter: backButton.verticalCenter
+        anchors.right: parent.right
+        margin-right: 8
+        size: 175 28
+        text-offset: 35 2
+        placeholder-offset: 35 -2
+        text-align: left
+        color: white
+        focusable: true
+        image-source: /modules/client_entergame/images/labelbox_noselect
+        placeholder: Search...
+        placeholder-color: #aaaaaa
+        @onTextChange: modules.game_pokelog.onSearchTextChange(self:getText())
+
+        $focus:
+          image-source: /modules/client_entergame/images/labelbox_select
+
+        UIWidget
+          id: lupa
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.left: parent.left
+          margin-left: 10
+          size: 24 24
+          image-source: /images/game/icons/lupa
+
+      ScrollablePanel
+        id: pokemonList
+        anchors.top: backButton.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        margin: 8 5 5 5
+        vertical-scrollbar: pokemonListScrollBar
+        layout:
+          type: grid
+          cell-size: 135 120
+          cell-spacing: 4
+          num-columns: 3
+
+      AllianceVerticalScrollBar
+        id: pokemonListScrollBar
+        anchors.top: backButton.bottom
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        margin: 8 1 5 0
+        margin-right: 10
+        step: 120
+        pixels-scroll: true
+
+    Panel
+      id: detailPanel
+      anchors.fill: parent
+      visible: false
+
+      UIButton
+        id: detailBackButton
+        anchors.top: parent.top
+        anchors.left: parent.left
+        margin: 8 0 0 8
+        size: 60 24
+        font: verdana-11px-antialised
+        color: #2ea1f8
+        !text: tr('< Back')
+        cursor: pointer
+        @onClick: modules.game_pokelog.showPokemonListBack()
+
+      UICreature
+        id: detailCreature
+        anchors.top: detailBackButton.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 8
+        size: 80 80
+        phantom: true
+        old-scaling: true
+
+      UIWidget
+        id: detailElementRow
+        anchors.top: detailCreature.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 2
+        height: 24
+        phantom: true
+        layout:
+          type: horizontalBox
+          spacing: 2
+
+        UIWidget
+          id: detailElementIcon
+          image-source: /modules/game_pokedex/elements
+          size: 24 24
+          image-clip: 0 0 24 24
+          phantom: true
+          visible: false
+
+        UIWidget
+          id: detailElementIcon2
+          image-source: /modules/game_pokedex/elements
+          size: 24 24
+          image-clip: 0 0 24 24
+          phantom: true
+          visible: false
+
+      Label
+        id: detailName
+        anchors.top: detailElementRow.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 4
+        font: verdana-11px-antialised
+        color: white
+        text-auto-resize: true
+
+      UIButton
+        id: trackerButton
+        anchors.left: detailName.right
+        anchors.verticalCenter: detailName.verticalCenter
+        margin-left: 6
+        size: 16 16
+        icon-source: @fa solid 12 f05b
+        icon-color: #666666
+        cursor: pointer
+        !tooltip: tr('Add to Tracker')
+
+      UIWidget
+        id: detailDexButton
+        anchors.left: trackerButton.right
+        anchors.verticalCenter: trackerButton.verticalCenter
+        margin-left: 5
+        size: 16 16
+        icon-source: @fa solid 12 f02d
+        icon-color: #8899aa
+        phantom: false
+        focusable: false
+        cursor: pointer
+        !tooltip: tr('Open in PokeDex')
+
+        $hover:
+          icon-color: #55bbff
+
+      PoppinsSemibold12
+        id: detailDefeats
+        anchors.top: detailName.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 2
+        color: #8899aa
+        text-auto-resize: true
+        text-offset: 0 4
+
+      Panel
+        id: rewardDisplayRow
+        anchors.top: detailDefeats.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 4
+        size: 380 56
+
+      UIWidget
+        id: detailProgressBg
+        anchors.top: rewardDisplayRow.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 4
+        size: 380 20
+        background-color: #0d1520
+
+        UIWidget
+          id: seg1
+          anchors.left: parent.left
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          width: 124
+          margin: 1 0 1 1
+
+          UIWidget
+            id: fill
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 0
+            background-color: #2ea1f8
+
+          PoppinsSemibold12
+            id: milestoneLabel
+            anchors.centerIn: parent
+            color: white
+            text-offset: 0 4
+            phantom: true
+
+        UIWidget
+          id: div1
+          anchors.left: seg1.right
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          width: 2
+          background-color: #273142
+
+        UIWidget
+          id: seg2
+          anchors.left: div1.right
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          width: 124
+          margin: 1 0 1 0
+
+          UIWidget
+            id: fill
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 0
+            background-color: #d4a017
+
+          PoppinsSemibold12
+            id: milestoneLabel
+            anchors.centerIn: parent
+            color: white
+            text-offset: 0 4
+            phantom: true
+
+        UIWidget
+          id: div2
+          anchors.left: seg2.right
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          width: 2
+          background-color: #273142
+
+        UIWidget
+          id: seg3
+          anchors.left: div2.right
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          width: 130
+          margin: 1 0 1 0
+
+          UIWidget
+            id: fill
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 0
+            background-color: #00ff00
+
+          PoppinsSemibold12
+            id: milestoneLabel
+            anchors.centerIn: parent
+            color: white
+            text-offset: 0 4
+            phantom: true
+
+  UIWidget
+    id: footerPanel
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    height: 126
+    margin-left: 5
+    margin-right: 5
+    margin-bottom: 5
+
+    NewButton
+      id: openTrackerButton
+      anchors.right: pointsIcon.left
+      anchors.verticalCenter: pointsIcon.verticalCenter
+      margin-right: 5
+      font: poppins semibold 12
+      !text: tr("Open Tracker")
+      opacity: 0.7
+      @onClick: modules.game_pokelog.openTracker()
+
+      $hover:
+        opacity: 1.0
+
+    UIWidget
+      id: pointsIcon
+      anchors.right: pointsLabel.left
+      anchors.verticalCenter: pointsLabel.verticalCenter
+      margin-right: 4
+      size: 20 20
+      image-source: /images/modules/pokelog_points
+      image-size: 20 20
+      phantom: true
+
+    PoppinsSemibold14
+      id: pointsLabel
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-right: 5
+      color: #d4a017
+      text-auto-resize: true
+      text: 0
+
+    UIItem
+      id: bankIcon
+      anchors.left: parent.left
+      anchors.verticalCenter: pointsLabel.verticalCenter
+      size: 20 20
+      margin-left: 5
+      virtual: true
+      item-id: 37382
+      phantom: true
+
+    PoppinsSemibold14
+      id: bankLabel
+      anchors.left: bankIcon.right
+      anchors.verticalCenter: pointsLabel.verticalCenter
+      margin-left: 4
+      color: #a0c8a0
+      text-auto-resize: true
+      text: 0
+
+    -- Rune bar: 3 active category slots
+    UIWidget
+      id: runeBar
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: parent.top
+      height: 100
+      margin-left: 6
+      margin-right: 6
+
+      PokelogRuneCard
+        id: runeSlot0
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: 139
+
+        Label
+          id: runeCatLabel
+          anchors.top: parent.top
+          anchors.left: parent.left
+          margin: 3 0 0 6
+          font: poppins semibold 9
+          color: #7f8fa4
+          !text: tr('OFFENSIVE')
+          text-auto-resize: true
+          phantom: true
+
+        UIButton
+          id: runePlusBtn
+          anchors.centerIn: parent
+          size: 26 26
+          icon-source: @fa solid 20 2b
+          icon-color: #7f8fa4
+          phantom: true
+          visible: true
+
+        UIWidget
+          id: runeImage
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          margin-left: 5
+          size: 50 60
+          image-smooth: true
+          phantom: true
+          visible: false
+
+        Label
+          id: runeLevelLabel
+          anchors.bottom: runeImage.bottom
+          anchors.right: runeImage.right
+          font: poppins bold 16
+          color: #d4a017
+          text-auto-resize: true
+          phantom: true
+          visible: false
+
+        UICreature
+          id: runeTargetOutfit
+          anchors.verticalCenter: runeImage.verticalCenter
+          anchors.right: parent.right
+          margin-right: 5
+          size: 74 74
+          phantom: true
+          visible: false
+          new-scaling: true
+          max-scale: 1.5
+          min-scale: 1.5
+
+        NewRedCloseButton
+          id: runeRemoveBtn
+          anchors.top: parent.top
+          anchors.right: parent.right
+          size: 14 14
+          margin: 6 6 0 0
+          cursor: pointer
+          visible: false
+
+      PokelogRuneCard
+        id: runeSlot1
+        anchors.left: runeSlot0.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        width: 139
+        margin-left: 3
+
+        Label
+          id: runeCatLabel
+          anchors.top: parent.top
+          anchors.left: parent.left
+          margin: 3 0 0 6
+          font: poppins semibold 9
+          color: #7f8fa4
+          !text: tr('DEFENSIVE')
+          text-auto-resize: true
+          phantom: true
+
+        UIButton
+          id: runePlusBtn
+          anchors.centerIn: parent
+          size: 26 26
+          icon-source: @fa solid 20 2b
+          icon-color: #7f8fa4
+          phantom: true
+          visible: true
+
+        UIWidget
+          id: runeImage
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          margin-left: 5
+          size: 50 60
+          image-smooth: true
+          phantom: true
+          visible: false
+
+        Label
+          id: runeLevelLabel
+          anchors.bottom: runeImage.bottom
+          anchors.right: runeImage.right
+          font: poppins bold 16
+          color: #d4a017
+          text-auto-resize: true
+          phantom: true
+          visible: false
+
+        UICreature
+          id: runeTargetOutfit
+          anchors.verticalCenter: runeImage.verticalCenter
+          anchors.right: parent.right
+          margin-right: 5
+          size: 74 74
+          phantom: true
+          visible: false
+          new-scaling: true
+          max-scale: 1.5
+          min-scale: 1.5
+
+        NewRedCloseButton
+          id: runeRemoveBtn
+          anchors.top: parent.top
+          anchors.right: parent.right
+          size: 14 14
+          margin: 6 6 0 0
+          cursor: pointer
+          visible: false
+
+      PokelogRuneCard
+        id: runeSlot2
+        anchors.left: runeSlot1.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        margin-left: 3
+
+        Label
+          id: runeCatLabel
+          anchors.top: parent.top
+          anchors.left: parent.left
+          margin: 3 0 0 6
+          font: poppins semibold 9
+          color: #7f8fa4
+          !text: tr('UTILITY')
+          text-auto-resize: true
+          phantom: true
+
+        UIButton
+          id: runePlusBtn
+          anchors.centerIn: parent
+          size: 26 26
+          icon-source: @fa solid 20 2b
+          icon-color: #7f8fa4
+          phantom: true
+          visible: true
+
+        UIWidget
+          id: runeImage
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          margin-left: 5
+          size: 50 60
+          image-smooth: true
+          phantom: true
+          visible: false
+
+        Label
+          id: runeLevelLabel
+          anchors.bottom: runeImage.bottom
+          anchors.right: runeImage.right
+          font: poppins bold 16
+          color: #d4a017
+          text-auto-resize: true
+          phantom: true
+          visible: false
+
+        UICreature
+          id: runeTargetOutfit
+          anchors.verticalCenter: runeImage.verticalCenter
+          anchors.right: parent.right
+          margin-right: 5
+          size: 74 74
+          phantom: true
+          visible: false
+          new-scaling: true
+          max-scale: 1.5
+          min-scale: 1.5
+
+        NewRedCloseButton
+          id: runeRemoveBtn
+          anchors.top: parent.top
+          anchors.right: parent.right
+          size: 14 14
+          margin: 6 6 0 0
+          cursor: pointer
+          visible: false

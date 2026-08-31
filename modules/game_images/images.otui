@@ -1,0 +1,10 @@
+UIWindow
+  id: imageWindow    
+  width: 350
+  height: 560
+  @onEnter: modules.game_images.hide()
+  @onEscape: modules.game_images.hide()
+  anchors.centerIn: parent
+  focusable: true
+  visible: false
+  @onClick: modules.game_images.hide()

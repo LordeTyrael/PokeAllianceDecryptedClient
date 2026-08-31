@@ -1,0 +1,280 @@
+OptionPanel
+  OptionCheckBox
+    id: classicView
+    !text: tr('Classic view')
+    margin-top: 5
+
+    $mobile:
+      visible: false
+
+  OptionCheckBox
+    id: displayNames
+    !text: tr('Display creature names')
+
+  OptionCheckBox
+    id: displayHealth
+    !text: tr('Display creature health bars')
+
+  OptionCheckBox
+    id: displayHealthOnTop
+    !text: tr('Display creature health bars above texts')
+    $mobile:
+      visible: false
+
+  OptionCheckBox
+    id: hidePlayerBars
+    !text: tr('Show player health bar')
+
+  Panel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      id: healthColor
+      !text: tr("Health Color")
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+      
+    OptionsComboBox
+      id: healthColorLabel
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+      @onSetup: |
+        self:addOption(tr("Default"))
+        self:addOption(tr("Yellow"))
+        self:addOption(tr("White"))
+        self:addOption(tr("Blue"))
+
+  Panel
+    height: 40
+    margin-top: 3
+
+    UILabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      id: leftPanelsLabel
+      !text: tr("Left panels")
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+
+    OptionsComboBox
+      id: leftPanels
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+      @onSetup: |
+        self:addOption("0")
+        self:addOption("1")
+        self:addOption("2")
+        self:addOption("3")
+        self:addOption("4")
+
+  Panel
+    height: 40
+    margin-top: 3
+
+    UILabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      id: rightPanelsLabel
+      !text: tr("Right panels")
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+
+    OptionsComboBox
+      id: rightPanels
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+      @onSetup: |
+        self:addOption("0")
+        self:addOption("1")
+        self:addOption("2")
+        self:addOption("3")
+        self:addOption("4")
+
+  OptionCheckBox
+    id: topLeftPanel
+    !text: tr('Top left panel')
+    margin-top: 5
+
+    $mobile:
+      visible: false
+
+  OptionCheckBox
+    id: topRightPanel
+    !text: tr('Top right panel')
+    margin-top: 5
+
+    $mobile:
+      visible: false
+
+  Panel
+    visible:false
+    height: 40
+    margin-top: 0
+
+  Label
+    visible:false
+    id: floorFadingLabel
+    margin-top: 0
+    @onSetup: |
+      local value = modules.client_options.getOption('floorFading')
+      self:setText(tr('Floor fading: %s ms', value))
+
+  OptionScrollbar
+    visible:false
+    id: floorFading
+    margin-top: 3
+    minimum: 0
+    maximum: 2000
+
+  Label
+    visible:false
+    id: floorFadingLabel2
+    margin-top: 0
+    !text: (tr('Floor fading doesn\'t work with enabled light'))
+
+  Panel
+    id: fadeInLabelPanel
+    height: 40
+
+    UILabel
+      id: fadeInLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+
+      @onSetup: |
+        local value = modules.client_options.getOption('fadeInTime')
+        self:setText(value == 0 and tr('Fade In: Disabled') or tr('Fade In: %s ms', value))
+
+    AllianceHorizontalScrollBar
+      id: fadeInTime
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 0
+      maximum: 500
+      step: 25
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: fadeOutLabelPanel
+    height: 40
+
+    UILabel
+      id: fadeOutLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+
+      @onSetup: |
+        local value = modules.client_options.getOption('fadeOutTime')
+        self:setText(value == 0 and tr('Fade Out: Disabled') or tr('Fade Out: %s ms', value))
+
+    AllianceHorizontalScrollBar
+      id: fadeOutTime
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 0
+      maximum: 500
+      step: 25
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: actionBarLabelPanel
+    height: 40
+
+    UILabel
+      id: actionBarLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+
+      @onSetup: |
+        local value = modules.client_options.getOption('actionBarSize')
+        self:setText(tr('Action Bar Slots: %s', value))
+  
+    AllianceHorizontalScrollBar
+      id: actionBarSize
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 12
+      maximum: 50
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: sidePanelOpacityPanel
+    height: 40
+
+    $mobile:
+      visible: false
+
+    UILabel
+      id: sidePanelOpacityLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+
+      @onSetup: |
+        local value = modules.client_options.getOption('sidePanelOpacity')
+        self:setText(value >= 100 and tr('Side panel opacity: Disabled') or tr('Side panel opacity: %s%%', value))
+
+    AllianceHorizontalScrollBar
+      id: sidePanelOpacity
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 20
+      maximum: 100
+      step: 5
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: sidePanelFadeDelayPanel
+    height: 40
+
+    $mobile:
+      visible: false
+
+    UILabel
+      id: sidePanelFadeDelayLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+
+      $disabled:
+        color: #ffffff88
+
+      @onSetup: |
+        local value = modules.client_options.getOption('sidePanelFadeDelay')
+        self:setText(tr('Side panel fade delay: %ss', value))
+
+    AllianceHorizontalScrollBar
+      id: sidePanelFadeDelay
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 0
+      maximum: 10
+      step: 1
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())

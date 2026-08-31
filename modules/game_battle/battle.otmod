@@ -1,0 +1,10 @@
+Module
+  name: game_battle
+  description: Manage battle window (new)
+  author: otclient@otclient.ovh
+  website: otclient.ovh
+  sandboxed: true
+  scripts: [ battle ]
+  dependencies: [ client_hotkeys, game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

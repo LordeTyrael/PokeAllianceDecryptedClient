@@ -1,0 +1,632 @@
+StoreCategory < NewButton
+  size: 194 33
+  image-border: 15
+  image-source: /images/modules/store_ui/category
+
+  UIWidget
+    id: category_icon
+    size: 22 22
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 10
+    phantom: true
+
+  Label
+    id: category_name
+    anchors.verticalCenter: category_icon.verticalCenter
+    anchors.left: category_icon.right
+    margin-left: 10
+
+StoreAnimBar < Label
+  size: 56 16
+  image-source: /images/modules/progressbar_load_bg
+  image-border-left: 10
+  image-border-right: 10
+  font: verdana-11px-rounded
+  text-align: center
+  color: #ffffff
+  phantom: true
+
+// Ícone TTF via icon-source (@família estilo tamanho codepoint) — f017 = relógio (FA solid)
+StoreClockIcon < UIWidget
+  size: 12 12
+  icon-source: @fa solid 11 f017
+  icon-color: #ffffff
+  phantom: true
+
+
+StoreWidget < ShopItemCard
+  id: mainWidget
+
+  UICreature
+    id: outfit
+    size: 80 80
+    anchors.top: parent.top
+    margin-top: 4
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-left: 15
+    phantom: true
+    visible: false
+    new-scaling: true
+
+  UIWidget
+    id: label
+    size: 51 51
+    anchors.top: parent.top
+    anchors.right: parent.right
+    visible: false
+    phantom: true
+
+  UIWidget
+    id: animLens
+    size: 18 18
+    anchors.bottom: name.top
+    anchors.right: parent.right
+    margin-right: 10
+    margin-bottom: 2
+    icon-source: @fa solid 15 f002
+    icon-color: #ffffff
+    visible: false
+
+  Label
+    id: promoTimeLeft
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    color: #ffffff
+    text-auto-resize: true
+    phantom: false
+    visible: false
+
+  StoreClockIcon
+    id: clockIcon
+    anchors.right: promoTimeLeft.left
+    anchors.verticalCenter: promoTimeLeft.verticalCenter
+    margin-right: 3
+
+  &item:
+    visible: false
+
+  &priceIcon:
+    item-id: 3028
+
+  &name:
+    anchors.top: outfit.bottom
+
+DepositPanel < NewPopupWindow
+  id: deposit_panel
+  size: 380 172
+  visible: false
+  anchors.centerIn: parent
+  @onEscape: modules.game_store.depositPanelClose()
+
+  Label
+    id: accountDiamonds
+    anchors.top: parent.top
+    margin-top: 8
+    anchors.horizontalCenter: parent.horizontalCenter
+    font: poppins semibold 14
+    textColor: "#FFCA59"
+    !text: tr("Available Diamonds on Character")
+    margin-right: 3
+    text-align: center
+    text-auto-resize: true
+
+  UIWidget
+    id: diamondIcon
+    size: 36 36
+    virtual: true
+    anchors.verticalCenter: points.verticalCenter
+    anchors.right: points.left
+    margin-right: 6
+    image-source: newimages/icon_diamond
+
+  // Fixed 90 (fits 1,234,567 at 78px) with the text centred inside it, not text-auto-resize:
+  // a centred auto-resize widget grows to the right without the anchor running again, so the
+  // pair walked off centre as the balance got longer. 21 is half the icon block (36 + 6),
+  // which keeps icon+number centred as a unit at any width.
+  UIWidget
+    id: points
+    size: 90 28
+    text-align: center
+    anchors.top: accountDiamonds.bottom
+    font: poppins semibold 14
+    margin-top: 10
+    margin-left: 21
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("0")
+
+  NewRedCloseButton
+    id: close
+    size: 12 12
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_store.depositPanelClose()
+
+  UIWidget
+    margin-top: 70
+    margin-right: 20
+    margin-left: 20
+    margin-bottom: 20
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+
+    Label
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      font: poppins semibold 16
+      textColor: "#ffca70"
+      !text: tr("Quantity")
+      text-align: center
+
+    // 32 is label_search's own height and image-border keeps its corners at any width
+    TextEdit
+      id: count
+      size: 200 32
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: prev.bottom
+      margin-top: 10
+      image-source: newimages/label_search
+      image-border: 10
+      text-align: center
+
+    NewButton
+      id: button
+      !text: tr('Confirm')
+      size: 100 30
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      image-source: /images/newui/btngreen_small
+      @onClick: modules.game_store.sendDepositRequest()
+
+WithdrawPanel < NewPopupWindow
+  id: withdraw_panel
+  size: 380 172
+  visible: false
+  anchors.centerIn: parent
+  @onEscape: modules.game_store.withdrawPanelClose()
+
+  Label
+    id: accountDiamonds
+    anchors.top: parent.top
+    margin-top: 8
+    anchors.horizontalCenter: parent.horizontalCenter
+    font: poppins semibold 14
+    textColor: "#FFCA59"
+    !text: tr("Available Diamonds on Account")
+    text-align: center
+    text-auto-resize: true
+
+  UIWidget
+    id: diamondIcon
+    size: 36 36
+    virtual: true
+    anchors.verticalCenter: points.verticalCenter
+    anchors.right: points.left
+    margin-right: 6
+    image-source: newimages/icon_diamond
+
+  // Fixed 90 (fits 1,234,567 at 78px) with the text centred inside it, not text-auto-resize:
+  // a centred auto-resize widget grows to the right without the anchor running again, so the
+  // pair walked off centre as the balance got longer. 21 is half the icon block (36 + 6),
+  // which keeps icon+number centred as a unit at any width.
+  UIWidget
+    id: points
+    size: 90 28
+    text-align: center
+    anchors.top: accountDiamonds.bottom
+    font: poppins semibold 14
+    margin-top: 10
+    margin-left: 21
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("0")
+
+  NewRedCloseButton
+    id: close
+    size: 12 12
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_store.withdrawPanelClose()
+
+  UIWidget
+    margin-top: 70
+    margin-right: 20
+    margin-left: 20
+    margin-bottom: 20
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.left: parent.left
+
+    Label
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: parent.right
+      font: poppins semibold 16
+      textColor: "#ffca70"
+      !text: tr("Quantity")
+      text-align: center
+
+    // 32 is label_search's own height and image-border keeps its corners at any width
+    TextEdit
+      id: count
+      size: 200 32
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: prev.bottom
+      margin-top: 10
+      image-source: newimages/label_search
+      image-border: 10
+      text-align: center
+
+    NewButton
+      id: button
+      !text: tr('Confirm')
+      size: 100 30
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 10
+      image-source: /images/newui/btngreen_small
+      @onClick: modules.game_store.sendWithdrawRequest()
+  
+NewOpaqueWindow
+  id: store
+  size: 860 570
+  anchors.centerIn: parent
+  margin-bottom: 100
+  focusable: true
+  @onEscape: modules.game_store.hide()
+
+  UIWidget
+    id: background_category
+    width: 230
+    anchors.top: parent.top
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    image-source: /images/modules/store_ui/background_category
+    phantom: true
+
+  UIWidget
+    id: background_items
+    width: 600
+    anchors.top: parent.top
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    image-source: /images/modules/store_ui/background_items
+    phantom: true
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/modules/store_ui/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 28
+      image-source: /images/modules/store_ui/base_icon
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 20
+      !text: tr("Diamond Store")
+
+  UIWidget
+    id: account_icon
+    size: 18 19
+    anchors.left: parent.left
+    margin-left: 10
+    anchors.top: base_name.bottom
+    margin-top: 10
+    image-source: /images/modules/store_ui/account_icon
+
+  Label
+    id: accountName
+    anchors.verticalCenter: account_icon.verticalCenter
+    anchors.left: account_icon.right
+    margin-left: 5
+    text-auto-resize: true
+    !text: tr("Account")
+    font: poppins semibold 16
+
+  Label
+    id: accountDiamonds
+    anchors.verticalCenter: viewButton.verticalCenter
+    font: poppins semibold 16
+    text-auto-resize: true
+    !text: tr("0")
+    anchors.right: viewButton.left
+    margin-right: 8
+
+  NewButton
+    id: viewButton
+    size: 21 16
+    anchors.verticalCenter: account_icon.verticalCenter
+    anchors.right: depositInfo.right
+    image-source: /images/modules/store_ui/view_icon
+    @onClick: modules.game_store.toggleBalanceHidden()
+
+  UIWidget
+    id: character_icon
+    size: 16 16
+    anchors.left: parent.left
+    margin-left: 10
+    anchors.top: account_icon.bottom
+    margin-top: 10
+    image-source: /images/modules/store_ui/diamond_icon
+
+  Label
+    id: characterName
+    anchors.verticalCenter: character_icon.verticalCenter
+    anchors.left: character_icon.right
+    margin-left: 5
+    text-auto-resize: true
+    !text: tr("Character")
+    font: poppins semibold 16
+
+  Label
+    id: playerDiamonds
+    anchors.verticalCenter: characterViewButton.verticalCenter
+    font: poppins semibold 16
+    text-auto-resize: true
+    !text: tr("0")
+    anchors.right: characterViewButton.left
+    margin-right: 8
+
+  NewButton
+    id: characterViewButton
+    size: 21 16
+    anchors.verticalCenter: character_icon.verticalCenter
+    anchors.right: depositInfo.right
+    image-source: /images/modules/store_ui/view_icon
+    @onClick: modules.game_store.toggleBalanceHidden()
+
+  NewButton
+    id: withdrawInfo
+    size: 111 26
+    anchors.left: parent.left
+    margin-left: 10
+    margin-top: 10
+    anchors.top: character_icon.bottom
+    @onClick: modules.game_store.openWithdrawPanel()
+    image-source: /images/modules/store_ui/withdraw_background
+    font: poppins semibold 14
+    !text: tr('Withdraw')
+
+  NewButton
+    id: depositInfo
+    size: 111 26
+    anchors.left: withdrawInfo.right
+    margin-left: 5
+    anchors.top: withdrawInfo.top
+    @onClick: modules.game_store.openDepositPanel()
+    image-source: /images/modules/store_ui/withdraw_background
+    font: poppins semibold 14
+    !text: tr('Deposit')
+
+  // Stacked, each spanning both columns: side by side the label needed a fixed width and
+  // "Credit Card" at 115 was wider than the 111 the button had, which pushed it - and the
+  // icon anchored to its left - 31px outside the button, over the Pix one. The labels size
+  // themselves now, and the icon+label pair is centred by shifting the label half the icon
+  // block to the right.
+  NewButton
+    id: donateInfo
+    anchors.left: withdrawInfo.left
+    anchors.right: depositInfo.right
+    anchors.top: withdrawInfo.bottom
+    height: 25
+    margin-top: 5
+    @onClick: modules.game_store.openDonatePixPanel()
+    image-source: /images/modules/store_ui/pix_background
+
+    UIWidget
+      id: diamondIcon
+      size: 21 21
+      phantom: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: points.left
+      margin-right: 5
+      image-source: /images/modules/store_ui/pix_icon
+
+    UIWidget
+      id: points
+      height: 20
+      text-auto-resize: true
+      phantom: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-left: 13
+      font: poppins semibold 14
+      !text: tr('Pix')
+
+  NewButton
+    id: donateCardInfo
+    anchors.left: donateInfo.left
+    anchors.right: donateInfo.right
+    anchors.top: donateInfo.bottom
+    height: 25
+    margin-top: 5
+    @onClick: modules.game_store.openDonateCreditCardPanel()
+    image-source: /images/modules/store_ui/pix_background
+
+    UIWidget
+      id: cardIcon
+      size: 16 16
+      phantom: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: points.left
+      margin-right: 5
+      icon-source: @fa solid 16 f09d
+      icon-size: 16 16
+      icon-color: white
+
+    UIWidget
+      id: points
+      height: 20
+      text-auto-resize: true
+      phantom: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-left: 11
+      font: poppins semibold 14
+      !text: tr('Credit Card')
+
+  Label
+    id: categoryLabel
+    font: poppins semibold 18
+    anchors.top: donateCardInfo.bottom
+    margin-top: 8
+    anchors.left: donateInfo.left
+    !text: tr("Categories")
+    text-auto-resize: true
+
+  UIWidget
+    id: categoryPanel
+    width: 194
+    anchors.left: donateInfo.left
+    anchors.top: categoryLabel.bottom
+    anchors.bottom: parent.bottom
+    margin-top: 8
+    margin-bottom: 10
+    layout:
+      type: grid
+      num-columns: 1
+      cell-size: 194 33
+      cell-spacing: 4
+      flow: true
+
+  UIWidget
+    id: itemPanel
+    anchors.fill: background_items
+    phantom: true
+
+    UIWidget
+      id: title_background
+      size: 550 136
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 50
+      image-source: /images/modules/store_ui/shop_title_background
+
+      UIWidget
+        anchors.fill: parent
+        image-source: /images/modules/store_ui/title_background
+        opacity: 0.22
+
+      UIWidget
+        id: categoryIcon
+        size: 58 54
+        anchors.verticalCenter: categoryTitle.verticalCenter
+        anchors.right: categoryTitle.left
+        margin-right: 10
+        image-source: /images/modules/store_ui/exclusive_icon_colored
+
+      Label
+        id: categoryTitle
+        anchors.centerIn: parent
+        font: poppins semibold 38
+        margin-left: 29
+        margin-bottom: 15
+        textColor: "#f9ed32"
+        !text: tr("Category")
+        text-auto-resize: true
+
+      Label
+        id: categoryDescription
+        font: poppins semibold 13
+        anchors.horizontalCenter: parent.horizontalCenter
+        text-auto-resize: true
+        anchors.top: categoryTitle.bottom
+        margin-top: 2
+        !text: tr("Discover exclusive, limited-time items in the store!")
+
+    NewButton
+      id: subcategoriesButton
+      size: 200 32
+      anchors.top: searchShopItem.top
+      anchors.left: title_background.left
+      image-source: /images/modules/store_ui/category_selected
+      image-border: 15
+
+    UIWidget
+      id: lupa
+      anchors.verticalCenter: searchShopItem.verticalCenter
+      size: 32 32
+      anchors.right: searchShopItem.left
+      margin-right: 5
+      image-source: /images/modules/store_ui/lupa
+
+    EntergameTextEdit
+      id: searchShopItem
+      size: 175 32
+      font: poppins semibold 12
+      anchors.top: title_background.bottom
+      anchors.right: title_background.right
+      margin-top: 5
+      text-offset: 0 0
+      padding-left: 15
+      text-align: center
+      color: white
+      image-source: /modules/client_entergame/images/labelbox_noselect
+      @onTextChange: modules.game_store.onSearchTextChange(self:getText())
+  
+      $focus:
+        image-source: /modules/client_entergame/images/labelbox_select
+
+    ScrollablePanel
+      id: itemShopPanel
+      focusable: false
+      anchors.top: title_background.bottom
+      anchors.left: title_background.left
+      anchors.right: title_background.right
+      margin-right: 15
+      anchors.bottom: parent.bottom
+      margin-top: 35
+      vertical-scrollbar: itemShopScroll
+      padding-top: 10
+      padding-bottom: 15
+      auto-focus: none
+      layout:
+        type: grid
+        num-columns: 3
+        cell-size: 175 160
+        cell-spacing: 5
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: itemShopScroll
+      anchors.top: itemShopPanel.top
+      anchors.bottom: itemShopPanel.bottom
+      anchors.left: itemShopPanel.right
+      margin-left: 10
+      margin-top: 15
+      margin-bottom: 15
+      step: 30
+      pixels-scroll: true
+
+  WithdrawPanel
+  DepositPanel
+
+  NewRedCloseButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_store.hide()

@@ -1,0 +1,92 @@
+ChoiceListLabel < Label
+  font: poppins semibold 12
+  border-color: #4D7900
+  border-width: 0
+  text-offset: 2 2
+  focusable: true
+  height: 20
+
+  $focus:
+    border-width: 1
+
+ChoiceList < TextList
+  id: choiceList
+  image-source: /images/newui/background_popup
+  vertical-scrollbar: choiceScrollBar
+  anchors.fill: parent
+  anchors.top: prev.bottom
+  anchors.bottom: next.top
+  margin-top: 4
+  margin-bottom: 10
+  margin-right: 18
+  margin-left: 8
+  focusable: false
+  visible: false
+
+ChoiceScrollBar < AllianceVerticalScrollBar
+  id: choiceScrollBar
+  anchors.top: choiceList.top
+  anchors.bottom: choiceList.bottom
+  anchors.left: choiceList.right
+  step: 14
+  margin-left: 4
+  pixels-scroll: true
+  visible: false
+
+ModalButton < NewButton
+  size: 100 40
+  margin-top: 2
+  margin-bottom: 2
+
+  $!first:
+    margin-left: 20
+
+  $pressed:
+    text-offset: 0 0
+
+ModalDialog < MainWindow
+  id: modalDialog
+  size: 320 200
+  &minimumWidth: 300
+  &maximumWidth: 600
+  &minimumChoices: 4
+  &maximumChoices: 10
+  image-source: /images/newui/background_3
+  padding-top: 10
+
+  Label
+    id: title
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    font: poppins boldbordered 20
+    text-auto-resize: true
+
+  Label
+    id: messageLabel
+    anchors.top: title.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    font: poppins semibold 14
+    margin-top: 10
+    text-align: center
+    text-auto-resize: true
+    text-wrap: true
+
+  ChoiceList
+
+  HorizontalSeparator
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: next.top
+    margin-bottom: 25
+
+  Panel
+    id: buttonsPanel
+    width: 220
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-bottom: 20
+    height: 40
+    layout: horizontalBox
+
+  ChoiceScrollBar

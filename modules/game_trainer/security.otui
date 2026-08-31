@@ -1,0 +1,55 @@
+NewOpaqueWindow
+  @onEscape: modules.game_trainer.closeSecurityWindow()
+  id: main
+  size: 340 150
+  anchors.centerIn: parent
+
+  Label
+    id: title
+    font: poppins semibold 22
+    !text: tr("Character Security")
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 8
+    text-auto-resize: true
+
+  UIWidget
+    size: 290 80
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: title.bottom
+    margin-top: 15
+
+    layout:
+      type: grid
+      cell-size: 140 32
+      cell-spacing: 8
+      num-columns: 2
+      flow: true
+
+    NewStraightBlueButton
+      id: setPassword
+      !text: tr("Set Password")
+      @onClick: modules.game_trainer.tryOpenSetPassword()
+
+    NewStraightBlueButton
+      id: removePassword
+      !text: tr("Remove Password")
+      @onClick: modules.game_trainer.tryRemovePassword()
+
+    NewStraightBlueButton
+      id: unlockPassword
+      !text: tr("Unlock password")
+      @onClick: modules.game_trainer.tryOpenCheckPassword()
+
+    NewStraightBlueButton
+      id: lostPassword
+      !text: tr("Lost Password")
+      @onClick: modules.game_trainer.tryOpenLostPassword()
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_trainer.closeSecurityWindow()

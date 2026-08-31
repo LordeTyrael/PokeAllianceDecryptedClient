@@ -1,0 +1,8 @@
+Module
+  name: game_house
+  description: House information window shown when looking at a house
+  author: PokeAlliance
+  sandboxed: true
+  scripts: [ house ]
+  @onLoad: init()
+  @onUnload: terminate()

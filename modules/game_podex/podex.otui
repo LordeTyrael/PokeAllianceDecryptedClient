@@ -1,0 +1,176 @@
+CategoryButton < UIWidget
+  width: 130
+  height: 32
+  margin-left: 18
+  &updateSelected: |
+    function(self)
+      self:setImageSource("images/difficulty/"..self:getId().."_button_"..(self:isFocused() and "on" or "off"))
+      self:setColor((self:isFocused() and "black" or "white"))
+      if self:isFocused() then modules.game_podex.toggleCategory(self.category) end
+    end
+  @onFocusChange: self:updateSelected()
+  @onSetup: self:updateSelected()
+DifficultyButton < UIWidget
+  height: 25
+  &updateSelected: |
+    function(self)
+      self:setImageSource("images/"..self:getId().."_button_"..(self:isFocused() and "on" or "off"))
+      if self:isFocused() then modules.game_podex.toggleDifficulty(self.difficulty) end
+    end
+  @onFocusChange: self:updateSelected()
+  @onSetup: self:updateSelected()
+PodexWidget < UIWidget
+  size: 711 75
+  image-source: images/individual-list
+  image-auto-resize: true
+  anchors-right: listScrollBar.left
+  UIWidget
+    id: icon
+    size: 66 57
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 5
+  UIWidget
+    id: name
+    anchors.top: parent.top
+    anchors.left: icon.right
+    margin-top: 14
+    margin-left: 14
+    text-auto-resize: true
+  UIWidget
+    id: desc
+    anchors.top: name.bottom
+    anchors.left: icon.right
+    margin-top: 2
+    margin-left: 14
+    margin-right: 2
+    text-wrap: true
+    text-auto-resize: true
+  UIScrollArea
+    id: items
+    size: 94 64
+    margin-top: 6
+    margin-right: 6
+    anchors.top: parent.top
+    anchors.right: parent.right    
+    layout:
+      type: grid
+      cell-size: 31 31
+      cell-spacing: 0
+      num-lines: 2
+      num-columns: 3
+      flow: true      
+      font: verdana-11px-rounded
+  UIWidget
+    id: upgrade
+    size: 43 45
+    anchors.top: name.top
+    anchors.right: items.left
+    margin-right: 10
+    !tooltip: tr('Upgrade')
+    visible: false
+    image-source: images/upgrade
+TypePanel < UIScrollArea
+  id: typePanel
+  size: 767 34
+  margin-top: 38
+  margin-left: 7
+  layout: horizontalBox
+  anchors.top: parent.top
+  anchors.left: parent.left
+  CategoryButton
+    id: active
+    &category: 0
+    !text: tr("Active")
+    color: #101111
+  CategoryButton
+    id: offensive
+    &category: 1
+    !text: tr("Offensive")
+    color: #101111
+  CategoryButton
+    id: defensive
+    &category: 2
+    !text: tr("Defensive")
+    color: #101111
+  CategoryButton
+    id: character
+    &category: 3
+    !text: tr("Character")
+    color: #101111
+  CategoryButton
+    id: others
+    &category: 4
+    !text: tr("Others")
+    color: #101111
+DifficultyPanel < UIScrollArea
+  id: difficultyPanel
+  size: 320 15
+  layout: horizontalBox
+  anchors.top: parent.top
+  anchors.horizontalCenter: parent.horizontalCenter
+  margin-top: 94
+  DifficultyButton
+    id: comum
+    &difficulty: 1
+    !text: tr("Common")
+    padding: 15
+    color: #08b365
+  DifficultyButton
+    id: medium
+    &difficulty: 2
+    !text: tr("Medium")
+    padding: 15
+    color: #007fd2
+  DifficultyButton
+    id: hard
+    &difficulty: 3
+    !text: tr("Expert")
+    padding: 15
+    color: #b30808
+  DifficultyButton
+    id: extreme
+    &difficulty: 4
+    !text: tr("Legendary")
+    padding: 15
+    color: #ffd303
+ListPanel < UIScrollArea
+  id: listPanel
+  width: 700
+  height: 320
+  margin-left: 30
+  margin-top: 46
+  layout: verticalBox
+  anchors.top: difficultyPanel.top
+  anchors.left: parent.left
+  vertical-scrollbar: listScrollBar
+ListScrollBar < VerticalScrollBar
+  id: listScrollBar  
+  margin-right: 12
+  anchors.top: listPanel.top
+  anchors.right: parent.right
+  anchors.bottom: listPanel.bottom
+  step: 30
+PodexClose < UIWidget
+  id: close
+  size: 28 29
+  anchors.top: parent.top
+  anchors.right: parent.right
+  margin-top: 3
+  margin-right: 6
+  image-source: images/close
+  @onClick: modules.game_podex.hide()
+UIWindow
+  font: lucida-11px-rounded
+  id: podex
+  size: 784 494
+  opacity: 0.95
+  anchors.centerIn: parent
+  padding: 2
+  image-source: images/background
+
+  PodexClose
+  TypePanel
+  DifficultyPanel
+  ListPanel
+  ListScrollBar

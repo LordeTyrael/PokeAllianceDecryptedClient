@@ -1,0 +1,195 @@
+Panel
+  ScrollablePanel
+    id: gameOptionsContent
+    anchors.left: parent.left
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: gameOptionsScrollBar.left
+    margin-right: 4
+    vertical-scrollbar: gameOptionsScrollBar
+    layout:
+      type: verticalBox
+
+    OptionCheckBox
+      id: classicControl
+      !text: tr('Classic control')
+
+      $mobile:
+        visible: false
+
+    OptionCheckBox
+      id: displayText
+      !text: tr('Display text messages')
+
+    OptionCheckBox
+      id: smartWalk
+      !text: tr('Enable smart walking')
+      !tooltip: tr('Will detect when to use diagonal step based on the\nkeys you are pressing')
+
+    OptionCheckBox
+      id: walkRightClick
+      !text: tr('Disable Walk when Right Click')
+
+    Panel
+      height: 23
+      margin-top: 8
+
+      $mobile:
+        visible: false
+
+      UILabel
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        !text: tr('Left mouse button action')
+        !tooltip: tr('Order Pokémon and Nothing disable click-to-walk;\nthe keyboard and the minimap still walk')
+        text-offset: 5 0
+        font: poppins semibold 14
+        text-auto-resize: true
+
+      OptionsComboBox
+        id: leftMouseAction
+        width: 200
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+        @onSetup: |
+          self:addOption(tr('Walk'))
+          self:addOption(tr('Order Pokémon'))
+          self:addOption(tr('Nothing'))
+
+    OptionCheckBox
+      id: containerShiftRightClickNewWindow
+      !text: tr('Shift+Right-click a backpack opens it in a new window')
+
+    OptionCheckBox
+      id: turnPokemon
+      !text: tr('Turn Pokémon when turn your Character')
+      !tooltip: tr('Turn Pokémon when turn your Character')
+
+    OptionCheckBox
+      id: targetNpcs
+      !text: tr('Allow Tab to target NPCs')
+      !tooltip: tr('When off, switch target skips NPCs')
+
+    OptionCheckBox
+      id: showGuildName
+      !text: tr('Show guild name above players')
+
+    OptionCheckBox
+      id: showGuildIcon
+      !text: tr('Show guild icon above players')
+
+    OptionCheckBox
+      id: shinyIcon
+      !text: tr('Show a Special Icon on Shinies')
+
+    OptionCheckBox
+      id: shinyCorpse
+      !text: tr('Show a Special Shader on Shinies Corpses')
+
+    OptionCheckBox
+      id: pokeballOnFloor
+      !text: tr('Draw Pokeball Icons on Floor')
+
+    OptionCheckBox
+      id: pokeballOnIcon
+      !text: tr('Draw Pokeball Icons on Window')
+
+    OptionCheckBox
+      id: showFlyButtons
+      !text: tr('Show Fly Up/Down buttons while flying')
+      !tooltip: tr('Show on-screen buttons above/below the player to ascend/descend while flying')
+
+    Panel
+      height: 23
+      margin-top: 8
+
+      UILabel
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        !text: tr("Boss Health Bar Position")
+        text-offset: 5 0
+        font: poppins semibold 14
+        text-auto-resize: true
+
+      OptionsComboBox
+        id: bossHealthBarPosition
+        width: 200
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+        @onSetup: |
+          self:addOption(tr("Top Left"))
+          self:addOption(tr("Top Right"))
+          self:addOption(tr("Bottom Left"))
+          self:addOption(tr("Bottom Right"))
+
+    Panel
+      height: 23
+      margin-top: 8
+
+      UILabel
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        !text: tr("Condition Icons Position")
+        text-offset: 5 0
+        font: poppins semibold 14
+        text-auto-resize: true
+
+      OptionsComboBox
+        id: conditionBarPosition
+        width: 200
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+        @onSetup: |
+          self:addOption(tr("Auto"))
+          self:addOption(tr("Movebar Top Left"))
+          self:addOption(tr("Movebar Top Right"))
+          self:addOption(tr("Movebar Bottom Left"))
+          self:addOption(tr("Movebar Bottom Right"))
+
+    Panel
+      height: 23
+      margin-top: 8
+
+      UILabel
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        !text: tr("Condition Icons Orientation")
+        text-offset: 5 0
+        font: poppins semibold 14
+        text-auto-resize: true
+
+      OptionsComboBox
+        id: conditionBarOrientation
+        width: 200
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+        @onSetup: |
+          self:addOption(tr("Auto"))
+          self:addOption(tr("Vertical"))
+          self:addOption(tr("Horizontal"))
+
+
+    OptionCheckBox
+      id: showCreatureGhostOpacity
+      !text: tr('Show Creature Ghost Opacity')
+      !tooltip: tr('When enabled, ghost creatures will use their opacity settings')
+
+    Label
+      margin-top: 12
+      text-wrap: true
+      text-auto-resize: true
+      font: poppins semibold 11
+      color: #ffff00
+      !text: tr('To change the language, use the selector on the login screen shown when you open the client.')
+
+  AllianceVerticalScrollBar
+    id: gameOptionsScrollBar
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    step: 30
+    pixels-scroll: true

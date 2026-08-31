@@ -1,0 +1,268 @@
+UIWidget
+  id: ChangeEmailWindow
+  size: 668 524
+  visible: false
+  focusable: true
+  anchors.centerIn: parent
+  image-source: images/redesign/card-frame
+  image-border: 18
+
+  UIWidget
+    id: artPanel
+    width: 266
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    phantom: true
+    clip-transparency: true
+    image-source: images/redesign/card-art-mask
+    image-border: 18
+
+    UIWidget
+      anchors.fill: parent
+      phantom: true
+      image-source: images/redesign/card-art
+      image-clip: 0 0 266 524
+
+  UIWidget
+    id: logo
+    size: 76 76
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 30
+    margin-left: 26
+    image-source: /images/pka/logo
+    image-smooth: true
+    phantom: true
+
+  PkaArtSubtitle
+    id: artSubtitle
+    width: 214
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 26
+    margin-bottom: 30
+    !text: tr('Your email is the key to recovering your account.')
+
+  PkaArtTitle
+    id: artTitle
+    width: 214
+    anchors.left: parent.left
+    anchors.bottom: artSubtitle.top
+    margin-left: 26
+    margin-bottom: 8
+    !text: tr('Update your email')
+
+  PkaCardTitle
+    id: title
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 24
+    margin-left: 296
+    !text: tr('Change Email')
+
+  PkaCardSubtitle
+    id: subtitle
+    anchors.top: title.bottom
+    anchors.left: title.left
+    margin-top: 2
+    !text: tr('Confirm your identity to update your email')
+
+  PkaFieldLabel
+    id: passwordLabel
+    anchors.top: subtitle.bottom
+    anchors.left: parent.left
+    margin-top: 16
+    margin-left: 296
+    !text: tr('YOUR PASSWORD')
+
+  PkaInput
+    id: passwordTextEdit
+    text-hidden: true
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+
+  PkaFieldLabel
+    id: newEmailLabel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 296
+    !text: tr('NEW EMAIL')
+
+  PkaInput
+    id: newEmailEdit
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+
+  PkaFieldLabel
+    id: confirmEmailLabel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 296
+    !text: tr('CONFIRM EMAIL')
+
+  PkaInput
+    id: confirmEmailTextEdit
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+
+  PkaFieldLabel
+    id: recoveryKeyLabel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 296
+    !text: tr('RECOVERY KEY (OPTIONAL)')
+
+  PkaInput
+    id: recoveryKeyTextEdit
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 296
+    margin-right: 30
+    @onTextChange: ChangeEmail.updateRecoveryKeyNotice(self)
+
+  UIWidget
+    id: rkEmptyNotice
+    height: 64
+    anchors.top: recoveryKeyTextEdit.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 296
+    margin-right: 30
+    image-source: images/redesign/soft-panel
+    image-border: 12
+    image-color: #e8c66a
+    phantom: true
+
+    UIWidget
+      id: icon
+      size: 16 16
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 11
+      margin-left: 14
+      icon-source: @fa solid 14 f017
+      icon-color: #e8c66a
+      phantom: true
+
+    Label
+      id: noticeTitle
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 8
+      margin-left: 40
+      font: poppins semibold 11
+      color: #e8c66a
+      text-auto-resize: true
+      phantom: true
+      !text: tr('30-day waiting period')
+
+    Label
+      id: noticeText
+      anchors.top: noticeTitle.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 1
+      margin-left: 40
+      margin-right: 12
+      font: poppins regular 11
+      color: #b4c4decc
+      text-align: left
+      text-wrap: true
+      text-auto-resize: true
+      phantom: true
+      !text: tr('No Recovery Key entered. Enter your key above to change instantly.')
+
+  UIWidget
+    id: rkFilledNotice
+    height: 64
+    visible: false
+    anchors.top: recoveryKeyTextEdit.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 296
+    margin-right: 30
+    image-source: images/redesign/soft-panel
+    image-border: 12
+    image-color: #4ade80
+    phantom: true
+
+    UIWidget
+      id: icon
+      size: 16 16
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 11
+      margin-left: 14
+      icon-source: @fa solid 14 f0e7
+      icon-color: #4ade80
+      phantom: true
+
+    Label
+      id: noticeTitle
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 8
+      margin-left: 40
+      font: poppins semibold 11
+      color: #7fe6a5
+      text-auto-resize: true
+      phantom: true
+      !text: tr('Instant change')
+
+    Label
+      id: noticeText
+      anchors.top: noticeTitle.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 1
+      margin-left: 40
+      margin-right: 12
+      font: poppins regular 11
+      color: #b4c4decc
+      text-align: left
+      text-wrap: true
+      text-auto-resize: true
+      phantom: true
+      !text: tr('Valid Recovery Key entered. Without it, the change takes 30 days.')
+
+  PkaGhostButton
+    id: backButton
+    size: 84 44
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    margin-bottom: 28
+    margin-left: 296
+    !text: tr('Back')
+    @onClick: CreateCharacter.doCloseChangeEmail()
+
+  PkaPrimaryButton
+    id: confirmButton
+    height: 44
+    anchors.bottom: parent.bottom
+    anchors.left: backButton.right
+    anchors.right: parent.right
+    margin-bottom: 28
+    margin-left: 9
+    margin-right: 30
+    !text: tr('Change Email')
+    @onClick: CreateCharacter.doChangeEmail()

@@ -1,0 +1,103 @@
+TextWindow < NewOpaqueWindow
+  id: textWindow
+  size: 320 300
+  anchors.centerIn: parent
+  focusable: true
+
+  UIWidget
+    id: titleBar
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 200 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: titleLabel
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 15
+      margin-top: 2
+      font: poppins semibold 16
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+
+  Item
+    id: textItem
+    virtual: true
+    anchors.top: titleBar.bottom
+    anchors.left: parent.left
+    margin-top: 10
+    margin-left: 15
+
+  Label
+    id: description
+    anchors.top: textItem.top
+    anchors.left: textItem.right
+    anchors.right: parent.right
+    margin-left: 8
+    margin-right: 15
+    font: poppins semibold 11
+    color: #c5e4f9
+    text-auto-resize: true
+    text-align: left
+    text-wrap: true
+
+  MultilineTextEdit
+    id: text
+    anchors.top: textScroll.top
+    anchors.left: parent.left
+    anchors.right: textScroll.left
+    anchors.bottom: textScroll.bottom
+    margin-left: 15
+    font: poppins semibold 11
+    vertical-scrollbar: textScroll
+    text-wrap: true
+
+  AllianceVerticalScrollBar
+    id: textScroll
+    anchors.top: textItem.bottom
+    anchors.bottom: okButton.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 15
+    margin-bottom: 10
+    step: 16
+    pixels-scroll: true
+
+  AllianceStraightBlueButton
+    id: okButton
+    !text: tr('Ok')
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.right: next.left
+    margin-right: 10
+    margin-bottom: 15
+    width: 80
+
+  NewStraightGrayButton
+    id: cancelButton
+    !text: tr('Close')
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-right: 15
+    margin-bottom: 15
+    width: 80
+
+  Label
+    id: charCounter
+    visible: false
+    anchors.verticalCenter: okButton.verticalCenter
+    anchors.right: okButton.left
+    margin-right: 12
+    font: poppins semibold 11
+    color: #c5e4f9
+    text-auto-resize: true

@@ -1,0 +1,9 @@
+Module
+  name: game_stars
+  description: stars
+  author: PokeAlliance
+  website: http://pokealliance.com
+  sandboxed: true
+  scripts: [ stars ]
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,8 @@
+Module
+  name: game_achievements
+  description: Mostra e gerencia todas as conquistas
+  dependencies: [ client_hotkeys ]
+  sandboxed: true
+  scripts: [ achievements ]
+  @onLoad: init()
+  @onUnload: terminate()

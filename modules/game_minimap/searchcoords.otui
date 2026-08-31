@@ -1,0 +1,105 @@
+SearchCoordsWindow < NewOpaqueWindow
+  size: 320 180
+  anchors.centerIn: parent
+  opacity: 0.9
+  focusable: true
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 250 36
+    image-source: /images/general_ui/name_base
+    phantom: true
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      margin-left: 15
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr("Search Coordinates")
+
+  NewRedCloseButton
+    id: cancelButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_minimap.closeSearchCoords()
+
+  Label
+    id: validationLabel
+    font: poppins semibold 11
+    text-auto-resize: true
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 15
+    margin-left: 15
+    color: #00ff00
+    visible: false
+
+  EntergameTextEdit
+    id: coordsInput
+    size: 280 28
+    font: poppins semibold 12
+    text-offset: 14 4
+    color: white
+    focusable: true
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    anchors.top: validationLabel.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+    @onTextChange: modules.game_minimap.onSearchCoordsTextChange(self)
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  Panel
+    id: createFlagPanel
+    height: 25
+    focusable: false
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: coordsInput.bottom
+    margin-top: 10
+    margin-left: 15
+    margin-right: 15
+
+    Label
+      id: createFlagLabel
+      font: poppins semibold 11
+      color: #a0b0c0
+      !text: tr('Create a flag at this spot')
+      text-auto-resize: true
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+
+    SwitchBox
+      id: createFlag
+      focusable: false
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      @onCheckChange: |
+        local checked = self:isChecked()
+        local margin = checked and 20 or 2
+        local imageSource = checked and "/images/general_ui/icons/base_slider_selected" or "/images/general_ui/icons/base_slider"
+        local sliderButton = self.sliderButton
+        if sliderButton then
+          sliderButton:setMarginLeft(margin)
+        end
+        self:setImageSource(imageSource)
+
+  AllianceStraightBlueButton
+    id: okButton
+    size: 140 30
+    font: poppins semibold 12
+    text-align: center
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-bottom: 15
+    !text: tr("Confirm")
+    @onClick: modules.game_minimap.confirmSearchCoords()

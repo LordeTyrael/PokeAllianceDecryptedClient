@@ -1,0 +1,11 @@
+Module
+  name: game_streamview
+  description: In-game viewer for a streamer's Twitch/YouTube channel (g_webview)
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  autoload: true
+  sandboxed: true
+  scripts: [ streamview ]
+  dependencies: [ game_interface ]
+  @onLoad: init()
+  @onUnload: terminate()

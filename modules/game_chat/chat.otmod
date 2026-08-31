@@ -1,0 +1,12 @@
+Module
+  name: game_chat
+  description: Chat
+  author: Dev Stone
+  website: https://x.gd/kJ2WH
+  sandboxed: true
+  autoload: true
+  reloadable: true
+  scripts: [ chat, emotes_convertion ]
+  dependencies: [ game_battle, client_hotkeys ]
+  @onLoad: init()
+  @onUnload: terminate()

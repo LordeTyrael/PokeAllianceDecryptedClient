@@ -1,0 +1,31 @@
+StoreButton < UIButton
+  size: 180 180
+  change-cursor-image: true
+  cursor: pointer
+
+  $disabled:
+    image-color: #dfdfdf66
+    icon-color: #dfdfdf
+    change-cursor-image: false
+
+UIWindow
+  id: store
+  size: 400 200
+  anchors.centerIn: parent
+  image-source: /images/ui/newpanel2
+  opacity: 0.9
+  @onEscape: modules.game_store.hideStoreWindow()
+
+  StoreButton
+    id: onlinePoints
+    image-source: images/onlinepoints
+    anchors.centerIn: parent
+    margin-left: 100
+    @onClick: modules.game_onlineshop.toggle()
+
+  StoreButton
+    id: store
+    image-source: images/images
+    anchors.centerIn: parent
+    margin-right: 100
+    @onClick: modules.game_store.toggle()

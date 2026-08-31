@@ -1,0 +1,201 @@
+OptionPanel
+  Label
+    text-wrap: false
+    @onSetup: |
+      self:setText(tr("GPU: ") .. g_graphics.getRenderer())
+
+  Label
+    text-wrap: false
+    @onSetup: |
+      self:setText(tr("Version: ") .. g_graphics.getVersion())
+
+  HorizontalSeparator
+    id: separator
+    margin: 5 5 5 5
+
+  OptionCheckBox
+    id: vsync
+    !text: tr('Enable vertical synchronization')
+    !tooltip: tr('Limits FPS (usually to 60)')
+
+  OptionCheckBox
+    id: showFps
+    !text: tr('Show frame rate')
+
+  OptionCheckBox
+    id: enableLights
+    !text: tr('Enable lights')
+
+  OptionCheckBox
+    id: fullscreen
+    !text: tr('Fullscreen')
+    tooltip: Ctrl+Shift+F
+
+  OptionCheckBox
+    id: multithreadRendering
+    !text: tr('Multithread rendering')
+    &optionLabel:
+      phantom: false
+      !tooltip: tr('Runs game logic and rendering on separate CPU cores.\nUsually raises FPS on a multi-core CPU, but uses more\nCPU and adds up to one frame of input delay.')
+
+  Panel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: optimizationLevelLabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Optimization level")
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+      phantom: false
+      !tooltip: tr("High/Maximum optimization level may cause visual defects.")
+
+    OptionsComboBox
+      id: optimizationLevel
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.setOption(self:getId(), self.currentIndex)
+      @onSetup: |
+        self:addOption(tr("Automatic"))
+        self:addOption(tr("None"))
+        self:addOption(tr("Low"))
+        self:addOption(tr("Medium"))
+        self:addOption(tr("High"))
+        self:addOption(tr("Maximum"))
+
+  Panel
+    id: frameRatePanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: backgroundFrameRateLabel
+      !text: tr('Game framerate limit: %s', 'max')
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+
+      @onSetup: |
+        local value = modules.client_options.getOption('backgroundFrameRate')
+        local text = value
+        if value <= 0 or value >= 201 then
+          text = 'max'
+        end
+        self:setText(tr('Game framerate limit: %s', text))
+  
+    AllianceHorizontalScrollBar
+      id: backgroundFrameRate
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 10
+      maximum: 201
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: ambientLightPanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: ambientLightLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+      @onSetup: |
+        local value = modules.client_options.getOption('ambientLight')
+        self:setText(tr('Ambient light: %s%%', value))
+
+    AllianceHorizontalScrollBar
+      id: ambientLight
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 0
+      maximum: 100
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: combatEffectOpacityOwnPanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: combatEffectOpacityOwnLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+      @onSetup: |
+        local value = modules.client_options.getOption('combatEffectOpacityOwn')
+        self:setText(tr('Opacity Combat Effects Own: %s%%', value))
+
+    AllianceHorizontalScrollBar
+      id: combatEffectOpacityOwn
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 0
+      maximum: 100
+      !tooltip: tr('Effects and missiles caused by you or by your pokemon. Only combat is dimmed.')
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    id: combatEffectOpacityOthersPanel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: combatEffectOpacityOthersLabel
+      font: poppins semibold 14
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text-auto-resize: true
+      text-offset: 5 0
+      @onSetup: |
+        local value = modules.client_options.getOption('combatEffectOpacityOthers')
+        self:setText(tr('Opacity Combat Effects Others: %s%%', value))
+
+    AllianceHorizontalScrollBar
+      id: combatEffectOpacityOthers
+      size: 200 26
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      minimum: 0
+      maximum: 100
+      !tooltip: tr('Effects and missiles caused by anyone else. Only combat is dimmed.')
+      @onValueChange: modules.client_options.setOption(self:getId(), self:getValue())
+
+  Panel
+    height: 23
+    margin-top: 8
+
+    UILabel
+      id: hudScaleLabel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("HudScale Percent")
+      text-offset: 5 0
+      font: poppins semibold 14
+      text-auto-resize: true
+      phantom: false
+      
+    OptionsComboBox
+      id: hudScale
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      @onOptionChange: modules.client_options.setOption(self:getId(),   self.currentIndex)
+      @onSetup: |
+        self:addOption("100% " .. tr("(Default)"))
+        self:addOption("125%")
+        self:addOption("150%")
+        self:addOption("175%")
+        self:addOption("200%")

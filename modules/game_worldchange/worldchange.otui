@@ -1,0 +1,440 @@
+WorldChangeWindow < HeadlessWindow
+  id: window
+  size: 400 421
+  anchors.centerIn: parent
+  image-source: images/background0
+  opacity: 0.95  
+
+  UIWidget
+    id: read_button
+    size: 212 47
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter    
+    image-source: images/read_button
+    margin-top: 120
+
+  UIWidget
+    id: tools
+    size: 380 200
+    margin-top: 15
+    --background: #ffff0020
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: read_button.bottom
+
+  UIWidget
+    id: closeButton
+    size: 28 29
+    anchors.top: parent.top
+    anchors.right: parent.right    
+    image-source: images/close
+    @onClick: self:getParent():hide()
+
+  UIWidget
+    id: alert_icon
+    size: 15 15
+    anchors.top: widget1.top
+    anchors.right: widget1.left
+    image-source: images/alert_icon
+    margin-right: 5
+    margin-top: 25
+
+  UIWidget
+    id: widget1
+    size: 300 60
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: read_button.bottom
+    image-source: images/widget_bar
+    margin-top: 15
+    text-align: center
+    text-wrap: true
+
+  UIWidget
+    id: alert_icon2
+    size: 15 15
+    anchors.top: widget2.top    
+    anchors.right: widget2.left
+    image-source: images/alert_icon
+    margin-right: 5
+    margin-top: 15    
+
+  UIWidget
+    id: widget2
+    size: 300 40
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: widget1.bottom
+    image-source: images/widget_bar
+    margin-top: 15
+    text-align: center
+    text-wrap: true
+
+  UIWidget
+    id: alert_icon3
+    size: 15 15
+    anchors.top: widget3.top
+    anchors.right: widget3.left
+    image-source: images/alert_icon
+    margin-right: 5
+    margin-top: 15    
+
+  UIWidget
+    id: widget3
+    size: 300 40
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: widget2.bottom
+    image-source: images/widget_bar
+    margin-top: 15
+    text-align: center
+    text-wrap: true
+
+  UIWidget
+    id: next
+    size: 106 30
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right    
+    image-source: images/next
+    margin-bottom: 18
+    margin-right: 18 
+    !text: tr("Next")
+    @onClick: modules.game_worldchange:next()
+
+WorldChangeWindow2 < HeadlessWindow
+  id: window
+  size: 400 470
+  anchors.centerIn: parent
+  image-source: images/background
+  opacity: 0.95
+
+  UIWidget
+    id: requirements_panel
+    size: 350 200
+    --image-source: images/widget_bar
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    margin-top: 65
+  
+    
+    UIWidget
+      id: house_icon
+      anchors.top: house_requirement.top
+      anchors.right: house_requirement.left
+      margin-right: 5
+      size: 18 18
+      image-source: images/icon_false
+
+    UIWidget
+      id: house_requirement
+      !text: tr('You cannot own a house')
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: 250
+      text-align: left
+      text-wrap: true    
+      margin-top: 28
+      text-offset: 0 2
+
+    UIWidget
+      id: market_icon
+      anchors.top: next.top
+      anchors.right: market_requirement.left
+      margin-right: 5
+      size: 18 18
+      image-source: images/icon_false
+  
+    UIWidget
+      id: market_requirement
+      !text: tr('No announcements or offers in market')
+      anchors.top: house_requirement.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: 250
+      text-align: left
+      text-wrap: true
+      margin-top: 6
+      text-offset: 0 2
+
+    UIWidget
+      id: guild_icon
+      anchors.top: next.top
+      anchors.right: guild_requirement.left
+      margin-right: 5
+      size: 18 18
+      image-source: images/icon_false
+  
+    UIWidget
+      id: guild_requirement
+      !text: tr('You cannot be in a guild')
+      anchors.top: market_requirement.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: 250
+      text-align: left
+      text-wrap: true
+      margin-top: 6   
+      text-offset: 0 2   
+
+    UIWidget
+      id: tc_icon
+      anchors.top: next.top
+      anchors.right: tc_requirement.left
+      margin-right: 5
+      size: 18 18
+      image-source: images/icon_false
+  
+    UIWidget
+      id: tc_requirement
+      !text: tr('Must be in the Trade Center')
+      anchors.top: guild_requirement.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: 250
+      text-align: left
+      text-wrap: true
+      margin-top: 6
+      text-offset: 0 2
+
+    UIWidget
+      id: tournament_icon
+      anchors.top: next.top
+      anchors.right: tournament_requirement.left
+      margin-right: 5
+      size: 18 18
+      image-source: images/icon_false
+  
+    UIWidget
+      id: tournament_requirement
+      !text: tr('Cannot be registered in an Tournament')
+      anchors.top: tc_requirement.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: 250
+      text-align: left
+      text-wrap: true
+      margin-top: 6
+      text-offset: 0 2
+
+    UIWidget
+      id: pvp_icon
+      anchors.top: next.top
+      anchors.right: pvp_requirement.left
+      margin-right: 5
+      size: 18 18
+      image-source: images/icon_false
+  
+    UIWidget
+      id: pvp_requirement
+      !text: tr('No active PvP penalty.')
+      anchors.top: tournament_requirement.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: 250
+      text-align: left
+      text-wrap: true
+      margin-top: 6
+      text-offset: 0 2
+
+    UIWidget
+      id: transfer_icon
+      anchors.top: pvp_icon.bottom
+      anchors.left: pvp_icon.left
+      size: 18 18
+      image-source: images/icon_false
+      margin-top: 1
+  
+    UIWidget
+      id: transfer_requirement
+      !text: tr("Didn't transfered in less than 30 days.")
+      anchors.top: prev.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: 260
+      text-align: left      
+      margin-left: 5
+      margin-top: 2
+      text-offset: 0 2
+
+    UIWidget
+      id: pending_coins_icon
+      anchors.top: transfer_icon.bottom
+      anchors.left: transfer_icon.left
+      margin-top: 1
+      size: 18 18
+      image-source: images/icon_false
+  
+    UIWidget
+      id: pending_coins_requirement
+      !text: tr('No pending transfers from the website.')
+      anchors.top: prev.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: 260
+      text-align: left      
+      margin-left: 5
+      margin-top: 2
+      text-offset: 0 2
+
+  HorizontalSeparator
+    id: separator
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: requirements_panel.bottom
+    anchors.verticalCenter: parent.verticalCenter
+    margin-bottom: 5
+    margin-top: 35
+    margin-left: 15
+    margin-right: 15
+
+  UIWidget
+    id: world_panel
+    size: 350 150
+    --image-source: images/widget_bar
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: separator.bottom    
+
+    Label
+      id: choose_text
+      anchors.top: parent.top
+      anchors.left: parent.left
+      size: 125 20
+      margin-top: 15
+      margin-left: 50 
+      !text: tr("Choose a new World:")
+      text-offset: 0 3
+
+    ComboBox
+      id: server_box
+      font: verdana-11px-antialised
+      anchors.top: choose_text.top
+      anchors.left: choose_text.right
+      text-align: left
+      margin-left: 5
+
+    Label
+      id: migration_text
+      anchors.left: choose_text.left
+      anchors.top: choose_text.bottom
+      !text: tr("Price:")      
+      text-offset: 0 3
+      height: 18
+      margin-top: 5
+
+    UIItem
+      id: lcIcon
+      size: 30 30
+      item-id: 39090      
+      anchors.left: migration_text.right
+      anchors.top: choose_text.bottom
+      margin-left: 10
+
+    UIWidget
+      id: price
+      size: 18 18
+      anchors.left: lcIcon.right
+      anchors.top: choose_text.bottom
+      margin-left: 4
+      margin-top: 5
+      image-source: images/icon_false
+
+    UIWidget
+      id: name
+      anchors.top: migration_text.bottom
+      anchors.left: migration_text.left
+      margin-top: 10
+      text-auto-resize: true
+      !text: tr("Player Name: ")
+
+    UIWidget
+      id: server
+      anchors.top: prev.bottom
+      anchors.left: prev.left
+      margin-top: 5
+      text-auto-resize: true
+      !text: tr("World: ")
+
+    UIWidget
+      id: newserver
+      anchors.top: prev.bottom
+      anchors.left: prev.left
+      margin-top: 5
+      text-auto-resize: true
+      !text: tr("New World: ")
+
+  UIWidget
+    id: prev
+    size: 106 30
+    anchors.top: world_panel.bottom
+    anchors.left: parent.left
+    image-source: images/next
+    margin-bottom: 18
+    margin-left: 18 
+    !text: tr("Back")
+    @onClick: modules.game_worldchange:prev()
+
+  UIWidget
+    id: confirm
+    size: 106 30
+    anchors.top: prev.top
+    anchors.right: parent.right
+    image-source: images/next
+    margin-bottom: 18
+    margin-right: 18 
+    !text: tr("Migrate")
+    @onClick: modules.game_worldchange:confirm()
+
+  UIWidget
+    id: closeButton
+    size: 28 29
+    anchors.top: parent.top
+    anchors.right: parent.right    
+    image-source: images/close
+    @onClick: self:getParent():hide()
+
+WorldChangeWindow3 < HeadlessWindow
+  id: confirm_window
+  size: 350 272
+  anchors.centerIn: parent
+  image-source: images/bg_confirm
+  opacity: 0.95
+
+  Label
+    id: confirm_text
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    size: 250 50
+    margin-top: 70
+    !text: tr("Please, type your password to confirm the migration.")
+    text-offset: 0 3
+    text-wrap: true
+
+  Label
+    id: confirm_text
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    size: 250 50
+    margin-top: 10
+    !text: tr("Remember: This action cannot be undone.")
+    text-offset: 0 3
+    text-wrap: true
+    color: red
+    max-length: 25
+
+  TextEdit
+    id: password_confirm
+    !text: tr('Password')
+    text-align: center
+    anchors.left: prev.left
+    anchors.right: prev.right      
+    anchors.top: prev.bottom            
+    text-hidden: true
+    color: white
+    margin-top: 5
+
+  UIWidget
+    id: confirm
+    size: 70 30
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter    
+    image-source: images/next    
+    !text: tr("Migrate")
+    @onClick: modules.game_worldchange:confirmWindow()
+    margin-top: 15
+
+  UIWidget
+    id: closeButton
+    size: 28 29
+    anchors.top: parent.top
+    anchors.right: parent.right    
+    image-source: images/close
+    @onClick: self:getParent():hide()

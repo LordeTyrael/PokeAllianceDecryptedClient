@@ -1,0 +1,55 @@
+UIWindow
+  id: unlockedWindow
+  phantom: true
+  size: 237 128
+  anchors.top: topMenu.bottom
+  anchors.right: parent.right
+  image-source: images/unlocked
+  margin-top: 25
+  margin-right: 25
+  visible: false
+  UIWidget
+    id: title
+    size: 237 30
+    margin-top: 5
+    color: #66ccff    
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter  
+    !text: tr('Achievement Unlocked')
+  UIWidget
+    id: icon
+    size: 50 50
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 15
+    margin-top: 45
+  UIWidget
+    id: elementIcon
+    anchors.fill: icon
+  UIWidget
+    id: name
+    anchors.top: icon.top
+    anchors.left: icon.right
+    anchors.right: parent.right
+    text-auto-resize: true
+    margin-left: 12
+    margin-right: 12
+    text: ?
+    font: poppins semibold 12
+    color: green
+    text-align: center
+  UIWidget
+    id: description
+    width: 145
+    height: 50
+    text-wrap: true
+    text-align: left
+    anchors.top: name.bottom
+    anchors.left: icon.right
+    anchors.right: parent.right
+    margin-top: 3
+    margin-left: 12
+    margin-right: 12
+    text-auto-resize: true
+    !text: tr('Secret Achievement')
+    text-align: center

@@ -1,0 +1,9 @@
+Module
+  name: game_links
+  description: in-game links
+  author: pokealliance
+  website: https://github.com/pokealliance
+  sandboxed: true
+  scripts: [ links ]
+  @onLoad: init()
+  @onUnload: terminate()

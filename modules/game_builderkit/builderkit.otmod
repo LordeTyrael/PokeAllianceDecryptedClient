@@ -1,0 +1,10 @@
+Module
+  name: game_builderkit
+  description: builderkit system
+  author: PokeAlliance
+  website: https://pokealliance.com
+  sandboxed: true
+  autoload: true
+  scripts: [ builderkit ]
+  @onLoad: init()
+  @onUnload: terminate()

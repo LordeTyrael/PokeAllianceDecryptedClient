@@ -1,0 +1,110 @@
+ChoiceCreature < NewButton
+  size: 50 50
+
+UIWindow
+  id: medalWindow    
+  size: 600 400
+  anchors.centerIn: parent
+  draggable: true
+  focusable: true
+
+  UIWidget
+    id: background
+    anchors.fill: parent
+    phantom: true
+    image-source: images/background
+
+    UIWidget
+      id: titleBackground
+      size: 368 36
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      image-source: images/top_background
+      phantom: true
+
+      Label
+        id: titleName
+        anchors.verticalCenter: titleIcon.verticalCenter
+        text-auto-resize: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        font: poppins semibold 24
+        phantom: true
+        !text: tr("Select Pokémon")
+
+  UIScrollArea
+    id: preysPanel
+    size: 560 300
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-top: 50
+    margin-right: 5
+    anchors.horizontalCenter: parent.horizontalCenter
+    vertical-scrollbar: attributeAreaScrollableBar
+    image-source: images/prey_background
+    padding: 8
+
+    layout:
+      type: grid
+      cell-size: 50 50
+      num-columns: 10
+      cell-spacing: 5
+
+  Label
+    id: loadingLabel
+    anchors.centerIn: preysPanel
+    text-auto-resize: true
+    font: poppins semibold 18
+    color: #cccccc
+    phantom: true
+    visible: false
+    !text: tr("Loading...")
+
+  AllianceVerticalScrollBar
+    id: attributeAreaScrollableBar
+    anchors.top: preysPanel.top
+    anchors.bottom: preysPanel.bottom
+    anchors.left: preysPanel.right
+    margin-left: 8
+    step: 30
+    pixels-scroll: true
+    visible: false
+
+  NewButton
+    id: closeButton
+    size: 20 20
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    image-source: /images/newui/close
+    @onClick: modules.game_prey.hideChoiceWindow()
+
+  UITextEdit
+    id: searchItemEdit
+    font: poppins semibold 14
+    color: white
+    size: 177 26
+    text-offset: 0 2
+    opacity: 1
+    focusable: true
+    padding: 4
+    padding-left: 10
+    selection-color: #272727
+    selection-background-color: #cccccc
+    anchors.top: preysPanel.bottom
+    anchors.right: parent.right
+    margin-right: 20
+    margin-top: 5
+    image-source: images/search_background
+    $disabled:
+      color: #27272788
+      opacity: 0.5
+    @onTextChange: modules.game_prey.onSearchTextChange(self:getText())
+
+    UIWidget
+      id: searchItemEditIcon
+      size: 11 11
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      image-source: images/search_icon
+      margin-right: 4

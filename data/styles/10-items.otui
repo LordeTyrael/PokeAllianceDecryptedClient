@@ -1,0 +1,38 @@
+Item < UIItem
+  size: 32 32
+  padding: 1
+  image-source: /images/general_ui/flatpanel
+  font: verdana-11px-rounded
+  border-color: white
+  color: white
+
+  $disabled:
+    color: #646464
+
+ContainerItem < UIItem
+  size: 32 32
+  padding: 1
+  image-source: /images/general_ui/flatpanel
+  font: verdana-11px-rounded
+  border: 0 alpha
+  color: white
+
+  $hover:
+    border: 1 lightGray
+    image-source: /images/general_ui/flatpanel_hover
+
+  $disabled:
+    color: #646464
+
+NewUIItem < UIItem
+  size: 34 34
+  padding: 1
+  image-source: /images/ui/newItem
+  font: verdana-11px-rounded
+  border-color: white
+  color: white
+  searchable: true
+  virtual: true
+
+  $disabled:
+    color: #646464

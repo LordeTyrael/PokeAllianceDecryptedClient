@@ -1,0 +1,766 @@
+MinimapWaypointFlag < UIWidget
+  size: 11 11
+  focusable: false
+
+MinimapFlag < UIWidget
+  size: 11 11
+  focusable: false
+
+MinimapHouseFlag < UIWidget
+  size: 12 12
+  focusable: false
+  icon-source: @fa solid-outline 12 f015
+  icon-color: #00ff00
+
+// Cidade clicavel no minimapa: icone + nome. O container recebe o mouse e os dois filhos sao
+// phantom -- e assim que clicar no NOME funciona igual a clicar no icone. Nao pode ser um Label na
+// raiz: UILabel.create() chama setPhantom(true) e o widget nunca receberia o clique.
+// A largura e ajustada no Lua depois de setText, porque o nome tem tamanho variavel.
+CityMarker < UIWidget
+  size: 12 12
+  cursor: pointer
+  change-cursor-image: true
+
+  UIWidget
+    id: icon
+    size: 12 12
+    icon-source: @fa blackrounded 12 f3c5
+    phantom: true
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+
+  Label
+    id: label
+    font: poppins semibold 16
+    text-auto-resize: true
+    phantom: true
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 3
+
+MinimapCross < UIWidget
+  focusable: false
+  phantom: true
+  image: /images/game/minimap/cross
+  size: 16 16
+
+MinimapFloorUpButton < Button
+  size: 20 20
+  margin-right: 28
+  margin-bottom: 28
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+  icon-source: /images/game/minimap/floor_up
+  icon-clip: 0 32 16 16
+  $pressed:
+    icon-clip: 0 0 16 16
+  $hover !pressed:
+    icon-clip: 0 16 16 16
+
+MinimapFloorDownButton < Button
+  size: 20 20
+  margin-right: 28
+  margin-bottom: 4
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+  icon-source: /images/game/minimap/floor_down
+  icon-clip: 0 32 16 16
+  $pressed:
+    icon-clip: 0 0 16 16
+  $hover !pressed:
+    icon-clip: 0 16 16 16
+
+MinimapZoomInButton < Button
+  text: +
+  size: 20 20
+  margin-right: 4
+  margin-bottom: 28
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+
+MinimapZoomOutButton < Button
+  text: -
+  size: 20 20
+  margin-right: 4
+  margin-bottom: 4
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+
+MinimapResetButton < Button
+  !text: tr('Center')
+  size: 44 20
+  anchors.left: parent.left
+  anchors.top: parent.top
+  margin: 4
+
+MinimapBarButton < UIWidget
+  size: 24 24
+  icon-color: white
+  change-cursor-image: true
+  cursor: pointer
+  // ENGOLE o clique: estes botoes sao filhos do proprio widget do minimapa, e sem consumir o
+  // release o evento sobe para UIMinimap:onMouseRelease (gamelib), que chama player:autoWalk --
+  // apertar "subir andar" fazia o personagem sair andando ate o tile debaixo do botao.
+  //
+  // Nao quebra o @onClick de cada botao: o widget pressionado e escolhido por POSICAO
+  // (uimanager.cpp:156) e o onClick sai do updatePressedWidget (:283), nao desta cadeia.
+  @onMouseRelease: return true
+  $hover:
+    icon-color: #aaaaaa
+  $pressed:
+    icon-color: #888888
+
+Minimap < UIMinimap
+  draggable: true
+  focusable: false
+  cross: true
+  color: black
+
+
+// Minimap Flag Create Window
+
+
+MinimapFlagCheckBox < UICheckBox
+  size: 30 30
+  cursor: pointer
+  change-cursor-image: true
+
+  // Sem icon-source/icon-size: o icone vem do Lua (uiminimap.lua chama setIcon com a string
+  // "@fa blackrounded <tam> <codepoint>" da tabela MapFlags). Sem icon-size, o glifo e desenhado
+  // no tamanho nativo e centralizado -- que e o certo, porque MapFlags mistura varios tamanhos e
+  // um icon-size fixo esticaria todos para o mesmo retangulo.
+  //
+  // image-source/border/color ficam TAMBEM no base, nao so dentro dos $state: UIWidget::updateStyle
+  // so restaura uma propriedade ao SAIR de um estado se a mesma tag existir no estilo base --
+  // declarada apenas dentro de um $state, ela gruda para sempre.
+  image-source: /images/newui/background_2
+  image-border: 10
+  image-color: #ffffff00
+
+  $hover !checked:
+    image-color: #ffffff70
+
+  $checked:
+    image-source: /images/newui/blueSoft
+    image-border: 8
+    image-color: #ffffffff
+
+MinimapFlagWindow < UIWindow
+  // Herda de UIWindow, nao de NewOpaqueWindow: styles.lua carrega os .otui em ordem de nome, entao
+  // 60-pka.otui vem DEPOIS de 40-minimap.otui e usar um estilo de la como BASE quebra o boot.
+  // Como filho nao ha problema (NewBlueButton etc. sao resolvidos no createWidget). Por isso o
+  // fundo do NewOpaqueWindow esta escrito inline aqui.
+  image-source: /images/newui/background_3
+  image-border: 15
+  size: 384 356
+  anchors.centerIn: parent
+  focusable: true
+  // Sem !text de proposito: o titulo agora e o chip base_name. UIWindow.create ja alinha o texto
+  // proprio da janela no topo-centro, e ele sobreporia o chip.
+
+  UIWidget
+    id: base_name
+    size: 250 36
+    phantom: true
+    focusable: false
+    image-source: /images/general_ui/name_base
+    anchors.top: parent.top
+    anchors.left: parent.left
+
+    Label
+      id: base_text
+      font: poppins semibold 16
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 15
+      margin-top: 2
+      !text: tr('Create Map Mark')
+
+  NewRedCloseButton
+    id: closeButton
+    focusable: false
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: |
+      local window = self:getParent()
+      if window.onEscape then window:onEscape() end
+
+  PoppinsSemibold12
+    id: positionTitle
+    color: #a0b0c0
+    !text: tr('Position')
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 16
+    margin-left: 16
+
+  UIWidget
+    id: positionBox
+    height: 28
+    phantom: true
+    focusable: false
+    image-source: /images/newui/background_2
+    image-border: 10
+    anchors.top: positionTitle.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 16
+    margin-right: 16
+
+    PoppinsSemibold13
+      id: position
+      color: #e6edf5
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 12
+
+  PoppinsSemibold12
+    id: descriptionTitle
+    color: #a0b0c0
+    !text: tr('Description')
+    anchors.top: positionBox.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 16
+
+  EntergameTextEdit
+    id: description
+    height: 28
+    font: poppins semibold 12
+    color: white
+    text-offset: 14 4
+    placeholder-offset: 14 4
+    placeholder-color: #88909a
+    !placeholder: tr('Name this spot')
+    focusable: true
+    image-source: /modules/client_entergame/images/labelbox_noselect
+    anchors.top: descriptionTitle.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 16
+    margin-right: 16
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  PoppinsSemibold12
+    id: iconTitle
+    color: #a0b0c0
+    !text: tr('Icon')
+    anchors.top: description.bottom
+    anchors.left: parent.left
+    margin-top: 14
+    margin-left: 16
+
+  UIWidget
+    id: flagPanel
+    height: 80
+    focusable: false
+    image-source: /images/newui/background_2
+    image-border: 10
+    padding: 8
+    anchors.top: iconTitle.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 8
+    margin-left: 16
+    margin-right: 16
+    // Grade por indice em vez de ancoras encadeadas prev.right: assim uma celula que mude de
+    // tamanho nao arrasta a linha inteira. Sem flow: true, senao numColumns muda com a largura.
+    layout:
+      type: grid
+      cell-size: 30 30
+      cell-spacing: 4
+      num-columns: 10
+
+    MinimapFlagCheckBox
+      id: flag0
+    MinimapFlagCheckBox
+      id: flag1
+    MinimapFlagCheckBox
+      id: flag2
+    MinimapFlagCheckBox
+      id: flag3
+    MinimapFlagCheckBox
+      id: flag4
+    MinimapFlagCheckBox
+      id: flag5
+    MinimapFlagCheckBox
+      id: flag6
+    MinimapFlagCheckBox
+      id: flag7
+    MinimapFlagCheckBox
+      id: flag8
+    MinimapFlagCheckBox
+      id: flag9
+    MinimapFlagCheckBox
+      id: flag10
+    MinimapFlagCheckBox
+      id: flag11
+    MinimapFlagCheckBox
+      id: flag12
+    MinimapFlagCheckBox
+      id: flag13
+    MinimapFlagCheckBox
+      id: flag14
+    MinimapFlagCheckBox
+      id: flag15
+    MinimapFlagCheckBox
+      id: flag16
+    MinimapFlagCheckBox
+      id: flag17
+    MinimapFlagCheckBox
+      id: flag18
+    MinimapFlagCheckBox
+      id: flag19
+
+  NewBlueButton
+    id: okButton
+    size: 90 30
+    font: poppins semibold 12
+    text-align: center
+    !text: tr('Ok')
+    anchors.right: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-right: 6
+    margin-bottom: 16
+
+  NewRedButton
+    id: cancelButton
+    size: 90 30
+    font: poppins semibold 12
+    text-align: center
+    !text: tr('Cancel')
+    anchors.left: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    margin-left: 6
+    margin-bottom: 16
+
+// Row in the PokedexLegendRow mould: pin on the left, label, SwitchBox on the right.
+MinimapLegendRow < UIWidget
+  // no anchors here: the rows live in a verticalBox, which stretches them to the panel width and
+  // rejects anchors outright ("the parent widget doesn't use anchor layout")
+  height: 26
+
+  Label
+    id: name
+    font: poppins semibold 12
+    color: #e8eaed
+    text-auto-resize: true
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    phantom: true
+
+  // The SwitchBox base @onCheckChange reads `not self:isChecked()` and slides the wrong way:
+  // UICheckBox:onClick already applied the new value before firing. OptionCheckBox and the Pokedex
+  // legend both override it for that reason; so does this one.
+  SwitchBox
+    id: check
+    checked: true
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    @onCheckChange: modules.game_minimap.onLegendToggle(self:getParent():getId(), self:isChecked())
+
+
+MinimapWindow < MiniWindow
+  height: 210
+  image-source: /images/general_ui/background
+  font: poppins semibold 14
+  // matches the Label style the other windows' titles use; the window's own text defaults to white
+  color: #dfdfdf
+  text-offset: 27 6
+
+  &closeButton
+    anchors.top: miniwindowTopBar.top
+    anchors.right: miniwindowTopBar.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    change-cursor-image: true
+    cursor: pointer
+    image-source: /images/newui/miniwindow/close
+    image-clip: 0 0 11 11
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+      image-clip: 0 0 11 11
+
+    $pressed:
+      opacity: 0.75
+      image-clip: 0 0 11 11
+
+  &minimizeButton
+    anchors.top: none
+    anchors.right: closeButton.left
+    margin-right: 5
+    anchors.verticalCenter: closeButton.verticalCenter
+    size: 11 7
+    change-cursor-image: true
+    cursor: pointer
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+      image-clip: 0 0 11 7
+
+    $pressed:
+      image-clip: 0 0 11 7
+
+    $on:
+      image-clip: 0 7 11 7
+
+    $on hover:
+      opacity: 0.5
+      image-clip: 0 7 11 7
+
+    $on pressed:
+      image-clip: 0 7 11 7
+
+  &lockButton
+    anchors.top: none
+    anchors.right: minimizeButton.left
+    anchors.verticalCenter: closeButton.verticalCenter
+    margin-right: 5
+    size: 13 15
+    change-cursor-image: true
+    cursor: pointer
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+      image-clip: 0 15 13 15
+
+    $pressed:
+      image-clip: 0 15 13 15
+
+    $on:
+      image-clip: 0 0 13 15
+
+    $on hover:
+      opacity: 0.5
+      image-clip: 0 0 13 15
+
+    $on pressed:
+      image-clip: 0 0 13 15
+
+  Label
+    id: helpLabel
+    text: ?
+    text-align: center
+    phantom: false
+    !tooltip: tr('Hold left mouse button to navigate\nScroll mouse middle button to zoom\nRight mouse button to create map marks')
+    anchors.verticalCenter: optionsButton.verticalCenter
+    anchors.right: optionsButton.left
+    margin-right: 3
+    size: 14 14
+
+  MiniWindowContents
+    margin-left: 8
+    margin-top: 35
+    margin-bottom: 10
+
+    Minimap
+      id: minimap
+      anchors.fill: parent
+
+      // Fullmap overlays (hidden by default, shown in fullmap mode)
+      NewRedCloseButton
+        id: fullmapCloseButton
+        visible: false
+        anchors.top: parent.top
+        anchors.right: parent.right
+        margin-top: 30
+        margin-right: 30
+        @onClick: modules.game_minimap.toggleFullMap()
+        // Na instancia, e nao no NewRedCloseButton: aquele estilo e usado por dezenas de janelas
+        // que nao tem nada a ver com o autowalk do minimapa. Ver a nota no MinimapBarButton.
+        @onMouseRelease: return true
+
+      // Legend: toggles for the icon layers drawn over the full map. Shown only in fullmap mode.
+      NewOpaqueWindow
+        id: fullmapLegendPanel
+        visible: false
+        draggable: false
+        size: 226 118
+        anchors.top: fullmapTimePanel.bottom
+        anchors.left: fullmapTimePanel.left
+        margin-top: 10
+
+        Label
+          id: fullmapLegendTitle
+          !text: tr('Legend')
+          font: poppins semibold 11
+          color: #8b93a1
+          text-auto-resize: true
+          anchors.top: parent.top
+          anchors.left: parent.left
+          margin-top: 10
+          margin-left: 12
+          phantom: true
+
+        UIWidget
+          id: fullmapLegendCollapse
+          size: 16 16
+          anchors.top: parent.top
+          anchors.right: parent.right
+          margin-top: 9
+          margin-right: 12
+          icon-source: @fa solid 12 f077
+          icon-color: #aaaaaa
+          cursor: pointer
+          @onClick: modules.game_minimap.toggleLegendCollapsed()
+
+        UIWidget
+          id: fullmapLegendRows
+          anchors.top: fullmapLegendTitle.bottom
+          anchors.left: parent.left
+          anchors.right: parent.right
+          margin-top: 4
+          margin-left: 12
+          margin-right: 12
+          height: 78
+          layout:
+            type: verticalBox
+
+          MinimapLegendRow
+            id: houses
+
+          MinimapLegendRow
+            id: dungeons
+
+          MinimapLegendRow
+            id: instances
+
+
+      NewOpaqueWindow
+        id: fullmapTimePanel
+        visible: false
+        draggable: false
+        size: 120 36
+        anchors.top: parent.top
+        anchors.left: parent.left
+        margin-top: 15
+        margin-left: 15
+        // Nao e phantom: phantom faria o clique atravessar ate o minimapa, que trata
+        // release como clique no mapa e chama player:autoWalk. Ver MinimapBarButton.
+        // focusable: false porque o NewOpaqueWindow e focavel por padrao.
+        focusable: false
+        @onMouseRelease: return true
+
+        UIWidget
+          id: fullmapTimeIcon
+          size: 22 22
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.left: parent.left
+          margin-left: 10
+          phantom: true
+
+        Label
+          id: fullmapTime
+          font: poppins semibold 14
+          text-auto-resize: true
+          color: white
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.right: parent.right
+          margin-right: 12
+          phantom: true
+
+      NewOpaqueWindow
+        id: fullmapCoordsPanel
+        visible: false
+        draggable: false
+        size: 120 28
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        margin-bottom: 15
+        margin-right: 15
+        // Nao e phantom: phantom faria o clique atravessar ate o minimapa, que trata
+        // release como clique no mapa e chama player:autoWalk. Ver MinimapBarButton.
+        // focusable: false porque o NewOpaqueWindow e focavel por padrao.
+        focusable: false
+        @onMouseRelease: return true
+
+        Label
+          id: fullmapCoords
+          font: poppins semibold 11
+          text-auto-resize: true
+          color: white
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.horizontalCenter: parent.horizontalCenter
+          phantom: true
+
+      NewOpaqueWindow
+        id: fullmapButtonBarBg
+        visible: false
+        draggable: false
+        opacity: 0.5
+        size: 158 24
+        anchors.bottom: fullmapCoordsPanel.top
+        anchors.right: parent.right
+        margin-bottom: 5
+        margin-right: 30
+        // Nao e phantom: phantom faria o clique atravessar ate o minimapa, que trata
+        // release como clique no mapa e chama player:autoWalk. Ver MinimapBarButton.
+        // focusable: false porque o NewOpaqueWindow e focavel por padrao.
+        focusable: false
+        @onMouseRelease: return true
+
+      UIWidget
+        id: fullmapButtonBar
+        visible: false
+        height: 24
+        anchors.bottom: fullmapCoordsPanel.top
+        anchors.right: parent.right
+        margin-bottom: 5
+        margin-right: 30
+        layout:
+          type: horizontalBox
+          spacing: 2
+          fit-children: true
+
+        MinimapBarButton
+          id: floorUpWidget
+          icon-source: @fa solid 14 f062
+          @onClick: modules.game_minimap.minimapFloorUp()
+
+        MinimapBarButton
+          id: floorDownWidget
+          icon-source: @fa solid 14 f063
+          @onClick: modules.game_minimap.minimapFloorDown()
+
+        MinimapBarButton
+          id: resetWidget
+          icon-source: @fa solid 14 f05b
+          @onClick: modules.game_minimap.minimapReset()
+
+        MinimapBarButton
+          id: searchWidget
+          icon-source: @fa solid 14 f002
+          @onClick: modules.game_minimap.openSearchCoords()
+
+        MinimapBarButton
+          id: zoomInWidget
+          icon-source: @fa solid 14 2b
+          @onClick: modules.game_minimap.minimapZoomIn()
+
+        MinimapBarButton
+          id: zoomOutWidget
+          icon-source: @fa solid 14 f068
+          @onClick: modules.game_minimap.minimapZoomOut()
+
+  NewOpaqueWindow
+    id: minimapCoordsPanel
+    draggable: false
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 30
+    margin-left: 5
+    height: 20
+    width: 90
+    phantom: true
+
+    Label
+      id: minimapCoords
+      font: poppins semibold 10
+      text-auto-resize: true
+      color: white
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+      phantom: true
+
+  NewOpaqueWindow
+    id: minimapTimePanel
+    draggable: false
+    anchors.top: minimapCoordsPanel.top
+    anchors.right: parent.right
+    margin-right: 5
+    margin-right: 2
+    height: 20
+    width: 70
+    phantom: true
+
+    UIWidget
+      id: minimapTimeIcon
+      size: 16 16
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 8
+      phantom: true
+
+    Label
+      id: minimapTime
+      font: poppins semibold 11
+      text-auto-resize: true
+      color: white
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      margin-right: 8
+      phantom: true
+
+  NewOpaqueWindow
+    id: minimapButtonBarBg
+    draggable: false
+    opacity: 0.5
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: contentsPanel.horizontalCenter
+    margin-bottom: 2
+    height: 24
+    width: 182
+    phantom: true
+
+  UIWidget
+    id: minimapButtonBar
+    height: 24
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: contentsPanel.horizontalCenter
+    margin-bottom: 2
+    layout:
+      type: horizontalBox
+      spacing: 2
+      fit-children: true
+
+    MinimapBarButton
+      id: floorUpWidget
+      icon-source: @fa solid 14 f062
+      @onClick: modules.game_minimap.minimapFloorUp()
+
+    MinimapBarButton
+      id: floorDownWidget
+      icon-source: @fa solid 14 f063
+      @onClick: modules.game_minimap.minimapFloorDown()
+
+    MinimapBarButton
+      id: resetWidget
+      icon-source: @fa solid 14 f05b
+      @onClick: modules.game_minimap.minimapReset()
+
+    MinimapBarButton
+      id: searchWidget
+      icon-source: @fa solid 14 f002
+      @onClick: modules.game_minimap.openSearchCoords()
+
+    MinimapBarButton
+      id: zoomInWidget
+      icon-source: @fa solid 14 2b
+      @onClick: modules.game_minimap.minimapZoomIn()
+
+    MinimapBarButton
+      id: zoomOutWidget
+      icon-source: @fa solid 14 f068
+      @onClick: modules.game_minimap.minimapZoomOut()
+
+    MinimapBarButton
+      id: fullscreenWidget
+      icon-source: @fa solid 14 f065
+      @onClick: modules.game_minimap.toggleFullMap()
+

@@ -1,0 +1,153 @@
+TopButton < UIButton
+  size: 26 26
+  image-source: /images/ui/button_top
+  image-clip: 0 0 26 26
+  cursor: pointer
+
+TopToggleButton < UIButton
+  size: 26 26
+  image-source: /images/ui/button_top
+  image-clip: 0 0 26 26
+  cursor: pointer
+    
+// Divisor vertical entre os grupos da topbar (fixos da esquerda | customizaveis | fixos da direita).
+// NAO e phantom de proposito: TopMenu e TopMenuButtonsPanel sao os dois phantom, entao um clique
+// aqui atravessaria ate o mapa e faria o personagem andar. O handler engole o clique.
+// Retangulo branco solido em vez do /images/ui/separator_vertical: aquele PNG e uma linha ESCURA
+// (RGB 39 e 99) e image-color e multiplicativo, entao nao havia como clarea-lo pela imagem.
+// A altura vem do layout: (28 do padding rect) - margin-top - margin-bottom.
+TopMenuSeparator < UIWidget
+  background-color: #ffffff77
+  width: 2
+  margin-top: 1
+  margin-bottom: 1
+  margin-left: 3
+  margin-right: 3
+  focusable: false
+  @onMouseRelease: return true
+
+TopMenuButtonsPanel < Panel
+  layout:
+    type: horizontalBox
+    spacing: 12
+    fit-children: true
+  padding: 6 7
+
+// Menu que abre ABAIXO de um botao da topbar (hoje: Store -> Diamond/Online Points/Twitch).
+// Mesmo fundo e mesmas metricas do middleGameButtonsPanel, para ler como uma extensao da barra.
+// Nao e phantom nem Panel: precisa receber o clique (grabMouse + onMousePress fecham ao clicar
+// fora, igual ao UIPopupMenu).
+TopMenuButtonMenu < UIWidget
+  layout:
+    type: horizontalBox
+    spacing: 12
+    fit-children: true
+  padding: 6 7
+  height: 40
+  image-source: /images/general_ui/background
+  image-border: 15
+  focusable: false
+
+TopMenuPanel < Panel
+  height: 40
+  width: 800
+  image-repeated: true
+  focusable: false
+
+TopMenuFrameCounterLabel < Label
+  font: verdana-11px-rounded
+  color: white
+  margin-top: 4
+  margin-left: 5  
+
+TopMenuPingLabel < Label
+  font: verdana-11px-rounded
+
+TopMenu < TopMenuPanel
+  id: topMenu
+  phantom: true
+  anchors.top: parent.top
+  anchors.left: parent.left
+  anchors.right: parent.right  
+
+  TopMenuButtonsPanel
+    id: leftButtonsPanel
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    image-border: 25    
+
+  TopMenuButtonsPanel
+    id: leftGameButtonsPanel
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: prev.right
+    visible: false
+    image-border: 25    
+
+  TopMenuFrameCounterLabel
+    id: fpsLabel
+    text-auto-resize: true
+    text-align: center
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: leftGameButtonsPanel.right
+
+  TopMenuPingLabel
+    color: white
+    id: pingLabel
+    text-auto-resize: true
+    anchors.top: fpsLabel.bottom
+    anchors.left: fpsLabel.left
+
+  Label
+    id: onlineLabel
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    font: verdana-11px-antialised
+    text-align: center
+    text-auto-resize: true
+
+  TopMenuButtonsPanel
+    id: middleButtonsPanel
+    --anchors.top: parent.top    
+    --anchors.horizontalCenter: parent.horizontalCenter
+    --image-border: 25
+    --margin-left: 400
+    --margin-right: 400
+    --disabled: true
+
+  TopMenuButtonsPanel
+    id: middleGameButtonsPanel
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    image-source: /images/general_ui/background
+    image-border: 10
+    visible: false
+    opacity: 1
+    image-border: 15
+    height: 40
+
+  TopMenuButtonsPanel
+    id: rightButtonsPanel
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right    
+
+  TopMenuButtonsPanel
+    id: rightGameButtonsPanel
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom    
+    anchors.right: prev.left
+    visible: false
+
+HideTopBar < UIWidget
+  id: hideTopBar
+  anchors.horizontalCenter: parent.horizontalCenter
+  anchors.top: parent.top
+  focusable: false
+  margin-top: 40
+  size: 60 34
+  visible: true
+  @onClick: toggleMidTopMenu()

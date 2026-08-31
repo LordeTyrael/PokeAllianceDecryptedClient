@@ -1,0 +1,74 @@
+NewOpaqueWindow
+  id: selectDailyWindow
+  size: 260 220
+  anchors.centerIn: parent
+  visible: false
+  draggable: false
+  @onEscape: modules.game_dailies.hideSelectDaily()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 190 36
+    image-source: /images/general_ui/name_base
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 15
+      margin-top: 2
+      font: poppins semibold 16
+      !text: tr("Difficulty")
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 13
+    margin-right: 16
+    !tooltip: tr("Close")
+    @onClick: modules.game_dailies.hideSelectDaily()
+
+  PoppinsSemibold12
+    id: hint
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 12
+    height: 18
+    text-align: center
+    color: #a0b0c0
+    !text: tr("Choose a difficulty")
+
+  AllianceStraightBlueButton
+    id: easy
+    size: 160 32
+    font: poppins semibold 12
+    anchors.top: hint.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 12
+    !text: tr('Easy')
+    @onClick: modules.game_dailies.confirmSelectDificulty(self, 1)
+
+  AllianceStraightBlueButton
+    id: medium
+    size: 160 32
+    font: poppins semibold 12
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    !text: tr('Medium')
+    @onClick: modules.game_dailies.confirmSelectDificulty(self, 2)
+
+  AllianceStraightBlueButton
+    id: hard
+    size: 160 32
+    font: poppins semibold 12
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 10
+    !text: tr('Hard')
+    @onClick: modules.game_dailies.confirmSelectDificulty(self, 3)

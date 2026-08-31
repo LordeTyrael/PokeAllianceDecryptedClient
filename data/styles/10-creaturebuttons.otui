@@ -1,0 +1,55 @@
+CreatureButton < UICreatureButton
+  height: 25
+  margin-bottom: 5
+
+  UICreature
+    id: creature
+    size: 25 25
+    anchors.left: parent.left
+    anchors.top: parent.top
+    phantom: true
+    old-scaling: true
+
+  UIWidget
+    id: spacer
+    width: 3
+    anchors.left: creature.right
+    anchors.top: creature.top
+    phantom: true
+
+  UIWidget
+    id: emblem
+    height: 11
+    anchors.left: spacer.right
+    anchors.top: creature.top
+    phantom: true
+
+  Label
+    id: label
+    anchors.left: emblem.right
+    anchors.right: parent.right
+    anchors.top: creature.top
+    color: #888888
+    margin-left: 10
+    phantom: true
+    font: poppins semibold 12
+    text-auto-resize: true
+
+  UIWidget
+    id: lifeBar
+    anchors.left: spacer.right
+    margin-left: 5
+    size: 130 7
+    anchors.top: label.bottom
+    margin-top: 2
+    phantom: true
+    image-source: /modules/game_battle/images/health_background
+
+    UIWidget
+      id: lifeBarPercent
+      anchors.left: lifeBar.left
+      anchors.top: lifeBar.top
+      size: 130 7
+      phantom: true
+      image-source: /modules/game_battle/images/health_bar
+      opacity: 0.7

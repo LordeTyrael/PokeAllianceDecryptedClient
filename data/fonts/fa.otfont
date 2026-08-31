@@ -1,0 +1,19 @@
+Font
+  type: ttf
+  family: fa
+  default: true
+  styles:
+    brands:
+      file: fa-brands-400
+    regular:
+      file: fa-regular-400
+    solid:
+      file: fa-solid-900
+    solid-outline:
+      file: fa-solid-900
+      outline-width: 1
+      outline-color: #000000
+    blackrounded:
+      file: fa-sharp-solid-900
+      outline-width: 1
+      outline-color: #000008

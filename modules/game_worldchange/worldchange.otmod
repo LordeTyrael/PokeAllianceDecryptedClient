@@ -1,0 +1,9 @@
+Module
+  name: game_worldchange
+  description: player world change
+  author: pokealliance
+  website: https://github.com/pokealliance
+  sandboxed: true
+  scripts: [ worldchange ]
+  @onLoad: init()
+  @onUnload: terminate()

@@ -1,0 +1,9 @@
+Module
+  name: game_images
+  description: Open image on screen
+  author: PokeAlliance
+  website: PokeAlliance.com.br
+  sandboxed: true
+  scripts: [ images ]
+  @onLoad: init()
+  @onUnload: terminate()

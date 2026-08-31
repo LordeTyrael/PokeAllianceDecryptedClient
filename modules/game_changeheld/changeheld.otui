@@ -1,0 +1,192 @@
+HeldExchangeCard < UIWidget
+  id: heldExchangeCard
+  size: 160 160
+
+  UIWidget
+    anchors.fill: parent
+    image-border: 15
+    image-source: /images/newui/background_3
+    phantom: true
+
+    PoppinsSemibold12
+      id: cardTitle
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 10
+      color: #ffffff
+      text-align: center
+      text-auto-resize: true
+
+    UIWidget
+      id: exchangeRow
+      anchors.top: cardTitle.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      height: 55
+      margin-top: 6
+      layout:
+        type: horizontalBox
+        align-items: center
+        spacing: 2
+        fit-children: true
+      phantom: true
+
+    NewStraightBlueButton
+      id: exchangeButton
+      size: 100 28
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-bottom: 12
+      !text: tr("Exchange")
+
+HeldExchangeItemIcon < UIWidget
+  size: 36 48
+  phantom: true
+
+  UIItem
+    id: icon
+    size: 36 36
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    phantom: true
+    virtual: true
+
+HeldArrowIcon < UIWidget
+  size: 20 11
+  phantom: true
+
+  UIWidget
+    id: arrow
+    size: 20 11
+    anchors.centerIn: parent
+    margin-bottom: 6
+    image-source: /images/modules/arrow_right_green
+    phantom: true
+
+HeldBottomItem < UIWidget
+  height: 30
+  phantom: true
+  layout:
+    type: horizontalBox
+    align-items: center
+    spacing: 1
+    fit-children: true
+
+  UIItem
+    id: icon
+    size: 30 30
+    phantom: true
+    virtual: true
+
+  PoppinsSemibold12
+    id: countLabel
+    height: 30
+    color: #ffffff
+    text-auto-resize: true
+    text-align: center
+
+NewOpaqueWindow
+  id: changeHeldWindow
+  size: 550 450
+  anchors.centerIn: parent
+  focusable: true
+  visible: false
+  @onEscape: modules.game_changeheld.close()
+
+  UIWidget
+    id: base_name
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 260 36
+    image-source: /images/general_ui/name_base
+
+    UIWidget
+      id: base_icon
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 32 32
+      image-source: /images/game/icons/brokes
+
+    Label
+      id: base_text
+      text-auto-resize: true
+      anchors.left: base_icon.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      margin-top: 4
+      font: poppins semibold 20
+      !text: tr("Exchange of Helds")
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 8
+    margin-right: 8
+    @onClick: modules.game_changeheld.close()
+
+  EntergameTextEdit
+    id: searchEdit
+    size: 180 28
+    anchors.top: base_name.bottom
+    anchors.left: parent.left
+    margin-top: 10
+    margin-left: 15
+    text-offset: 14 5
+    placeholder-offset: 14 5
+    placeholder: Search...
+    placeholder-color: #aaaaaa
+    color: white
+    image-source: /modules/client_entergame/images/labelbox_noselect
+
+    $focus:
+      image-source: /modules/client_entergame/images/labelbox_select
+
+  ScrollablePanel
+    id: changeHeldPanel
+    anchors.top: searchEdit.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: bottomBar.top
+    margin: 10
+    margin-left: 15
+    margin-right: 15
+    vertical-scrollbar: changeHeldScrollBar
+    layout:
+      type: grid
+      num-columns: 3
+      cell-size: 160 160
+      cell-spacing: 5
+      flow: true
+
+  AllianceVerticalScrollBar
+    id: changeHeldScrollBar
+    anchors.top: searchEdit.bottom
+    anchors.bottom: bottomBar.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-bottom: 10
+    margin-right: 3
+    step: 48
+    pixels-scroll: true
+
+  UIWidget
+    id: bottomBar
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    height: 40
+    image-border: 15
+    image-source: /images/newui/background_3
+
+    UIWidget
+      id: bottomItemsPanel
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 10
+      height: 30
+      layout:
+        type: horizontalBox
+        spacing: 1
+        fit-children: true
+      phantom: true

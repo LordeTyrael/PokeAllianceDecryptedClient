@@ -1,0 +1,83 @@
+TournamentPokemonWidget < UIWidget
+  size: 64 64
+  @onClick: modules.game_tournament.selectWidget(self)
+  border-width: 1
+  border-color: red
+  cursor: pointer
+
+  UICreature
+    id: pokemon
+    anchors.centerIn: parent
+    size: 64 64
+    phantom: true
+
+  Label
+    id: pokemonBoost
+    anchors.right: pokemon.right
+    anchors.bottom: pokemon.bottom
+    font: poppins semibold 14
+    margin-right: 3
+    phantom: true
+    text-auto-resize: true
+
+NewOpaqueWindow
+  @onEscape: modules.game_tournament.closeRegisterWindow()
+  size: 470 550
+  padding: 10
+  anchors.centerIn: parent
+
+  Label
+    id: title
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: parent.top
+    !text: tr("Tournament")
+    font: poppins semibold 22
+    text-auto-resize: true
+
+  ScrollablePanel
+    id: pokemonPanel
+    size: 405 400
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: title.bottom
+    margin-top: 25
+    padding: 15
+    draggable: false
+    phantom: true
+    vertical-scrollbar: pokemonPanelScroll
+    image-border: 15
+    image-source: /images/newui/background_popup
+
+    layout:
+      type: grid
+      cell-size: 64 64
+      num-columns: 5
+      cell-spacing: 10
+
+  AllianceVerticalScrollBar
+    id: pokemonPanelScroll
+    anchors.top: pokemonPanel.top
+    anchors.bottom: pokemonPanel.bottom
+    anchors.right: pokemonPanel.right
+    margin-right: 10
+    margin-top: 15
+    margin-bottom: 15
+    step: 30
+    pixels-scroll: true
+
+  NewStraightBlueButton
+    id: registerButton
+    size: 120 50
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: pokemonPanel.bottom
+    margin-top: 15
+    font: poppins semibold 14
+    !text: tr("Register")
+    @onClick: modules.game_tournament.sendTournamentRegistration()
+
+  NewRedCloseButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 10
+    margin-right: 10
+    @onClick: modules.game_tournament.closeRegisterWindow()

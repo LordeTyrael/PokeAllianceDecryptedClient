@@ -1,0 +1,10 @@
+Module
+  name: game_autocombo
+  description: Auto Combo Pokémon System
+  author: PokeAlliance
+  website: https://pokealliance.com
+  sandboxed: true
+  autoload: true
+  scripts: [ autocombo ]
+  @onLoad: init()
+  @onUnload: terminate()

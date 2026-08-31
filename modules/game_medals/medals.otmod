@@ -1,0 +1,10 @@
+Module
+  name: game_medals
+  description: Medals
+  author: PokeAlliance
+  website: https://www.pokealliance.com.br
+  dependencies: [ client_hotkeys ]
+  sandboxed: true
+  scripts: [ medals ]
+  @onLoad: init()
+  @onUnload: terminate()

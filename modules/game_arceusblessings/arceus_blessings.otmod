@@ -1,0 +1,10 @@
+Module
+  name: game_arceusblessings
+  description: Arceus Blessing system
+  author: PokeAlliance
+  website: https://pokealliance.com
+  sandboxed: true
+  autoload: true
+  scripts: [ arceus_blessings ]
+  @onLoad: init()
+  @onUnload: terminate()

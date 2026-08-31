@@ -1,0 +1,10 @@
+Module
+  name: game_gathering
+  description: Proximity prompt + channel UI for gatherable world resources (veins)
+  author: Danvrb
+  sandboxed: true
+  website: none
+  dependencies: [ game_interface, client_hotkeys, game_chat ]
+  @onLoad: init()
+  @onUnload: terminate()
+  scripts: [ gathering ]

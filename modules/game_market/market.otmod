@@ -1,0 +1,7 @@
+Module
+  name: game_market
+  description: Gerencia compra e venda do servidor.
+  sandboxed: true
+  scripts: [ market ]
+  @onLoad: init()
+  @onUnload: terminate()

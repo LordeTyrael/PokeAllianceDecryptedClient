@@ -1,0 +1,239 @@
+GamePassItem < UIItem
+  size: 48 48
+  font: poppins rounded 16
+  text-align: right
+  virtual: true
+  on: true
+  cursor: pointer
+
+  $on:
+    opacity: 1.0
+
+  $!on !checked:
+    opacity: 0.5
+
+  $checked:
+    opacity: 1.0
+
+  $hover:
+    opacity: 1.0
+
+  UICreature
+    id: outfit
+    size: 48 48
+    visible: false
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    phantom: true
+    old-scaling: true
+
+GamePassCheck < UIWidget
+  size: 20 20
+  image-source: images/reward/check
+  visible: false
+
+GamePassReward < Panel
+  size: 79 290
+
+  Panel
+    id: standard
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 79 139
+    image-source: images/reward/subbase
+    text: 1
+    text-align: top
+    text-offset: 0 4
+
+    UIWidget
+      anchors.centerIn: parent
+      margin-top: 7
+      size: 66 66
+      image-source: images/reward/itemholder
+
+    GamePassItem
+      id: item
+      anchors.centerIn: prev
+      @onClick: modules.game_pass.displayItemInfo(self)
+
+    GamePassCheck
+      id: check
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 15
+
+  Panel
+    id: premium
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-top: 7
+    size: 79 139
+    image-source: images/reward/premiumsubbase
+    text: 1
+    text-align: top
+    text-offset: 0 1
+
+    UIWidget
+      anchors.centerIn: parent
+      margin-top: 7
+      size: 66 66
+      image-source: images/reward/premiumitemholder
+
+    GamePassItem
+      id: item
+      anchors.centerIn: prev
+      @onClick: modules.game_pass.displayItemInfo(self)
+
+    GamePassCheck
+      id: check
+      anchors.top: prev.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 15
+
+Panel
+  id: rewardsPanel
+  padding: 8
+
+  ScrollablePanel
+    id: scrollPanel
+    anchors.top: parent.top
+    anchors.left: infoPanel.right
+    anchors.right: descriptionPanel.left
+    horizontal-scrollbar: scrollBar
+    height: 290
+
+    layout:
+      type: horizontalBox
+      spacing: 6
+
+  UIWidget
+    id: loading
+    anchors.centerIn: scrollPanel
+    size: 120 120
+    image-source: images/loading
+
+  Panel
+    id: leftEffectPanel
+    anchors.left: scrollPanel.left
+    anchors.top: scrollPanel.top
+    size: 60 280
+    image-source: images/reward/effect
+    opacity: 0.8
+    phantom: true
+    visible: false
+
+  Panel
+    id: rightEffectPanel
+    anchors.right: scrollPanel.right
+    anchors.top: scrollPanel.top
+    size: 60 280
+    image-source: images/reward/effectright
+    opacity: 0.8
+    phantom: true
+    visible: false
+
+  AllianceHorizontalScrollBar
+    id: scrollBar
+    anchors.top: prev.bottom
+    anchors.left: infoPanel.right
+    anchors.right: descriptionPanel.left
+    margin-top: 25
+    height: 15
+    step: 50
+    pixels-scroll: true
+
+  Panel
+    id: infoPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: -5
+    size: 85 290
+    cursor: pointer
+
+    UIWidget
+      anchors.top: parent.top
+      anchors.right: parent.right
+      size: 85 145
+      image-source: images/reward/freebase
+      icon-source: images/reward/icon
+      icon-offset: 0 6
+      margin-top: 3
+      font: poppins bold 13
+      text-align: top
+      text-offset: 0 3
+      !text: tr('FREE')
+
+    UIWidget
+      anchors.top: prev.bottom
+      anchors.right: parent.right
+      size: 85 145
+      image-source: images/reward/premiumbase
+      icon-source: images/reward/premiumicon
+      icon-offset: 0 6
+      font: poppins bold 13
+      text-align: top
+      text-offset: 0 3
+      !text: tr('PREMIUM')
+
+  Panel
+    id: descriptionPanel
+    anchors.top: parent.top
+    anchors.right: parent.right
+    height: 260
+    width: 248
+    padding: 10
+
+    UIWidget
+      id: holder
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      size: 125 125
+      image-source: images/reward/ball
+
+    UIItem
+      id: item
+      anchors.centerIn: prev
+      size: 96 96
+      virtual: true
+
+    Label
+      id: title
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.top: holder.bottom
+      margin-top: 10
+      font: poppins bold 18
+      text-auto-resize: true
+      text-wrap: true
+      text-align: center
+
+    Label
+      id: description
+      anchors.top: prev.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 3
+      font: poppins semibold 12
+      text-auto-resize: true
+      text-wrap: true
+      text-align: center
+
+  UIButton
+    id: claimButton
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: prev.horizontalCenter
+    size: 152 53
+    image-source: images/reward/claimbtn
+    font: poppins bold 14
+    !text: tr("Claim")
+    visible: false
+    cursor: pointer
+    margin-top: 15
+
+    $hover:
+      opacity: 1.0
+
+    $!hover:
+      opacity: 0.8
+
+    @onClick: modules.game_pass.claimReward()

@@ -1,0 +1,181 @@
+RankingCell < UIWidget
+  size: 120 40
+  font: sans-bold-16px
+
+RankingRow < UIWidget
+  size: 642 37
+  margin-top: 10
+  margin-left: 10
+
+  RankingCell
+    id: rankid
+    !text: tr('#')
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    width: 50
+
+  RankingCell
+    id: icon
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    size: 32 32
+    margin-left: 20
+
+  RankingCell
+    id: name
+    !text: tr('Name')
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    width: 170
+    text-align: left
+    text-offset: 15 0
+
+  RankingCell
+    id: level
+    !text: tr('Level')
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    width: 50
+
+  RankingCell
+    id: value
+    !text: tr('Value')
+    anchors.left: prev.right    
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 55
+
+  AllianceSeparator
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+
+
+RankingHeaderRow < NewPopupWindow
+  size: 642 37
+  margin-top: 5
+
+  RankingCell
+    id: rankid
+    !text: tr('#')
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    width: 50
+
+  RankingCell
+    id: icon
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    size: 32 32
+    margin-left: 20
+
+  RankingCell
+    id: name
+    !text: tr('Name')
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    width: 80        
+
+  RankingCell
+    id: level
+    !text: tr('Level')
+    anchors.left: prev.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 55
+
+  RankingCell
+    id: value
+    !text: tr('Value')
+    anchors.left: prev.right    
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 20
+
+NewOpaqueWindow
+  @onEscape: self:hide()
+  id: window
+  size: 588 426
+  anchors.centerIn: parent
+
+  UIWidget
+    id: titleBackground
+    anchors.left: parent.left
+    anchors.top: parent.top
+    size: 368 36
+    image-source: /images/modules/store_ui/name_base
+    phantom: true
+
+    UIWidget
+      id: iconWidget
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      margin-left: 10
+      size: 21 17
+      phantom: true
+      image-source: images/icon
+
+    Label
+      id: title
+      anchors.left: iconWidget.right
+      margin-left: 10
+      anchors.verticalCenter: parent.verticalCenter
+      !text: tr("Ranking")
+      margin-top: 2
+      font: poppins semibold 20
+      text-auto-resize: true
+
+  UIWidget
+    id: tools
+    size: 500 30
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: titleBackground.bottom
+    margin-top: 20
+
+    Label
+      id: filter
+      !text: tr('Filter:')
+      size: 40 20
+      anchors.left: parent.left
+      anchors.top: parent.top
+      font: poppins semibold 15
+      margin-top: 5      
+
+    OptionsComboBox
+      id: filterBox
+      width: 140
+      anchors.top: parent.top
+      anchors.left: filter.right
+      margin-left: 10
+      margin-top: 2
+
+  RankingHeaderRow
+    id: columns
+    size: 515 37
+    anchors.top: prev.bottom    
+    anchors.left: parent.left
+    margin-left: 25
+
+  ScrollablePanel
+    id: content
+    --background: #ff000080
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    margin-left: 24
+    --anchors.bottom: parent.bottom
+    size: 515 265
+    vertical-scrollbar: contentScrollbar     
+    layout: verticalBox
+
+  AllianceVerticalScrollBar
+    id: contentScrollbar
+    anchors.top: columns.top
+    anchors.left: content.right
+    anchors.bottom: content.bottom
+    step: 30
+    margin-left: 18
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-right: 10
+    margin-top: 10
+    @onClick: self:getParent():hide()

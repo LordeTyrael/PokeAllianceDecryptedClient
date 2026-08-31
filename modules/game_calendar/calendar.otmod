@@ -1,0 +1,9 @@
+Module
+  name: game_calendar
+  description: PokeAlliance
+  author: Tanjiro
+  website: pokealliance.com
+  sandboxed: true
+  scripts: [ calendar ]
+  @onLoad: init()
+  @onUnload: terminate()

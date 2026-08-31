@@ -1,0 +1,186 @@
+RuinedItemSlot < UIItem
+  size: 32 32
+  virtual: true
+  image-source: /images/newui/item
+  change-cursor-image: true
+  cursor: pointer
+
+RewardsTooltip < UITooltip
+  width: 160
+  follow-mouse-offset: -180 -40
+  border: 1 #313D4F
+  background-color: #273142
+  padding: 4
+  padding-left: 9
+  padding-right: 9
+
+  layout: verticalBox
+    fit-children: true
+
+  Label
+    height: 25
+    font: poppins bold 15
+    text-align: center
+    !text: tr("Possible Rewards")
+
+  Panel
+    id: rewards
+    height: 34
+    layout:
+      type: grid
+      cell-size: 34 34
+      cell-spacing: 2
+      num-columns: 4
+      flow: true
+
+NewOpaqueWindow
+  @onEscape: modules.game_ruinedascendant.hideAscendantWindow()
+  anchors.centerIn: parent
+  size: 540 410
+  focusable: true
+
+  UIWidget
+    id: header
+    anchors.top: parent.top
+    anchors.left: parent.left
+    size: 368 37
+    image-offset: 1 0
+    image-source: images/header
+    font: poppins bold 20
+    text-align: left
+    text-offset: 10 0
+    !text: tr("Ruined Ascendant")
+
+  NewRedCloseButton
+    id: close
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin: 10 10 0 0
+    @onClick: modules.game_ruinedascendant.hideAscendantWindow()
+
+  UIWidget
+    id: dungeonImage
+    size: 230 320
+    anchors.left: parent.left
+    anchors.top: header.bottom
+    margin-top: 25
+    margin-left: 35
+    image-source: images/banners/default
+
+  NewOpaqueWindow
+    id: megaStonePanel
+    anchors.top: dungeonImage.top
+    anchors.right: parent.right
+    anchors.bottom: meritButton.top
+    margin-bottom: 5
+    margin-right: 35
+    size: 230 320
+    phantom: true
+    focusable: true
+
+    UIWidget
+      id: availableBackground
+      size: 176 26
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: parent.top
+      margin-top: 20
+      image-source: images/available_background
+      change-cursor-image: true
+      cursor: pointer
+
+      Label
+        id: availableButton
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        icon-source: @fa solid 16 f06e
+        icon-color: #2a3444
+        text-align: left
+        icon-offset: 5 0
+        text-offset: 30 2
+        icon-align: left
+        font: poppins semibold 12
+        !text: tr('Show only available')
+        text-auto-resize: true
+
+    UIWidget
+      id: searchPanel
+      size: 176 26
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.top: prev.bottom
+      margin-top: 5
+      image-source: images/search_background
+
+      UITextEdit
+        id: searchText
+        anchors.fill: parent
+        text-align: left
+        text-offset: 30 0
+        placeholder-offset: 30 -2
+        icon-align: left
+        focusable: true
+        phantom: false
+        font: poppins semibold 12
+        !placeholder: tr("Search")
+        placeholder-align: left
+
+        UIWidget
+          id: searchIcon
+          size: 20 20
+          anchors.left: parent.left
+          anchors.verticalCenter: parent.verticalCenter
+          icon-source: @fa solid 16 f002
+          icon-color: #76869a
+          icon-offset: 5 0
+
+
+    ScrollablePanel
+      id: megaStones
+      anchors.top: searchPanel.bottom
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 15
+      padding: 8
+      size: 190 170
+      vertical-scrollbar: scrollBar
+      layout:
+        type: grid
+        cell-size: 32 32
+        num-columns: 5
+        cell-spacing: 3
+        flow: true
+
+    AllianceVerticalScrollBar
+      id: scrollBar
+      anchors.top: prev.top
+      anchors.bottom: prev.bottom
+      anchors.left: prev.right
+      margin-bottom: 10
+      margin-left: 3
+      pixels-scroll: true
+      step: 40
+
+  NewStraightBlueButton
+    id: meritButton
+    size: 230 30
+    anchors.right: parent.right
+    margin-right: 35
+    anchors.bottom: convertButton.top
+    margin-bottom: 5
+    !text: tr("Merit")
+
+  NewStraightBlueButton
+    id: convertButton
+    size: 230 30
+    anchors.right: parent.right
+    margin-right: 35
+    anchors.bottom: startButton.top
+    margin-bottom: 5
+    !text: tr("Convert Stones")
+
+  NewStraightBlueButton
+    id: startButton
+    size: 230 40
+    anchors.right: parent.right
+    margin-right: 35
+    anchors.bottom: dungeonImage.bottom
+    !text: tr("Start Dungeon")

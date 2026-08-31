@@ -1,0 +1,9 @@
+Module
+  name: game_houseauction
+  description: House auction window
+  author: PokeAlliance
+  website: PokeAlliance.com.br
+  sandboxed: true
+  scripts: [ houseauction ]
+  @onLoad: init()
+  @onUnload: terminate()

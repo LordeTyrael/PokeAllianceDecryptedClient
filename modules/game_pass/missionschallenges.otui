@@ -1,0 +1,114 @@
+ChallengeMissionPanel < Panel
+  size: 121 169
+  image-source: images/challengepanel
+  font: poppins bold 15
+  text-align: top
+  text-offset: 0 1
+  text: Elite Hunter
+
+  UIWidget
+    id: accumulate
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 23
+    margin-right: 5
+    size: 23 23
+    font: poppins bold 12
+    icon-source: @fa solid 23 f1ce
+    icon-color: #616b77
+    text-align: center
+    text-offset: 2 3
+    text: 1
+    visible: false
+
+  Label
+    id: progress
+    anchors.verticalCenter: prev.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    font: poppins semibold 14
+    text-auto-resize: true
+    text-align: center
+
+  Label
+    id: description
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    font: poppins semibold 14
+    text-align: center
+    text-vertical-auto-resize: true
+    text-wrap: true
+    text: ""
+
+  GamePassExpLabel
+    id: exp
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    font: poppins semibold 14
+    margin-bottom: 10
+    color: #ffffff
+    text: 50
+
+Panel
+  id: challenges
+  text-align: center
+
+  GamePassInfoLabel
+    id: info
+    anchors.centerIn: parent
+
+  UIWidget
+    id: loading
+    anchors.centerIn: parent
+    size: 120 120
+    image-source: images/loading
+    visible: false
+
+  GamePassAccumulateCheckBox
+    id: accumulate
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 8
+
+    @onCheckChange: |
+      function(self)
+        modules.game_pass.toggleChallengesAccumulate()
+      end
+
+  ScrollablePanel
+    id: missions
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    anchors.right: next.left
+    vertical-scrollbar: scrollBar
+    padding: 8
+
+    layout:
+      type: grid
+      cell-size: 121 169
+      flow: true
+      cell-spacing: 12
+
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+    ChallengeMissionPanel
+
+  AllianceVerticalScrollBar
+    id: scrollBar
+    anchors.top: accumulate.bottom
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    width: 10
+    step: 25
+    pixels-scroll: true

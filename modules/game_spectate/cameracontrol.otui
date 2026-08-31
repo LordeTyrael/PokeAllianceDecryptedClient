@@ -1,0 +1,197 @@
+UIMiniWindow
+  id: spectateHostWindow
+  size: 195 170
+  &save: true
+  &autoOpen: false
+  focusable: false
+  clipping: true
+  image-border: 12
+  image-source: /images/general_ui/bordered_background
+  &minimizedHeight: 26
+
+  UIWidget
+    id: hudTopBar
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 26
+    phantom: true
+
+  UIItem
+    id: cameraIcon
+    anchors.left: hudTopBar.left
+    margin-left: 6
+    anchors.verticalCenter: hudTopBar.verticalCenter
+    size: 18 18
+    phantom: true
+    virtual: true
+    item-id: 5080
+
+  Label
+    id: channelControl
+    anchors.left: cameraIcon.right
+    margin-left: 5
+    anchors.verticalCenter: cameraIcon.verticalCenter
+    anchors.right: optionsButton.left
+    margin-right: 2
+    !text: tr("Cam")
+    text-offset: 0 0
+    font: poppins semibold 12
+
+  NewButton
+    id: leaveButton
+    anchors.top: hudTopBar.top
+    anchors.right: hudTopBar.right
+    margin-top: 8
+    margin-right: 7
+    size: 11 11
+    image-source: /images/newui/miniwindow/close
+    @onClick: modules.game_spectate.closeHosting()
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+  NewButton
+    id: collapseButton
+    anchors.right: leaveButton.left
+    margin-right: 5
+    anchors.verticalCenter: leaveButton.verticalCenter
+    size: 11 7
+    image-source: /images/newui/miniwindow/arrows
+    image-clip: 0 0 11 7
+    @onClick: modules.game_spectate.hideHosting()
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 7 11 7
+
+  NewButton
+    id: lockButton
+    anchors.right: collapseButton.left
+    margin-right: 5
+    anchors.verticalCenter: leaveButton.verticalCenter
+    size: 13 15
+    image-source: /images/newui/miniwindow/lock
+    image-clip: 0 15 13 15
+    opacity: 1.0
+
+    $hover:
+      opacity: 0.5
+
+    $on:
+      image-clip: 0 0 13 15
+
+  DockableOptionsButton
+    id: optionsButton
+    anchors.right: lockButton.left
+    margin-right: 7
+    anchors.verticalCenter: leaveButton.verticalCenter
+
+  Label
+    id: channelName
+    anchors.top: hudTopBar.bottom
+    margin-top: 10
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-left: 10
+    margin-right: 10
+    height: 30
+    !text: tr("Channel Name")
+    text-align: center
+    text-wrap: true
+    font: poppins semibold 14
+
+  UIWidget
+    id: timeChannelIcon
+    size: 15 15
+    anchors.left: iconsPanel.left
+    anchors.top: channelName.bottom
+    margin-top: 6
+    image-source: images/channel_management/time
+
+  Label
+    id: timeChannelOpenned
+    anchors.verticalCenter: timeChannelIcon.verticalCenter
+    anchors.left: timeChannelIcon.right
+    margin-left: 5
+    text-align: center
+    text-auto-resize: true
+    font: poppins semibold 12
+    text-offset: 0 1
+
+  NewButton
+    id: viewerCountIcon
+    size: 16 13
+    anchors.verticalCenter: timeChannelIcon.verticalCenter
+    anchors.right: viewerCount.left
+    margin-right: 3
+    image-source: images/channel_list/view
+    @onClick: modules.game_spectate.requestViewersName()
+
+  Label
+    id: viewerCount
+    anchors.verticalCenter: timeChannelOpenned.verticalCenter
+    anchors.right: iconsPanel.right
+    text: 0
+    text-auto-resize: true
+    text-align: center
+    font: poppins semibold 12
+    text-offset: 0 1
+
+  UIWidget
+    id: iconsPanel
+    size: 120 21
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: channelName.bottom
+    margin-top: 35
+
+    NewButton
+      id: editChannelName
+      size: 20 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: parent.left
+      image-source: images/channel_management/edit_name
+      !tooltip: tr('Edit Name')
+      @onClick: modules.game_spectate.showChangeNameOption()
+
+    NewButton
+      id: editChannelPassword
+      size: 20 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: prev.right
+      margin-left: 14
+      image-source: images/channel_management/edit_password
+
+    NewButton
+      id: showBanList
+      size: 20 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: next.left
+      margin-right: 14
+      image-source: images/channel_management/show_ban
+      !tooltip: tr('Show Banneds')
+      @onClick: modules.game_spectate.requestBannedsViewersName()
+
+    NewButton
+      id: changePokemonView
+      size: 20 20
+      anchors.verticalCenter: parent.verticalCenter
+      anchors.right: parent.right
+      image-source: images/channel_management/pokes_on
+      !tooltip: tr('Change Pokemon View')
+      @onClick: modules.game_spectate.changePokemonPreview()
+
+  NewButton
+    id: closeChannelButton
+    size: 120 28
+    anchors.top: iconsPanel.bottom
+    margin-top: 15
+    anchors.horizontalCenter: parent.horizontalCenter
+    !text: tr("Close Channel")
+    font: poppins semibold 12
+    image-source: images/channel_management/close_base
+    @onClick: modules.game_spectate.closeHosting()
